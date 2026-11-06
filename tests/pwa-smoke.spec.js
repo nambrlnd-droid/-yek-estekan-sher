@@ -24,7 +24,7 @@ test("reader, favorite persistence and image studio work at this viewport", asyn
   await page.locator("#readerFavorite").click();
   await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
   await page.reload();
-  await page.locator(".verse").first().click();
+  await expect(page.locator("#readerView")).toBeVisible();
   await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
   await page.locator("#readerMakeImage").click();
   await expect(page.locator("#imageStudioView")).toBeVisible();
