@@ -1,0 +1,46 @@
+name: Sync public Telegram channel
+
+on:
+  schedule:
+    - cron: "17,47 * * * *"
+  workflow_dispatch:
+    inputs:
+      pages:
+        description: "Archive pages to scan (about 20 posts per page; max 100)"
+        required: false
+        default: "1"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-channel-sync
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Collect public channel posts
+        run: |
+          PAGES="${{ inputs.pages || '1' }}"
+          python scripts/sync_telegram.py --pages "$PAGES"
+      - name: Commit updated review inbox
+        run: |
+          if git diff --quiet -- telegram-inbox.json; then
+            echo "No new Telegram posts."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add telegram-inbox.json
+          git commit -m "Sync public Telegram channel inbox"
+          git push
