@@ -5,7 +5,7 @@
   const poemSource=Array.isArray(window.poemEntries)?window.poemEntries:[];
   const pinnedSource=Array.isArray(window.pinnedEntries)?window.pinnedEntries:[];
   const poems=poemSource.map((x,i)=>({
-    id:"poem-"+String(i+1).padStart(4,"0"),
+    id:x.id||("poem-"+String(i+1).padStart(4,"0")),
     type:x.section==="texts"?"text":"poem",
     title:x.title||((x.body||"").split(/\n/)[0]||"بدون عنوان").slice(0,72),
     body:String(x.body||""), author:String(x.author||""),
@@ -13,7 +13,7 @@
     legacyIndex:i, collectionIds:[]
   }));
   const pinned=pinnedSource.map((x,i)=>({
-    id:"pinned-"+String(i+1).padStart(3,"0"),type:"text",
+    id:x.id||("pinned-"+String(i+1).padStart(3,"0")),type:"text",
     title:x.title||((x.body||"").split(/\n/)[0]||"بدون عنوان").slice(0,72),
     body:String(x.body||""),author:String(x.author||""),
     tags:Array.isArray(x.tags)?[...x.tags]:[],source:x.source||"",
