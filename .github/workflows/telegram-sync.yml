@@ -1,6 +1,11 @@
 name: Sync public Telegram channel
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/sync_telegram.py"
+      - ".github/workflows/telegram-sync.yml"
   schedule:
     - cron: "17,47 * * * *"
   workflow_dispatch:
