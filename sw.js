@@ -1,6 +1,6 @@
 /* PWA service worker for GitHub Pages subpath deployment. */
 const CACHE_PREFIX="yes-v13-";
-const CACHE_NAME=CACHE_PREFIX+"shell-2";
+const CACHE_NAME=CACHE_PREFIX+"shell-3";
 const CORE=[
  "./","./index.html","./manifest.webmanifest","./icons/icon.svg",
  "./poems.js","./poems-extra.js","./pinned.js",
