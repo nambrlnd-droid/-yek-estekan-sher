@@ -47,13 +47,29 @@ body.reader-open .site-header,body.reader-open .hero-feature,body.reader-open #r
 body.reader-open main{max-width:850px;padding-top:22px}
 @media(max-width:600px){.reader-toolbar{align-items:flex-start;flex-direction:column}.reader-tools{justify-content:flex-start}.reader-paper{border-radius:18px}.reader-body{font-size:17px;line-height:2.35}.reader-nav button{font-size:11px;padding:9px 6px}}
 
+
+.notebook-view{max-width:820px;margin:0 auto 30px}.notebook-view[hidden]{display:none!important}
+.notebook-open .site-header,.notebook-open .hero-feature,.notebook-open footer{display:none!important}.notebook-open main{padding-top:22px}
+.notebook-head{text-align:center;margin:0 0 18px}.notebook-head h2{font-weight:500;color:#f4dfc5}.notebook-head p{font-size:12px;color:var(--muted)}
+.notebook-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:15px 0}
+.notebook-tabs button{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:24px;padding:9px 16px;font-size:12px}
+.notebook-tabs button.active{background:var(--gold);border-color:var(--gold);color:#21170f}
+.notebook-items{display:grid;gap:10px}.notebook-row,.notebook-note{border:1px solid var(--line);background:linear-gradient(145deg,#2c251e,#211d19);border-radius:15px;padding:14px 16px}
+.notebook-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.notebook-row-title{border:0;background:none;color:var(--text);font:inherit;text-align:right;cursor:pointer}
+.notebook-meta{display:block;color:var(--muted);font-size:10px;margin-top:6px}.notebook-actions{display:flex;align-items:center;gap:8px}
+.notebook-create{display:flex;gap:8px;margin-bottom:12px}.notebook-create input,.notebook-note textarea{min-width:0;flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;color:var(--text)}
+.notebook-note p{white-space:pre-wrap;line-height:2;color:var(--muted)}.notebook-note textarea{display:block;width:100%;min-height:100px;margin:10px 0}
+.notebook-heading{font-weight:500;color:var(--gold2)}
+.notebook-backup{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:15px 0 22px}
+@media(max-width:600px){.notebook-row{align-items:flex-start}.notebook-meta{max-width:180px}.notebook-create{flex-direction:column}}
+
 </style></head>
 <body>
 <header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۲</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
 <main>
 <a class="hero-feature" href="#pinned" id="pinned"><div class="hero-copy"><small>✦ گزیده‌ای برای مکث و دوباره خواندن</small><strong>پیشنهاد‌ومیض</strong><span>مجموعه‌ای ویژه از شعرها، واژه‌ها و متن‌های برگزیده</span></div><div class="hero-symbol" aria-hidden="true">✧</div></a>
 <div id="regularView">
-<div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button></div>
+<div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><div style="display:flex;gap:7px"><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button><button class="tool-button" id="openNotebook" type="button">دفتر من</button></div></div>
 <nav class="primary" id="sections" aria-label="بخش‌های اصلی"><button class="active" data-section="poems">اشعار</button><button data-section="texts">متون</button></nav>
 <div class="section-heading"><h2 id="sectionTitle">پناهی میان واژه‌ها</h2><p id="sectionNote">اشعار را بر اساس حال‌وهوا و موضوع مرور کنید.</p></div>
 <nav class="topics" id="topics" aria-label="دسته‌بندی موضوعی"></nav>
@@ -67,6 +83,13 @@ body.reader-open main{max-width:850px;padding-top:22px}
   <article class="reader-paper"><div class="reader-kicker" id="readerKicker">یک استکان شعر</div><h2 class="reader-title" id="readerTitle"></h2><div class="reader-body" id="readerBody"></div><div class="reader-author" id="readerAuthor"></div><div class="reader-tags" id="readerTags"></div></article>
   <div class="reader-nav"><button id="readerPrevious" type="button">اثر پیشین</button><button id="readerNext" type="button">اثر بعدی</button></div><div class="reader-status" id="readerStatus" role="status"></div>
 </section>
+<section class="notebook-view" id="notebookView" hidden>
+ <button class="back" id="notebookBack" type="button">← بازگشت به کتابخانه</button>
+ <div class="notebook-head"><h2>دفتر شخصی من</h2><p>علاقه‌مندی‌ها، ردّ خواندن‌ها و یادداشت‌هایی که کنار واژه‌ها می‌مانند.</p></div>
+ <nav class="notebook-tabs" id="notebookTabs" aria-label="بخش‌های دفتر شخصی"></nav>
+ <div class="notebook-items" id="notebookItems"></div>
+ <div class="notebook-backup"><button class="tool-button" id="backupNotebook" type="button">دریافت نسخهٔ پشتیبان</button><button class="tool-button" id="restoreNotebook" type="button">بازیابی نسخهٔ پشتیبان</button><input id="restoreFile" type="file" accept="application/json,.json" hidden></div>
+</section>
 </main>
 <footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۲</div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="poems.js"></script><script src="pinned.js"></script>
@@ -74,6 +97,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
 <script src="js/router.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/reader.js"></script>
+<script src="js/notebook.js"></script>
 <script>
 const el=id=>document.getElementById(id),entries=window.poemEntries||[],pinnedEntries=window.pinnedEntries||[];
 const topicMap={poems:[],texts:["همه","مذهبی و آیینی","تاریخی و روایی","اخلاقی و تربیتی","معرفتی و اعتقادی","ادبی و تأملی","اجتماعی"]};
