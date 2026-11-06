@@ -9,30 +9,16 @@
 <p class="section-note" id="sectionNote">اشعار بر اساس موضوع دسته‌بندی شده‌اند.</p><nav class="topics" id="topics" aria-label="دسته‌بندی موضوعی"></nav>
 <section class="grid" id="entries"></section><div class="empty" id="empty" hidden>موردی در این دسته یا با این عبارت پیدا نشد.</div></main>
 <footer>یک استکان شعر · برای لحظه‌های مکث و خواندن</footer>
+<script src="poems.js"></script>
 <script>
 const topicMap={
  poems:["همه","عاشقانه و دلدادگی","فراق و دلتنگی","تنهایی و غربت","رنج و دل‌شکستگی","امید و تاب‌آوری","عرفان و معنویت","حکمت و اخلاق","اجتماعی و انتقادی","طنز و لطافت","مرگ و گذر عمر"],
  texts:["همه","مذهبی و آیینی","تاریخی و روایی","اخلاقی و تربیتی","معرفتی و اعتقادی","ادبی و تأملی","اجتماعی"]
 };
-const entries=[
-{section:"poems",tags:[1],author:"حافظ",body:"اگر آن ترک شیرازی به دست آرد دل ما را\nبه خال هندویش بخشم سمرقند و بخارا را"},
-{section:"poems",tags:[1],author:"سعدی",body:"من از آن روز که در بند توام آزادم\nپادشاهم که به دست تو اسیر افتادم"},
-{section:"poems",tags:[1,6],author:"مولانا",body:"بی همگان به سر شود، بی تو به سر نمی‌شود\nداغ تو دارد این دلم، جای دگر نمی‌شود"},
-{section:"poems",tags:[1],author:"حافظ",body:"در ازل پرتو حسنت ز تجلی دم زد\nعشق پیدا شد و آتش به همه عالم زد"},
-{section:"poems",tags:[1,7],author:"سعدی",body:"به جهان خرم از آنم که جهان خرم از اوست\nعاشقم بر همه عالم که همه عالم از اوست"},
-{section:"poems",tags:[2,3],author:"شهریار",body:"آمدی جانم به قربانت ولی حالا چرا\nبی‌وفا حالا که من افتاده‌ام از پا چرا"},
-{section:"poems",tags:[2],author:"سعدی",body:"شب فراق که داند که تا سحر چند است\nمگر کسی که به زندان عشق دربند است"},
-{section:"poems",tags:[3,6],author:"مولانا",body:"هر کسی کو دور ماند از اصل خویش\nباز جوید روزگار وصل خویش"},
-{section:"poems",tags:[5],author:"سهراب سپهری",body:"چشم‌ها را باید شست، جور دیگر باید دید\nواژه‌ها را باید شست"},
-{section:"poems",tags:[5],author:"حافظ",body:"یوسف گمگشته بازآید به کنعان غم مخور\nکلبه احزان شود روزی گلستان غم مخور"},
-{section:"poems",tags:[5,10],author:"خیام",body:"برخیز و مخور غم جهان گذران\nبنشین و دمی به شادمانی گذران"},
-{section:"poems",tags:[8],author:"سعدی",body:"بنی‌آدم اعضای یک پیکرند\nکه در آفرینش ز یک گوهرند"},
-{section:"poems",tags:[5,7],author:"پروین اعتصامی",body:"قطره‌ای کز جویباری می‌رود\nاز پی انجام کاری می‌رود"},
-{section:"poems",tags:[9],author:"عبید زاکانی",body:"واعظی پرسید از فرزند خویش\nهیچ می‌دانی مسلمانی به چیست؟"}
-];
+const entries=window.poemEntries||[];
 let section="poems",topic=0;const el=id=>document.getElementById(id);
 function buildTopics(){el("topics").innerHTML="";topicMap[section].forEach((name,i)=>{const b=document.createElement("button");b.textContent=name;b.className=i===topic?"active":"";b.onclick=()=>{topic=i;render()};el("topics").appendChild(b)})}
-function render(){buildTopics();el("sectionNote").textContent=section==="poems"?"اشعار بر اساس موضوع دسته‌بندی شده‌اند.":"متون بر اساس موضوع دسته‌بندی خواهند شد.";const q=el("search").value.trim().toLocaleLowerCase("fa");const root=el("entries");root.innerHTML="";let count=0;entries.forEach(x=>{if(x.section!==section)return;if(topic&&!x.tags.includes(topic))return;if(q&&!(x.body+" "+(x.author||"")+" "+x.tags.map(t=>topicMap[section][t]).join(" ")).toLocaleLowerCase("fa").includes(q))return;count++;const card=document.createElement("article");card.className="entry";const cat=document.createElement("div");cat.className="category";cat.textContent=x.tags.map(t=>topicMap[section][t]).join(" · ");const body=document.createElement("div");body.className="verse";body.textContent=x.body;card.append(cat,body);if(x.author){const author=document.createElement("div");author.className="author";author.textContent="— "+x.author;card.append(author)}const btn=document.createElement("button");btn.className="copy";btn.textContent="کپی";btn.onclick=async()=>{try{await navigator.clipboard.writeText(x.body+(x.author?"\n— "+x.author:""));btn.textContent="کپی شد ✓";setTimeout(()=>btn.textContent="کپی",1300)}catch(e){btn.textContent="امکان کپی نیست"}};card.append(btn);root.append(card)});el("empty").hidden=count!==0}
+function render(){buildTopics();el("sectionNote").textContent=section==="poems"?"اشعار بر اساس موضوع دسته‌بندی شده‌اند.":"متون بر اساس موضوع دسته‌بندی خواهند شد.";const q=el("search").value.trim().toLocaleLowerCase("fa");const root=el("entries");root.innerHTML="";let count=0;entries.forEach(x=>{if(x.section!==section)return;if(topic&&!x.tags.includes(topicMap[section][topic]))return;if(q&&!(x.body+" "+(x.author||"")+" "+x.tags.join(" ")).toLocaleLowerCase("fa").includes(q))return;count++;const card=document.createElement("article");card.className="entry";const cat=document.createElement("div");cat.className="category";cat.textContent=x.tags.join(" · ");const body=document.createElement("div");body.className="verse";body.textContent=x.body;card.append(cat,body);if(x.author){const author=document.createElement("div");author.className="author";author.textContent="— "+x.author;card.append(author)}const btn=document.createElement("button");btn.className="copy";btn.textContent="کپی";btn.onclick=async()=>{try{await navigator.clipboard.writeText(x.body+(x.author?"\n— "+x.author:""));btn.textContent="کپی شد ✓";setTimeout(()=>btn.textContent="کپی",1300)}catch(e){btn.textContent="امکان کپی نیست"}};card.append(btn);root.append(card)});el("empty").hidden=count!==0}
 document.querySelectorAll("#sections button").forEach(b=>b.onclick=()=>{section=b.dataset.section;topic=0;document.querySelectorAll("#sections button").forEach(x=>x.classList.toggle("active",x===b));render()});
 el("search").addEventListener("input",render);render();
 </script></body></html>
