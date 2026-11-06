@@ -9,6 +9,7 @@ from urllib.request import Request, urlopen
 
 CHANNEL = "Poemestic"
 OUT = Path("telegram-inbox.json")
+PUBLICATION = Path("telegram-poems.js")
 
 class PostParser(HTMLParser):
     def __init__(self):
@@ -65,6 +66,55 @@ def read_page(before=None):
     parser = PostParser()
     parser.feed(fetch(url))
     return parser.posts
+
+
+def build_publication(posts):
+    """Publish clear literary/poetry posts; leave promotional/admin posts out."""
+    excluded = re.compile(r"(عضویت|تبلیغات|تبلیغ|ثبت.?نام|ارسال.?اثر|فروش|خرید|کانال.?ما|لینک.?کانال|همکاری.?تبلیغاتی|پیام.?مدیریت)", re.I)
+    entries = []
+    for post in posts:
+        raw = (post.get("text") or "").replace("\u200f", "").replace("\u200e", "").strip()
+        if not raw or excluded.search(raw) or re.search(r"https?://|t\.me/", raw, re.I):
+            continue
+        lines = raw.splitlines()
+        author = ""
+        if lines:
+            match = re.match(r"^\s*[-—]\s*(.{2,45}?)\s*[.،؛…؟!]*\s*$", lines[-1])
+            if match:
+                author = match.group(1).strip()
+                lines = lines[:-1]
+        body = "\n".join(lines).strip()
+        if not body or not re.search(r"[\u0600-\u06FF]", body):
+            continue
+        entries.append({
+            "id": "telegram-" + str(post["id"]),
+            "section": "poems",
+            "tags": ["شعر کانال"],
+            "author": author,
+            "body": body
+        })
+    # Preserve unique bodies within this channel archive.
+    unique, seen = [], set()
+    for entry in entries:
+        key = re.sub(r"[\s\W_]+", "", entry["body"], flags=re.UNICODE)
+        if key and key not in seen:
+            seen.add(key)
+            unique.append(entry)
+    source = json.dumps(unique, ensure_ascii=False, indent=2)
+    js = (
+        "/* Generated from reviewed public posts in @Poemestic. "
+        "Only explicit author signatures are retained. */\n"
+        "(function(){\n\"use strict\";\n"
+        "const incoming=" + source + ";\n"
+        "const norm=s=>String(s||'').normalize('NFKC').replace(/[\\s\\p{P}\\p{S}\\u200c\\u200e\\u200fـ]/gu,'').toLowerCase();\n"
+        "const list=window.poemEntries||(window.poemEntries=[]);\n"
+        "const seen=new Set(list.map(x=>norm(x.body)));\n"
+        "for(const item of incoming){const k=norm(item.body);if(!k||seen.has(k))continue;seen.add(k);list.push(item);}\n"
+        "window.telegramArchiveImported=incoming.length;\n"
+        "})();\n"
+    )
+    PUBLICATION.write_text(js, "utf-8")
+    return len(unique)
 
 def main():
     ap = argparse.ArgumentParser()
@@ -123,8 +173,9 @@ def main():
 
     result = {"channel": CHANNEL, "updated_at": datetime.now(timezone.utc).isoformat(),
               "fetched_this_run": fetched, "archive_cursor": archive_oldest, "archive_pages_this_run": pages_done, "posts": sorted(by_id.values(), key=lambda p: int(p["id"]))}
+    published = build_publication(result["posts"])
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", "utf-8")
-    print(f"Saved {len(result['posts'])} unique posts ({fetched} fetched this run).")
+    print(f"Saved {len(result['posts'])} unique posts ({fetched} fetched this run); {published} poetry candidates prepared for site publication.")
 
 if __name__ == "__main__":
     try:
