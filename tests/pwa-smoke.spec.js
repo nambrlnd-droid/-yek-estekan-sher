@@ -19,7 +19,8 @@ test("app shell, manifest and service worker register under GitHub Pages subpath
 
 test("reader, favorite persistence and image studio work at this viewport", async ({ page }) => {
   await page.goto("/");
-  await page.locator(".verse").first().click();
+  await expect(page.locator("#entries .verse").first()).toBeVisible();
+  await page.locator("#entries .verse").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
   await page.locator("#readerFavorite").click();
   await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
