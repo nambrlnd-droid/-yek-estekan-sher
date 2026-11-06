@@ -29,6 +29,24 @@ main{width:min(1020px,100%);margin:auto;padding:0 18px 56px}
 footer{text-align:center;color:#8e7c6b;font-size:11px;padding:12px 15px 28px}footer .foot-mark{color:var(--gold);font-size:16px;margin-bottom:5px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#ead4b8;color:#21170f;padding:9px 17px;border-radius:25px;font-size:12px;box-shadow:var(--shadow);transition:.25s;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:600px){.site-header{padding:27px 15px 22px}.brand-mark{width:56px;height:56px;font-size:26px}.tagline{font-size:12px}.hero-feature{padding:17px 17px;border-radius:18px;gap:10px}.hero-copy strong{font-size:17px}.hero-symbol{width:58px;height:58px;font-size:25px}.toolbar{align-items:stretch}.tool-button{padding:9px 11px;font-size:11px}.topics,.pinned-topics{justify-content:flex-start}.grid{grid-template-columns:1fr;gap:11px}.entry{min-height:160px;padding:18px}.verse,.pinned-body{font-size:14px}.pinned-intro h2{font-size:20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+.reader-view{max-width:780px;margin:0 auto 30px}.reader-view[hidden]{display:none!important}
+.reader-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 16px}
+.reader-toolbar .back{margin:0}.reader-tools{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.reader-tools button,.reader-nav button{border:1px solid var(--line);border-radius:24px;background:var(--surface);color:var(--muted);padding:8px 12px;font-size:12px}
+.reader-tools button:hover,.reader-nav button:hover{border-color:var(--gold);color:var(--gold2)}
+.reader-paper{border:1px solid #80603f88;border-radius:24px;background:radial-gradient(circle at 50% 0,#49332155,transparent 55%),linear-gradient(145deg,#2c251e,#211d19 78%);padding:clamp(25px,6vw,54px) clamp(18px,6vw,56px);box-shadow:var(--shadow);text-align:center}
+.reader-kicker{color:var(--gold);font-size:11px;margin-bottom:18px}.reader-title{font-size:clamp(19px,4vw,26px);font-weight:500;color:#f4dfc5;line-height:1.9;margin:0 0 22px}
+.reader-body{white-space:pre-wrap;text-align:center;line-height:2.45;font-size:19px;font-weight:300;color:var(--text);overflow-wrap:anywhere}
+.reader-author{color:var(--gold2);font-size:13px;margin:25px 0 0}.reader-tags{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.reader-tags span{border:1px solid var(--line);border-radius:20px;padding:5px 10px;color:var(--muted);font-size:10px}
+.reader-nav{display:flex;justify-content:space-between;gap:12px;margin-top:15px}.reader-nav button{flex:1}
+.reader-status{text-align:center;color:var(--muted);font-size:11px;margin-top:12px;min-height:22px}
+.entry,.pinned-item{cursor:pointer}.entry:focus-visible,.pinned-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+body.reader-open .site-header,body.reader-open .hero-feature,body.reader-open #regularView,body.reader-open #pinnedView,body.reader-open footer{display:none!important}
+body.reader-open main{max-width:850px;padding-top:22px}
+@media(max-width:600px){.reader-toolbar{align-items:flex-start;flex-direction:column}.reader-tools{justify-content:flex-start}.reader-paper{border-radius:18px}.reader-body{font-size:17px;line-height:2.35}.reader-nav button{font-size:11px;padding:9px 6px}}
+
 </style></head>
 <body>
 <header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۲</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
@@ -42,6 +60,13 @@ footer{text-align:center;color:#8e7c6b;font-size:11px;padding:12px 15px 28px}foo
 <section class="grid" id="entries"></section><div class="empty" id="empty" hidden><span>❧</span>هنوز محتوایی در این بخش نیست؛ یا با این عبارت چیزی پیدا نشد.</div>
 </div>
 <div class="pinned-view" id="pinnedView" hidden><button class="back" id="backFromPinned">بازگشت به کتابخانه</button><div class="pinned-intro"><h2>پیشنهاد‌ومیض</h2><p>برگزیده‌ای از شعرها و نوشته‌هایی که ارزش مکث دوباره دارند.</p><span class="pinned-label">مجموعهٔ اختصاصی</span></div><div class="pinned-tools"><input id="pinnedSearch" type="search" placeholder="جست‌وجو در این مجموعه…" aria-label="جست‌وجو در پیشنهاد ومیض"></div><nav class="pinned-topics" id="pinnedTopics" aria-label="موضوعات پیشنهاد ومیض"></nav><section class="pinned-list" id="pinnedEntries"></section><div class="empty" id="pinnedEmpty" hidden>موردی در این مجموعه پیدا نشد.</div></div>
+<section class="reader-view" id="readerView" hidden aria-live="polite">
+  <div class="reader-toolbar"><button class="back" id="readerBack" type="button">← بازگشت به کتابخانه</button>
+    <div class="reader-tools"><button id="readerSmaller" type="button" aria-label="کوچک‌تر کردن قلم">الف−</button><button id="readerLarger" type="button" aria-label="بزرگ‌تر کردن قلم">الف+</button><button id="readerCopy" type="button">کپی متن</button><button id="readerShare" type="button">اشتراک‌گذاری</button><button id="readerFavorite" type="button">♡ نشان‌کردن</button></div>
+  </div>
+  <article class="reader-paper"><div class="reader-kicker" id="readerKicker">یک استکان شعر</div><h2 class="reader-title" id="readerTitle"></h2><div class="reader-body" id="readerBody"></div><div class="reader-author" id="readerAuthor"></div><div class="reader-tags" id="readerTags"></div></article>
+  <div class="reader-nav"><button id="readerPrevious" type="button">اثر پیشین</button><button id="readerNext" type="button">اثر بعدی</button></div><div class="reader-status" id="readerStatus" role="status"></div>
+</section>
 </main>
 <footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۲</div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="poems.js"></script><script src="pinned.js"></script>
