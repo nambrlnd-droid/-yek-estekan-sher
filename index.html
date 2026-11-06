@@ -75,7 +75,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
 .image-controls textarea,.image-controls input,.image-controls select{width:100%;background:#171512;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text);font:inherit;font-size:12px}
 .image-controls textarea{min-height:190px;line-height:2;resize:vertical}
 .image-control-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.image-checks{display:flex;gap:16px;flex-wrap:wrap}.image-checks label{display:flex;align-items:center;gap:6px}
+.image-controls input[type="range"]{accent-color:var(--gold);padding:4px}.image-checks{display:flex;gap:16px;flex-wrap:wrap}.image-checks label{display:flex;align-items:center;gap:6px}
 .image-preview{padding:12px;border:1px solid var(--line);border-radius:18px;background:#100e0c;position:sticky;top:12px}
 .image-preview canvas{display:block;width:100%;height:auto;border-radius:10px}
 .image-status{font-size:11px;color:var(--muted);text-align:center;min-height:22px;margin-top:8px}
@@ -121,6 +121,10 @@ body.reader-open main{max-width:850px;padding-top:22px}
    <div class="image-control-row">
     <label>قالب رنگی<select id="imageTheme"><option value="paper">کاغذ گرم</option><option value="night">شب و طلایی</option><option value="dawn">سپیده</option><option value="olive">زیتونی</option><option value="minimal">مینیمال روشن</option></select></label>
     <label>چیدمان متن<select id="imageAlign"><option value="center">وسط‌چین</option><option value="right">راست‌چین</option><option value="left">چپ‌چین</option></select></label>
+   </div>
+   <div class="image-control-row">
+    <label>قلم متن<select id="imageFont"><option value="Vazirmatn">وزیرمتن</option><option value="Tahoma">Tahoma</option><option value="serif">سریف</option></select></label>
+    <label>نقش پس‌زمینه<select id="imagePattern"><option value="none">ساده و خلوت</option><option value="stars">نقش ستاره‌ای</option><option value="arch">قاب قوسی</option><option value="leaves">نقش برگ</option></select></label>
    </div>
    <div class="image-control-row">
     <label>اندازهٔ قلم <input id="imageFontSize" type="range" min="28" max="58" value="40"></label>
