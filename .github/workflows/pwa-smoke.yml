@@ -4,8 +4,11 @@ on:
   push:
     branches: [v1.3-development]
   pull_request:
-    branches: [v1.3-development]
+    branches: [main, v1.3-development]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   browser-smoke:
@@ -17,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
       - name: Install test dependencies
         run: npm install
       - name: Install Chromium
