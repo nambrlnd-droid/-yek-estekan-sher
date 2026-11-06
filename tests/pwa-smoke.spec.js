@@ -17,8 +17,8 @@ test("app shell, manifest and service worker register under GitHub Pages subpath
   expect(errors).toEqual([]);
 });
 
-test("reader, favorite persistence and image studio work at this viewport", async ({ page }) => {
-  await page.goto("/");
+test("reader, favorite persistence and image studio work at this viewport", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
   await expect(page.locator("#entries .verse").first()).toBeVisible();
   await page.locator("#entries .verse").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
