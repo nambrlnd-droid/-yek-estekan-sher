@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#171512"><meta name="description" content="یک استکان شعر؛ مکثی کوتاه میان شعر، واژه و حال خوب.">\n<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>یک استکان شعر | نسخهٔ ۱.۳ · در حال توسعه</title>
+<title>یک استکان شعر | نسخهٔ ۱.۳</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -81,10 +81,30 @@ body.reader-open main{max-width:850px;padding-top:22px}
 .image-status{font-size:11px;color:var(--muted);text-align:center;min-height:22px;margin-top:8px}
 .image-actions{display:flex;gap:8px;flex-wrap:wrap}.image-actions button{flex:1}
 @media(max-width:720px){.image-studio-layout{grid-template-columns:1fr}.image-preview{position:static}.image-control-row{grid-template-columns:1fr 1fr}}
+
+.site-stats{max-width:850px;margin:0 auto 22px;padding:16px 17px 12px;border:1px solid #80603f66;border-radius:20px;background:linear-gradient(145deg,#2b241d,#201b16);box-shadow:0 10px 28px #0002}
+.stats-heading{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold2);font-size:13px;margin-bottom:13px}.stats-heading span{color:#9d7952;font-size:11px}
+.stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.stat-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:94px;padding:10px 5px;border:1px solid #ffffff0d;border-radius:14px;background:#17151266;text-align:center}
+.stat-icon{color:var(--gold);font-size:16px;line-height:1.2}.stat-card strong{color:#f2d8b6;font-size:clamp(19px,3vw,25px);font-weight:600;font-variant-numeric:tabular-nums}.stat-card>span:last-child{color:var(--muted);font-size:10px;line-height:1.7}.stats-caption{margin:10px 0 0;text-align:center;color:#8e7c6b;font-size:9px}
+@media(max-width:650px){.site-stats{padding:13px 10px 10px;margin-bottom:17px}.stats-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.stat-card{min-height:82px}.stats-caption{font-size:9px}}
+
 </style></head>
 <body>
-<header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۳ · آزمایشی</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
+<header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ اصلی ۱.۳</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
 <main>
+
+<section class="site-stats" id="siteStats" aria-label="آمار کتابخانه">
+ <div class="stats-heading"><span>✦</span><strong>کتابخانهٔ یک استکان شعر</strong><span>✦</span></div>
+ <div class="stats-grid">
+  <article class="stat-card"><span class="stat-icon">❧</span><strong id="statTotal">۰</strong><span>مجموع مطالب</span></article>
+  <article class="stat-card"><span class="stat-icon">✍</span><strong id="statPoems">۰</strong><span>شعرها</span></article>
+  <article class="stat-card"><span class="stat-icon">▤</span><strong id="statTexts">۰</strong><span>متون</span></article>
+  <article class="stat-card"><span class="stat-icon">♙</span><strong id="statAuthors">۰</strong><span>شاعران و نویسندگان</span></article>
+  <article class="stat-card"><span class="stat-icon">❖</span><strong id="statTopics">۰</strong><span>موضوع‌های دسته‌بندی</span></article>
+ </div>
+ <p class="stats-caption">آمار به‌صورت خودکار از محتوای بارگذاری‌شده در کتابخانه محاسبه می‌شود.</p>
+</section>
 <a class="hero-feature" href="#pinned" id="pinned"><div class="hero-copy"><small>✦ گزیده‌ای برای مکث و دوباره خواندن</small><strong>پیشنهاد‌ومیض</strong><span>مجموعه‌ای ویژه از شعرها، واژه‌ها و متن‌های برگزیده</span></div><div class="hero-symbol" aria-hidden="true">✧</div></a>
 <div id="regularView">
 <div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><div style="display:flex;gap:7px"><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button><button class="tool-button" id="openNotebook" type="button">دفتر من</button><button class="tool-button" id="openImageStudio" type="button">ساخت تصویر</button><button class="tool-button" id="installApp" type="button" hidden>نصب برنامه</button></div></div>
@@ -138,7 +158,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
  </div>
 </section>
 </main>
-<footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۳ آزمایشی</div><div class="pwa-tools"><span class="pwa-status" id="pwaStatus" role="status" aria-live="polite">در حال آماده‌سازی حالت آفلاین…</span></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ اصلی ۱.۳</div><div class="pwa-tools"><span class="pwa-status" id="pwaStatus" role="status" aria-live="polite">در حال آماده‌سازی حالت آفلاین…</span></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="poems.js"></script><script src="poems-extra.js"></script><script src="pinned.js"></script>
 <script src="js/content.js"></script>
 <script src="js/router.js"></script>
@@ -150,6 +170,20 @@ body.reader-open main{max-width:850px;padding-top:22px}
 <script src="js/pwa.js"></script>
 <script>
 const el=id=>document.getElementById(id),entries=window.poemEntries||[],pinnedEntries=window.pinnedEntries||[];
+
+function updateSiteStats(){
+ const poems=entries.filter(x=>x.section==="poems").length;
+ const texts=entries.filter(x=>x.section==="texts").length;
+ const authors=new Set(entries.map(x=>(x.author||"").trim()).filter(Boolean)).size;
+ const topics=new Set(entries.flatMap(x=>Array.isArray(x.tags)?x.tags:[]).map(x=>String(x).trim()).filter(Boolean)).size;
+ const fmt=n=>new Intl.NumberFormat("fa-IR").format(n);
+ el("statTotal").textContent=fmt(poems+texts);
+ el("statPoems").textContent=fmt(poems);
+ el("statTexts").textContent=fmt(texts);
+ el("statAuthors").textContent=fmt(authors);
+ el("statTopics").textContent=fmt(topics);
+}
+
 const topicMap={poems:[],texts:["همه","مذهبی و آیینی","تاریخی و روایی","اخلاقی و تربیتی","معرفتی و اعتقادی","ادبی و تأملی","اجتماعی"]};
 topicMap.poems=["همه",...new Set(entries.filter(x=>x.section==="poems").flatMap(x=>x.tags||[]))];
 let section="poems",topic=0,pinnedTopic="همه",toastTimer;
@@ -168,5 +202,6 @@ document.querySelectorAll("#sections button").forEach(b=>b.onclick=()=>{section=
 el("search").addEventListener("input",render);el("authorFilter").addEventListener("change",render);el("creditFilter").addEventListener("change",render);el("pinnedSearch").addEventListener("input",renderPinned);el("pinnedAuthorFilter").addEventListener("change",renderPinned);
 el("pinned").addEventListener("click",e=>{e.preventDefault();showPinned();history.replaceState(null,"",location.pathname+"#pinned")});el("backFromPinned").addEventListener("click",leavePinned);
 el("randomPoem").addEventListener("click",()=>{const list=entries.filter(x=>x.section==="poems");if(!list.length)return;const item=list[Math.floor(Math.random()*list.length)];section="poems";topic=0;document.querySelectorAll("#sections button").forEach(x=>x.classList.toggle("active",x.dataset.section==="poems"));el("search").value="";render();const card=[...el("entries").children].find(node=>node.querySelector(".verse")?.textContent===item.body);if(card){card.scrollIntoView({behavior:"smooth",block:"center"});card.animate([{borderColor:"#d5a66f",transform:"scale(1)"},{borderColor:"#f0c994",transform:"scale(1.015)"},{borderColor:"#40362d",transform:"scale(1)"}],{duration:1100})}});
+updateSiteStats();
 if(location.hash==="#pinned")showPinned();render();
 </script></body></html>
