@@ -36,7 +36,7 @@ jobs:
           python-version: "3.12"
       - name: Collect public channel posts
         run: |
-          PAGES="${{ inputs.pages || '1' }}"
+          PAGES="${{ inputs.pages || '10' }}"
           python scripts/sync_telegram.py --pages "$PAGES"
       - name: Commit updated review inbox
         run: |
