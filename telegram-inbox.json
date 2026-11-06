@@ -1,6 +1,6 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-06T21:18:15.298457+00:00",
+  "updated_at": "2026-11-06T21:29:35.385Z",
   "fetched_this_run": 220,
   "archive_cursor": 6989,
   "archive_pages_this_run": 10,
@@ -11,8 +11,9 @@
       "author": "",
       "date": "2026-10-02T11:42:26+00:00",
       "source_url": "https://t.me/Poemestic/6989",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "6991",
@@ -20,8 +21,9 @@
       "author": "",
       "date": "2026-10-02T12:02:44+00:00",
       "source_url": "https://t.me/Poemestic/6991",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "6993",
@@ -29,8 +31,9 @@
       "author": "",
       "date": "2026-10-02T17:15:50+00:00",
       "source_url": "https://t.me/Poemestic/6993",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "6994",
@@ -38,8 +41,9 @@
       "author": "",
       "date": "2026-10-02T18:32:51+00:00",
       "source_url": "https://t.me/Poemestic/6994",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7003",
@@ -47,8 +51,9 @@
       "author": "",
       "date": "2026-10-02T18:50:00+00:00",
       "source_url": "https://t.me/Poemestic/7003",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7010",
@@ -56,8 +61,9 @@
       "author": "",
       "date": "2026-10-02T19:01:36+00:00",
       "source_url": "https://t.me/Poemestic/7010",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7023",
@@ -65,8 +71,9 @@
       "author": "",
       "date": "2026-10-02T19:19:45+00:00",
       "source_url": "https://t.me/Poemestic/7023",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7029",
@@ -74,8 +81,9 @@
       "author": "",
       "date": "2026-10-02T19:36:34+00:00",
       "source_url": "https://t.me/Poemestic/7029",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7039",
@@ -83,8 +91,9 @@
       "author": "",
       "date": "2026-10-02T19:57:38+00:00",
       "source_url": "https://t.me/Poemestic/7039",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7043",
@@ -92,8 +101,9 @@
       "author": "",
       "date": "2026-10-02T20:09:17+00:00",
       "source_url": "https://t.me/Poemestic/7043",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7050",
@@ -101,8 +111,9 @@
       "author": "",
       "date": "2026-10-02T20:20:13+00:00",
       "source_url": "https://t.me/Poemestic/7050",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7053",
@@ -110,8 +121,9 @@
       "author": "",
       "date": "2026-10-03T03:15:07+00:00",
       "source_url": "https://t.me/Poemestic/7053",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7054",
@@ -119,8 +131,9 @@
       "author": "",
       "date": "2026-10-03T10:40:53+00:00",
       "source_url": "https://t.me/Poemestic/7054",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7057",
@@ -128,8 +141,9 @@
       "author": "",
       "date": "2026-10-03T11:49:01+00:00",
       "source_url": "https://t.me/Poemestic/7057",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7058",
@@ -137,8 +151,9 @@
       "author": "",
       "date": "2026-10-03T12:00:06+00:00",
       "source_url": "https://t.me/Poemestic/7058",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7059",
@@ -146,8 +161,9 @@
       "author": "",
       "date": "2026-10-03T12:15:37+00:00",
       "source_url": "https://t.me/Poemestic/7059",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7060",
@@ -155,8 +171,9 @@
       "author": "",
       "date": "2026-10-03T12:47:10+00:00",
       "source_url": "https://t.me/Poemestic/7060",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7061",
@@ -164,8 +181,9 @@
       "author": "",
       "date": "2026-10-04T10:20:23+00:00",
       "source_url": "https://t.me/Poemestic/7061",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7062",
@@ -173,8 +191,9 @@
       "author": "",
       "date": "2026-10-04T10:41:12+00:00",
       "source_url": "https://t.me/Poemestic/7062",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7065",
@@ -182,8 +201,9 @@
       "author": "",
       "date": "2026-10-04T12:29:56+00:00",
       "source_url": "https://t.me/Poemestic/7065",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7067",
@@ -191,8 +211,9 @@
       "author": "",
       "date": "2026-10-04T13:50:05+00:00",
       "source_url": "https://t.me/Poemestic/7067",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7068",
@@ -200,8 +221,9 @@
       "author": "",
       "date": "2026-10-04T14:28:21+00:00",
       "source_url": "https://t.me/Poemestic/7068",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7071",
@@ -209,8 +231,9 @@
       "author": "",
       "date": "2026-10-04T19:10:26+00:00",
       "source_url": "https://t.me/Poemestic/7071",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7073",
@@ -218,8 +241,9 @@
       "author": "",
       "date": "2026-10-04T19:30:01+00:00",
       "source_url": "https://t.me/Poemestic/7073",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7074",
@@ -227,8 +251,9 @@
       "author": "",
       "date": "2026-10-04T19:40:49+00:00",
       "source_url": "https://t.me/Poemestic/7074",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7075",
@@ -236,8 +261,9 @@
       "author": "",
       "date": "2026-10-04T19:53:48+00:00",
       "source_url": "https://t.me/Poemestic/7075",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7076",
@@ -245,8 +271,9 @@
       "author": "",
       "date": "2026-10-04T20:12:47+00:00",
       "source_url": "https://t.me/Poemestic/7076",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7077",
@@ -254,8 +281,9 @@
       "author": "",
       "date": "2026-10-05T09:36:03+00:00",
       "source_url": "https://t.me/Poemestic/7077",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7078",
@@ -263,8 +291,9 @@
       "author": "",
       "date": "2026-10-05T11:04:39+00:00",
       "source_url": "https://t.me/Poemestic/7078",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7079",
@@ -272,8 +301,9 @@
       "author": "",
       "date": "2026-10-05T11:15:15+00:00",
       "source_url": "https://t.me/Poemestic/7079",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7080",
@@ -281,8 +311,9 @@
       "author": "",
       "date": "2026-10-05T12:05:34+00:00",
       "source_url": "https://t.me/Poemestic/7080",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7081",
@@ -290,8 +321,9 @@
       "author": "",
       "date": "2026-10-05T15:57:05+00:00",
       "source_url": "https://t.me/Poemestic/7081",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7083",
@@ -299,8 +331,9 @@
       "author": "",
       "date": "2026-10-05T17:31:52+00:00",
       "source_url": "https://t.me/Poemestic/7083",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7084",
@@ -308,8 +341,9 @@
       "author": "",
       "date": "2026-10-05T19:35:17+00:00",
       "source_url": "https://t.me/Poemestic/7084",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7095",
@@ -317,8 +351,9 @@
       "author": "",
       "date": "2026-10-05T19:51:01+00:00",
       "source_url": "https://t.me/Poemestic/7095",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7106",
@@ -326,8 +361,9 @@
       "author": "",
       "date": "2026-10-05T20:04:01+00:00",
       "source_url": "https://t.me/Poemestic/7106",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7117",
@@ -335,8 +371,9 @@
       "author": "",
       "date": "2026-10-05T20:17:01+00:00",
       "source_url": "https://t.me/Poemestic/7117",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7128",
@@ -344,8 +381,9 @@
       "author": "",
       "date": "2026-10-05T21:23:53+00:00",
       "source_url": "https://t.me/Poemestic/7128",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7129",
@@ -353,8 +391,9 @@
       "author": "",
       "date": "2026-10-06T10:40:29+00:00",
       "source_url": "https://t.me/Poemestic/7129",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7130",
@@ -362,8 +401,9 @@
       "author": "",
       "date": "2026-10-06T10:51:58+00:00",
       "source_url": "https://t.me/Poemestic/7130",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7133",
@@ -371,8 +411,9 @@
       "author": "",
       "date": "2026-10-06T11:40:39+00:00",
       "source_url": "https://t.me/Poemestic/7133",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7134",
@@ -380,8 +421,9 @@
       "author": "",
       "date": "2026-10-06T12:44:13+00:00",
       "source_url": "https://t.me/Poemestic/7134",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7135",
@@ -389,8 +431,9 @@
       "author": "",
       "date": "2026-10-06T13:52:27+00:00",
       "source_url": "https://t.me/Poemestic/7135",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7137",
@@ -398,8 +441,9 @@
       "author": "",
       "date": "2026-10-06T16:26:02+00:00",
       "source_url": "https://t.me/Poemestic/7137",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7142",
@@ -407,8 +451,9 @@
       "author": "",
       "date": "2026-10-06T19:46:21+00:00",
       "source_url": "https://t.me/Poemestic/7142",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7143",
@@ -416,8 +461,9 @@
       "author": "",
       "date": "2026-10-07T10:23:53+00:00",
       "source_url": "https://t.me/Poemestic/7143",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7144",
@@ -425,8 +471,9 @@
       "author": "",
       "date": "2026-10-07T10:42:31+00:00",
       "source_url": "https://t.me/Poemestic/7144",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7148",
@@ -434,8 +481,9 @@
       "author": "",
       "date": "2026-10-07T11:21:01+00:00",
       "source_url": "https://t.me/Poemestic/7148",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7149",
@@ -443,8 +491,9 @@
       "author": "",
       "date": "2026-10-07T13:14:06+00:00",
       "source_url": "https://t.me/Poemestic/7149",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7151",
@@ -452,8 +501,9 @@
       "author": "",
       "date": "2026-10-07T15:26:37+00:00",
       "source_url": "https://t.me/Poemestic/7151",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7152",
@@ -461,8 +511,9 @@
       "author": "",
       "date": "2026-10-07T17:53:11+00:00",
       "source_url": "https://t.me/Poemestic/7152",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7153",
@@ -470,8 +521,9 @@
       "author": "",
       "date": "2026-10-07T20:19:16+00:00",
       "source_url": "https://t.me/Poemestic/7153",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7155",
@@ -479,8 +531,9 @@
       "author": "",
       "date": "2026-10-07T20:50:59+00:00",
       "source_url": "https://t.me/Poemestic/7155",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7160",
@@ -488,8 +541,9 @@
       "author": "",
       "date": "2026-10-08T11:05:14+00:00",
       "source_url": "https://t.me/Poemestic/7160",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7161",
@@ -497,8 +551,9 @@
       "author": "",
       "date": "2026-10-08T11:58:10+00:00",
       "source_url": "https://t.me/Poemestic/7161",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7163",
@@ -506,8 +561,9 @@
       "author": "",
       "date": "2026-10-08T12:23:35+00:00",
       "source_url": "https://t.me/Poemestic/7163",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7164",
@@ -515,8 +571,9 @@
       "author": "",
       "date": "2026-10-08T15:23:55+00:00",
       "source_url": "https://t.me/Poemestic/7164",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7165",
@@ -524,8 +581,9 @@
       "author": "",
       "date": "2026-10-08T16:16:24+00:00",
       "source_url": "https://t.me/Poemestic/7165",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7171",
@@ -533,8 +591,9 @@
       "author": "",
       "date": "2026-10-08T21:46:29+00:00",
       "source_url": "https://t.me/Poemestic/7171",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7174",
@@ -542,8 +601,9 @@
       "author": "",
       "date": "2026-10-09T11:04:01+00:00",
       "source_url": "https://t.me/Poemestic/7174",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7175",
@@ -551,8 +611,9 @@
       "author": "",
       "date": "2026-10-09T11:32:39+00:00",
       "source_url": "https://t.me/Poemestic/7175",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7177",
@@ -560,8 +621,9 @@
       "author": "",
       "date": "2026-10-09T17:17:43+00:00",
       "source_url": "https://t.me/Poemestic/7177",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7180",
@@ -569,8 +631,9 @@
       "author": "",
       "date": "2026-10-09T18:45:29+00:00",
       "source_url": "https://t.me/Poemestic/7180",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7181",
@@ -578,8 +641,9 @@
       "author": "",
       "date": "2026-10-09T19:01:23+00:00",
       "source_url": "https://t.me/Poemestic/7181",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7183",
@@ -587,8 +651,9 @@
       "author": "",
       "date": "2026-10-10T12:07:07+00:00",
       "source_url": "https://t.me/Poemestic/7183",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7184",
@@ -596,8 +661,9 @@
       "author": "",
       "date": "2026-10-10T14:57:30+00:00",
       "source_url": "https://t.me/Poemestic/7184",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7185",
@@ -605,8 +671,9 @@
       "author": "",
       "date": "2026-10-10T16:56:50+00:00",
       "source_url": "https://t.me/Poemestic/7185",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7186",
@@ -614,8 +681,9 @@
       "author": "",
       "date": "2026-10-10T18:40:44+00:00",
       "source_url": "https://t.me/Poemestic/7186",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7190",
@@ -623,8 +691,9 @@
       "author": "",
       "date": "2026-10-10T19:49:03+00:00",
       "source_url": "https://t.me/Poemestic/7190",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7191",
@@ -632,8 +701,9 @@
       "author": "",
       "date": "2026-10-10T20:03:49+00:00",
       "source_url": "https://t.me/Poemestic/7191",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7193",
@@ -641,8 +711,9 @@
       "author": "",
       "date": "2026-10-11T08:21:41+00:00",
       "source_url": "https://t.me/Poemestic/7193",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7196",
@@ -650,8 +721,9 @@
       "author": "",
       "date": "2026-10-11T12:31:47+00:00",
       "source_url": "https://t.me/Poemestic/7196",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7197",
@@ -659,8 +731,9 @@
       "author": "",
       "date": "2026-10-11T13:36:20+00:00",
       "source_url": "https://t.me/Poemestic/7197",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7198",
@@ -668,8 +741,9 @@
       "author": "",
       "date": "2026-10-11T16:41:49+00:00",
       "source_url": "https://t.me/Poemestic/7198",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7199",
@@ -677,8 +751,9 @@
       "author": "",
       "date": "2026-10-11T17:46:37+00:00",
       "source_url": "https://t.me/Poemestic/7199",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7202",
@@ -686,8 +761,9 @@
       "author": "",
       "date": "2026-10-11T18:08:45+00:00",
       "source_url": "https://t.me/Poemestic/7202",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7203",
@@ -695,8 +771,9 @@
       "author": "",
       "date": "2026-10-11T18:25:29+00:00",
       "source_url": "https://t.me/Poemestic/7203",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7205",
@@ -704,8 +781,9 @@
       "author": "",
       "date": "2026-10-11T19:53:01+00:00",
       "source_url": "https://t.me/Poemestic/7205",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7208",
@@ -713,8 +791,9 @@
       "author": "",
       "date": "2026-10-11T20:26:59+00:00",
       "source_url": "https://t.me/Poemestic/7208",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7209",
@@ -722,8 +801,9 @@
       "author": "",
       "date": "2026-10-12T09:46:33+00:00",
       "source_url": "https://t.me/Poemestic/7209",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7211",
@@ -731,8 +811,9 @@
       "author": "",
       "date": "2026-10-12T15:49:33+00:00",
       "source_url": "https://t.me/Poemestic/7211",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7212",
@@ -740,8 +821,9 @@
       "author": "",
       "date": "2026-10-12T16:16:54+00:00",
       "source_url": "https://t.me/Poemestic/7212",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7215",
@@ -749,8 +831,9 @@
       "author": "",
       "date": "2026-10-12T20:21:01+00:00",
       "source_url": "https://t.me/Poemestic/7215",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7216",
@@ -758,8 +841,9 @@
       "author": "",
       "date": "2026-10-12T22:27:17+00:00",
       "source_url": "https://t.me/Poemestic/7216",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7217",
@@ -767,8 +851,9 @@
       "author": "",
       "date": "2026-10-13T08:35:16+00:00",
       "source_url": "https://t.me/Poemestic/7217",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7218",
@@ -776,8 +861,9 @@
       "author": "",
       "date": "2026-10-13T10:09:30+00:00",
       "source_url": "https://t.me/Poemestic/7218",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7221",
@@ -785,8 +871,9 @@
       "author": "",
       "date": "2026-10-13T11:09:59+00:00",
       "source_url": "https://t.me/Poemestic/7221",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7222",
@@ -794,8 +881,9 @@
       "author": "",
       "date": "2026-10-13T14:23:33+00:00",
       "source_url": "https://t.me/Poemestic/7222",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7224",
@@ -803,8 +891,9 @@
       "author": "",
       "date": "2026-10-13T17:32:38+00:00",
       "source_url": "https://t.me/Poemestic/7224",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7227",
@@ -812,8 +901,9 @@
       "author": "",
       "date": "2026-10-13T20:56:07+00:00",
       "source_url": "https://t.me/Poemestic/7227",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7228",
@@ -821,8 +911,9 @@
       "author": "",
       "date": "2026-10-14T12:27:57+00:00",
       "source_url": "https://t.me/Poemestic/7228",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7229",
@@ -830,8 +921,9 @@
       "author": "",
       "date": "2026-10-14T12:38:25+00:00",
       "source_url": "https://t.me/Poemestic/7229",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7230",
@@ -839,8 +931,9 @@
       "author": "",
       "date": "2026-10-14T12:51:24+00:00",
       "source_url": "https://t.me/Poemestic/7230",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7234",
@@ -848,8 +941,9 @@
       "author": "",
       "date": "2026-10-14T13:21:41+00:00",
       "source_url": "https://t.me/Poemestic/7234",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7235",
@@ -857,8 +951,9 @@
       "author": "",
       "date": "2026-10-14T13:43:18+00:00",
       "source_url": "https://t.me/Poemestic/7235",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7236",
@@ -866,8 +961,9 @@
       "author": "",
       "date": "2026-10-14T17:48:32+00:00",
       "source_url": "https://t.me/Poemestic/7236",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7238",
@@ -875,8 +971,9 @@
       "author": "",
       "date": "2026-10-15T07:32:17+00:00",
       "source_url": "https://t.me/Poemestic/7238",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7241",
@@ -884,8 +981,9 @@
       "author": "",
       "date": "2026-10-15T11:32:51+00:00",
       "source_url": "https://t.me/Poemestic/7241",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7242",
@@ -893,8 +991,9 @@
       "author": "",
       "date": "2026-10-15T14:17:57+00:00",
       "source_url": "https://t.me/Poemestic/7242",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7243",
@@ -902,8 +1001,9 @@
       "author": "",
       "date": "2026-10-15T14:28:07+00:00",
       "source_url": "https://t.me/Poemestic/7243",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7245",
@@ -911,8 +1011,9 @@
       "author": "",
       "date": "2026-10-15T15:15:25+00:00",
       "source_url": "https://t.me/Poemestic/7245",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7248",
@@ -920,8 +1021,9 @@
       "author": "",
       "date": "2026-10-15T17:15:03+00:00",
       "source_url": "https://t.me/Poemestic/7248",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7249",
@@ -929,8 +1031,9 @@
       "author": "",
       "date": "2026-10-15T18:10:44+00:00",
       "source_url": "https://t.me/Poemestic/7249",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7250",
@@ -938,8 +1041,9 @@
       "author": "",
       "date": "2026-10-15T18:51:10+00:00",
       "source_url": "https://t.me/Poemestic/7250",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7254",
@@ -947,8 +1051,9 @@
       "author": "",
       "date": "2026-10-15T20:55:40+00:00",
       "source_url": "https://t.me/Poemestic/7254",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7255",
@@ -956,8 +1061,9 @@
       "author": "",
       "date": "2026-10-15T22:03:10+00:00",
       "source_url": "https://t.me/Poemestic/7255",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7256",
@@ -965,8 +1071,9 @@
       "author": "",
       "date": "2026-10-16T08:15:54+00:00",
       "source_url": "https://t.me/Poemestic/7256",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7257",
@@ -974,8 +1081,9 @@
       "author": "",
       "date": "2026-10-16T11:36:39+00:00",
       "source_url": "https://t.me/Poemestic/7257",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7258",
@@ -983,8 +1091,9 @@
       "author": "",
       "date": "2026-10-16T12:49:34+00:00",
       "source_url": "https://t.me/Poemestic/7258",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7261",
@@ -992,8 +1101,9 @@
       "author": "",
       "date": "2026-10-16T13:19:57+00:00",
       "source_url": "https://t.me/Poemestic/7261",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7263",
@@ -1001,8 +1111,9 @@
       "author": "",
       "date": "2026-10-16T17:22:19+00:00",
       "source_url": "https://t.me/Poemestic/7263",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7264",
@@ -1010,8 +1121,9 @@
       "author": "",
       "date": "2026-10-16T17:34:50+00:00",
       "source_url": "https://t.me/Poemestic/7264",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7274",
@@ -1019,8 +1131,9 @@
       "author": "",
       "date": "2026-10-16T17:48:07+00:00",
       "source_url": "https://t.me/Poemestic/7274",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7282",
@@ -1028,8 +1141,9 @@
       "author": "",
       "date": "2026-10-16T18:00:53+00:00",
       "source_url": "https://t.me/Poemestic/7282",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7291",
@@ -1037,8 +1151,9 @@
       "author": "",
       "date": "2026-10-16T18:12:06+00:00",
       "source_url": "https://t.me/Poemestic/7291",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7300",
@@ -1046,8 +1161,9 @@
       "author": "",
       "date": "2026-10-16T18:23:08+00:00",
       "source_url": "https://t.me/Poemestic/7300",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7308",
@@ -1055,8 +1171,9 @@
       "author": "",
       "date": "2026-10-16T18:34:19+00:00",
       "source_url": "https://t.me/Poemestic/7308",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7310",
@@ -1064,8 +1181,9 @@
       "author": "",
       "date": "2026-10-16T19:42:01+00:00",
       "source_url": "https://t.me/Poemestic/7310",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7311",
@@ -1073,8 +1191,9 @@
       "author": "",
       "date": "2026-10-17T03:59:26+00:00",
       "source_url": "https://t.me/Poemestic/7311",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7312",
@@ -1082,8 +1201,9 @@
       "author": "",
       "date": "2026-10-17T08:11:24+00:00",
       "source_url": "https://t.me/Poemestic/7312",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7316",
@@ -1091,8 +1211,9 @@
       "author": "",
       "date": "2026-10-17T11:45:04+00:00",
       "source_url": "https://t.me/Poemestic/7316",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7317",
@@ -1100,8 +1221,9 @@
       "author": "",
       "date": "2026-10-17T11:57:11+00:00",
       "source_url": "https://t.me/Poemestic/7317",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7318",
@@ -1109,8 +1231,9 @@
       "author": "",
       "date": "2026-10-17T13:57:27+00:00",
       "source_url": "https://t.me/Poemestic/7318",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7322",
@@ -1118,8 +1241,9 @@
       "author": "",
       "date": "2026-10-17T17:09:08+00:00",
       "source_url": "https://t.me/Poemestic/7322",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7323",
@@ -1127,8 +1251,9 @@
       "author": "",
       "date": "2026-10-17T18:50:33+00:00",
       "source_url": "https://t.me/Poemestic/7323",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7324",
@@ -1136,8 +1261,9 @@
       "author": "",
       "date": "2026-10-17T19:19:36+00:00",
       "source_url": "https://t.me/Poemestic/7324",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7326",
@@ -1145,8 +1271,9 @@
       "author": "",
       "date": "2026-10-17T19:33:44+00:00",
       "source_url": "https://t.me/Poemestic/7326",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7327",
@@ -1154,8 +1281,9 @@
       "author": "",
       "date": "2026-10-17T19:58:21+00:00",
       "source_url": "https://t.me/Poemestic/7327",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7328",
@@ -1163,8 +1291,9 @@
       "author": "",
       "date": "2026-10-17T21:45:10+00:00",
       "source_url": "https://t.me/Poemestic/7328",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7329",
@@ -1172,8 +1301,9 @@
       "author": "",
       "date": "2026-10-19T16:46:53+00:00",
       "source_url": "https://t.me/Poemestic/7329",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7330",
@@ -1181,8 +1311,9 @@
       "author": "",
       "date": "2026-10-19T18:55:48+00:00",
       "source_url": "https://t.me/Poemestic/7330",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7331",
@@ -1190,8 +1321,9 @@
       "author": "",
       "date": "2026-10-19T19:08:13+00:00",
       "source_url": "https://t.me/Poemestic/7331",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7334",
@@ -1199,8 +1331,9 @@
       "author": "",
       "date": "2026-10-19T20:24:11+00:00",
       "source_url": "https://t.me/Poemestic/7334",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7335",
@@ -1208,8 +1341,9 @@
       "author": "",
       "date": "2026-10-19T20:56:06+00:00",
       "source_url": "https://t.me/Poemestic/7335",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7336",
@@ -1217,8 +1351,9 @@
       "author": "",
       "date": "2026-10-20T10:21:24+00:00",
       "source_url": "https://t.me/Poemestic/7336",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7338",
@@ -1226,8 +1361,9 @@
       "author": "",
       "date": "2026-10-20T14:31:01+00:00",
       "source_url": "https://t.me/Poemestic/7338",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7349",
@@ -1235,8 +1371,9 @@
       "author": "",
       "date": "2026-10-20T14:50:17+00:00",
       "source_url": "https://t.me/Poemestic/7349",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7361",
@@ -1244,8 +1381,9 @@
       "author": "",
       "date": "2026-10-20T15:05:57+00:00",
       "source_url": "https://t.me/Poemestic/7361",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7372",
@@ -1253,8 +1391,9 @@
       "author": "",
       "date": "2026-10-20T15:16:01+00:00",
       "source_url": "https://t.me/Poemestic/7372",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7383",
@@ -1262,8 +1401,9 @@
       "author": "",
       "date": "2026-10-20T15:29:01+00:00",
       "source_url": "https://t.me/Poemestic/7383",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7385",
@@ -1271,8 +1411,9 @@
       "author": "",
       "date": "2026-10-20T17:45:24+00:00",
       "source_url": "https://t.me/Poemestic/7385",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7386",
@@ -1280,8 +1421,9 @@
       "author": "",
       "date": "2026-10-20T18:16:06+00:00",
       "source_url": "https://t.me/Poemestic/7386",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7389",
@@ -1289,8 +1431,9 @@
       "author": "",
       "date": "2026-10-20T20:18:05+00:00",
       "source_url": "https://t.me/Poemestic/7389",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7390",
@@ -1298,8 +1441,9 @@
       "author": "",
       "date": "2026-10-21T09:53:13+00:00",
       "source_url": "https://t.me/Poemestic/7390",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7391",
@@ -1307,8 +1451,9 @@
       "author": "",
       "date": "2026-10-21T10:28:51+00:00",
       "source_url": "https://t.me/Poemestic/7391",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7394",
@@ -1316,8 +1461,9 @@
       "author": "",
       "date": "2026-10-21T12:21:06+00:00",
       "source_url": "https://t.me/Poemestic/7394",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7395",
@@ -1325,8 +1471,9 @@
       "author": "",
       "date": "2026-10-21T15:37:39+00:00",
       "source_url": "https://t.me/Poemestic/7395",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7396",
@@ -1334,8 +1481,9 @@
       "author": "",
       "date": "2026-10-21T15:59:12+00:00",
       "source_url": "https://t.me/Poemestic/7396",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7397",
@@ -1343,8 +1491,9 @@
       "author": "",
       "date": "2026-10-21T17:15:38+00:00",
       "source_url": "https://t.me/Poemestic/7397",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7400",
@@ -1352,8 +1501,9 @@
       "author": "",
       "date": "2026-10-21T20:09:01+00:00",
       "source_url": "https://t.me/Poemestic/7400",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7401",
@@ -1361,8 +1511,9 @@
       "author": "",
       "date": "2026-10-22T09:32:45+00:00",
       "source_url": "https://t.me/Poemestic/7401",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7402",
@@ -1370,8 +1521,9 @@
       "author": "",
       "date": "2026-10-22T09:43:13+00:00",
       "source_url": "https://t.me/Poemestic/7402",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7403",
@@ -1379,8 +1531,9 @@
       "author": "",
       "date": "2026-10-22T09:54:59+00:00",
       "source_url": "https://t.me/Poemestic/7403",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7404",
@@ -1388,8 +1541,9 @@
       "author": "",
       "date": "2026-10-22T10:05:50+00:00",
       "source_url": "https://t.me/Poemestic/7404",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7405",
@@ -1397,8 +1551,9 @@
       "author": "",
       "date": "2026-10-22T10:37:17+00:00",
       "source_url": "https://t.me/Poemestic/7405",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7408",
@@ -1406,8 +1561,9 @@
       "author": "",
       "date": "2026-10-22T11:28:58+00:00",
       "source_url": "https://t.me/Poemestic/7408",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7409",
@@ -1415,8 +1571,9 @@
       "author": "",
       "date": "2026-10-22T12:55:57+00:00",
       "source_url": "https://t.me/Poemestic/7409",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7412",
@@ -1424,8 +1581,9 @@
       "author": "",
       "date": "2026-10-22T17:23:50+00:00",
       "source_url": "https://t.me/Poemestic/7412",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7414",
@@ -1433,8 +1591,9 @@
       "author": "",
       "date": "2026-10-22T18:50:01+00:00",
       "source_url": "https://t.me/Poemestic/7414",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7415",
@@ -1442,8 +1601,9 @@
       "author": "",
       "date": "2026-10-23T10:55:02+00:00",
       "source_url": "https://t.me/Poemestic/7415",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7416",
@@ -1451,8 +1611,9 @@
       "author": "",
       "date": "2026-10-23T17:17:26+00:00",
       "source_url": "https://t.me/Poemestic/7416",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7417",
@@ -1460,8 +1621,9 @@
       "author": "",
       "date": "2026-10-24T15:42:31+00:00",
       "source_url": "https://t.me/Poemestic/7417",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7418",
@@ -1469,8 +1631,9 @@
       "author": "",
       "date": "2026-10-24T16:39:56+00:00",
       "source_url": "https://t.me/Poemestic/7418",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7419",
@@ -1478,8 +1641,9 @@
       "author": "",
       "date": "2026-10-24T19:02:10+00:00",
       "source_url": "https://t.me/Poemestic/7419",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7422",
@@ -1487,8 +1651,9 @@
       "author": "",
       "date": "2026-10-24T20:20:29+00:00",
       "source_url": "https://t.me/Poemestic/7422",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7423",
@@ -1496,8 +1661,9 @@
       "author": "",
       "date": "2026-10-24T20:31:58+00:00",
       "source_url": "https://t.me/Poemestic/7423",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7424",
@@ -1505,8 +1671,9 @@
       "author": "",
       "date": "2026-10-25T10:46:18+00:00",
       "source_url": "https://t.me/Poemestic/7424",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7426",
@@ -1514,8 +1681,9 @@
       "author": "",
       "date": "2026-10-25T11:08:10+00:00",
       "source_url": "https://t.me/Poemestic/7426",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7427",
@@ -1523,8 +1691,9 @@
       "author": "",
       "date": "2026-10-25T11:19:13+00:00",
       "source_url": "https://t.me/Poemestic/7427",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7428",
@@ -1532,8 +1701,9 @@
       "author": "",
       "date": "2026-10-25T12:58:54+00:00",
       "source_url": "https://t.me/Poemestic/7428",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7432",
@@ -1541,8 +1711,9 @@
       "author": "",
       "date": "2026-10-25T13:53:45+00:00",
       "source_url": "https://t.me/Poemestic/7432",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7434",
@@ -1550,8 +1721,9 @@
       "author": "",
       "date": "2026-10-25T14:04:22+00:00",
       "source_url": "https://t.me/Poemestic/7434",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7437",
@@ -1559,8 +1731,9 @@
       "author": "",
       "date": "2026-10-25T18:31:44+00:00",
       "source_url": "https://t.me/Poemestic/7437",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7438",
@@ -1568,8 +1741,9 @@
       "author": "",
       "date": "2026-10-25T19:31:33+00:00",
       "source_url": "https://t.me/Poemestic/7438",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7439",
@@ -1577,8 +1751,9 @@
       "author": "",
       "date": "2026-10-25T19:45:18+00:00",
       "source_url": "https://t.me/Poemestic/7439",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7442",
@@ -1586,8 +1761,9 @@
       "author": "",
       "date": "2026-10-25T20:20:27+00:00",
       "source_url": "https://t.me/Poemestic/7442",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7444",
@@ -1595,8 +1771,9 @@
       "author": "",
       "date": "2026-10-26T10:05:22+00:00",
       "source_url": "https://t.me/Poemestic/7444",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7445",
@@ -1604,8 +1781,9 @@
       "author": "",
       "date": "2026-10-26T10:18:23+00:00",
       "source_url": "https://t.me/Poemestic/7445",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7446",
@@ -1613,8 +1791,9 @@
       "author": "",
       "date": "2026-10-26T10:35:21+00:00",
       "source_url": "https://t.me/Poemestic/7446",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7447",
@@ -1622,8 +1801,9 @@
       "author": "",
       "date": "2026-10-26T10:46:28+00:00",
       "source_url": "https://t.me/Poemestic/7447",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7450",
@@ -1631,8 +1811,9 @@
       "author": "",
       "date": "2026-10-26T11:35:51+00:00",
       "source_url": "https://t.me/Poemestic/7450",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7452",
@@ -1640,8 +1821,9 @@
       "author": "",
       "date": "2026-10-26T15:24:50+00:00",
       "source_url": "https://t.me/Poemestic/7452",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7453",
@@ -1649,8 +1831,9 @@
       "author": "",
       "date": "2026-10-26T16:04:21+00:00",
       "source_url": "https://t.me/Poemestic/7453",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7456",
@@ -1658,8 +1841,9 @@
       "author": "",
       "date": "2026-10-26T17:13:19+00:00",
       "source_url": "https://t.me/Poemestic/7456",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7457",
@@ -1667,8 +1851,9 @@
       "author": "",
       "date": "2026-10-26T18:33:44+00:00",
       "source_url": "https://t.me/Poemestic/7457",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7461",
@@ -1676,8 +1861,9 @@
       "author": "",
       "date": "2026-10-26T20:15:23+00:00",
       "source_url": "https://t.me/Poemestic/7461",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7462",
@@ -1685,8 +1871,9 @@
       "author": "",
       "date": "2026-10-27T11:20:23+00:00",
       "source_url": "https://t.me/Poemestic/7462",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7463",
@@ -1694,8 +1881,9 @@
       "author": "",
       "date": "2026-10-27T15:04:05+00:00",
       "source_url": "https://t.me/Poemestic/7463",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7464",
@@ -1703,8 +1891,9 @@
       "author": "",
       "date": "2026-10-27T17:12:56+00:00",
       "source_url": "https://t.me/Poemestic/7464",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7467",
@@ -1712,8 +1901,9 @@
       "author": "",
       "date": "2026-10-27T19:01:16+00:00",
       "source_url": "https://t.me/Poemestic/7467",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7468",
@@ -1721,8 +1911,9 @@
       "author": "",
       "date": "2026-10-28T10:36:40+00:00",
       "source_url": "https://t.me/Poemestic/7468",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7469",
@@ -1730,8 +1921,9 @@
       "author": "",
       "date": "2026-10-28T11:21:49+00:00",
       "source_url": "https://t.me/Poemestic/7469",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7470",
@@ -1739,8 +1931,9 @@
       "author": "",
       "date": "2026-10-28T11:48:31+00:00",
       "source_url": "https://t.me/Poemestic/7470",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7471",
@@ -1748,8 +1941,9 @@
       "author": "",
       "date": "2026-10-28T13:29:07+00:00",
       "source_url": "https://t.me/Poemestic/7471",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7475",
@@ -1757,8 +1951,9 @@
       "author": "",
       "date": "2026-10-28T15:04:35+00:00",
       "source_url": "https://t.me/Poemestic/7475",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7477",
@@ -1766,8 +1961,9 @@
       "author": "",
       "date": "2026-10-28T17:07:57+00:00",
       "source_url": "https://t.me/Poemestic/7477",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7478",
@@ -1775,8 +1971,9 @@
       "author": "",
       "date": "2026-10-28T18:15:33+00:00",
       "source_url": "https://t.me/Poemestic/7478",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7481",
@@ -1784,8 +1981,9 @@
       "author": "",
       "date": "2026-10-29T10:19:12+00:00",
       "source_url": "https://t.me/Poemestic/7481",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7484",
@@ -1793,8 +1991,9 @@
       "author": "",
       "date": "2026-10-29T11:20:32+00:00",
       "source_url": "https://t.me/Poemestic/7484",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7485",
@@ -1802,8 +2001,9 @@
       "author": "",
       "date": "2026-10-29T13:38:15+00:00",
       "source_url": "https://t.me/Poemestic/7485",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:51.728177+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:51.728177+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7488",
@@ -1811,8 +2011,9 @@
       "author": "",
       "date": "2026-10-29T17:07:22+00:00",
       "source_url": "https://t.me/Poemestic/7488",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7489",
@@ -1820,8 +2021,9 @@
       "author": "",
       "date": "2026-10-29T18:42:43+00:00",
       "source_url": "https://t.me/Poemestic/7489",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7490",
@@ -1829,8 +2031,9 @@
       "author": "",
       "date": "2026-10-29T19:46:51+00:00",
       "source_url": "https://t.me/Poemestic/7490",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7492",
@@ -1838,8 +2041,9 @@
       "author": "",
       "date": "2026-10-29T20:26:24+00:00",
       "source_url": "https://t.me/Poemestic/7492",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7493",
@@ -1847,8 +2051,9 @@
       "author": "",
       "date": "2026-10-30T10:23:46+00:00",
       "source_url": "https://t.me/Poemestic/7493",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7494",
@@ -1856,8 +2061,9 @@
       "author": "",
       "date": "2026-10-30T10:41:42+00:00",
       "source_url": "https://t.me/Poemestic/7494",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7496",
@@ -1865,8 +2071,9 @@
       "author": "",
       "date": "2026-10-30T12:48:48+00:00",
       "source_url": "https://t.me/Poemestic/7496",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7497",
@@ -1874,8 +2081,9 @@
       "author": "",
       "date": "2026-10-30T13:32:40+00:00",
       "source_url": "https://t.me/Poemestic/7497",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7501",
@@ -1883,8 +2091,9 @@
       "author": "",
       "date": "2026-10-30T15:44:05+00:00",
       "source_url": "https://t.me/Poemestic/7501",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7503",
@@ -1892,8 +2101,9 @@
       "author": "",
       "date": "2026-10-30T17:11:42+00:00",
       "source_url": "https://t.me/Poemestic/7503",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7506",
@@ -1901,8 +2111,9 @@
       "author": "",
       "date": "2026-10-31T12:21:15+00:00",
       "source_url": "https://t.me/Poemestic/7506",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7507",
@@ -1910,8 +2121,9 @@
       "author": "",
       "date": "2026-10-31T15:09:44+00:00",
       "source_url": "https://t.me/Poemestic/7507",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7508",
@@ -1919,8 +2131,9 @@
       "author": "",
       "date": "2026-10-31T17:26:11+00:00",
       "source_url": "https://t.me/Poemestic/7508",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7513",
@@ -1928,8 +2141,9 @@
       "author": "",
       "date": "2026-10-31T17:52:01+00:00",
       "source_url": "https://t.me/Poemestic/7513",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7514",
@@ -1937,8 +2151,9 @@
       "author": "",
       "date": "2026-10-31T18:06:37+00:00",
       "source_url": "https://t.me/Poemestic/7514",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7515",
@@ -1946,8 +2161,9 @@
       "author": "",
       "date": "2026-10-31T19:12:23+00:00",
       "source_url": "https://t.me/Poemestic/7515",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7517",
@@ -1955,8 +2171,9 @@
       "author": "",
       "date": "2026-10-31T20:19:01+00:00",
       "source_url": "https://t.me/Poemestic/7517",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7518",
@@ -1964,8 +2181,9 @@
       "author": "",
       "date": "2026-11-01T11:47:37+00:00",
       "source_url": "https://t.me/Poemestic/7518",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7520",
@@ -1973,8 +2191,9 @@
       "author": "",
       "date": "2026-11-01T14:59:23+00:00",
       "source_url": "https://t.me/Poemestic/7520",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7521",
@@ -1982,8 +2201,9 @@
       "author": "",
       "date": "2026-11-01T15:29:56+00:00",
       "source_url": "https://t.me/Poemestic/7521",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:17:16.961959+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:17:16.961959+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7523",
@@ -1991,8 +2211,9 @@
       "author": "",
       "date": "2026-11-01T16:48:01+00:00",
       "source_url": "https://t.me/Poemestic/7523",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7525",
@@ -2000,8 +2221,9 @@
       "author": "",
       "date": "2026-11-01T18:20:01+00:00",
       "source_url": "https://t.me/Poemestic/7525",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7527",
@@ -2009,8 +2231,9 @@
       "author": "",
       "date": "2026-11-01T19:26:07+00:00",
       "source_url": "https://t.me/Poemestic/7527",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7528",
@@ -2018,8 +2241,9 @@
       "author": "",
       "date": "2026-11-01T19:36:49+00:00",
       "source_url": "https://t.me/Poemestic/7528",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7530",
@@ -2027,8 +2251,9 @@
       "author": "",
       "date": "2026-11-01T20:35:32+00:00",
       "source_url": "https://t.me/Poemestic/7530",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7532",
@@ -2036,8 +2261,9 @@
       "author": "",
       "date": "2026-11-01T21:18:22+00:00",
       "source_url": "https://t.me/Poemestic/7532",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7534",
@@ -2045,8 +2271,9 @@
       "author": "",
       "date": "2026-11-02T14:49:30+00:00",
       "source_url": "https://t.me/Poemestic/7534",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7536",
@@ -2054,8 +2281,9 @@
       "author": "",
       "date": "2026-11-02T16:36:10+00:00",
       "source_url": "https://t.me/Poemestic/7536",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7544",
@@ -2063,8 +2291,9 @@
       "author": "",
       "date": "2026-11-02T16:47:03+00:00",
       "source_url": "https://t.me/Poemestic/7544",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7551",
@@ -2072,8 +2301,9 @@
       "author": "",
       "date": "2026-11-02T16:58:23+00:00",
       "source_url": "https://t.me/Poemestic/7551",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7561",
@@ -2081,8 +2311,9 @@
       "author": "",
       "date": "2026-11-02T17:09:16+00:00",
       "source_url": "https://t.me/Poemestic/7561",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7570",
@@ -2090,8 +2321,9 @@
       "author": "",
       "date": "2026-11-02T17:20:16+00:00",
       "source_url": "https://t.me/Poemestic/7570",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7579",
@@ -2099,8 +2331,9 @@
       "author": "",
       "date": "2026-11-02T18:59:59+00:00",
       "source_url": "https://t.me/Poemestic/7579",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7581",
@@ -2108,8 +2341,9 @@
       "author": "",
       "date": "2026-11-02T20:00:30+00:00",
       "source_url": "https://t.me/Poemestic/7581",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7582",
@@ -2117,8 +2351,9 @@
       "author": "",
       "date": "2026-11-02T20:35:18+00:00",
       "source_url": "https://t.me/Poemestic/7582",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7583",
@@ -2126,8 +2361,9 @@
       "author": "",
       "date": "2026-11-03T11:42:22+00:00",
       "source_url": "https://t.me/Poemestic/7583",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7587",
@@ -2135,8 +2371,9 @@
       "author": "",
       "date": "2026-11-03T15:23:46+00:00",
       "source_url": "https://t.me/Poemestic/7587",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7589",
@@ -2144,8 +2381,9 @@
       "author": "",
       "date": "2026-11-03T16:08:45+00:00",
       "source_url": "https://t.me/Poemestic/7589",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7590",
@@ -2153,8 +2391,9 @@
       "author": "",
       "date": "2026-11-03T16:58:55+00:00",
       "source_url": "https://t.me/Poemestic/7590",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7591",
@@ -2162,8 +2401,9 @@
       "author": "",
       "date": "2026-11-03T19:27:49+00:00",
       "source_url": "https://t.me/Poemestic/7591",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:16:32.239919+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:16:32.239919+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7592",
@@ -2171,8 +2411,9 @@
       "author": "",
       "date": "2026-11-03T20:22:35+00:00",
       "source_url": "https://t.me/Poemestic/7592",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254295+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254295+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7593",
@@ -2180,8 +2421,9 @@
       "author": "",
       "date": "2026-11-04T14:15:52+00:00",
       "source_url": "https://t.me/Poemestic/7593",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254319+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254319+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7595",
@@ -2189,8 +2431,9 @@
       "author": "",
       "date": "2026-11-04T14:36:06+00:00",
       "source_url": "https://t.me/Poemestic/7595",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254322+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254322+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7597",
@@ -2198,8 +2441,9 @@
       "author": "",
       "date": "2026-11-05T10:59:41+00:00",
       "source_url": "https://t.me/Poemestic/7597",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254323+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254323+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7600",
@@ -2207,8 +2451,9 @@
       "author": "",
       "date": "2026-11-05T11:27:01+00:00",
       "source_url": "https://t.me/Poemestic/7600",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254325+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254325+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7601",
@@ -2216,8 +2461,9 @@
       "author": "",
       "date": "2026-11-05T12:57:58+00:00",
       "source_url": "https://t.me/Poemestic/7601",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254327+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254327+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7603",
@@ -2225,8 +2471,9 @@
       "author": "",
       "date": "2026-11-05T15:21:09+00:00",
       "source_url": "https://t.me/Poemestic/7603",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254328+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254328+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7604",
@@ -2234,8 +2481,9 @@
       "author": "",
       "date": "2026-11-05T16:24:38+00:00",
       "source_url": "https://t.me/Poemestic/7604",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254330+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254330+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7606",
@@ -2243,8 +2491,9 @@
       "author": "",
       "date": "2026-11-06T10:45:57+00:00",
       "source_url": "https://t.me/Poemestic/7606",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254333+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254333+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7607",
@@ -2252,8 +2501,9 @@
       "author": "",
       "date": "2026-11-06T13:32:41+00:00",
       "source_url": "https://t.me/Poemestic/7607",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254334+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254334+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7608",
@@ -2261,8 +2511,9 @@
       "author": "",
       "date": "2026-11-06T14:38:50+00:00",
       "source_url": "https://t.me/Poemestic/7608",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254336+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254336+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7609",
@@ -2270,8 +2521,9 @@
       "author": "",
       "date": "2026-11-06T18:37:13+00:00",
       "source_url": "https://t.me/Poemestic/7609",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254337+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254337+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7616",
@@ -2279,8 +2531,9 @@
       "author": "",
       "date": "2026-11-06T18:51:48+00:00",
       "source_url": "https://t.me/Poemestic/7616",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254338+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254338+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7622",
@@ -2288,8 +2541,9 @@
       "author": "",
       "date": "2026-11-06T19:01:49+00:00",
       "source_url": "https://t.me/Poemestic/7622",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254339+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254339+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7629",
@@ -2297,8 +2551,9 @@
       "author": "",
       "date": "2026-11-06T19:21:05+00:00",
       "source_url": "https://t.me/Poemestic/7629",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254341+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254341+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7635",
@@ -2306,8 +2561,9 @@
       "author": "",
       "date": "2026-11-06T19:32:01+00:00",
       "source_url": "https://t.me/Poemestic/7635",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254342+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254342+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7643",
@@ -2315,8 +2571,9 @@
       "author": "",
       "date": "2026-11-06T19:49:34+00:00",
       "source_url": "https://t.me/Poemestic/7643",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254343+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254343+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7651",
@@ -2324,8 +2581,9 @@
       "author": "",
       "date": "2026-11-06T20:02:19+00:00",
       "source_url": "https://t.me/Poemestic/7651",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254344+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254344+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7659",
@@ -2333,8 +2591,9 @@
       "author": "",
       "date": "2026-11-06T20:21:07+00:00",
       "source_url": "https://t.me/Poemestic/7659",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254346+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254346+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     },
     {
       "id": "7660",
@@ -2342,8 +2601,9 @@
       "author": "",
       "date": "2026-11-06T20:32:24+00:00",
       "source_url": "https://t.me/Poemestic/7660",
-      "status": "needs_review",
-      "first_seen_at": "2026-11-06T21:12:43.254347+00:00"
+      "status": "published",
+      "first_seen_at": "2026-11-06T21:12:43.254347+00:00",
+      "review_note": "پایش شد؛ محتوای شعری از آرشیو کانال وارد کتابخانه شد."
     }
   ]
 }
