@@ -40,7 +40,7 @@ footer{text-align:center;color:#8e7c6b;font-size:11px;padding:12px 15px 28px}foo
 .reader-body{white-space:pre-wrap;text-align:center;line-height:2.45;font-size:19px;font-weight:300;color:var(--text);overflow-wrap:anywhere}
 .reader-author{color:var(--gold2);font-size:13px;margin:25px 0 0}.reader-tags{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:22px}
 .reader-tags span{border:1px solid var(--line);border-radius:20px;padding:5px 10px;color:var(--muted);font-size:10px}
-.reader-nav{display:flex;justify-content:space-between;gap:12px;margin-top:15px}.reader-nav button{flex:1}
+.reader-note{margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.reader-note label{display:block;color:var(--gold2);font-size:12px;margin-bottom:9px}.reader-note textarea{width:100%;resize:vertical;min-height:90px;background:#171512;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text);font:inherit;line-height:1.9}.reader-nav{display:flex;justify-content:space-between;gap:12px;margin-top:15px}.reader-nav button{flex:1}
 .reader-status{text-align:center;color:var(--muted);font-size:11px;margin-top:12px;min-height:22px}
 .entry,.pinned-item{cursor:pointer}.entry:focus-visible,.pinned-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 body.reader-open .site-header,body.reader-open .hero-feature,body.reader-open #regularView,body.reader-open #pinnedView,body.reader-open footer{display:none!important}
@@ -81,6 +81,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
     <div class="reader-tools"><button id="readerSmaller" type="button" aria-label="کوچک‌تر کردن قلم">الف−</button><button id="readerLarger" type="button" aria-label="بزرگ‌تر کردن قلم">الف+</button><button id="readerCopy" type="button">کپی متن</button><button id="readerShare" type="button">اشتراک‌گذاری</button><button id="readerFavorite" type="button">♡ نشان‌کردن</button></div>
   </div>
   <article class="reader-paper"><div class="reader-kicker" id="readerKicker">یک استکان شعر</div><h2 class="reader-title" id="readerTitle"></h2><div class="reader-body" id="readerBody"></div><div class="reader-author" id="readerAuthor"></div><div class="reader-tags" id="readerTags"></div></article>
+  <section class="reader-note"><label for="readerNote">یادداشت شخصی کنار این اثر</label><textarea id="readerNote" rows="4" placeholder="برداشت، نکته یا حال‌وهوای خودتان را اینجا بنویسید…"></textarea><div class="reader-tools"><button id="readerSaveNote" type="button">ذخیرهٔ یادداشت</button><button id="readerAddCollection" type="button">افزودن به مجموعه</button></div></section>
   <div class="reader-nav"><button id="readerPrevious" type="button">اثر پیشین</button><button id="readerNext" type="button">اثر بعدی</button></div><div class="reader-status" id="readerStatus" role="status"></div>
 </section>
 <section class="notebook-view" id="notebookView" hidden>
