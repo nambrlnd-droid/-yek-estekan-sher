@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "یک استکان شعر",
+  "short_name": "یک استکان شعر",
+  "description": "کتابخانه‌ای برای شعر، واژه و مکث؛ همراه با دفتر شخصی و استودیوی تصویر.",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#171512",
+  "theme_color": "#171512",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
