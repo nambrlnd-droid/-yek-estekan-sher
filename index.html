@@ -2,8 +2,8 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#171512"><meta name="description" content="یک استکان شعر؛ مکثی کوتاه میان شعر، واژه و حال خوب.">
-<title>یک استکان شعر | نسخهٔ ۱.۲</title>
+<meta name="theme-color" content="#171512"><meta name="description" content="یک استکان شعر؛ مکثی کوتاه میان شعر، واژه و حال خوب.">\n<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>یک استکان شعر | نسخهٔ ۱.۳ · در حال توسعه</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -29,22 +29,125 @@ main{width:min(1020px,100%);margin:auto;padding:0 18px 56px}
 footer{text-align:center;color:#8e7c6b;font-size:11px;padding:12px 15px 28px}footer .foot-mark{color:var(--gold);font-size:16px;margin-bottom:5px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#ead4b8;color:#21170f;padding:9px 17px;border-radius:25px;font-size:12px;box-shadow:var(--shadow);transition:.25s;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:600px){.site-header{padding:27px 15px 22px}.brand-mark{width:56px;height:56px;font-size:26px}.tagline{font-size:12px}.hero-feature{padding:17px 17px;border-radius:18px;gap:10px}.hero-copy strong{font-size:17px}.hero-symbol{width:58px;height:58px;font-size:25px}.toolbar{align-items:stretch}.tool-button{padding:9px 11px;font-size:11px}.topics,.pinned-topics{justify-content:flex-start}.grid{grid-template-columns:1fr;gap:11px}.entry{min-height:160px;padding:18px}.verse,.pinned-body{font-size:14px}.pinned-intro h2{font-size:20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+.reader-view{max-width:780px;margin:0 auto 30px}.reader-view[hidden]{display:none!important}
+.reader-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 16px}
+.reader-toolbar .back{margin:0}.reader-tools{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.reader-tools button,.reader-nav button{border:1px solid var(--line);border-radius:24px;background:var(--surface);color:var(--muted);padding:8px 12px;font-size:12px}
+.reader-tools button:hover,.reader-nav button:hover{border-color:var(--gold);color:var(--gold2)}
+.reader-paper{border:1px solid #80603f88;border-radius:24px;background:radial-gradient(circle at 50% 0,#49332155,transparent 55%),linear-gradient(145deg,#2c251e,#211d19 78%);padding:clamp(25px,6vw,54px) clamp(18px,6vw,56px);box-shadow:var(--shadow);text-align:center}
+.reader-kicker{color:var(--gold);font-size:11px;margin-bottom:18px}.reader-title{font-size:clamp(19px,4vw,26px);font-weight:500;color:#f4dfc5;line-height:1.9;margin:0 0 22px}
+.reader-body{white-space:pre-wrap;text-align:center;line-height:2.45;font-size:19px;font-weight:300;color:var(--text);overflow-wrap:anywhere}
+.reader-author{color:var(--gold2);font-size:13px;margin:25px 0 0}.reader-tags{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.reader-tags span{border:1px solid var(--line);border-radius:20px;padding:5px 10px;color:var(--muted);font-size:10px}
+.reader-note{margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.reader-note label{display:block;color:var(--gold2);font-size:12px;margin-bottom:9px}.reader-note textarea{width:100%;resize:vertical;min-height:90px;background:#171512;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text);font:inherit;line-height:1.9}.reader-nav{display:flex;justify-content:space-between;gap:12px;margin-top:15px}.reader-nav button{flex:1}
+.reader-status{text-align:center;color:var(--muted);font-size:11px;margin-top:12px;min-height:22px}
+.entry,.pinned-item{cursor:pointer}.entry:focus-visible,.pinned-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+body.reader-open .site-header,body.reader-open .hero-feature,body.reader-open #regularView,body.reader-open #pinnedView,body.reader-open footer{display:none!important}
+body.reader-open main{max-width:850px;padding-top:22px}
+@media(max-width:600px){.reader-toolbar{align-items:flex-start;flex-direction:column}.reader-tools{justify-content:flex-start}.reader-paper{border-radius:18px}.reader-body{font-size:17px;line-height:2.35}.reader-nav button{font-size:11px;padding:9px 6px}}
+
+
+.notebook-view{max-width:820px;margin:0 auto 30px}.notebook-view[hidden]{display:none!important}
+.notebook-open .site-header,.notebook-open .hero-feature,.notebook-open footer{display:none!important}.notebook-open main{padding-top:22px}
+.notebook-head{text-align:center;margin:0 0 18px}.notebook-head h2{font-weight:500;color:#f4dfc5}.notebook-head p{font-size:12px;color:var(--muted)}
+.notebook-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:15px 0}
+.notebook-tabs button{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:24px;padding:9px 16px;font-size:12px}
+.notebook-tabs button.active{background:var(--gold);border-color:var(--gold);color:#21170f}
+.notebook-items{display:grid;gap:10px}.notebook-row,.notebook-note{border:1px solid var(--line);background:linear-gradient(145deg,#2c251e,#211d19);border-radius:15px;padding:14px 16px}
+.notebook-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.notebook-row-title{border:0;background:none;color:var(--text);font:inherit;text-align:right;cursor:pointer}
+.notebook-meta{display:block;color:var(--muted);font-size:10px;margin-top:6px}.notebook-actions{display:flex;align-items:center;gap:8px}
+.notebook-create{display:flex;gap:8px;margin-bottom:12px}.notebook-create input,.notebook-note textarea{min-width:0;flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;color:var(--text)}
+.notebook-note p{white-space:pre-wrap;line-height:2;color:var(--muted)}.notebook-note textarea{display:block;width:100%;min-height:100px;margin:10px 0}
+.notebook-heading{font-weight:500;color:var(--gold2)}
+.notebook-backup{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:15px 0 22px}
+@media(max-width:600px){.notebook-row{align-items:flex-start}.notebook-meta{max-width:180px}.notebook-create{flex-direction:column}}
+
+
+/* Advanced Persian-aware search */
+.search-filters{display:flex;gap:8px;max-width:850px;margin:-5px auto 14px;justify-content:flex-start;flex-wrap:wrap}.search-filters select{min-width:150px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:22px;padding:9px 13px;font:inherit;font-size:11px;outline:none}.search-filters select:focus{border-color:var(--gold)}.search-summary{max-width:850px;margin:0 auto 10px;color:var(--muted);font-size:11px;min-height:18px}.pinned-tools{display:grid;gap:8px}.pinned-tools select{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:22px;padding:9px 13px;color:var(--muted);font:inherit;font-size:11px}
+
+.image-studio{max-width:1000px;margin:0 auto 32px}.image-studio[hidden]{display:none!important}
+.image-studio-head{text-align:center;margin:8px 0 18px}.image-studio-head h2{font-weight:500;color:#f4dfc5}.image-studio-head p{font-size:12px;color:var(--muted)}
+.image-studio-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:18px;align-items:start}
+.image-controls{display:grid;gap:12px;padding:17px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.image-controls label{display:grid;gap:6px;color:var(--muted);font-size:12px}
+.image-controls textarea,.image-controls input,.image-controls select{width:100%;background:#171512;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text);font:inherit;font-size:12px}
+.image-controls textarea{min-height:190px;line-height:2;resize:vertical}
+.image-control-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.image-controls input[type="range"]{accent-color:var(--gold);padding:4px}.image-checks{display:flex;gap:16px;flex-wrap:wrap}.image-checks label{display:flex;align-items:center;gap:6px}
+.image-preview{padding:12px;border:1px solid var(--line);border-radius:18px;background:#100e0c;position:sticky;top:12px}
+.image-preview canvas{display:block;width:100%;height:auto;border-radius:10px}
+.image-status{font-size:11px;color:var(--muted);text-align:center;min-height:22px;margin-top:8px}
+.image-actions{display:flex;gap:8px;flex-wrap:wrap}.image-actions button{flex:1}
+@media(max-width:720px){.image-studio-layout{grid-template-columns:1fr}.image-preview{position:static}.image-control-row{grid-template-columns:1fr 1fr}}
 </style></head>
 <body>
-<header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۲</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
+<header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۳ · آزمایشی</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
 <main>
 <a class="hero-feature" href="#pinned" id="pinned"><div class="hero-copy"><small>✦ گزیده‌ای برای مکث و دوباره خواندن</small><strong>پیشنهاد‌ومیض</strong><span>مجموعه‌ای ویژه از شعرها، واژه‌ها و متن‌های برگزیده</span></div><div class="hero-symbol" aria-hidden="true">✧</div></a>
 <div id="regularView">
-<div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button></div>
+<div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><div style="display:flex;gap:7px"><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button><button class="tool-button" id="openNotebook" type="button">دفتر من</button><button class="tool-button" id="openImageStudio" type="button">ساخت تصویر</button><button class="tool-button" id="installApp" type="button" hidden>نصب برنامه</button></div></div>
+<div class="search-filters"><select id="authorFilter" aria-label="فیلتر بر اساس شاعر"><option value="">همهٔ شاعران</option></select><select id="creditFilter" aria-label="فیلتر وضعیت نام شاعر"><option value="">همهٔ آثار</option><option value="known">با نام شاعر</option><option value="unknown">بدون نام شاعر</option></select></div><div class="search-summary" id="searchSummary" aria-live="polite"></div>
 <nav class="primary" id="sections" aria-label="بخش‌های اصلی"><button class="active" data-section="poems">اشعار</button><button data-section="texts">متون</button></nav>
 <div class="section-heading"><h2 id="sectionTitle">پناهی میان واژه‌ها</h2><p id="sectionNote">اشعار را بر اساس حال‌وهوا و موضوع مرور کنید.</p></div>
 <nav class="topics" id="topics" aria-label="دسته‌بندی موضوعی"></nav>
 <section class="grid" id="entries"></section><div class="empty" id="empty" hidden><span>❧</span>هنوز محتوایی در این بخش نیست؛ یا با این عبارت چیزی پیدا نشد.</div>
 </div>
-<div class="pinned-view" id="pinnedView" hidden><button class="back" id="backFromPinned">بازگشت به کتابخانه</button><div class="pinned-intro"><h2>پیشنهاد‌ومیض</h2><p>برگزیده‌ای از شعرها و نوشته‌هایی که ارزش مکث دوباره دارند.</p><span class="pinned-label">مجموعهٔ اختصاصی</span></div><div class="pinned-tools"><input id="pinnedSearch" type="search" placeholder="جست‌وجو در این مجموعه…" aria-label="جست‌وجو در پیشنهاد ومیض"></div><nav class="pinned-topics" id="pinnedTopics" aria-label="موضوعات پیشنهاد ومیض"></nav><section class="pinned-list" id="pinnedEntries"></section><div class="empty" id="pinnedEmpty" hidden>موردی در این مجموعه پیدا نشد.</div></div>
+<div class="pinned-view" id="pinnedView" hidden><button class="back" id="backFromPinned">بازگشت به کتابخانه</button><div class="pinned-intro"><h2>پیشنهاد‌ومیض</h2><p>برگزیده‌ای از شعرها و نوشته‌هایی که ارزش مکث دوباره دارند.</p><span class="pinned-label">مجموعهٔ اختصاصی</span></div><div class="pinned-tools"><input id="pinnedSearch" type="search" placeholder="جست‌وجو در این مجموعه…" aria-label="جست‌وجو در پیشنهاد ومیض"><select id="pinnedAuthorFilter" aria-label="فیلتر نویسنده"><option value="">همهٔ نویسندگان</option></select></div><nav class="pinned-topics" id="pinnedTopics" aria-label="موضوعات پیشنهاد ومیض"></nav><section class="pinned-list" id="pinnedEntries"></section><div class="empty" id="pinnedEmpty" hidden>موردی در این مجموعه پیدا نشد.</div></div>
+<section class="reader-view" id="readerView" hidden aria-live="polite">
+  <div class="reader-toolbar"><button class="back" id="readerBack" type="button">← بازگشت به کتابخانه</button>
+    <div class="reader-tools"><button id="readerSmaller" type="button" aria-label="کوچک‌تر کردن قلم">الف−</button><button id="readerLarger" type="button" aria-label="بزرگ‌تر کردن قلم">الف+</button><button id="readerCopy" type="button">کپی متن</button><button id="readerShare" type="button">اشتراک‌گذاری</button><button id="readerFavorite" type="button">♡ نشان‌کردن</button><button id="readerMakeImage" type="button">ساخت تصویر</button></div>
+  </div>
+  <article class="reader-paper"><div class="reader-kicker" id="readerKicker">یک استکان شعر</div><h2 class="reader-title" id="readerTitle"></h2><div class="reader-body" id="readerBody"></div><div class="reader-author" id="readerAuthor"></div><div class="reader-tags" id="readerTags"></div></article>
+  <section class="reader-note"><label for="readerNote">یادداشت شخصی کنار این اثر</label><textarea id="readerNote" rows="4" placeholder="برداشت، نکته یا حال‌وهوای خودتان را اینجا بنویسید…"></textarea><div class="reader-tools"><button id="readerSaveNote" type="button">ذخیرهٔ یادداشت</button><button id="readerAddCollection" type="button">افزودن به مجموعه</button></div></section>
+  <div class="reader-nav"><button id="readerPrevious" type="button">اثر پیشین</button><button id="readerNext" type="button">اثر بعدی</button></div><div class="reader-status" id="readerStatus" role="status"></div>
+</section>
+<section class="notebook-view" id="notebookView" hidden>
+ <button class="back" id="notebookBack" type="button">← بازگشت به کتابخانه</button>
+ <div class="notebook-head"><h2>دفتر شخصی من</h2><p>علاقه‌مندی‌ها، ردّ خواندن‌ها و یادداشت‌هایی که کنار واژه‌ها می‌مانند.</p></div>
+ <nav class="notebook-tabs" id="notebookTabs" aria-label="بخش‌های دفتر شخصی"></nav>
+ <div class="notebook-items" id="notebookItems"></div>
+ <div class="notebook-backup"><button class="tool-button" id="backupNotebook" type="button">دریافت نسخهٔ پشتیبان</button><button class="tool-button" id="restoreNotebook" type="button">بازیابی نسخهٔ پشتیبان</button><input id="restoreFile" type="file" accept="application/json,.json" hidden></div>
+</section>
+
+<section class="image-studio" id="imageStudioView" hidden>
+ <button class="back" id="imageStudioBack" type="button">← بازگشت</button>
+ <div class="image-studio-head"><h2>استودیوی تصویر شعر</h2><p>متن را بنویسید یا از صفحهٔ مطالعه به این بخش بیاورید؛ سپس طرح را تنظیم و به‌صورت PNG ذخیره کنید.</p></div>
+ <div class="image-studio-layout">
+  <div class="image-controls">
+   <label>متن شعر یا نوشته<textarea id="imageText" dir="rtl" placeholder="متن دلخواهتان را اینجا بنویسید…"></textarea></label>
+   <label>نام شاعر یا نویسنده<input id="imageAuthor" type="text" dir="rtl" placeholder="نام شاعر"></label>
+   <div class="image-control-row">
+    <label>قالب رنگی<select id="imageTheme"><option value="paper">کاغذ گرم</option><option value="night">شب و طلایی</option><option value="dawn">سپیده</option><option value="olive">زیتونی</option><option value="minimal">مینیمال روشن</option></select></label>
+    <label>چیدمان متن<select id="imageAlign"><option value="center">وسط‌چین</option><option value="right">راست‌چین</option><option value="left">چپ‌چین</option></select></label>
+   </div>
+   <div class="image-control-row">
+    <label>قلم متن<select id="imageFont"><option value="Vazirmatn">وزیرمتن</option><option value="Tahoma">Tahoma</option><option value="serif">سریف</option></select></label>
+    <label>نقش پس‌زمینه<select id="imagePattern"><option value="none">ساده و خلوت</option><option value="stars">نقش ستاره‌ای</option><option value="arch">قاب قوسی</option><option value="leaves">نقش برگ</option></select></label>
+   </div>
+   <div class="image-control-row">
+    <label>اندازهٔ قلم <input id="imageFontSize" type="range" min="28" max="58" value="40"></label>
+    <label>فاصلهٔ سطرها <input id="imageSpacing" type="range" min="1.5" max="2.8" step=".1" value="2"></label>
+   </div>
+   <div class="image-checks"><label><input id="imageShowAuthor" type="checkbox" checked> نمایش نام شاعر</label><label><input id="imageShowBrand" type="checkbox" checked> امضای یک استکان شعر</label></div>
+   <div class="image-actions"><button class="tool-button" id="imageDownload" type="button">دریافت تصویر PNG</button></div>
+   <div class="image-status" id="imageStatus" role="status">در حال آماده‌سازی پیش‌نمایش…</div>
+  </div>
+  <div class="image-preview"><canvas id="poetryCanvas" width="1080" height="1350" aria-label="پیش‌نمایش تصویر شعر"></canvas></div>
+ </div>
+</section>
 </main>
-<footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۲</div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۳ آزمایشی</div><div class="pwa-tools"><span class="pwa-status" id="pwaStatus" role="status" aria-live="polite">در حال آماده‌سازی حالت آفلاین…</span></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="poems.js"></script><script src="pinned.js"></script>
+<script src="js/content.js"></script>
+<script src="js/router.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/reader.js"></script>
+<script src="js/notebook.js"></script>
+<script src="js/search.js"></script>
+<script src="js/image-studio.js"></script>
+<script src="js/pwa.js"></script>
 <script>
 const el=id=>document.getElementById(id),entries=window.poemEntries||[],pinnedEntries=window.pinnedEntries||[];
 const topicMap={poems:[],texts:["همه","مذهبی و آیینی","تاریخی و روایی","اخلاقی و تربیتی","معرفتی و اعتقادی","ادبی و تأملی","اجتماعی"]};
@@ -54,15 +157,16 @@ const favorites=()=>{try{return JSON.parse(localStorage.getItem("yekestekan-favo
 function notify(s){const t=el("toast");t.textContent=s;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
 function copyText(s){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(()=>notify("متن کپی شد")).catch(()=>notify("کپی در این مرورگر در دسترس نیست"))}else notify("کپی در این مرورگر در دسترس نیست")}
 function shareText(s){if(navigator.share){navigator.share({title:"یک استکان شعر",text:s}).catch(()=>{})}else copyText(s)}
-function cardActions(card,item,key){const bar=document.createElement("div");bar.className="card-actions";const c=document.createElement("button");c.className="action";c.textContent="کپی متن";c.onclick=()=>copyText(item.body+(item.author?"\n— "+item.author:""));bar.append(c);const f=document.createElement("button"),isOn=favorites().includes(key);f.className="action favorite"+(isOn?" on":"");f.textContent=isOn?"♥ نشان‌شده":"♡ نشان‌کردن";f.onclick=()=>{let a=favorites();a=a.includes(key)?a.filter(x=>x!==key):[...a,key];try{localStorage.setItem("yekestekan-favorites",JSON.stringify(a));f.classList.toggle("on",a.includes(key));f.textContent=a.includes(key)?"♥ نشان‌شده":"♡ نشان‌کردن";notify(a.includes(key)?"به علاقه‌مندی‌ها افزوده شد":"از علاقه‌مندی‌ها برداشته شد")}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست")}};bar.append(f);const sh=document.createElement("button");sh.className="action";sh.textContent="اشتراک‌گذاری";sh.onclick=()=>shareText(item.body+(item.author?"\n— "+item.author:""));bar.append(sh);card.append(bar)}
+function cardActions(card,item,key){const bar=document.createElement("div");bar.className="card-actions";const c=document.createElement("button");c.className="action";c.textContent="کپی متن";c.onclick=()=>copyText(item.body+(item.author?"\n— "+item.author:""));bar.append(c);const f=document.createElement("button"),isOn=favorites().includes(key);f.className="action favorite"+(isOn?" on":"");f.textContent=isOn?"♥ نشان‌شده":"♡ نشان‌کردن";f.onclick=async()=>{try{const id=item.id||key,old=await YESStorage.get("favorites",id);if(old)await YESStorage.remove("favorites",id);else await YESStorage.put("favorites",{id,contentId:id,createdAt:new Date().toISOString()});let legacy=favorites();legacy=legacy.filter(x=>x!==key);if(!old)legacy.push(key);localStorage.setItem("yekestekan-favorites",JSON.stringify(legacy));f.classList.toggle("on",!old);f.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد")}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست")}};bar.append(f);const sh=document.createElement("button");sh.className="action";sh.textContent="اشتراک‌گذاری";sh.onclick=()=>shareText(item.body+(item.author?"\n— "+item.author:""));bar.append(sh);card.append(bar)}
+function refreshAuthorFilters(){const fill=(id,list,label)=>{const select=el(id),old=select.value;select.replaceChildren();const first=document.createElement("option");first.value="";first.textContent=label;select.append(first);[...new Set(list.map(x=>x.author).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"fa")).forEach(name=>{const o=document.createElement("option");o.value=name;o.textContent=name;select.append(o)});if([...select.options].some(o=>o.value===old))select.value=old;};fill("authorFilter",entries.filter(x=>x.section===section),"همهٔ شاعران");fill("pinnedAuthorFilter",pinnedEntries,"همهٔ نویسندگان");}
 function buildTopics(){const nav=el("topics");nav.innerHTML="";(topicMap[section]||["همه"]).forEach((name,i)=>{const b=document.createElement("button");b.textContent=name;b.className=i===topic?"active":"";b.onclick=()=>{topic=i;render()};nav.append(b)})}
-function render(){buildTopics();el("sectionTitle").textContent=section==="poems"?"پناهی میان واژه‌ها":"متون و نوشته‌ها";el("sectionNote").textContent=section==="poems"?"اشعار را بر اساس حال‌وهوا و موضوع مرور کنید.":"متون بر اساس موضوع دسته‌بندی خواهند شد.";const q=el("search").value.trim().toLocaleLowerCase("fa"),root=el("entries");root.innerHTML="";let count=0;entries.forEach((x,i)=>{if(x.section!==section)return;if(topic&&!((x.tags||[]).includes(topicMap[section][topic])))return;if(q&&!(x.body+" "+(x.author||"")+" "+(x.tags||[]).join(" ")).toLocaleLowerCase("fa").includes(q))return;count++;const card=document.createElement("article");card.className="entry";const cat=document.createElement("div");cat.className="category";cat.textContent=(x.tags||[]).join(" · ");const body=document.createElement("div");body.className="verse";body.textContent=x.body;card.append(cat,body);if(x.author){const author=document.createElement("div");author.className="author";author.textContent="— "+x.author;card.append(author)}cardActions(card,x,"poem-"+i);root.append(card)});el("empty").hidden=count!==0}
-function renderPinned(){const nav=el("pinnedTopics");nav.innerHTML="";const allTopics=["همه",...new Set(pinnedEntries.flatMap(x=>x.tags||[]))];allTopics.forEach(t=>{const b=document.createElement("button");b.textContent=t;b.className=t===pinnedTopic?"active":"";b.onclick=()=>{pinnedTopic=t;renderPinned()};nav.append(b)});const q=el("pinnedSearch").value.trim().toLocaleLowerCase("fa"),root=el("pinnedEntries");root.innerHTML="";let count=0;pinnedEntries.forEach((x,i)=>{if(pinnedTopic!=="همه"&&!(x.tags||[]).includes(pinnedTopic))return;if(q&&!(x.body+" "+(x.author||"")+" "+(x.tags||[]).join(" ")).toLocaleLowerCase("fa").includes(q))return;count++;const card=document.createElement("article");card.className="pinned-item";const kind=document.createElement("div");kind.className="pinned-kind";kind.textContent=(x.tags||[]).join(" · ");const body=document.createElement("div");body.className="pinned-body";body.textContent=x.body;card.append(kind,body);if(x.author){const author=document.createElement("div");author.className="pinned-author";author.textContent="— "+x.author;card.append(author)}if(x.url){const link=document.createElement("a");link.className="pinned-link";link.href=x.url;link.target="_blank";link.rel="noopener";link.textContent="مشاهدهٔ پیوند ↗";card.append(link)}cardActions(card,x,"pinned-"+i);root.append(card)});el("pinnedEmpty").hidden=count!==0}
+function render(){buildTopics();refreshAuthorFilters();el("sectionTitle").textContent=section==="poems"?"پناهی میان واژه‌ها":"متون و نوشته‌ها";el("sectionNote").textContent=section==="poems"?"اشعار را بر اساس حال‌وهوا و موضوع مرور کنید.":"متون بر اساس موضوع دسته‌بندی خواهند شد.";const q=el("search").value,author=el("authorFilter").value,credit=el("creditFilter").value,root=el("entries");root.innerHTML="";let count=0;const matches=entries.filter(x=>x.section===section&&(!topic||(x.tags||[]).includes(topicMap[section][topic]))&&(!author||x.author===author)&&(!credit||(credit==="known"?!!x.author:!x.author))&&window.YESSearch.matches(x,q));matches.sort((a,b)=>window.YESSearch.score(b,q)-window.YESSearch.score(a,q));matches.forEach((x,i)=>{count++;const card=document.createElement("article");card.className="entry";const cat=document.createElement("div");cat.className="category";cat.textContent=(x.tags||[]).join(" · ");const body=document.createElement("div");body.className="verse";body.textContent=x.body;body.tabIndex=0;body.setAttribute("role","button");body.setAttribute("aria-label","باز کردن اثر در صفحهٔ مطالعه");body.title="برای مطالعهٔ مستقل انتخاب کنید";body.addEventListener("click",()=>window.YESReader.open(x.id));body.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();window.YESReader.open(x.id)}});card.append(cat,body);if(x.author){const author=document.createElement("div");author.className="author";author.textContent="— "+x.author;card.append(author)}cardActions(card,x,"poem-"+i);root.append(card)});el("empty").hidden=count!==0;el("searchSummary").textContent=(q.trim()||author||credit)?count+" اثر با این جست‌وجو و فیلترها پیدا شد.":""}
+function renderPinned(){const nav=el("pinnedTopics");nav.innerHTML="";const allTopics=["همه",...new Set(pinnedEntries.flatMap(x=>x.tags||[]))];allTopics.forEach(t=>{const b=document.createElement("button");b.textContent=t;b.className=t===pinnedTopic?"active":"";b.onclick=()=>{pinnedTopic=t;renderPinned()};nav.append(b)});const q=el("pinnedSearch").value,author=el("pinnedAuthorFilter").value,root=el("pinnedEntries");root.innerHTML="";let count=0;const matches=pinnedEntries.filter(x=>(pinnedTopic==="همه"||(x.tags||[]).includes(pinnedTopic))&&(!author||x.author===author)&&window.YESSearch.matches(x,q));matches.sort((a,b)=>window.YESSearch.score(b,q)-window.YESSearch.score(a,q));matches.forEach((x,i)=>{count++;const card=document.createElement("article");card.className="pinned-item";const kind=document.createElement("div");kind.className="pinned-kind";kind.textContent=(x.tags||[]).join(" · ");const body=document.createElement("div");body.className="pinned-body";body.textContent=x.body;body.tabIndex=0;body.setAttribute("role","button");body.setAttribute("aria-label","باز کردن اثر در صفحهٔ مطالعه");body.title="برای مطالعهٔ مستقل انتخاب کنید";body.addEventListener("click",()=>window.YESReader.open(x.id));body.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();window.YESReader.open(x.id)}});card.append(kind,body);if(x.author){const author=document.createElement("div");author.className="pinned-author";author.textContent="— "+x.author;card.append(author)}if(x.url){const link=document.createElement("a");link.className="pinned-link";link.href=x.url;link.target="_blank";link.rel="noopener";link.textContent="مشاهدهٔ پیوند ↗";card.append(link)}cardActions(card,x,"pinned-"+i);root.append(card)});el("pinnedEmpty").hidden=count!==0}
 function showPinned(){el("regularView").hidden=true;el("pinnedView").hidden=false;renderPinned();window.scrollTo({top:0,behavior:"smooth"})}
 function leavePinned(){el("pinnedView").hidden=true;el("regularView").hidden=false;history.replaceState(null,"",location.pathname);document.body.classList.remove("reading-mode");window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("#sections button").forEach(b=>b.onclick=()=>{section=b.dataset.section;topic=0;document.querySelectorAll("#sections button").forEach(x=>x.classList.toggle("active",x===b));render()});
-el("search").addEventListener("input",render);el("pinnedSearch").addEventListener("input",renderPinned);
+el("search").addEventListener("input",render);el("authorFilter").addEventListener("change",render);el("creditFilter").addEventListener("change",render);el("pinnedSearch").addEventListener("input",renderPinned);el("pinnedAuthorFilter").addEventListener("change",renderPinned);
 el("pinned").addEventListener("click",e=>{e.preventDefault();showPinned();history.replaceState(null,"",location.pathname+"#pinned")});el("backFromPinned").addEventListener("click",leavePinned);
-el("randomPoem").addEventListener("click",()=>{const list=entries.filter(x=>x.section==="poems");if(!list.length)return;const item=list[Math.floor(Math.random()*list.length)];section="poems";topic=0;document.querySelectorAll("#sections button").forEach(x=>x.classList.toggle("active",x.dataset.section==="poems"));el("search").value="";render();const index=list.indexOf(item),card=el("entries").children[index];if(card){card.scrollIntoView({behavior:"smooth",block:"center"});card.animate([{borderColor:"#d5a66f",transform:"scale(1)"},{borderColor:"#f0c994",transform:"scale(1.015)"},{borderColor:"#40362d",transform:"scale(1)"}],{duration:1100})}});
+el("randomPoem").addEventListener("click",()=>{const list=entries.filter(x=>x.section==="poems");if(!list.length)return;const item=list[Math.floor(Math.random()*list.length)];section="poems";topic=0;document.querySelectorAll("#sections button").forEach(x=>x.classList.toggle("active",x.dataset.section==="poems"));el("search").value="";render();const card=[...el("entries").children].find(node=>node.querySelector(".verse")?.textContent===item.body);if(card){card.scrollIntoView({behavior:"smooth",block:"center"});card.animate([{borderColor:"#d5a66f",transform:"scale(1)"},{borderColor:"#f0c994",transform:"scale(1.015)"},{borderColor:"#40362d",transform:"scale(1)"}],{duration:1100})}});
 if(location.hash==="#pinned")showPinned();render();
 </script></body></html>
