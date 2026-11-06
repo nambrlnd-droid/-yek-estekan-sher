@@ -26,7 +26,7 @@ function draw(){
  const lineHeight=size*spacing,total=lines.length*lineHeight,maxHeight=H-420,scale=total>maxHeight?maxHeight/total:1;
  const actualSize=size*scale,actualLine=lineHeight*scale;ctx.font=actualSize+"px Vazirmatn, Tahoma, sans-serif";
  const x=align==="right"?W-150:align==="left"?150:W/2;let y=Math.max(330,(H-total*scale)/2+actualSize/2);
- lines.forEach(line=>{if(line)ctx.fillText(line,x,y,{maxWidth});y+=actualLine;});
+ lines.forEach(line=>{if(line)ctx.fillText(line,x,y);y+=actualLine;});
  if($("imageShowAuthor").checked&&$("imageAuthor").value.trim()){ctx.fillStyle=p.muted;ctx.font="30px Vazirmatn, Tahoma, sans-serif";ctx.textAlign="center";ctx.fillText("— "+$("imageAuthor").value.trim(),W/2,H-190);}
  if($("imageShowBrand").checked){ctx.fillStyle=p.accent;ctx.font="22px Vazirmatn, Tahoma, sans-serif";ctx.textAlign="center";ctx.fillText("یک استکان شعر",W/2,H-112);}
  ctx.strokeStyle=p.line;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(430,H-165);ctx.lineTo(650,H-165);ctx.stroke();
