@@ -33,6 +33,7 @@
     const tags=$("readerTags");tags.replaceChildren();
     item.tags.forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
     $("readerFavorite").textContent=await favoriteState(id)?"♥ نشان‌شده":"♡ نشان‌کردن";
+    try{const note=await window.YESStorage.get("notes",id);$("readerNote").value=note?.text||"";}catch(e){$("readerNote").value="";}
     const list=items(),index=list.findIndex(x=>x.id===id);
     $("readerPrevious").disabled=index<=0;
     $("readerNext").disabled=index<0||index>=list.length-1;
@@ -73,6 +74,8 @@
     $("readerSmaller").onclick=()=>{fontSize=Math.max(14,fontSize-1);$("readerBody").style.fontSize=fontSize+"px";};
     $("readerLarger").onclick=()=>{fontSize=Math.min(30,fontSize+1);$("readerBody").style.fontSize=fontSize+"px";};
     $("readerPrevious").onclick=()=>goRelative(-1);$("readerNext").onclick=()=>goRelative(1);
+    $("readerSaveNote").onclick=async()=>{try{await window.YESReader.saveNote(currentId,$("readerNote").value);notify("یادداشت ذخیره شد");}catch(e){notify("ذخیرهٔ یادداشت ممکن نشد");}};
+    $("readerAddCollection").onclick=async()=>{try{const cols=await window.YESStorage.all("collections");if(!cols.length){notify("ابتدا در دفتر شخصی یک مجموعه بسازید");return;}const choice=prompt("شناسهٔ مجموعه را وارد کنید:\n"+cols.map(c=>c.id+" — "+c.title).join("\n"));const col=cols.find(c=>c.id===choice);if(!col){notify("مجموعه پیدا نشد");return;}col.itemIds=col.itemIds||[];if(!col.itemIds.includes(currentId))col.itemIds.push(currentId);await window.YESStorage.put("collections",col);notify("به مجموعه افزوده شد");}catch(e){notify("افزودن به مجموعه ممکن نشد");}};
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("reader-open"))window.YESRouter.go("home");});
   },{once:true});
 })();
