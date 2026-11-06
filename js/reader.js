@@ -1,9 +1,78 @@
-/* Reader state and safe content lookup. UI is rendered by the application shell. */
+/* Dedicated, deep-linkable reader for poems and pinned texts. */
 (function(){
   "use strict";
+  const $=id=>document.getElementById(id);
+  let currentId=null,fontSize=19;
+  const content=()=>window.YESContent;
+  const items=()=>content().all;
+  const notify=s=>{const n=$("readerStatus");if(n)n.textContent=s;};
+  const textOf=x=>x.body+(x.author?"\n— "+x.author:"");
+  async function favoriteState(id){try{return !!(await window.YESStorage.get("favorites",id));}catch(e){return false;}}
+  async function toggleFavorite(){
+    if(!currentId)return;
+    const old=await favoriteState(currentId);
+    try{
+      if(old)await window.YESStorage.remove("favorites",currentId);
+      else await window.YESStorage.put("favorites",{id:currentId,contentId:currentId,createdAt:new Date().toISOString()});
+      $("readerFavorite").textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";
+      notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد");
+    }catch(e){notify("ذخیرهٔ علاقه‌مندی در این مرورگر ممکن نشد");}
+  }
+  async function render(id){
+    const item=content().get(id);
+    if(!item){document.body.classList.remove("reader-open");$("readerView").hidden=true;notify("این اثر پیدا نشد.");return;}
+    currentId=id;
+    document.body.classList.add("reader-open");
+    $("readerView").hidden=false;
+    $("readerTitle").textContent=item.title||"خواندن";
+    $("readerBody").textContent=item.body;
+    $("readerBody").style.fontSize=fontSize+"px";
+    $("readerAuthor").textContent=item.author?"— "+item.author:"";
+    $("readerAuthor").hidden=!item.author;
+    $("readerKicker").textContent=item.type==="text"?"متن برگزیده":"از کتابخانهٔ اشعار";
+    const tags=$("readerTags");tags.replaceChildren();
+    item.tags.forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
+    $("readerFavorite").textContent=await favoriteState(id)?"♥ نشان‌شده":"♡ نشان‌کردن";
+    const list=items(),index=list.findIndex(x=>x.id===id);
+    $("readerPrevious").disabled=index<=0;
+    $("readerNext").disabled=index<0||index>=list.length-1;
+    $("readerPrevious").style.opacity=index<=0?".45":"1";
+    $("readerNext").style.opacity=index>=list.length-1?".45":"1";
+    try{await window.YESReader.remember(id);}catch(e){notify("اثر باز شد؛ ثبت سابقه در این مرورگر ممکن نشد.");}
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function goRelative(delta){
+    const list=items(),index=list.findIndex(x=>x.id===currentId),next=list[index+delta];
+    if(next)window.YESRouter.go("read",next.id);
+  }
+  function copy(){
+    const item=content().get(currentId);if(!item)return;
+    const value=textOf(item);
+    if(navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(()=>notify("متن کپی شد")).catch(()=>notify("کپی در این مرورگر در دسترس نیست"));
+    else notify("قابلیت کپی در این مرورگر در دسترس نیست");
+  }
+  function share(){
+    const item=content().get(currentId);if(!item)return;
+    const value=textOf(item);
+    if(navigator.share)navigator.share({title:item.title||"یک استکان شعر",text:value,url:location.href}).catch(()=>{});
+    else copy();
+  }
   window.YESReader={
-    open(id){const item=window.YESContent&&window.YESContent.get(id);if(!item)return false;window.YESRouter.go("read",id);return true;},
-    async remember(id){if(!window.YESContent.get(id))return;await window.YESStorage.put("history",{id,contentId:id,readAt:new Date().toISOString()});},
-    async saveNote(contentId,text){if(!window.YESContent.get(contentId))throw new Error("اثر پیدا نشد");await window.YESStorage.put("notes",{id:contentId,contentId,text:String(text),updatedAt:new Date().toISOString()});}
+    open(id){if(!content().get(id))return false;window.YESRouter.go("read",id);return true;},
+    async remember(id){if(!content().get(id))return;await window.YESStorage.put("history",{id,contentId:id,readAt:new Date().toISOString()});},
+    async saveNote(contentId,text){if(!content().get(contentId))throw new Error("اثر پیدا نشد");await window.YESStorage.put("notes",{id:contentId,contentId,text:String(text),updatedAt:new Date().toISOString()});}
   };
+  window.addEventListener("yes:route",state=>{
+    if(state.route==="read"&&state.id)render(decodeURIComponent(state.id));
+    else{document.body.classList.remove("reader-open");if($("readerView"))$("readerView").hidden=true;}
+  });
+  document.addEventListener("DOMContentLoaded",()=>{
+    $("readerBack").onclick=()=>window.YESRouter.go("home");
+    $("readerFavorite").onclick=toggleFavorite;
+    $("readerCopy").onclick=copy;$("readerShare").onclick=share;
+    $("readerSmaller").onclick=()=>{fontSize=Math.max(14,fontSize-1);$("readerBody").style.fontSize=fontSize+"px";};
+    $("readerLarger").onclick=()=>{fontSize=Math.min(30,fontSize+1);$("readerBody").style.fontSize=fontSize+"px";};
+    $("readerPrevious").onclick=()=>goRelative(-1);$("readerNext").onclick=()=>goRelative(1);
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("reader-open"))window.YESRouter.go("home");});
+  },{once:true});
 })();
