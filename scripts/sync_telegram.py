@@ -68,36 +68,61 @@ def read_page(before=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pages", type=int, default=1)
+    ap.add_argument("--pages", type=int, default=10)
     ap.add_argument("--delay", type=float, default=1.5)
     args = ap.parse_args()
     if args.pages < 1 or args.pages > 100:
         raise SystemExit("--pages must be between 1 and 100")
     existing = json.loads(OUT.read_text("utf-8")) if OUT.exists() else {"channel": CHANNEL, "posts": []}
     by_id = {str(p["id"]): p for p in existing.get("posts", [])}
-    cursor, fetched = None, 0
-    for page_no in range(args.pages):
-        batch = read_page(cursor)
-        if not batch:
-            print(f"Page {page_no+1}: no posts returned; stopping.")
-            break
+    fetched = 0
+    now = datetime.now(timezone.utc).isoformat()
+
+    def merge(batch):
+        nonlocal fetched
         fetched += len(batch)
+        ids = []
         for p in batch:
             pid = str(p["id"])
             p["source_url"] = f"https://t.me/{CHANNEL}/{pid}"
             p["status"] = by_id.get(pid, {}).get("status", "needs_review")
-            p["first_seen_at"] = by_id.get(pid, {}).get("first_seen_at", datetime.now(timezone.utc).isoformat())
+            p["first_seen_at"] = by_id.get(pid, {}).get("first_seen_at", now)
             by_id[pid] = p
-        ids = [int(p["id"]) for p in batch if str(p["id"]).isdigit()]
-        oldest = min(ids) if ids else None
-        print(f"Page {page_no+1}: {len(batch)} posts; oldest id={oldest}")
-        if not oldest or oldest <= 1 or len(batch) < 2:
+            if pid.isdigit():
+                ids.append(int(pid))
+        return min(ids) if ids else None
+
+    # Always refresh the newest page so recent channel posts are not missed.
+    latest = read_page()
+    latest_oldest = merge(latest) if latest else None
+    print(f"Latest page: {len(latest)} posts; oldest id={latest_oldest}")
+
+    # Continue progressively through the historical archive across scheduled runs.
+    cursor = existing.get("archive_cursor") or latest_oldest
+    archive_oldest = cursor
+    pages_done = 0
+    for page_no in range(args.pages):
+        if not cursor or int(cursor) <= 1:
+            print("Reached the beginning of the channel archive.")
+            archive_oldest = None
             break
+        batch = read_page(cursor)
+        if not batch:
+            print(f"Archive page {page_no+1}: no posts returned; stopping.")
+            break
+        oldest = merge(batch)
+        pages_done += 1
+        print(f"Archive page {page_no+1}: {len(batch)} posts; oldest id={oldest}")
+        if not oldest or oldest >= int(cursor):
+            print("Archive cursor did not move; stopping to avoid a loop.")
+            break
+        archive_oldest = oldest
         cursor = oldest
         if page_no + 1 < args.pages:
             time.sleep(args.delay)
+
     result = {"channel": CHANNEL, "updated_at": datetime.now(timezone.utc).isoformat(),
-              "fetched_this_run": fetched, "posts": sorted(by_id.values(), key=lambda p: int(p["id"]))}
+              "fetched_this_run": fetched, "archive_cursor": archive_oldest, "archive_pages_this_run": pages_done, "posts": sorted(by_id.values(), key=lambda p: int(p["id"]))}
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", "utf-8")
     print(f"Saved {len(result['posts'])} unique posts ({fetched} fetched this run).")
 
