@@ -52,7 +52,7 @@ jobs:
             git rebase --abort || true
             git pull --ff-only origin main
             python scripts/sync_telegram.py --pages "$PAGES"
-            git add telegram-inbox.json
+            git add telegram-inbox.json telegram-poems.js
             git commit -m "Sync public Telegram channel inbox (retry)"
           fi
           git push
