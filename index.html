@@ -66,13 +66,28 @@ body.reader-open main{max-width:850px;padding-top:22px}
 
 /* Advanced Persian-aware search */
 .search-filters{display:flex;gap:8px;max-width:850px;margin:-5px auto 14px;justify-content:flex-start;flex-wrap:wrap}.search-filters select{min-width:150px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:22px;padding:9px 13px;font:inherit;font-size:11px;outline:none}.search-filters select:focus{border-color:var(--gold)}.search-summary{max-width:850px;margin:0 auto 10px;color:var(--muted);font-size:11px;min-height:18px}.pinned-tools{display:grid;gap:8px}.pinned-tools select{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:22px;padding:9px 13px;color:var(--muted);font:inherit;font-size:11px}
+
+.image-studio{max-width:1000px;margin:0 auto 32px}.image-studio[hidden]{display:none!important}
+.image-studio-head{text-align:center;margin:8px 0 18px}.image-studio-head h2{font-weight:500;color:#f4dfc5}.image-studio-head p{font-size:12px;color:var(--muted)}
+.image-studio-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:18px;align-items:start}
+.image-controls{display:grid;gap:12px;padding:17px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.image-controls label{display:grid;gap:6px;color:var(--muted);font-size:12px}
+.image-controls textarea,.image-controls input,.image-controls select{width:100%;background:#171512;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text);font:inherit;font-size:12px}
+.image-controls textarea{min-height:190px;line-height:2;resize:vertical}
+.image-control-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.image-checks{display:flex;gap:16px;flex-wrap:wrap}.image-checks label{display:flex;align-items:center;gap:6px}
+.image-preview{padding:12px;border:1px solid var(--line);border-radius:18px;background:#100e0c;position:sticky;top:12px}
+.image-preview canvas{display:block;width:100%;height:auto;border-radius:10px}
+.image-status{font-size:11px;color:var(--muted);text-align:center;min-height:22px;margin-top:8px}
+.image-actions{display:flex;gap:8px;flex-wrap:wrap}.image-actions button{flex:1}
+@media(max-width:720px){.image-studio-layout{grid-template-columns:1fr}.image-preview{position:static}.image-control-row{grid-template-columns:1fr 1fr}}
 </style></head>
 <body>
 <header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۲</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
 <main>
 <a class="hero-feature" href="#pinned" id="pinned"><div class="hero-copy"><small>✦ گزیده‌ای برای مکث و دوباره خواندن</small><strong>پیشنهاد‌ومیض</strong><span>مجموعه‌ای ویژه از شعرها، واژه‌ها و متن‌های برگزیده</span></div><div class="hero-symbol" aria-hidden="true">✧</div></a>
 <div id="regularView">
-<div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><div style="display:flex;gap:7px"><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button><button class="tool-button" id="openNotebook" type="button">دفتر من</button></div></div>
+<div class="toolbar"><div class="search"><input id="search" type="search" placeholder="در شعرها، متن‌ها و نام شاعران جست‌وجو کنید…" aria-label="جست‌وجو"></div><div style="display:flex;gap:7px"><button class="tool-button" id="randomPoem" type="button">✧ شعر تصادفی</button><button class="tool-button" id="openNotebook" type="button">دفتر من</button><button class="tool-button" id="openImageStudio" type="button">ساخت تصویر</button></div></div>
 <div class="search-filters"><select id="authorFilter" aria-label="فیلتر بر اساس شاعر"><option value="">همهٔ شاعران</option></select><select id="creditFilter" aria-label="فیلتر وضعیت نام شاعر"><option value="">همهٔ آثار</option><option value="known">با نام شاعر</option><option value="unknown">بدون نام شاعر</option></select></div><div class="search-summary" id="searchSummary" aria-live="polite"></div>
 <nav class="primary" id="sections" aria-label="بخش‌های اصلی"><button class="active" data-section="poems">اشعار</button><button data-section="texts">متون</button></nav>
 <div class="section-heading"><h2 id="sectionTitle">پناهی میان واژه‌ها</h2><p id="sectionNote">اشعار را بر اساس حال‌وهوا و موضوع مرور کنید.</p></div>
@@ -82,7 +97,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
 <div class="pinned-view" id="pinnedView" hidden><button class="back" id="backFromPinned">بازگشت به کتابخانه</button><div class="pinned-intro"><h2>پیشنهاد‌ومیض</h2><p>برگزیده‌ای از شعرها و نوشته‌هایی که ارزش مکث دوباره دارند.</p><span class="pinned-label">مجموعهٔ اختصاصی</span></div><div class="pinned-tools"><input id="pinnedSearch" type="search" placeholder="جست‌وجو در این مجموعه…" aria-label="جست‌وجو در پیشنهاد ومیض"><select id="pinnedAuthorFilter" aria-label="فیلتر نویسنده"><option value="">همهٔ نویسندگان</option></select></div><nav class="pinned-topics" id="pinnedTopics" aria-label="موضوعات پیشنهاد ومیض"></nav><section class="pinned-list" id="pinnedEntries"></section><div class="empty" id="pinnedEmpty" hidden>موردی در این مجموعه پیدا نشد.</div></div>
 <section class="reader-view" id="readerView" hidden aria-live="polite">
   <div class="reader-toolbar"><button class="back" id="readerBack" type="button">← بازگشت به کتابخانه</button>
-    <div class="reader-tools"><button id="readerSmaller" type="button" aria-label="کوچک‌تر کردن قلم">الف−</button><button id="readerLarger" type="button" aria-label="بزرگ‌تر کردن قلم">الف+</button><button id="readerCopy" type="button">کپی متن</button><button id="readerShare" type="button">اشتراک‌گذاری</button><button id="readerFavorite" type="button">♡ نشان‌کردن</button></div>
+    <div class="reader-tools"><button id="readerSmaller" type="button" aria-label="کوچک‌تر کردن قلم">الف−</button><button id="readerLarger" type="button" aria-label="بزرگ‌تر کردن قلم">الف+</button><button id="readerCopy" type="button">کپی متن</button><button id="readerShare" type="button">اشتراک‌گذاری</button><button id="readerFavorite" type="button">♡ نشان‌کردن</button><button id="readerMakeImage" type="button">ساخت تصویر</button></div>
   </div>
   <article class="reader-paper"><div class="reader-kicker" id="readerKicker">یک استکان شعر</div><h2 class="reader-title" id="readerTitle"></h2><div class="reader-body" id="readerBody"></div><div class="reader-author" id="readerAuthor"></div><div class="reader-tags" id="readerTags"></div></article>
   <section class="reader-note"><label for="readerNote">یادداشت شخصی کنار این اثر</label><textarea id="readerNote" rows="4" placeholder="برداشت، نکته یا حال‌وهوای خودتان را اینجا بنویسید…"></textarea><div class="reader-tools"><button id="readerSaveNote" type="button">ذخیرهٔ یادداشت</button><button id="readerAddCollection" type="button">افزودن به مجموعه</button></div></section>
@@ -95,6 +110,29 @@ body.reader-open main{max-width:850px;padding-top:22px}
  <div class="notebook-items" id="notebookItems"></div>
  <div class="notebook-backup"><button class="tool-button" id="backupNotebook" type="button">دریافت نسخهٔ پشتیبان</button><button class="tool-button" id="restoreNotebook" type="button">بازیابی نسخهٔ پشتیبان</button><input id="restoreFile" type="file" accept="application/json,.json" hidden></div>
 </section>
+
+<section class="image-studio" id="imageStudioView" hidden>
+ <button class="back" id="imageStudioBack" type="button">← بازگشت</button>
+ <div class="image-studio-head"><h2>استودیوی تصویر شعر</h2><p>متن را بنویسید یا از صفحهٔ مطالعه به این بخش بیاورید؛ سپس طرح را تنظیم و به‌صورت PNG ذخیره کنید.</p></div>
+ <div class="image-studio-layout">
+  <div class="image-controls">
+   <label>متن شعر یا نوشته<textarea id="imageText" dir="rtl" placeholder="متن دلخواهتان را اینجا بنویسید…"></textarea></label>
+   <label>نام شاعر یا نویسنده<input id="imageAuthor" type="text" dir="rtl" placeholder="نام شاعر"></label>
+   <div class="image-control-row">
+    <label>قالب رنگی<select id="imageTheme"><option value="paper">کاغذ گرم</option><option value="night">شب و طلایی</option><option value="dawn">سپیده</option><option value="olive">زیتونی</option><option value="minimal">مینیمال روشن</option></select></label>
+    <label>چیدمان متن<select id="imageAlign"><option value="center">وسط‌چین</option><option value="right">راست‌چین</option><option value="left">چپ‌چین</option></select></label>
+   </div>
+   <div class="image-control-row">
+    <label>اندازهٔ قلم <input id="imageFontSize" type="range" min="28" max="58" value="40"></label>
+    <label>فاصلهٔ سطرها <input id="imageSpacing" type="range" min="1.5" max="2.8" step=".1" value="2"></label>
+   </div>
+   <div class="image-checks"><label><input id="imageShowAuthor" type="checkbox" checked> نمایش نام شاعر</label><label><input id="imageShowBrand" type="checkbox" checked> امضای یک استکان شعر</label></div>
+   <div class="image-actions"><button class="tool-button" id="imageDownload" type="button">دریافت تصویر PNG</button></div>
+   <div class="image-status" id="imageStatus" role="status">در حال آماده‌سازی پیش‌نمایش…</div>
+  </div>
+  <div class="image-preview"><canvas id="poetryCanvas" width="1080" height="1350" aria-label="پیش‌نمایش تصویر شعر"></canvas></div>
+ </div>
+</section>
 </main>
 <footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۲</div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="poems.js"></script><script src="pinned.js"></script>
@@ -104,6 +142,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
 <script src="js/reader.js"></script>
 <script src="js/notebook.js"></script>
 <script src="js/search.js"></script>
+<script src="js/image-studio.js"></script>
 <script>
 const el=id=>document.getElementById(id),entries=window.poemEntries||[],pinnedEntries=window.pinnedEntries||[];
 const topicMap={poems:[],texts:["همه","مذهبی و آیینی","تاریخی و روایی","اخلاقی و تربیتی","معرفتی و اعتقادی","ادبی و تأملی","اجتماعی"]};
