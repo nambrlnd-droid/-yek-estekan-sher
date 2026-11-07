@@ -137,7 +137,7 @@ function installInteractions(){
   const dockRoutes={home:"home",library:"library",search:"search",favorites:"favorites",notebook:"notebook"};
   if(dock){event.preventDefault();event.stopImmediatePropagation();go(dockRoutes[dock.dataset.action]||"home");return;}
   const navLink=event.target.closest("#v16PrimaryNav a,.v16-page-card,.v16-home-cta");
-  if(navLink){const route=(navLink.getAttribute("href")||"").replace(/^#\\/?/,"").split("/")[0];if(route){event.preventDefault();event.stopImmediatePropagation();go(route);return;}}
+  if(navLink){const route=(navLink.getAttribute("href")||"").slice(2).split("/")[0];if(route){event.preventDefault();event.stopImmediatePropagation();go(route);return;}}
   if(internalClick)return;
   if(event.target.closest("#pinned")||(event.target.closest("#v15LibraryTabs button")&&event.target.closest("#v15LibraryTabs button").textContent.trim()==="پیشنهاد‌ومیض")){event.preventDefault();event.stopImmediatePropagation();go("pinned");return;}
   if(event.target.closest(".v15-open-library")){event.preventDefault();event.stopImmediatePropagation();go("library");return;}
