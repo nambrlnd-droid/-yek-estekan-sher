@@ -73,7 +73,7 @@ const generalRules = [
  ["تأمل و اندیشه", /اندیشه|تفکر|تأمل|معنا|زندگی|جهان|هستی|حقیقت|راز|فلسفه|بودن|نیستی|سرنوشت/]
 ];
 
-const genericTags = new Set(["ادبیات کلاسیک","پیشنهاد‌ومیض","شعر","اشعار","متن","متون","غزل"]);
+const genericTags = new Set(["ادبیات کلاسیک","پیشنهاد‌ومیض","شعر","اشعار","متن","متون","غزل"].map(norm));
 function tagSubject(item, body) {
   const tags = Array.isArray(item.tags) ? item.tags : [];
   for (const raw of tags) {
@@ -97,7 +97,7 @@ function tagSubject(item, body) {
 function classify(item, isPinned) {
   const body = String(item.body || "").trim();
   const oldSection = item.section || "";
-  const isText = isPinned ? (body.split(/\r?\n/).filter(Boolean).length > 4 && body.length > 350) : oldSection === "texts";
+  const isText = isPinned ? (Array.isArray(item.tags) && item.tags.some(t => typeof t === "string" && /نامه‌ها و متون تاریخی|پیوندها و منابع/.test(t))) : oldSection === "texts";
   const type = isText ? "text" : "poem";
   const subject = tagSubject(item, norm(body));
   const primary = type === "poem" ? (subject.name && sacred.some(([n]) => n === subject.name) || /سوگ و مرثیه|مناسبت‌ها و آیین‌های دینی|زیارت و عتبات|دعا و مناجات|قرآن و معارف قرآنی|معارف و اعتقادات/.test(subject.name) ? "اشعار مذهبی" : "اشعار غیرمذهبی")
