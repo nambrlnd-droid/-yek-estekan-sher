@@ -25,7 +25,7 @@ function refreshFilters(){
 }
 function isArchiveCategory(name){return !!name&&!!window.YESArchive?.isArchiveCategory(name);}
 function dedupe(list){
- const seen=new Set();return list.filter(x=>{const body=normalize(x.body).replace(/[\p{P}\p{S}]/gu,"");const key=x.id||body;if(!body||seen.has(key))return false;seen.add(key);return true;});
+ const seen=new Set();return list.filter(x=>{const body=normalize(x.body).replace(/[\p{P}\p{S}]/gu,"");const key=body;if(!body||seen.has(key))return false;seen.add(key);return true;});
 }
 function filters(){return {q:$("search").value.trim(),author:$("authorFilter").value,credit:$("creditFilter").value,c1:$("category1Filter").value,c2:$("category2Filter").value,c3:$("category3Filter").value};}
 function filterList(list,f){
@@ -58,7 +58,7 @@ async function getPool(f,limit){
  const all=window.poemEntries||[];
  if(f.q&&section==="poems"&&window.YESArchive?.loadAll)await window.YESArchive.loadAll();
  else if(f.c1&&section==="poems"&&f.c1==="عمومی"&&window.YESArchive?.loadAll)await window.YESArchive.loadAll();
- else if(f.c2&&isArchiveCategory(f.c2))await window.YESArchive.loadCategory(f.c2);
+ else if(f.c2&&isArchiveCategory(f.c2)){await window.YESArchive.loadCategory(f.c2);refreshFilters();}
  const source=(f.c2&&isArchiveCategory(f.c2))?(window.YESArchive.items(f.c2)||[]):all;
  let matches=dedupe(filterList(source,f));
  if(!f.c2&&f.c1==="عمومی"&&section==="poems")matches=dedupe(filterList(all,f));
