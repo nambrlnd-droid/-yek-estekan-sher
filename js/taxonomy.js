@@ -110,8 +110,8 @@ function classify(item, isPinned) {
   const type = isText ? "text" : "poem";
   const subject = tagSubject(item, norm(body));
   if (isText && subject.name === "شعر آزاد و ادبی") subject.name = "نوشته عمومی";
-  const primary = type === "poem" ? (subject.name && sacred.some(([n]) => n === subject.name) || /سوگ و مرثیه|مناسبت‌ها و آیین‌های دینی|زیارت و عتبات|دعا و مناجات|قرآن و معارف قرآنی|معارف و اعتقادات/.test(subject.name) ? "اشعار مذهبی" : "اشعار غیرمذهبی")
-                              : (sacred.some(([n]) => n === subject.name) || /دعا و مناجات|قرآن و معارف قرآنی|مناسبت‌ها|زیارت و عتبات|معارف و اعتقادات/.test(subject.name) ? "متون مذهبی" : "متون عمومی");
+  const isReligious = sacred.some(([n]) => n === subject.name) || /سوگ و مرثیه|مناسبت‌ها|زیارت و عتبات|دعا و مناجات|قرآن و معارف قرآنی|معارف و اعتقادات|تاریخ و سیره دینی/.test(subject.name);
+  const primary = isReligious ? "مذهبی" : "عمومی";
   item.contentType = type;
   item.category1 = primary;
   item.category2 = subject.name;
@@ -127,7 +127,7 @@ function applyTaxonomy() {
   const all = entries.concat(pinned);
   const count = (name, value) => all.filter(x => x.category1 === name && (!value || x.category2 === value)).length;
   window.YES_TAXONOMY = {
-    version:"2.1.0", total:all.length, libraryTotal:entries.length,
+    version:"2.2.0", total:all.length, libraryTotal:entries.length,
     poems:entries.filter(x => x.section !== "texts").length,
     texts:entries.filter(x => x.section === "texts").length,
     pinned:pinned.length, review:all.filter(x => x.taxonomyReview).length,
