@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-07T18:53:05.306868+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 1916,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-07T22:47:54.608213+00:00",
+  "fetched_this_run": 797,
+  "archive_cursor": null,
+  "archive_pages_this_run": 39,
   "posts": [
     {
       "id": "1",
@@ -25177,6 +25177,15 @@
       "source_url": "https://t.me/Poemestic/7666",
       "status": "needs_review",
       "first_seen_at": "2026-11-07T18:49:09.893040+00:00"
+    },
+    {
+      "id": "7667",
+      "text": "تا تو مرادِ من دهی، کشته مرا فراق تو،\nتا تو به داد من رسی، من به خدا رسیده‌ام.\n-رهی ‌معیری.",
+      "author": "",
+      "date": "2026-11-07T18:53:21+00:00",
+      "source_url": "https://t.me/Poemestic/7667",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-07T22:46:22.353631+00:00"
     }
   ]
 }
