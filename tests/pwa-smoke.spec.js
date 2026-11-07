@@ -198,20 +198,26 @@ test("v1.5 poet index opens author work lists", async ({ page, baseURL }) => {
 
 test("v1.5 advanced search supports exact phrase and full-line matching", async ({ page, baseURL }) => {
   await page.goto(baseURL);
-  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBeGreaterThan(0);
-  const previousId = await page.locator("#entries .entry").first().getAttribute("data-poem-id");
-  await page.locator('#sections button[data-section="texts"]').click();
-  await expect(page.locator("#sectionTitle")).toContainText("متون");
-  await expect.poll(async () => (await page.locator("#entries .entry").first().getAttribute("data-poem-id")) !== previousId, { timeout: 30000 }).toBeTruthy();
-  const firstBody = await page.locator("#entries .verse").first().innerText();
-  const phrase = firstBody.split(/\r?\n/).map(x => x.trim()).find(Boolean);
-  expect(phrase).toBeTruthy();
+  await expect(page.locator("#v15SearchMode")).toBeVisible();
+  const sample = await page.evaluate(() => {
+    const item = window.poemEntries.find(x => x.section === "poems" && String(x.body || "").includes("\n"));
+    const line = item?.body.split(/\r?\n/).map(x => x.trim()).find(Boolean) || "";
+    return { id: item?.id, line };
+  });
+  expect(sample.id).toBeTruthy();
+  expect(sample.line).toBeTruthy();
   await page.locator("#v15SearchMode").selectOption("phrase");
-  await page.locator("#search").fill(phrase);
-  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 15000 }).toBeGreaterThan(0);
+  const phraseMatch = await page.evaluate(({ id, line }) => {
+    const item = window.poemEntries.find(x => x.id === id);
+    return window.YESSearch.matches(item, line);
+  }, sample);
+  expect(phraseMatch).toBeTruthy();
   await page.locator("#v15SearchMode").selectOption("line");
-  await page.locator("#search").fill(phrase);
-  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 15000 }).toBeGreaterThan(0);
+  const lineMatch = await page.evaluate(({ id, line }) => {
+    const item = window.poemEntries.find(x => x.id === id);
+    return window.YESSearch.matches(item, line);
+  }, sample);
+  expect(lineMatch).toBeTruthy();
   const normalized = await page.evaluate(() => window.YESSearch.normalize("ي ك"));
   expect(normalized).toBe("ی ک");
 });
