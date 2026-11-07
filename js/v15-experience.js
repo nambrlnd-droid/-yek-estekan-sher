@@ -143,6 +143,7 @@ function updateRelated(id){
 }
 window.addEventListener("yes:route",event=>{const s=event.detail||{};if(s.route==="read"&&s.id){document.body.classList.remove("library-open");setVisible("readerView");setTimeout(()=>updateRelated(decodeURIComponent(s.id)),0);}else if(s.route==="home"){document.body.classList.remove("reader-focus");focusMode=false;if(document.body.classList.contains("library-open"))setVisible("v15LibraryView");else setVisible("regularView");}});
 window.addEventListener("yes:archive-loaded",()=>{if(libraryMode==="poets"||libraryMode==="topics"||libraryMode==="collections")renderLibrary();});
+window.addEventListener("yes:archive-manifest-loaded",()=>{if($("v15LibraryView")&&!$("v15LibraryView").hidden&&libraryMode==="topics")renderLibrary();});
 window.addEventListener("yes:web-poems-loaded",()=>{if(libraryMode!=="topics"&&$("v15LibraryView")&&!$("v15LibraryView").hidden)renderLibrary();});
 document.addEventListener("DOMContentLoaded",()=>{
  setupSearch();setupLibrary();setupReader();
