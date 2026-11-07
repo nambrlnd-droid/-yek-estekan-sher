@@ -65,8 +65,8 @@
   }
   window.YESReader={
     open(id){if(!content().get(id))return false;window.YESRouter.go("read",id);return true;},
-    async remember(id){if(!content().get(id))return;await window.YESStorage.put("history",{id,contentId:id,readAt:new Date().toISOString()});},
-    async saveNote(contentId,text){if(!content().get(contentId))throw new Error("اثر پیدا نشد");await window.YESStorage.put("notes",{id:contentId,contentId,text:String(text),updatedAt:new Date().toISOString()});}
+    async remember(id){if(!content().get(id))return;await window.YESStorage.put("history",{id,contentId:id,itemSnapshot:content().get(id),readAt:new Date().toISOString()});},
+    async saveNote(contentId,text){if(!content().get(contentId))throw new Error("اثر پیدا نشد");await window.YESStorage.put("notes",{id:contentId,contentId,itemSnapshot:content().get(contentId),text:String(text),updatedAt:new Date().toISOString()});}
   };
   window.addEventListener("yes:route",event=>{
     const state=event.detail||{};
@@ -81,7 +81,7 @@
     $("readerLarger").onclick=()=>{fontSize=Math.min(30,fontSize+1);$("readerBody").style.fontSize=fontSize+"px";};
     $("readerPrevious").onclick=()=>goRelative(-1);$("readerNext").onclick=()=>goRelative(1);
     $("readerSaveNote").onclick=async()=>{try{await window.YESReader.saveNote(currentId,$("readerNote").value);notify("یادداشت ذخیره شد");}catch(e){notify("ذخیرهٔ یادداشت ممکن نشد");}};
-    $("readerAddCollection").onclick=async()=>{try{const cols=await window.YESStorage.all("collections");if(!cols.length){notify("ابتدا در دفتر شخصی یک مجموعه بسازید");return;}const choice=prompt("شناسهٔ مجموعه را وارد کنید:\n"+cols.map(c=>c.id+" — "+c.title).join("\n"));const col=cols.find(c=>c.id===choice);if(!col){notify("مجموعه پیدا نشد");return;}col.itemIds=col.itemIds||[];if(!col.itemIds.includes(currentId))col.itemIds.push(currentId);await window.YESStorage.put("collections",col);notify("به مجموعه افزوده شد");}catch(e){notify("افزودن به مجموعه ممکن نشد");}};
-    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("reader-open"))window.YESRouter.go("home");});
+    $("readerAddCollection").onclick=async()=>{try{const cols=await window.YESStorage.all("collections");if(!cols.length){notify("ابتدا در دفتر شخصی یک مجموعه بسازید");return;}const choice=prompt("شناسهٔ مجموعه را وارد کنید:\n"+cols.map(c=>c.id+" — "+c.title).join("\n"));const col=cols.find(c=>c.id===choice);if(!col){notify("مجموعه پیدا نشد");return;}col.itemIds=col.itemIds||[];if(!col.itemIds.includes(currentId))col.itemIds.push(currentId);col.itemSnapshots=col.itemSnapshots||{};col.itemSnapshots[currentId]=content().get(currentId);await window.YESStorage.put("collections",col);notify("به مجموعه افزوده شد");}catch(e){notify("افزودن به مجموعه ممکن نشد");}};
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("reader-open")){if(window.YESPages?.backFromReader)window.YESPages.backFromReader();else window.YESRouter.go("home");}});
   },{once:true});
 })();

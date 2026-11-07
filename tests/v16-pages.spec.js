@@ -1,5 +1,11 @@
 const { test, expect } = require("@playwright/test");
 
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.title !== "all archive poems load before the site is revealed") {
+    await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
+  }
+});
+
 async function openPage(page, route) {
   const desktopLink = page.locator('#v16PrimaryNav a[data-route="' + route + '"]');
   if (await desktopLink.isVisible()) {
@@ -108,4 +114,69 @@ test("image studio returns to the reader's originating page", async ({ page }) =
   await page.locator("#imageStudioBack").click();
   await expect(page.locator("#readerView")).toBeVisible();
   await expect(page).toHaveURL(/#\/read\//);
+});
+
+
+test("notebook keeps snapshot-backed history and notes and restores them", async ({ page }) => {
+  await page.goto("./#/notebook");
+  const snapshot = { id: "notebook-snapshot-test", title: "اثر آزمایشی دفتر", body: "متن ذخیره‌شده باید باقی بماند.", author: "آزمون", tags: [], type: "poem" };
+  const backup = {
+    format: "yek-estekan-sher-notebook",
+    version: 1,
+    favorites: [{ id: snapshot.id, contentId: snapshot.id, itemSnapshot: snapshot, createdAt: new Date().toISOString() }],
+    history: [{ id: snapshot.id, contentId: snapshot.id, itemSnapshot: snapshot, readAt: new Date().toISOString() }],
+    notes: [{ id: snapshot.id, contentId: snapshot.id, itemSnapshot: snapshot, text: "یادداشت آزمایشی", updatedAt: new Date().toISOString() }],
+    collections: [],
+    settings: []
+  };
+  await page.locator("#restoreFile").setInputFiles({
+    name: "backup.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(backup))
+  });
+  await expect(page.locator("#notebookItems")).toContainText("اثر آزمایشی دفتر");
+  await page.locator("#notebookTabs button").filter({ hasText: "تاریخچه" }).click();
+  await expect(page.locator("#notebookItems")).toContainText("اثر آزمایشی دفتر");
+  await page.locator("#notebookTabs button").filter({ hasText: "یادداشت‌ها" }).click();
+  await expect(page.locator("#notebookItems")).toContainText("یادداشت آزمایشی");
+});
+
+test("Escape returns to the page from which a poem was opened", async ({ page }) => {
+  await page.goto("./#/favorites");
+  await page.evaluate(async () => {
+    const item = { id: "escape-route-test", title: "آزمون بازگشت", body: "متن آزمون", author: "آزمون", tags: [], type: "poem" };
+    await window.YESStorage.put("favorites", { id: item.id, contentId: item.id, itemSnapshot: item, createdAt: new Date().toISOString() });
+  });
+  await page.reload();
+  await page.locator(".v16-favorite-open").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(/#\/favorites$/);
+  await expect(page.locator("#favoritesPageView")).toBeVisible();
+});
+
+
+test("all archive poems load before the site is revealed", async ({ page }) => {
+  test.setTimeout(240000);
+  await page.goto("./");
+  await expect(page.locator("#archiveBoot")).toBeVisible();
+  await expect(page.locator("#homePageView")).toBeHidden();
+  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 210000 });
+  await expect(page.locator("#archiveBoot")).toBeHidden({ timeout: 30000 });
+  await expect(page.locator("#homePageView")).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
+    const poems = window.poemEntries.filter(x => x.section === "poems").length;
+    const texts = window.poemEntries.filter(x => x.section === "texts").length;
+    return document.querySelector("#statPoems").textContent === fmt(poems)
+      && document.querySelector("#statTexts").textContent === fmt(texts)
+      && document.querySelector("#statTotal").textContent === fmt(poems + texts);
+  }), { timeout: 15000 }).toBeTruthy();
+  expect(await page.evaluate(() => window.YESArchive.loadedCategories())).toBe(9);
+  await page.context().setOffline(true);
+  await page.reload();
+  await expect(page.locator("#archiveBoot")).toBeVisible();
+  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 30000 });
+  await expect(page.locator("#archiveBoot")).toBeHidden({ timeout: 30000 });
+  await page.context().setOffline(false);
 });

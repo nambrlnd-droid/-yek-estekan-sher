@@ -1,8 +1,8 @@
 /* PWA service worker for GitHub Pages subpath deployment. */
 const CACHE_PREFIX="yes-v13-";
-const CACHE_NAME=CACHE_PREFIX+"shell-25";
+const CACHE_NAME=CACHE_PREFIX+"shell-26";
 const CORE=[
- "./","./index.html","./manifest.webmanifest","./icons/icon.svg","./css/v15-visual.css","./css/v15-library.css","./css/v16-editorial.css","./js/v16-pages.js",
+ "./","./index.html","./manifest.webmanifest","./icons/icon.svg","./css/v15-visual.css","./css/v15-library.css","./css/v16-editorial.css","./css/archive-gate.css","./js/v16-pages.js","./js/archive-gate.js",
  "./poems.js","./poems-extra.js","./poems-user-collection.js","./poems-hasan-collection.js","./telegram-poems.js","./internet-poems.js","./poems-web-loader.js","./pinned.js",
  "./js/taxonomy.js","./js/content.js","./js/router.js","./js/storage.js","./js/reader.js",
  "./js/notebook.js","./js/search.js","./js/image-studio.js","./js/pwa.js","./js/archive.js","./js/discovery.js","./js/v14-home.js","./js/v15-experience.js"
@@ -37,6 +37,10 @@ self.addEventListener("fetch",event=>{
     }catch(error){return cached||Response.error();}
    })());
   }
+  return;
+ }
+ if(url.pathname.includes("/data/poetry-archive/")){
+  event.respondWith(fetch(request));
   return;
  }
  if(request.mode==="navigate"){
