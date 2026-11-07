@@ -47,9 +47,9 @@ window.YESArchive={
    selected.push(remaining.splice(at,1)[0]);
   }
   await Promise.all(selected.map(item=>loadCategory(item.name)));
-  const result=[],seen=new Set(),base=Math.floor(count/selected.length),extra=count%selected.length;
+  const result=[],seen=new Set(),selectedTotal=selected.reduce((sum,x)=>sum+x.count,0);let remainingCount=count;
   for(let i=0;i<selected.length;i++){
-   const meta=selected[i],wanted=base+(i<extra?1:0);let added=0;
+   const meta=selected[i],wanted=i===selected.length-1?remainingCount:Math.min(remainingCount,Math.max(1,Math.round(count*meta.count/selectedTotal)));remainingCount-=wanted;let added=0;
    for(const item of take(categoryRecords.get(meta.name)||[],wanted*8)){
     const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(++added>=wanted)break;
    }
