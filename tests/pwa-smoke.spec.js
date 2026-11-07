@@ -248,6 +248,11 @@ test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({
   await expect(page.locator("#regularView")).toBeVisible();
   await page.locator(".v15-open-library").click();
   await expect(page.locator("#v15LibraryView")).toBeVisible();
+  await page.getByRole("button", { name: "پیشنهاد‌ومیض" }).click();
+  await expect(page.locator("#pinnedView")).toBeVisible();
+  await expect.poll(() => page.locator("#pinnedEntries .pinned-item").count()).toBeGreaterThan(0);
+  await page.locator("#backFromPinned").click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
   const dimensions = await page.evaluate(() => ({
     viewport: document.documentElement.clientWidth,
     page: document.documentElement.scrollWidth
