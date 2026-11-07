@@ -57,11 +57,13 @@ async function getPool(f,limit){
  await waitForManifest();
  const all=window.poemEntries||[];
  if(f.q&&section==="poems"&&window.YESArchive?.loadAll)await window.YESArchive.loadAll();
- else if(f.c1&&section==="poems"&&f.c1==="عمومی"&&window.YESArchive?.loadAll)await window.YESArchive.loadAll();
  else if(f.c2&&isArchiveCategory(f.c2)){await window.YESArchive.loadCategory(f.c2);refreshFilters();}
  const source=(f.c2&&isArchiveCategory(f.c2))?(window.YESArchive.items(f.c2)||[]):all;
  let matches=dedupe(filterList(source,f));
- if(!f.c2&&f.c1==="عمومی"&&section==="poems")matches=dedupe(filterList(all,f));
+ if(!f.q&&randomMode&&!f.c2&&f.c1==="عمومی"&&section==="poems"&&window.YESArchive?.randomItems){
+  const archiveSample=await window.YESArchive.randomItems(limit);
+  matches=dedupe(filterList([...archiveSample,...all],f));
+ }
  if(!f.q&&randomMode){
   if(!f.c1&&!f.c2&&!f.c3&&!f.author&&!f.credit&&section==="poems"&&window.YESArchive?.randomItems){
    const random=await window.YESArchive.randomItems(limit);
