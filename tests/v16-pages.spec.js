@@ -123,7 +123,7 @@ test("notebook keeps snapshot-backed history and notes and restores them", async
   const backup = {
     format: "yek-estekan-sher-notebook",
     version: 1,
-    favorites: [],
+    favorites: [{ id: snapshot.id, contentId: snapshot.id, itemSnapshot: snapshot, createdAt: new Date().toISOString() }],
     history: [{ id: snapshot.id, contentId: snapshot.id, itemSnapshot: snapshot, readAt: new Date().toISOString() }],
     notes: [{ id: snapshot.id, contentId: snapshot.id, itemSnapshot: snapshot, text: "یادداشت آزمایشی", updatedAt: new Date().toISOString() }],
     collections: [],
