@@ -4,10 +4,10 @@ window.YESWebPoemsReady=(async function(){
 const CACHE="yekestekan-webpoems-200-v1";
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
 const list=window.poemEntries||(window.poemEntries=[]);
-const add=items=>{const seen=new Set(list.map(x=>norm(x.body)));let n=0;for(const x of items){const k=norm(x.body);if(!k||seen.has(k))continue;seen.add(k);list.push(x);n++;}return n;};
+const add=items=>{const seen=new Set(list.map(x=>norm(x.body)));let n=0;for(const x of items){const k=norm(x.body);if(!k||seen.has(k))continue;seen.add(k);list.push(x);if(window.YESContent&&!window.YESContent.get(x.id)){window.YESContent.all.push({...x,type:"poem",title:x.title||String(x.body||"").split("\\n")[0]||"بدون عنوان",legacyIndex:list.length-1,collectionIds:[]});}n++;}if(window.YESContent)window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");return n;};
 try{
  let cached=null;try{cached=JSON.parse(localStorage.getItem(CACHE)||"null");}catch(e){}
- if(Array.isArray(cached)&&cached.length===200){add(cached);window.dispatchEvent(new Event("yes:web-poems-loaded"));return;}
+ if(Array.isArray(cached)&&cached.length===200){add(cached);window.dispatchEvent(new Event("yes:web-poems-loaded"));return true;}
  const root="https://cdn.jsdelivr.net/gh/ganjoor/ganjoor-data@main/";
  const cat=await fetch(root+"poets/hafez/ghazal/_cat.json").then(r=>{if(!r.ok)throw Error("category fetch failed");return r.json();});
  const candidates=(cat.Poems||[]).slice(0,260);
