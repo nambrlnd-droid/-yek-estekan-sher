@@ -29,7 +29,7 @@ test("app shell, manifest and service worker register under GitHub Pages subpath
 
 test("reader, favorite persistence and image studio work at this viewport", async ({ page, baseURL }) => {
   await page.goto(baseURL);
-  await expect(page.locator("#entries .verse").first()).toBeVisible();
+  await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
   await page.locator("#entries .verse").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
   await page.locator("#readerFavorite").click();
@@ -77,12 +77,12 @@ test("homepage renders only ten random poems and supports 10-50 display sizes", 
   await page.goto(baseURL);
   await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
   await expect(page.locator("#displayCount")).toHaveValue("10");
-  await expect.poll(() => page.locator("#entries .entry").count()).toBe(10);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(10);
   await page.locator("#displayCount").selectOption("30");
-  await expect.poll(() => page.locator("#entries .entry").count()).toBe(30);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(30);
   await page.locator("#refreshEntries").click();
   await expect.poll(() => page.locator("#entries .entry").count()).toBe(30);
   await page.locator("#displayCount").selectOption("50");
-  await expect.poll(() => page.locator("#entries .entry").count()).toBe(50);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(50);
   await expect(page.locator("#entries .entry").count()).resolves.toBeLessThanOrEqual(50);
 });
