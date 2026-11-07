@@ -1,0 +1,28 @@
+name: Prepare bulk poetry candidate corpus
+on:
+  push:
+    branches: [v1.3-content-expansion]
+    paths:
+      - "scripts/prepare-ganjoor-corpus.py"
+      - ".github/workflows/prepare-corpus.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  extract-and-screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Extract corpus and exclude religious or ambiguous texts
+        run: python scripts/prepare-ganjoor-corpus.py
+      - name: Upload stage 1 and stage 2 outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ganjoor-stage1-stage2-corpus
+          path: corpus-stage-output/
+          compression-level: 6
+          retention-days: 30
