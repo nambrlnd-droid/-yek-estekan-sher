@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(!openOne()){randomMode=true;render().then(openOne);}
  });
  window.addEventListener("yes:archive-manifest-loaded",refreshFilters);
+ window.addEventListener("yes:archive-ready",()=>{refreshFilters();render();});
  window.addEventListener("yes:web-poems-loaded",()=>{refreshFilters();render();});
  window.addEventListener("yes:archive-loaded",()=>{if(filters().c2||filters().c1||filters().q)render();});
  refreshFilters();render();
