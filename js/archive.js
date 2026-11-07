@@ -40,26 +40,28 @@ window.YESArchive={
   const m=await manifest();
   const take=(list,n)=>{const a=list.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(n,a.length));};
   if(categoryName){await loadCategory(categoryName);const meta=m.categories.find(x=>norm(x.name)===norm(categoryName));return meta?take(categoryRecords.get(meta.name)||[],count):[];}
-  const remaining=m.categories.slice(),selected=[],total=m.categories.reduce((sum,x)=>sum+x.count,0);
-  for(let i=0;i<Math.min(3,remaining.length);i++){
-   const weight=remaining.reduce((sum,x)=>sum+x.count,0);let r=Math.random()*weight,at=remaining.length-1;
-   for(let j=0;j<remaining.length;j++){r-=remaining[j].count;if(r<0){at=j;break;}}
-   selected.push(remaining.splice(at,1)[0]);
-  }
-  await Promise.all(selected.map(item=>loadCategory(item.name)));
-  const result=[],seen=new Set(),selectedTotal=selected.reduce((sum,x)=>sum+x.count,0);let remainingCount=count;
-  for(let i=0;i<selected.length;i++){
-   const meta=selected[i],wanted=i===selected.length-1?remainingCount:Math.min(remainingCount,Math.max(1,Math.round(count*meta.count/selectedTotal)));remainingCount-=wanted;let added=0;
-   for(const item of take(categoryRecords.get(meta.name)||[],wanted*8)){
-    const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(++added>=wanted)break;
+  // Reuse already downloaded category records. Re-selecting three fresh categories
+  // on every refresh caused repeated large downloads and heavy parsing on mobile.
+  const pool=()=>[...categoryRecords.values()].flat();
+  if(pool().length<count){
+   const remaining=m.categories.filter(item=>!loaded.has(item.name));
+   const weighted=[];
+   while(remaining.length){
+    const weight=remaining.reduce((sum,x)=>sum+x.count,0);
+    let r=Math.random()*weight,at=remaining.length-1;
+    for(let j=0;j<remaining.length;j++){r-=remaining[j].count;if(r<0){at=j;break;}}
+    weighted.push(remaining.splice(at,1)[0]);
    }
+   const chosen=weighted.slice(0,Math.min(3,weighted.length));
+   await Promise.all(chosen.map(item=>loadCategory(item.name)));
   }
-  if(result.length<count){
-   for(const meta of selected){for(const item of take(categoryRecords.get(meta.name)||[],count*5)){
-    const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(result.length>=count)break;
-   }if(result.length>=count)break;}
+  let records=pool();
+  // If the cached categories are unusually small, add one more category only as needed.
+  if(records.length<count){
+   const next=m.categories.find(item=>!loaded.has(item.name));
+   if(next){await loadCategory(next.name);records=pool();}
   }
-  return take(result,count);
+  return take(records,count);
  },
  isArchiveCategory(name){return !!(window.YESArchive.manifestData&&window.YESArchive.manifestData.categories.some(x=>norm(x.name)===norm(name)));},
  categories(){return window.YESArchive.manifestData?.categories||[];},
