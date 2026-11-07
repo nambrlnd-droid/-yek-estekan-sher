@@ -58,7 +58,7 @@
   const id=state?.route||"home";
   const page=pages.find(x=>x.id===id);
   document.body.classList.add("v16-editorial");
-  document.body.classList.remove("v16-page-home","v16-page-library","v16-page-search","v16-page-favorites","v16-page-notebook","library-open","notebook-open","reader-open","reader-focus","image-studio-open");
+  document.body.classList.remove("v16-page-home","v16-page-library","v16-page-search","v16-page-favorites","v16-page-notebook","v16-page-read","library-open","notebook-open","reader-open","reader-focus","image-studio-open");
   if(state.route==="pinned"){
    hideViews();if($("pinnedView"))$("pinnedView").hidden=false;
    document.body.classList.add("v16-page-library");setActive("library");
