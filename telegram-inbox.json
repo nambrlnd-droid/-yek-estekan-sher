@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-07T07:16:08.813623+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 1895,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-07T14:06:00.520602+00:00",
+  "fetched_this_run": 792,
+  "archive_cursor": null,
+  "archive_pages_this_run": 39,
   "posts": [
     {
       "id": "1",
@@ -25132,6 +25132,33 @@
       "source_url": "https://t.me/Poemestic/7660",
       "status": "published",
       "first_seen_at": "2026-11-06T21:12:43.254347+00:00"
+    },
+    {
+      "id": "7661",
+      "text": "دیدمت رفتی و داغت جگرم را سوزاند\nفکر بی هم‌نفسی با تو سرم را سوزاند\nعقل از نیمه معمولی من رد شد رفت\nعشق هم نیمه دیوانه ترم را سوزاند\nابرها آمده بودند نفس تازه کنم\nرعد و برقی همه برگ و برم را سوزاند\nمنِ گنجشک کجا جرات پروانه کجا\nخواستم گرم شوم شعله پرم را سوزاند.\n-حامد عسکری.",
+      "author": "",
+      "date": "2026-11-07T10:16:53+00:00",
+      "source_url": "https://t.me/Poemestic/7661",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-07T14:04:27.883030+00:00"
+    },
+    {
+      "id": "7662",
+      "text": "نمک خوردند، نمکدان را ربودند،\nچه حرف هایی که پشت ما سرودند.\nببین ما را که آسوده نشستیم،\nو آنها بی قرارند چون حسودند.",
+      "author": "",
+      "date": "2026-11-07T10:57:25+00:00",
+      "source_url": "https://t.me/Poemestic/7662",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-07T14:04:27.883030+00:00"
+    },
+    {
+      "id": "7663",
+      "text": "در حق \nآدم ناسپاس\n لطف دوباره\n خطاست.",
+      "author": "",
+      "date": "2026-11-07T11:58:29+00:00",
+      "source_url": "https://t.me/Poemestic/7663",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-07T14:04:27.883030+00:00"
     }
   ]
 }
