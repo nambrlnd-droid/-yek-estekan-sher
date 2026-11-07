@@ -1,6 +1,7 @@
 /* Blocks the app until every archive category is downloaded, verified and parsed. */
 (function(){
 "use strict";
+window.__YES_ARCHIVE_BOOTING=true;
 const root=document.getElementById("archiveBoot");
 const progress=document.getElementById("archiveBootProgress");
 const progressTrack=progress?.parentElement;
@@ -17,7 +18,7 @@ function paint(loaded,total,detail){
  if(category)category.textContent=detail?.categoryIndex?("دستهٔ "+detail.categoryIndex.toLocaleString("fa-IR")+" از "+detail.categoryTotal.toLocaleString("fa-IR")+" · "+detail.category):"در حال آماده‌سازی فهرست گنجینه";
 }
 function reveal(){
- complete=true;window.__YES_ARCHIVE_READY=true;
+ complete=true;window.__YES_ARCHIVE_READY=true;window.__YES_ARCHIVE_BOOTING=false;
  document.body.classList.remove("archive-gated");document.body.removeAttribute("aria-busy");
  if(root)root.hidden=true;
  window.dispatchEvent(new Event("yes:archive-ready"));
@@ -31,7 +32,7 @@ async function boot(){
   paint(window.YESArchive.loadedCount(),manifest.total,null);
   if(!progressListener){window.addEventListener("yes:archive-loaded",event=>paint(window.YESArchive.loadedCount(),manifest.total,event.detail));progressListener=true;}
   await window.YESArchive.loadAll();
-  const webResult=window.YESWebPoemsReady?await window.YESWebPoemsReady:false;
+  const webResult=window.YESWebPoemsReady?await Promise.race([window.YESWebPoemsReady,new Promise(resolve=>setTimeout(()=>resolve(false),20000))]):false;
   if(window.YESArchive.loadedCount()!==manifest.total)throw new Error("تعداد آثار دریافت‌شده کامل نیست.");
   window.__YES_ARCHIVE_DATA_READY=true;window.dispatchEvent(new Event("yes:archive-data-ready"));
   await window.YESNotebook?.migrateLegacy?.();
