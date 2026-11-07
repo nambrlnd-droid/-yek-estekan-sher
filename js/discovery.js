@@ -59,10 +59,11 @@ async function getPool(f,limit){
  if(f.q&&section==="poems"&&window.YESArchive?.loadAll)await window.YESArchive.loadAll();
  else if(f.c2&&isArchiveCategory(f.c2)){await window.YESArchive.loadCategory(f.c2);refreshFilters();}
  const source=(f.c2&&isArchiveCategory(f.c2))?(window.YESArchive.items(f.c2)||[]):all;
- let matches=dedupe(filterList(source,f));
+ let matches=dedupe(filterList(source,f));let totalMatches=matches.length;
  if(!f.q&&randomMode&&!f.c2&&f.c1==="عمومی"&&section==="poems"&&window.YESArchive?.randomItems){
   const archiveSample=await window.YESArchive.randomItems(limit);
   matches=dedupe(filterList([...archiveSample,...all],f));
+  totalMatches=window.YESArchive.manifestData?.total||matches.length;
  }
  if(!f.q&&randomMode){
   if(!f.c1&&!f.c2&&!f.c3&&!f.author&&!f.credit&&section==="poems"&&window.YESArchive?.randomItems){
@@ -85,7 +86,7 @@ async function render(){
   result.items.forEach((item,i)=>root.append(makeCard(item,i)));
   $("empty").hidden=result.items.length!==0;
   $("searchSummary").textContent=f.q?fmt(result.total)+" اثر با این عبارت و فیلترها پیدا شد؛ در این نوبت "+fmt(result.items.length)+" اثر نمایش داده می‌شود.":"";
-  setStatus(fmt(result.items.length)+" اثر از میان مجموعهٔ واجد شرایط نمایش داده شد.");
+  setStatus(fmt(result.items.length)+" اثر از "+fmt(result.total)+" اثر واجد شرایط نمایش داده شد.");
  }catch(error){if(token!==generation)return;setStatus("دریافت اشعار ممکن نشد؛ اتصال را بررسی و دوباره تلاش کنید.");$("empty").hidden=false;notify("بارگذاری اشعار ناموفق بود.");}
 }
 function changeSection(next){section=next;document.querySelectorAll("#sections button").forEach(b=>b.classList.toggle("active",b.dataset.section===section));["category1Filter","category2Filter","category3Filter","authorFilter","creditFilter"].forEach(id=>$(id).value="");$("search").value="";randomMode=true;refreshFilters();render();}
