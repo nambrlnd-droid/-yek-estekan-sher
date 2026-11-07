@@ -33,7 +33,7 @@ test.describe("v1.6 independent page routes", () => {
     await openPage(page, "notebook");
     await expect(page).toHaveURL(/#\/notebook$/);
     await expect(page.locator("#notebookView")).toBeVisible();
-    await expect(page.locator("#notebookTabs button").nth(3)).toHaveClass(/active/);
+    await expect(page.locator("#notebookTabs button").nth(0)).toHaveClass(/active/);
     await expect(page.locator("#favoritesPageView")).toBeHidden();
 
     await openPage(page, "home");
