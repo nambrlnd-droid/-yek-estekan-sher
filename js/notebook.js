@@ -2,22 +2,26 @@
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
-let tab="favorites",activeCollection=null;
+let tab="favorites",activeCollection=null,migrationPromise=null;
 const content=()=>window.YESContent;
 const toast=s=>{const n=$("toast");if(!n)return;n.textContent=s;n.classList.add("show");setTimeout(()=>n.classList.remove("show"),1800)};
 const node=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
-async function migrateLegacy(){
- if(!window.__YES_ARCHIVE_READY)await new Promise(resolve=>window.addEventListener("yes:archive-ready",resolve,{once:true}));
- try{
-  if(localStorage.getItem("yes-v13-favorites-migrated")==="1")return;
-  const old=JSON.parse(localStorage.getItem("yekestekan-favorites")||"[]");
-  for(const key of old){
-   const m=/^(poem|pinned)-(\d+)$/.exec(String(key));if(!m)continue;
-   const list=m[1]==="poem"?content().poems:content().pinned;
-   const item=list[Number(m[2])];if(item)await YESStorage.put("favorites",{id:item.id,contentId:item.id,itemSnapshot:item,createdAt:new Date().toISOString(),migrated:true});
-  }
-  localStorage.setItem("yes-v13-favorites-migrated","1");
- }catch(e){toast("انتقال علاقه‌مندی‌های قدیمی کامل نشد؛ دادهٔ قبلی دست‌نخورده باقی ماند.");}
+function migrateLegacy(){
+ if(migrationPromise)return migrationPromise;
+ migrationPromise=(async()=>{
+  if(!window.__YES_ARCHIVE_DATA_READY)await new Promise(resolve=>window.addEventListener("yes:archive-data-ready",resolve,{once:true}));
+  try{
+   if(localStorage.getItem("yes-v13-favorites-migrated")==="1")return;
+   const old=JSON.parse(localStorage.getItem("yekestekan-favorites")||"[]");
+   for(const key of old){
+    const m=/^(poem|pinned)-(\\d+)$/.exec(String(key));if(!m)continue;
+    const list=m[1]==="poem"?content().poems:content().pinned;
+    const item=list[Number(m[2])];if(item)await YESStorage.put("favorites",{id:item.id,contentId:item.id,itemSnapshot:item,createdAt:new Date().toISOString(),migrated:true});
+   }
+   localStorage.setItem("yes-v13-favorites-migrated","1");
+  }catch(e){toast("انتقال علاقه‌مندی‌های قدیمی کامل نشد؛ دادهٔ قبلی دست‌نخورده باقی ماند.");}
+ })();
+ return migrationPromise;
 }
 function open(initialTab){if(["favorites","history","notes","collections"].includes(initialTab))tab=initialTab;document.body.classList.add("notebook-open");$("notebookView").hidden=false;$("regularView").hidden=true;$("pinnedView").hidden=true;$("readerView").hidden=true;window.scrollTo({top:0,behavior:"smooth"});render();}
 function close(){document.body.classList.remove("notebook-open");$("notebookView").hidden=true;YESRouter.go("home");}
@@ -87,5 +91,6 @@ document.addEventListener("DOMContentLoaded",()=>{
  $("openNotebook").onclick=open;$("notebookBack").onclick=close;
  $("backupNotebook").onclick=backup;$("restoreNotebook").onclick=()=>$("restoreFile").click();
  $("restoreFile").onchange=e=>{if(e.target.files[0])restore(e.target.files[0]);e.target.value="";};
+ migrateLegacy();
 });
 })();
