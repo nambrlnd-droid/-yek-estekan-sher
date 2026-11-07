@@ -39,7 +39,7 @@ test("image studio exposes expanded Persian fonts and twelve design templates", 
 });
 
 test("image studio supports story and landscape export dimensions", async ({ page }) => {
-  await page.goto("./");
+  await page.goto("./#/search");
   await page.locator("#openImageStudio").click();
   await page.locator("#imageFormat").selectOption("story");
   await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height])).toEqual([1080, 1920]);
