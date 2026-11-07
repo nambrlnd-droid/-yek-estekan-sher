@@ -9,6 +9,7 @@
  .daily-poem small{display:block;color:var(--gold);font-size:10px;margin-bottom:9px}
  .daily-poem blockquote{margin:0;color:var(--text);font-size:16px;line-height:2.2;white-space:pre-line}
  .daily-poem .daily-author{display:block;color:var(--muted);font-size:11px;margin-top:9px}
+ .continue-reading[hidden]{display:none!important}
  .continue-reading{max-width:850px;margin:0 auto 16px;padding:12px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:12px}
  .continue-reading strong{display:block;color:var(--gold2);font-size:12px;font-weight:500}.continue-reading span{display:block;color:var(--muted);font-size:11px;margin-top:4px;max-width:560px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  .continue-reading button{border:1px solid var(--line);border-radius:20px;background:transparent;color:var(--gold2);padding:6px 13px;font:inherit;font-size:11px;white-space:nowrap}
