@@ -86,3 +86,34 @@ test("homepage renders only ten random poems and supports 10-50 display sizes", 
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(50);
   await expect(page.locator("#entries .entry").count()).resolves.toBeLessThanOrEqual(50);
 });
+
+
+test("refresh shows a new non-overlapping sample and remembers the chosen size", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(10);
+  const first = await page.locator("#entries .entry").evaluateAll(nodes => nodes.map(node => node.dataset.poemId));
+  await page.locator("#refreshEntries").click();
+  await expect.poll(async () => {
+    const next = await page.locator("#entries .entry").evaluateAll(nodes => nodes.map(node => node.dataset.poemId));
+    return next.length === 10 && next.every(id => !first.includes(id));
+  }, { timeout: 30000 }).toBeTruthy();
+  await page.locator("#displayCount").selectOption("20");
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(20);
+  await page.reload();
+  await expect(page.locator("#displayCount")).toHaveValue("20");
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(20);
+});
+
+test("favorite state is reflected in the personal notebook", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  const first = page.locator("#entries .entry").first();
+  const poemId = await first.getAttribute("data-poem-id");
+  await first.locator("button.favorite").click();
+  await expect(first.locator("button.favorite")).toContainText("نشان‌شده");
+  await page.locator("#openNotebook").click();
+  await expect(page.locator("#notebookView")).toBeVisible();
+  await expect(page.locator("#notebookItems")).toContainText(await first.locator(".verse").innerText());
+  expect(poemId).toBeTruthy();
+});
