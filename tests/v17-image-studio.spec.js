@@ -34,8 +34,10 @@ test("image studio exposes expanded Persian fonts and twelve design templates", 
   await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height])).toEqual([1200, 1200]);
   await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => c.toDataURL("image/png").length)).toBeGreaterThan(1000);
   await expect.poll(() => page.evaluate(async () => (await window.YESStorage.get("settings", "image-studio"))?.imageFont)).toBe("Amiri");
-  await page.evaluate(() => history.replaceState(null, "", location.pathname + "#/image"));
+  await page.evaluate(() => history.replaceState(null, "", location.pathname + "#/search"));
   await page.reload();
+  await expect(page.locator("#openImageStudio")).toBeVisible();
+  await page.locator("#openImageStudio").click();
   await expect(page.locator("#imageStudioView")).toBeVisible();
   await expect(page.locator("#imageFont")).toHaveValue("Amiri");
   await expect(page.locator("#imageFormat")).toHaveValue("square");
