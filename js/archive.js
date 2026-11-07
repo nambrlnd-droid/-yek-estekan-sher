@@ -67,8 +67,11 @@ async function loadCategory(name){
    seenIds.add(item.id);seenBodies.add(key);target.push(item);
   }
   if(window.YESContent){
-   for(const item of records){if(!seenContentIds.has(item.id)){window.YESContent.all.push(item);seenContentIds.add(item.id);}}
-   window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");
+   for(const item of records){
+    if(seenContentIds.has(item.id))continue;
+    window.YESContent.all.push(item);seenContentIds.add(item.id);
+    if(item.type!=="text")window.YESContent.poems.push(item);
+   }
   }
   loaded.set(meta.name,records.length);
   const loadedRecords=window.YESArchive.loadedCount();
