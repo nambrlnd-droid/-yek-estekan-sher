@@ -16,15 +16,14 @@ test("app shell, manifest and service worker register under GitHub Pages subpath
   await page.goto(baseURL);
   await expect(page).toHaveTitle(/یک استکان شعر/);
   await expect(page.locator("#siteStats")).toBeVisible();
-  const counts = await page.evaluate(() => ({
-    poems: window.poemEntries.filter(x => x.section === "poems").length,
-    texts: window.poemEntries.filter(x => x.section === "texts").length,
-    authors: new Set(window.poemEntries.map(x => (x.author || "").trim()).filter(Boolean)).size,
-    topics: new Set(window.poemEntries.flatMap(x => x.tags || []).map(x => String(x).trim()).filter(Boolean)).size
-  }));
-  expect(await page.locator("#statPoems").innerText()).toBe(new Intl.NumberFormat("fa-IR").format(counts.poems));
-  expect(await page.locator("#statTexts").innerText()).toBe(new Intl.NumberFormat("fa-IR").format(counts.texts));
-  expect(await page.locator("#statTotal").innerText()).toBe(new Intl.NumberFormat("fa-IR").format(counts.poems + counts.texts));
+  await expect.poll(async () => page.evaluate(() => {
+    const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
+    const poems = window.poemEntries.filter(x => x.section === "poems").length;
+    const texts = window.poemEntries.filter(x => x.section === "texts").length;
+    return document.querySelector("#statPoems").textContent === fmt(poems)
+      && document.querySelector("#statTexts").textContent === fmt(texts)
+      && document.querySelector("#statTotal").textContent === fmt(poems + texts);
+  }), { timeout: 30000 }).toBeTruthy();
   await expect(page.locator('link[rel="manifest"]')).toHaveAttribute("href", "./manifest.webmanifest");
   await expect(page.locator("#pwaStatus")).not.toBeEmpty();
   await page.waitForFunction(() => navigator.serviceWorker && navigator.serviceWorker.controller, null, { timeout: 15000 });
