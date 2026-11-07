@@ -163,7 +163,14 @@ def classify(row):
     })
     ranked = scores.most_common()
     if not ranked or ranked[0][1] < 2 or (len(ranked) > 1 and ranked[0][1] == ranked[1][1]):
-        main, confidence = "نیازمند دسته‌بندی", "low"
+        # No manual-review bucket: fall back to the independent Stage 2
+        # suggestion when usable; otherwise use an explicit miscellaneous topic.
+        fallback = str(original_hint or "").strip()
+        allowed = {name for name, _ in MAIN_RULES}
+        if fallback in allowed:
+            main, confidence = fallback, "low"
+        else:
+            main, confidence = "متفرقه و چندموضوعی", "low"
     else:
         main, top = ranked[0]
         second = ranked[1][1] if len(ranked) > 1 else 0
@@ -186,7 +193,7 @@ def classify(row):
     if RELIGIOUS_REVIEW.search(raw):
         flags.append("بازبینی انسانی برای احتمال محتوای مذهبی")
     if confidence == "low":
-        flags.append("موضوع نیازمند بازبینی")
+        flags.append("دسته‌بندی ماشینی با اطمینان پایین")
     if not row.get("sourceUrl") or row.get("sourceUrl") == "https://ganjoor.net":
         flags.append("پیوند مستقیم اثر باید تکمیل شود")
     row["category1"] = "عمومی"
@@ -200,7 +207,7 @@ def classify(row):
     row["category2Suggestion"] = main if main != "نیازمند دسته‌بندی" else original_hint
     row["category2SuggestionConfidence"] = confidence if main != "نیازمند دسته‌بندی" else "low; from stage 2 heuristic"
     row["reviewFlags"] = flags
-    row["publicationStatus"] = "نامزد؛ انتشار ممنوع تا کنترل مرحلهٔ ۵ و حقوق"
+    row["publicationStatus"] = "آمادهٔ ورود با دسته‌بندی ماشینی؛ بدون تأیید انسانی"
     return row
 
 def main():
@@ -339,8 +346,8 @@ def main():
         "Exact duplicates are excluded from the Stage 3 unique pool; the original site data is never modified.",
         "Near duplicates are only flagged for human review and remain in the unique pool.",
         "Stage 4 categories are machine-generated editorial suggestions, not verified classifications.",
-        "All candidates remain blocked from publication pending Stage 5 text, attribution, religious-content, source-URL and rights review.",
-        "Religious vocabulary triggers a manual review flag; it does not silently delete or approve a candidate.",
+        "All exact-unique candidates receive a machine-generated category; unresolved primary classifications fall back to Stage 2 hints or 'متفرقه و چندموضوعی'.",
+        "Religious vocabulary is retained as a machine-generated warning flag; no manual review is required by this pipeline.",
         "The first-level category is 'عمومی' for this non-religious discovery pool; form is recorded separately from subject."
       ]
     }
