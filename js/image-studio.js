@@ -110,7 +110,7 @@ async function saveSettings(){
  try{const value={id:"image-studio",...Object.fromEntries(settingIds.map(id=>[id,$(id).type==="checkbox"?$(id).checked:$(id).value]))};await window.YESStorage.put("settings",value);}catch(e){}
 }
 async function loadSettings(){
- try{const v=await window.YESStorage.get("settings","image-studio");if(!v)return;settingIds.forEach(id=>{if(v[id]!==undefined){if($(id).type==="checkbox")$(id).checked=!!v[id];else $(id).value=v[id];}});}catch(e){}
+ try{const v=await window.YESStorage.get("settings","image-studio");if(!v)return false;settingIds.forEach(id=>{if(v[id]!==undefined){if($(id).type==="checkbox")$(id).checked=!!v[id];else $(id).value=v[id];}});return true;}catch(e){return false;}
 }
 function applyTemplate(name){
  const t=templates[name];if(!t)return;
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
  settingIds.forEach(id=>{const control=$(id);if(!control)return;control.addEventListener("input",()=>{if(id==="imageTemplate")return;schedule();saveSettings();if(id==="imageFont"||id==="imageFontWeight")ensureFont();});control.addEventListener("change",()=>{if(id==="imageTemplate")applyTemplate(control.value);else{schedule();saveSettings();}});});
  ["imageText","imageAuthor"].forEach(id=>{const control=$(id);if(control)control.addEventListener("input",schedule);});
  if(document.fonts?.ready)document.fonts.ready.then(schedule);
- await loadSettings();document.querySelectorAll("#imagePresetButtons button").forEach(b=>b.classList.toggle("active",b.dataset.template===$("imageTemplate").value));
+ const restored=await loadSettings();if(!restored)applyTemplate("classic");document.querySelectorAll("#imagePresetButtons button").forEach(b=>b.classList.toggle("active",b.dataset.template===$("imageTemplate").value));
  await ensureFont();draw();
 });
 })();
