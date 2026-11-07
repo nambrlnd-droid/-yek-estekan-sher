@@ -39,6 +39,10 @@ self.addEventListener("fetch",event=>{
   }
   return;
  }
+ if(url.pathname.includes("/data/poetry-archive/")){
+  event.respondWith(fetch(request));
+  return;
+ }
  if(request.mode==="navigate"){
   event.respondWith((async()=>{
    try{
