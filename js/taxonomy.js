@@ -3,6 +3,7 @@
 (function(){
 "use strict";
 const rows=Array.isArray(window.poemEntries)?window.poemEntries:[];
+const pinned=Array.isArray(window.pinnedEntries)?window.pinnedEntries:[];
 const rx=(s)=>new RegExp(s,"i");
 const religious=[
  ["امیرالمؤمنین علیه‌السلام",/(امیرالمؤمنین|امیر مومنان|امیرالمومنین|علی بن ابی.?طالب|امام علی|یا علی|حیدر|مرتضی|ذوالفقار|غدیر|نهج.?البلاغه|مولای متقیان)/i],
@@ -76,5 +77,6 @@ function classify(item){
  item.tags=[primary,subject];
 }
 rows.forEach(classify);
-window.YES_TAXONOMY={version:"2.0.0",total:rows.length,poems:rows.filter(x=>x.section==="poems").length,texts:rows.filter(x=>x.section==="texts").length,review:rows.filter(x=>x.taxonomyReview).length,firstLevel:[...new Set(rows.map(x=>x.category1))],secondLevel:[...new Set(rows.map(x=>x.category2))]};
+pinned.forEach(item=>{const body=String(item.body||"");const matched=religious.filter(([name,re])=>re.test(body)).map(x=>x[0]);const isReligious=matched.length>0||/(یا الله|یا رب|خداوند|رسول الله|صلوات الله|علیهم السلام|علیه السلام|صل الله)/i.test(body);item.category1=isReligious?"متون مذهبی":"متون عمومی";item.category2=matched[0]||(general.find(([name,re])=>re.test(body))||[])[0]||"نوشته عمومی";item.tags=[item.category1,item.category2];});
+window.YES_TAXONOMY={version:"2.0.0",total:rows.length+pinned.length,libraryTotal:rows.length,poems:rows.filter(x=>x.section==="poems").length,texts:rows.filter(x=>x.section==="texts").length,pinned:pinned.length,review:rows.filter(x=>x.taxonomyReview).length,firstLevel:[...new Set(rows.map(x=>x.category1))],secondLevel:[...new Set(rows.map(x=>x.category2))]};
 })();
