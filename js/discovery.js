@@ -110,7 +110,10 @@ document.addEventListener("DOMContentLoaded",()=>{
  $("refreshEntries").addEventListener("click",()=>{randomMode=true;render();});
  document.querySelectorAll("#sections button").forEach(b=>intercept(b,"click",()=>changeSection(b.dataset.section)));
  ["search","authorFilter","creditFilter","category1Filter","category2Filter","category3Filter"].forEach(id=>intercept(id,id==="search"?"input":"change",()=>{randomMode=!$("search").value.trim();refreshFilters();render();}));
- intercept("randomPoem","click",()=>{randomMode=true;render();});
+ intercept("randomPoem","click",()=>{
+  const openOne=()=>{const cards=[...$("entries").querySelectorAll(".entry[data-poem-id]")];if(!cards.length)return false;const card=cards[Math.floor(Math.random()*cards.length)];return window.YESReader.open(card.dataset.poemId);};
+  if(!openOne()){randomMode=true;render().then(openOne);}
+ });
  window.addEventListener("yes:archive-manifest-loaded",refreshFilters);
  window.addEventListener("yes:web-poems-loaded",()=>{refreshFilters();render();});
  window.addEventListener("yes:archive-loaded",()=>{if(filters().c2||filters().c1||filters().q)render();});
