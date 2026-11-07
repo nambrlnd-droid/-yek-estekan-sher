@@ -36,7 +36,7 @@ def main():
         seen.add(ident)
         cat=str(src.get("category2") or "متفرقه و چندموضوعی").strip()
         item={
-          "id":ident,"section":"poems","title":str(src.get("title") or ""),
+          "id":ident,"section":"poems","type":"poem","title":str(src.get("title") or ""),
           "author":str(src.get("author") or ""),"body":body,
           "tags":[x for x in [cat,src.get("category3"),src.get("sourceCategory"),src.get("form")] if x],
           "source":"گنجور؛ مجموعهٔ دادهٔ mabidan/ganjoor",
