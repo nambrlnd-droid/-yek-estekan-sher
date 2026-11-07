@@ -5,8 +5,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("image studio exposes expanded Persian fonts and twelve design templates", async ({ page }) => {
-  await page.goto("./");
-  await page.waitForFunction(() => window.__YES_ARCHIVE_READY === true, null, { timeout: 15000 });
+  await page.goto("./#/search");
+  await expect(page.locator("#openImageStudio")).toBeVisible();
   await page.locator("#openImageStudio").click();
   await expect(page.locator("#imageStudioView")).toBeVisible();
   await expect(page.locator("#imageFont option")).toHaveCount(8);
