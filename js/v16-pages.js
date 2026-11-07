@@ -147,7 +147,6 @@ function installInteractions(){
   if(event.target.closest(".v15-open-library")){event.preventDefault();event.stopImmediatePropagation();go("library");return;}
   if(event.target.closest("#openNotebook")){event.preventDefault();event.stopImmediatePropagation();go("notebook");return;}
   if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
-  if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#openImageStudio")){event.preventDefault();event.stopImmediatePropagation();imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;window.YESImageStudio?.open(null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#notebookBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
   if(event.target.closest("#v15LibraryBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
