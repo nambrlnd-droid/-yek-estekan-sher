@@ -129,7 +129,7 @@ function showRoute(state){
  }
  if(route==="notebook"){window.YESNotebook?.open();setVisible("notebook");}
  if(route==="favorites")renderFavorites();
- if(route==="search"){const search=$("search");if(search&&state.focus)search.focus({preventScroll:true});}
+ if(route==="search"){const search=$("search");if(search)search.focus({preventScroll:true});}
 }
 function installInteractions(){
  document.addEventListener("click",event=>{
