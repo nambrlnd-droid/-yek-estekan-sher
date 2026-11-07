@@ -69,11 +69,12 @@ async function getPool(f,limit){
   if(!f.c1&&!f.c2&&!f.c3&&!f.author&&!f.credit&&section==="poems"&&window.YESArchive?.randomItems){
    const random=await window.YESArchive.randomItems(limit);
    const local=sample((window.poemEntries||[]).filter(x=>x.section==="poems"),Math.max(0,Math.floor(limit*.1)));
-   matches=dedupe([...random,...local]);
+   matches=dedupe([...random,...local]);totalMatches=window.YESArchive.manifestData?.total||matches.length;
   }else matches=sample(matches,limit);
  }else if(f.q){matches.sort((a,b)=>window.YESSearch.score(b,f.q)-window.YESSearch.score(a,f.q));if(randomMode)matches=sample(matches.slice(0,Math.max(limit*4,limit)),limit);else matches=matches.slice(0,limit);}
  else matches=sample(matches,limit);
- return {items:matches.slice(0,limit),total:matches.length};
+ if(f.c2&&isArchiveCategory(f.c2)&&!f.q){const meta=window.YESArchive.categories().find(x=>normalize(x.name)===normalize(f.c2));if(meta)totalMatches=meta.count;}
+ return {items:matches.slice(0,limit),total:totalMatches};
 }
 async function render(){
  const token=++generation,limit=count(),f=filters(),root=$("entries");
