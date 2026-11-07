@@ -91,7 +91,9 @@ function tagSubject(item, body, isText) {
   const hit = generalRules.find(([,re]) => re.test(body));
   if (hit) return {name:hit[0], confidence:"medium"};
   if (tags.some(t => typeof t === "string" && /غزل|ادبیات کلاسیک/.test(norm(t)))) return {name:"غزل و ادبیات کلاسیک", confidence:"medium"};
-  return {name:"شعر آزاد و ادبی", confidence:"low"};
+  const author = String(item.author || "").replace(/[\u200c\u200e\u200f]/g, " ").replace(/\s+/g, " ").trim();
+  if (author) return {name:"اشعار "+author, confidence:"medium"};
+  return {name:isText ? "نوشته عمومی" : "اشعار متفرقه و موضوع نامشخص", confidence:"low"};
 }
 
 function classify(item, isPinned) {
