@@ -238,6 +238,10 @@ test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({
   await page.setViewportSize({ width: 360, height: 780 });
   await page.goto(baseURL);
   await expect(page.locator("#v15SearchMode")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="library"]').click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="home"]').click();
+  await expect(page.locator("#regularView")).toBeVisible();
   await page.locator(".v15-open-library").click();
   await expect(page.locator("#v15LibraryView")).toBeVisible();
   const dimensions = await page.evaluate(() => ({
