@@ -26,7 +26,7 @@ function createNavigation(){
 function createHome(){
  if($("homePageView"))return;
  const main=document.querySelector("main"),home=make("section","v16-page v16-home");home.id="homePageView";
- home.innerHTML='<div class="v16-home-hero"><span class="v16-eyebrow">مکثی میان واژه‌ها</span><h2>هر بار، دریچه‌ای تازه به جهان شعر</h2><p>در کتابخانه قدم بزنید، واژه‌ای را جست‌وجو کنید یا خواندن را از همان‌جا که مانده‌اید ادامه دهید.</p><a class="v16-home-cta" href="#/library">ورود به کتابخانه <span>←</span></a></div><div id="v16DailySlot" class="v16-home-daily"></div><div id="v16StatsSlot"></div><div class="v16-home-section"><div class="v16-section-heading"><span>راه‌های کشف</span><h2>از کجا آغاز می‌کنید؟</h2></div><div class="v16-page-grid" id="v16HomeLinks"></div></div><div id="v16PinnedSlot"></div>';
+ home.innerHTML='<div class="v16-home-hero"><span class="v16-eyebrow">مکثی میان واژه‌ها</span><h2>یک استکان شعر</h2><p>برای لحظه‌های مکث، خواندن و دوباره دیدن جهان از پنجرهٔ واژه‌ها.</p><a class="v16-home-cta" href="#/library">ورود به کتابخانه <span>←</span></a><div id="v16DailySlot" class="v16-home-daily"></div></div><div id="v16StatsSlot"></div><div class="v16-home-section"><div class="v16-section-heading"><span>راه‌های کشف</span><h2>از کجا آغاز می‌کنید؟</h2></div><div class="v16-page-grid" id="v16HomeLinks"></div></div><div id="v16PinnedSlot"></div>';
  const mainFirst=main.firstElementChild;main.insertBefore(home,mainFirst);
  const links=$("v16HomeLinks");
  links.append(
@@ -122,7 +122,7 @@ function go(route,id){
 }
 function showRoute(state){
  const route=state?.route||"home";
- if(route==="read"){if(activeRoute!=="read"&&!(activeRoute==="image"&&imageReturnRoute==="read"))returnRoute=activeRoute;currentReadId=state?.id||currentReadId;activeRoute="read";setVisible("read");return;}
+ if(route==="read"){if(activeRoute!=="read"&&!(activeRoute==="image"&&imageReturnRoute==="read"))returnRoute=activeRoute;currentReadId=state?.id?decodeURIComponent(state.id):currentReadId;activeRoute="read";setVisible("read");return;}
  if(route==="image"||route==="image-studio"){if(activeRoute!=="image"){imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;}activeRoute="image";setVisible("image");return;}
  if(route==="pinned"){if(activeRoute!=="pinned")returnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
