@@ -24,6 +24,7 @@ function refreshFilters(){
  fillSelect("authorFilter",sectionItems.map(x=>x.author),"همهٔ شاعران");
 }
 function isArchiveCategory(name){return !!name&&!!window.YESArchive?.isArchiveCategory(name);}
+async function archiveSample(limit){try{return window.YESArchive?.randomItems?await window.YESArchive.randomItems(limit):[];}catch(error){setStatus("گنجینهٔ برخط موقتاً در دسترس نیست؛ از آثار بارگذاری‌شده استفاده می‌شود.");return [];}}
 function dedupe(list){
  const seen=new Set();return list.filter(x=>{const body=normalize(x.body).replace(/[\p{P}\p{S}]/gu,"");const key=body;if(!body||seen.has(key))return false;seen.add(key);return true;});
 }
@@ -50,7 +51,7 @@ function makeCard(item,index){
  if(item.author){const author=document.createElement("div");author.className="author";author.textContent="— "+item.author;card.append(author);}
  const bar=document.createElement("div");bar.className="card-actions";
  const copy=document.createElement("button");copy.className="action";copy.textContent="کپی متن";copy.onclick=()=>{const text=item.body+(item.author?"\n— "+item.author:"");navigator.clipboard?.writeText(text).then(()=>notify("متن کپی شد")).catch(()=>notify("کپی در این مرورگر در دسترس نیست"));};bar.append(copy);
- const fav=document.createElement("button");fav.className="action favorite";fav.textContent="♡ نشان‌کردن";let favoriteTouched=false;window.YESStorage.get("favorites",item.id).then(saved=>{if(saved&&!favoriteTouched){fav.textContent="♥ نشان‌شده";fav.classList.add("on");}}).catch(()=>{});fav.onclick=async()=>{favoriteTouched=true;try{const old=await window.YESStorage.get("favorites",item.id);if(old)await window.YESStorage.remove("favorites",item.id);else await window.YESStorage.put("favorites",{id:item.id,contentId:item.id,createdAt:new Date().toISOString()});fav.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";fav.classList.toggle("on",!old);notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد");}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست");}};bar.append(fav);
+ const fav=document.createElement("button");fav.className="action favorite";fav.textContent="♡ نشان‌کردن";let favoriteTouched=false;window.YESStorage.get("favorites",item.id).then(saved=>{if(saved&&!favoriteTouched){fav.textContent="♥ نشان‌شده";fav.classList.add("on");}}).catch(()=>{});fav.onclick=async()=>{favoriteTouched=true;try{const old=await window.YESStorage.get("favorites",item.id);if(old)await window.YESStorage.remove("favorites",item.id);else await window.YESStorage.put("favorites",{id:item.id,contentId:item.id,itemSnapshot:item,createdAt:new Date().toISOString()});fav.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";fav.classList.toggle("on",!old);notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد");}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست");}};bar.append(fav);
  const share=document.createElement("button");share.className="action";share.textContent="اشتراک‌گذاری";share.onclick=()=>{const text=item.body+(item.author?"\n— "+item.author:"");if(navigator.share)navigator.share({title:item.title||"یک استکان شعر",text}).catch(()=>{});else navigator.clipboard?.writeText(text).then(()=>notify("متن کپی شد"));};bar.append(share);card.append(bar);return card;
 }
 async function getPool(f,limit){
@@ -61,14 +62,14 @@ async function getPool(f,limit){
  const source=(f.c2&&isArchiveCategory(f.c2))?(window.YESArchive.items(f.c2)||[]):all;
  let matches=dedupe(filterList(source,f));let totalMatches=matches.length;
  if(!f.q&&randomMode&&!f.c2&&f.c1==="عمومی"&&section==="poems"&&window.YESArchive?.randomItems){
-  const archiveSample=await window.YESArchive.randomItems(limit*5);
-  matches=dedupe(filterList([...archiveSample,...all],f));
+  const archiveItems=await archiveSample(limit*5);
+  matches=dedupe(filterList([...archiveItems,...all],f));
   totalMatches=window.YESArchive.manifestData?.total||matches.length;
  }
  if(!f.q&&randomMode){
   if(!f.c1&&!f.c2&&!f.c3&&!f.author&&!f.credit&&section==="poems"&&window.YESArchive?.randomItems){
-   const random=await window.YESArchive.randomItems(limit*5);
-   const local=sample((window.poemEntries||[]).filter(x=>x.section==="poems"),Math.max(0,Math.floor(limit*.1)));
+   const random=await archiveSample(limit*5);
+   const local=sample((window.poemEntries||[]).filter(x=>x.section==="poems"),limit);
    matches=dedupe([...random,...local]);totalMatches=window.YESArchive.manifestData?.total||matches.length;
   }else matches=sample(matches,limit);
  }else if(f.q){matches.sort((a,b)=>window.YESSearch.score(b,f.q)-window.YESSearch.score(a,f.q));matches=matches.slice(0,limit);}

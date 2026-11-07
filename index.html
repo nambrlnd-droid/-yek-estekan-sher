@@ -2,8 +2,9 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#171512"><meta name="description" content="یک استکان شعر؛ مکثی کوتاه میان شعر، واژه و حال خوب.">\n<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>یک استکان شعر | نسخهٔ ۱.۵</title>
+<meta name="theme-color" content="#111923"><meta name="description" content="یک استکان شعر؛ مکثی کوتاه میان شعر، واژه و حال خوب.">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>یک استکان شعر | نسخهٔ ۱.۶</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -97,9 +98,9 @@ body.reader-open main{max-width:850px;padding-top:22px}
 .display-controls #displayStatus{flex-basis:100%;text-align:center;color:var(--muted);font-size:10px;min-height:15px}
 #loadMore{display:none!important}
 @media(max-width:600px){.display-controls{gap:8px;padding:11px}.display-controls label{width:100%;text-align:center}.display-controls select{flex:1}.display-controls button{flex:1}}
-</style><link rel="stylesheet" href="./css/v15-visual.css"><link rel="stylesheet" href="./css/v15-library.css"></head>
+</style><link rel="stylesheet" href="./css/v15-visual.css"><link rel="stylesheet" href="./css/v15-library.css"><link rel="stylesheet" href="./css/v16-editorial.css"></head>
 <body>
-<header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۵</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
+<header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۶</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
 <main>
 
 <section class="site-stats" id="siteStats" aria-label="آمار کتابخانه">
@@ -166,7 +167,7 @@ body.reader-open main{max-width:850px;padding-top:22px}
  </div>
 </section>
 </main>
-<footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۵</div>
+<footer><div class="foot-mark">✦</div><div>یک استکان شعر</div><div>برای لحظه‌های مکث و خواندن · نسخهٔ ۱.۶</div>
 <div class="pwa-tools"><span class="pwa-status" id="pwaStatus" role="status" aria-live="polite">در حال آماده‌سازی حالت آفلاین…</span></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="poems.js"></script><script src="poems-extra.js"></script><script src="poems-user-collection.js"></script><script src="poems-hasan-collection.js"></script><script src="telegram-poems.js"></script><script src="internet-poems.js"></script><script src="pinned.js"></script>
 <script src="js/taxonomy.js"></script>
@@ -199,7 +200,7 @@ const favorites=()=>{try{return JSON.parse(localStorage.getItem("yekestekan-favo
 function notify(s){const t=el("toast");t.textContent=s;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
 function copyText(s){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(()=>notify("متن کپی شد")).catch(()=>notify("کپی در این مرورگر در دسترس نیست"))}else notify("کپی در این مرورگر در دسترس نیست")}
 function shareText(s){if(navigator.share){navigator.share({title:"یک استکان شعر",text:s}).catch(()=>{})}else copyText(s)}
-function cardActions(card,item,key){const bar=document.createElement("div");bar.className="card-actions";const c=document.createElement("button");c.className="action";c.textContent="کپی متن";c.onclick=()=>copyText(item.body+(item.author?"\n— "+item.author:""));bar.append(c);const f=document.createElement("button"),isOn=favorites().includes(key);f.className="action favorite"+(isOn?" on":"");f.textContent=isOn?"♥ نشان‌شده":"♡ نشان‌کردن";f.onclick=async()=>{try{const id=item.id||key,old=await YESStorage.get("favorites",id);if(old)await YESStorage.remove("favorites",id);else await YESStorage.put("favorites",{id,contentId:id,createdAt:new Date().toISOString()});let legacy=favorites();legacy=legacy.filter(x=>x!==key);if(!old)legacy.push(key);localStorage.setItem("yekestekan-favorites",JSON.stringify(legacy));f.classList.toggle("on",!old);f.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد")}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست")}};bar.append(f);const sh=document.createElement("button");sh.className="action";sh.textContent="اشتراک‌گذاری";sh.onclick=()=>shareText(item.body+(item.author?"\n— "+item.author:""));bar.append(sh);card.append(bar)}
+function cardActions(card,item,key){const bar=document.createElement("div");bar.className="card-actions";const c=document.createElement("button");c.className="action";c.textContent="کپی متن";c.onclick=()=>copyText(item.body+(item.author?"\n— "+item.author:""));bar.append(c);const f=document.createElement("button"),isOn=favorites().includes(key);f.className="action favorite"+(isOn?" on":"");f.textContent=isOn?"♥ نشان‌شده":"♡ نشان‌کردن";f.onclick=async()=>{try{const id=item.id||key,old=await YESStorage.get("favorites",id);if(old)await YESStorage.remove("favorites",id);else await YESStorage.put("favorites",{id,contentId:id,itemSnapshot:item,createdAt:new Date().toISOString()});let legacy=favorites();legacy=legacy.filter(x=>x!==key);if(!old)legacy.push(key);localStorage.setItem("yekestekan-favorites",JSON.stringify(legacy));f.classList.toggle("on",!old);f.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد")}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست")}};bar.append(f);const sh=document.createElement("button");sh.className="action";sh.textContent="اشتراک‌گذاری";sh.onclick=()=>shareText(item.body+(item.author?"\n— "+item.author:""));bar.append(sh);card.append(bar)}
 function refreshAuthorFilters(){const fill=(id,list,label)=>{const select=el(id),old=select.value;select.replaceChildren();const first=document.createElement("option");first.value="";first.textContent=label;select.append(first);[...new Set(list.map(x=>x.author).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"fa")).forEach(name=>{const o=document.createElement("option");o.value=name;o.textContent=name;select.append(o)});if([...select.options].some(o=>o.value===old))select.value=old;};fill("authorFilter",entries.filter(x=>x.section===section),"همهٔ شاعران");fill("pinnedAuthorFilter",pinnedEntries,"همهٔ نویسندگان");}
 function refreshCategoryFilters(){const list=entries.filter(x=>x.section===section);const archiveCats=section==="poems"?(window.YESArchive?.categories().map(x=>x.name)||[]):[];const fill=(id,values,label)=>{const s=el(id),old=s.value;s.replaceChildren();const a=document.createElement("option");a.value="";a.textContent=label;s.append(a);[...new Set(values.filter(Boolean))].sort((a,b)=>a.localeCompare(b,"fa")).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;s.append(o)});if([...s.options].some(o=>o.value===old))s.value=old;};fill("category1Filter",[...list.map(x=>x.category1),...(archiveCats.length?["عمومی"]:[])],"همهٔ طبقات اصلی");const primary=el("category1Filter").value;const level2=list.filter(x=>!primary||x.category1===primary);fill("category2Filter",[...level2.map(x=>x.category2),...(!primary||primary==="عمومی"?archiveCats:[])],"همهٔ موضوعات");const secondary=el("category2Filter").value;fill("category3Filter",level2.filter(x=>!secondary||x.category2===secondary).map(x=>x.category3),"همهٔ زیرموضوعات");}
 function buildTopics(){el("topics").innerHTML="";}
@@ -214,5 +215,5 @@ el("randomPoem").addEventListener("click",()=>{const list=entries.filter(x=>x.se
 updateSiteStats();
 if(location.hash==="#pinned")showPinned();
 window.addEventListener("yes:web-poems-loaded",()=>{updateSiteStats();render();});window.addEventListener("yes:archive-manifest-loaded",()=>{refreshCategoryFilters();});window.addEventListener("yes:archive-loaded",()=>{updateSiteStats();refreshAuthorFilters();render(true);});
-</script><script src="js/discovery.js"></script><script src="js/v14-home.js"></script><script src="js/v15-experience.js"></script><script src="poems-web-loader.js"></script></body></html>
+</script><script src="js/discovery.js"></script><script src="js/v14-home.js"></script><script src="js/v15-experience.js"></script><script src="js/v16-pages.js"></script><script src="poems-web-loader.js"></script></body></html>
 <!-- Refresh Pages after Telegram archive sync: 2026-11-07 -->

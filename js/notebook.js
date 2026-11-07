@@ -13,12 +13,12 @@ async function migrateLegacy(){
   for(const key of old){
    const m=/^(poem|pinned)-(\d+)$/.exec(String(key));if(!m)continue;
    const list=m[1]==="poem"?content().poems:content().pinned;
-   const item=list[Number(m[2])];if(item)await YESStorage.put("favorites",{id:item.id,contentId:item.id,createdAt:new Date().toISOString(),migrated:true});
+   const item=list[Number(m[2])];if(item)await YESStorage.put("favorites",{id:item.id,contentId:item.id,itemSnapshot:item,createdAt:new Date().toISOString(),migrated:true});
   }
   localStorage.setItem("yes-v13-favorites-migrated","1");
  }catch(e){toast("انتقال علاقه‌مندی‌های قدیمی کامل نشد؛ دادهٔ قبلی دست‌نخورده باقی ماند.");}
 }
-function open(){document.body.classList.add("notebook-open");$("notebookView").hidden=false;$("regularView").hidden=true;$("pinnedView").hidden=true;$("readerView").hidden=true;window.scrollTo({top:0,behavior:"smooth"});render();}
+function open(initialTab){if(["favorites","history","notes","collections"].includes(initialTab))tab=initialTab;document.body.classList.add("notebook-open");$("notebookView").hidden=false;$("regularView").hidden=true;$("pinnedView").hidden=true;$("readerView").hidden=true;window.scrollTo({top:0,behavior:"smooth"});render();}
 function close(){document.body.classList.remove("notebook-open");$("notebookView").hidden=true;YESRouter.go("home");}
 async function render(){
  const root=$("notebookItems");root.replaceChildren();

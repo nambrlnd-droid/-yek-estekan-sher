@@ -11,9 +11,10 @@
   async function toggleFavorite(){
     if(!currentId)return;
     const old=await favoriteState(currentId);
+    const item=content().get(currentId);
     try{
       if(old)await window.YESStorage.remove("favorites",currentId);
-      else await window.YESStorage.put("favorites",{id:currentId,contentId:currentId,createdAt:new Date().toISOString()});
+      else await window.YESStorage.put("favorites",{id:currentId,contentId:currentId,itemSnapshot:item||null,createdAt:new Date().toISOString()});
       $("readerFavorite").textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";
       notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد");
     }catch(e){notify("ذخیرهٔ علاقه‌مندی در این مرورگر ممکن نشد");}
