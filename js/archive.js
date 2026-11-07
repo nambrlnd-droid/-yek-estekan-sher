@@ -3,7 +3,7 @@
 "use strict";
 const base="./data/poetry-archive/";
 let manifestPromise=null;
-const loaded=new Set(),pending=new Map();
+const loaded=new Map(),pending=new Map();
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").trim();
 async function manifest(){
  if(!manifestPromise)manifestPromise=fetch(base+"manifest.json").then(r=>{if(!r.ok)throw Error("فهرست گنجینه دریافت نشد");return r.json();});
@@ -20,11 +20,13 @@ async function loadCategory(name){
   if(typeof DecompressionStream==="undefined")throw Error("مرورگر از بازکردن آرشیو فشرده پشتیبانی نمی‌کند");
   const bytes=await response.arrayBuffer();const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
   const records=await new Response(stream).json();const target=window.poemEntries||(window.poemEntries=[]);
-  const ids=new Set(target.map(x=>x.id));let added=0;
-  for(const item of records){if(!item.id||ids.has(item.id))continue;ids.add(item.id);target.push(item);added++;}
+  const ids=new Set(target.map(x=>x.id));
+  const bodyKey=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\\s\\p{P}\\p{S}\\u200c\\u200e\\u200fـ]/gu,"").toLowerCase();
+  const bodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));let added=0;
+  for(const item of records){const key=bodyKey(item.body);if(!item.id||ids.has(item.id)||!key||bodies.has(key))continue;ids.add(item.id);bodies.add(key);target.push(item);added++;}
   if(window.YESContent){const known=new Set(window.YESContent.all.map(x=>x.id));for(const item of records){if(!known.has(item.id)){window.YESContent.all.push(item);known.add(item.id);}}window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");}
-  loaded.add(meta.name);
-  status("گنجینهٔ گنجور: "+window.YESArchive.loadedCount().toLocaleString("fa-IR")+" اثر از "+m.total.toLocaleString("fa-IR")+" اثر بارگذاری شده است. دسته‌بندی ماشینی است.");
+  loaded.set(meta.name,added);
+  status("گنجینهٔ گنجور: "+window.YESArchive.loadedCount().toLocaleString("fa-IR")+" اثر از "+m.total.toLocaleString("fa-IR")+" اثر بارگذاری شده است؛ منبع: گنجور (CC BY 4.0).");
   window.dispatchEvent(new CustomEvent("yes:archive-loaded",{detail:{category:meta.name,added,total:target.length}}));
   return added;
  })().catch(error=>{status("بارگذاری این دسته انجام نشد؛ اتصال را بررسی و دوباره انتخاب کنید.");throw error;}).finally(()=>pending.delete(meta.name));
@@ -35,8 +37,8 @@ window.YESArchive={
  manifest,loadCategory,loadAll,
  isArchiveCategory(name){return !!(window.YESArchive.manifestData&&window.YESArchive.manifestData.categories.some(x=>norm(x.name)===norm(name)));},
  categories(){return window.YESArchive.manifestData?.categories||[];},
- loadedCount(){return loaded.size?window.YESArchive.categories().filter(x=>loaded.has(x.name)).reduce((n,x)=>n+x.count,0):0;},
- loaded(name){return loaded.has(name);}
+ loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0)},
+ loaded(name){return loaded.has(name)}
 };
-manifest().then(m=>{window.YESArchive.manifestData=m;status("گنجینهٔ گنجور آماده است: "+m.total.toLocaleString("fa-IR")+" اثر در "+m.categories.length.toLocaleString("fa-IR")+" موضوع؛ برای دریافت هر بخش، موضوع آن را انتخاب کنید.");window.dispatchEvent(new Event("yes:archive-manifest-loaded"));}).catch(()=>status("گنجینهٔ اشعار در حال حاضر در دسترس نیست."));
+manifest().then(m=>{window.YESArchive.manifestData=m;status("گنجینهٔ گنجور آماده است: "+m.total.toLocaleString("fa-IR")+" اثر در "+m.categories.length.toLocaleString("fa-IR")+" موضوع؛ منبع: گنجور و مجموعهٔ mabidan/ganjoor (CC BY 4.0). دسته‌بندی ماشینی است؛ برای دریافت هر بخش، موضوع آن را انتخاب کنید.");window.dispatchEvent(new Event("yes:archive-manifest-loaded"));}).catch(()=>status("گنجینهٔ اشعار در حال حاضر در دسترس نیست."));
 })();
