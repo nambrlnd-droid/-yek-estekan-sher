@@ -50,7 +50,7 @@
     });
    });
    navigator.serviceWorker.addEventListener("controllerchange",()=>{
-    if(!window.__yesReloading){window.__yesReloading=true;location.reload();}
+    if($("pwaStatus"))$("pwaStatus").textContent="نسخهٔ تازه فعال شد؛ از این پس درخواست‌ها با نسخهٔ جدید پاسخ داده می‌شوند.";
    });
    if($("pwaStatus"))$("pwaStatus").textContent=navigator.onLine?"آمادهٔ استفاده · پوستهٔ برنامه ذخیره می‌شود":"آفلاین · نسخهٔ ذخیره‌شده فعال است";
   }catch(error){
