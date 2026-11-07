@@ -169,3 +169,72 @@ test("v1.5 visual stylesheet loads and preserves responsive theme controls", asy
   }));
   expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
+
+
+test("v1.5 library provides topic browsing and lazy archive categories", async ({ page, baseURL }) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto(baseURL);
+  await page.locator(".v15-open-library").click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  await page.getByRole("button", { name: "گنجینهٔ موضوعی" }).click();
+  await page.locator("#v15LibraryContent").getByRole("button", { name: /حماسی و ملی/ }).click();
+  await expect.poll(() => page.locator("#v15LibraryResults .v15-work").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await page.locator("#v15LibraryResults .v15-work").first().click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator("#readerBack").click();
+  await expect(page.locator("#regularView")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("v1.5 poet index opens author work lists", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await page.locator(".v15-open-library").click();
+  await page.getByRole("button", { name: "شاعران و نویسندگان" }).click();
+  await expect.poll(() => page.locator("#v15LibraryContent .v15-library-card").count()).toBeGreaterThan(0);
+  await page.locator("#v15LibraryContent .v15-library-card").first().click();
+  await expect(page.locator("#v15LibraryTitle")).not.toBeEmpty();
+  await expect.poll(() => page.locator("#v15LibraryResults .v15-work").count()).toBeGreaterThan(0);
+});
+
+test("v1.5 advanced search supports exact phrase and full-line matching", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await page.locator('#sections button[data-section="texts"]').click();
+  await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  const firstBody = await page.locator("#entries .verse").first().innerText();
+  const phrase = firstBody.split(/\r?\n/).map(x => x.trim()).find(Boolean);
+  expect(phrase).toBeTruthy();
+  await page.locator("#v15SearchMode").selectOption("phrase");
+  await page.locator("#search").fill(phrase);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 15000 }).toBeGreaterThan(0);
+  await page.locator("#v15SearchMode").selectOption("line");
+  await page.locator("#search").fill(phrase);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 15000 }).toBeGreaterThan(0);
+  const normalized = await page.evaluate(() => window.YESSearch.normalize("ي ك"));
+  expect(normalized).toBe("ی ک");
+});
+
+test("v1.5 reader focus mode and related works are available", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await page.locator("#entries .verse").first().click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator(".v15-focus-toggle").click();
+  await expect(page.locator("body")).toHaveClass(/reader-focus/);
+  await page.locator(".v15-focus-toggle").click();
+  await expect(page.locator("body")).not.toHaveClass(/reader-focus/);
+  await expect(page.locator("#v15Related")).toBeVisible();
+});
+
+test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto(baseURL);
+  await expect(page.locator("#v15SearchMode")).toBeVisible();
+  await page.locator(".v15-open-library").click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    page: document.documentElement.scrollWidth
+  }));
+  expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
