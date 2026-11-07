@@ -63,7 +63,8 @@
     async remember(id){if(!content().get(id))return;await window.YESStorage.put("history",{id,contentId:id,readAt:new Date().toISOString()});},
     async saveNote(contentId,text){if(!content().get(contentId))throw new Error("اثر پیدا نشد");await window.YESStorage.put("notes",{id:contentId,contentId,text:String(text),updatedAt:new Date().toISOString()});}
   };
-  window.addEventListener("yes:route",state=>{
+  window.addEventListener("yes:route",event=>{
+    const state=event.detail||{};
     if(state.route==="read"&&state.id)render(decodeURIComponent(state.id));
     else{document.body.classList.remove("reader-open");if($("readerView"))$("readerView").hidden=true;}
   });
