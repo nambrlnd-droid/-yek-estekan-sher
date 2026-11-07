@@ -156,8 +156,7 @@ test("Escape returns to the page from which a poem was opened", async ({ page })
 });
 
 
-test("all archive poems load before the site is revealed", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "desktop-chromium", "Full archive download is verified once on desktop.");
+test("all archive poems load before the site is revealed", async ({ page }) => {
   test.setTimeout(240000);
   await page.goto("./");
   await expect(page.locator("#archiveBoot")).toBeVisible();
