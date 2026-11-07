@@ -68,9 +68,11 @@ test("Ganjoor archive loads a selected category lazily and paginates results", a
   await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
   await page.locator("#category2Filter").selectOption({ label: "حماسی و ملی" });
   await page.waitForFunction(() => window.poemEntries.filter(x => String(x.id).startsWith("ganjoor-")).length >= 200, null, { timeout: 15000 });
+  await expect(page.locator("#category3Filter option")).toContainText("نبرد و دلاوری");
+  await page.locator("#category3Filter").selectOption({ label: "نبرد و دلاوری" });
   await expect(page.locator("#entries .entry")).toHaveCount(60);
   await expect(page.locator("#loadMore")).toBeVisible();
   await page.locator("#loadMore").click();
-  await expect(page.locator("#entries .entry")).toHaveCount(120);
+  await expect(page.locator("#entries .entry")).toHaveCount(106);
   expect(errors).toEqual([]);
 });
