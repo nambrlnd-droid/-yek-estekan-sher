@@ -72,3 +72,39 @@ test.describe("v1.6 independent page routes", () => {
     }
   });
 });
+
+test("a favorite snapshot remains readable when its archive record is not preloaded", async ({ page }) => {
+  await page.goto("./#/favorites");
+  await page.evaluate(async () => {
+    await window.YESStorage.put("favorites", {
+      id: "snapshot-poem-v16",
+      contentId: "snapshot-poem-v16",
+      itemSnapshot: {
+        id: "snapshot-poem-v16",
+        title: "آزمون حفظ علاقه‌مندی",
+        body: "این متن آزمایشی است و باید از روی نسخهٔ ذخیره‌شده باز شود.",
+        author: "آزمون",
+        section: "poems",
+        tags: []
+      },
+      createdAt: new Date().toISOString()
+    });
+  });
+  await page.reload();
+  await expect(page.locator("#favoritesPageView")).toBeVisible();
+  await page.locator(".v16-favorite-open").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await expect(page.locator("#readerBody")).toContainText("این متن آزمایشی است");
+});
+
+test("image studio returns to the reader's originating page", async ({ page }) => {
+  await page.goto("./#/search");
+  await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await page.locator("#entries .verse").first().click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator("#readerMakeImage").click();
+  await expect(page.locator("#imageStudioView")).toBeVisible();
+  await page.locator("#imageStudioBack").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await expect(page).toHaveURL(/#\/read\//);
+});
