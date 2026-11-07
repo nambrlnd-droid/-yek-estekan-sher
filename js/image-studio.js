@@ -152,7 +152,8 @@ window.YESImageStudio={open,render:draw,applyTemplate};
 document.addEventListener("DOMContentLoaded",async()=>{
  buildTemplateButtons();
  $("openImageStudio").onclick=()=>open(null);
- $("readerMakeImage").onclick=()=>{const id=decodeURIComponent(location.hash.split("/").pop()||"");open(window.YESContent.get(id)||null);};
+ const readerImageButton=$("readerMakeImage");
+ if(readerImageButton)readerImageButton.onclick=()=>{const id=decodeURIComponent(location.hash.split("/").pop()||"");open(window.YESContent.get(id)||null);};
  $("imageStudioBack").onclick=close;$("imageDownload").onclick=download;$("imageReset").onclick=resetSettings;
  settingIds.forEach(id=>{$(id).addEventListener("input",()=>{schedule();saveSettings();if(id==="imageFont"||id==="imageFontWeight")ensureFont();if(id==="imageTemplate")document.querySelectorAll("#imagePresetButtons button").forEach(b=>b.classList.toggle("active",b.dataset.template===$(id).value));});$(id).addEventListener("change",()=>{schedule();saveSettings();});});
  ["imageText","imageAuthor"].forEach(id=>$(id).addEventListener("input",schedule));
