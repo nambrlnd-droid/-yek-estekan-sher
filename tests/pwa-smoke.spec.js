@@ -169,3 +169,88 @@ test("v1.5 visual stylesheet loads and preserves responsive theme controls", asy
   }));
   expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
+
+
+test("v1.5 library provides topic browsing and lazy archive categories", async ({ page, baseURL }) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto(baseURL);
+  await page.locator(".v15-open-library").click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  await page.locator("#v15LibraryContent .v15-library-group").nth(2).getByRole("button", { name: /حماسی و ملی/ }).click();
+  await expect.poll(() => page.locator("#v15LibraryResults .v15-work").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await page.locator("#v15LibraryResults .v15-work").first().click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator("#readerBack").click();
+  await expect(page.locator("#regularView")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("v1.5 poet index opens author work lists", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await page.locator(".v15-open-library").click();
+  await page.getByRole("button", { name: "شاعران و نویسندگان" }).click();
+  await expect.poll(() => page.locator("#v15LibraryContent .v15-library-card").count()).toBeGreaterThan(0);
+  await page.locator("#v15LibraryContent .v15-library-card").first().click();
+  await expect(page.locator("#v15LibraryTitle")).not.toBeEmpty();
+  await expect.poll(() => page.locator("#v15LibraryResults .v15-work").count()).toBeGreaterThan(0);
+});
+
+test("v1.5 advanced search supports exact phrase and full-line matching", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect(page.locator("#v15SearchMode")).toBeVisible();
+  const sample = await page.evaluate(() => {
+    const item = window.poemEntries.find(x => x.section === "poems" && String(x.body || "").includes("\n"));
+    const line = item?.body.split(/\r?\n/).map(x => x.trim()).find(Boolean) || "";
+    return { id: item?.id, line };
+  });
+  expect(sample.id).toBeTruthy();
+  expect(sample.line).toBeTruthy();
+  await page.locator("#v15SearchMode").selectOption("phrase");
+  const phraseMatch = await page.evaluate(({ id, line }) => {
+    const item = window.poemEntries.find(x => x.id === id);
+    return window.YESSearch.matches(item, line);
+  }, sample);
+  expect(phraseMatch).toBeTruthy();
+  await page.locator("#v15SearchMode").selectOption("line");
+  const lineMatch = await page.evaluate(({ id, line }) => {
+    const item = window.poemEntries.find(x => x.id === id);
+    return window.YESSearch.matches(item, line);
+  }, sample);
+  expect(lineMatch).toBeTruthy();
+  const normalized = await page.evaluate(() => window.YESSearch.normalize("ي ك"));
+  expect(normalized).toBe("ی ک");
+});
+
+test("v1.5 reader focus mode and related works are available", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await page.locator("#entries .verse").first().click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator(".v15-focus-toggle").click();
+  await expect(page.locator("body")).toHaveClass(/reader-focus/);
+  await page.locator(".v15-focus-toggle").click();
+  await expect(page.locator("body")).not.toHaveClass(/reader-focus/);
+  await expect(page.locator("#v15Related")).toBeAttached();
+});
+
+test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto(baseURL);
+  await expect(page.locator("#v15SearchMode")).toBeVisible();
+  await page.locator('#sections button[data-section="texts"]').click();
+  await expect(page.locator("#sectionTitle")).toContainText("متون");
+  await page.locator('#sections button[data-section="poems"]').click();
+  await expect(page.locator("#sectionTitle")).toContainText("اشعار");
+  await page.locator('#mobileDock button[data-action="library"]').click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="home"]').click();
+  await expect(page.locator("#regularView")).toBeVisible();
+  await page.locator(".v15-open-library").click();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    page: document.documentElement.scrollWidth
+  }));
+  expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
