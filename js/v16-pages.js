@@ -120,7 +120,7 @@ function showRoute(state){
  const route=state?.route||"home";
  if(route==="read"){if(activeRoute!=="read")returnRoute=activeRoute;activeRoute="read";setVisible("read");return;}
  if(route==="image"||route==="image-studio"){if(activeRoute!=="image")returnRoute=activeRoute;activeRoute="image";setVisible("image");return;}
- if(route==="pinned"){activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
+ if(route==="pinned"){if(activeRoute!=="pinned")returnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
  activeRoute=route;setVisible(route);
  if(route==="library"){
@@ -139,11 +139,13 @@ function installInteractions(){
   const navLink=event.target.closest("#v16PrimaryNav a,.v16-page-card,.v16-home-cta");
   if(navLink){const route=(navLink.getAttribute("href")||"").replace(/^#\\/?/,"").split("/")[0];if(route){event.preventDefault();event.stopImmediatePropagation();go(route);return;}}
   if(internalClick)return;
+  if(event.target.closest("#pinned")||(event.target.closest("#v15LibraryTabs button")&&event.target.closest("#v15LibraryTabs button").textContent.trim()==="پیشنهاد‌ومیض")){event.preventDefault();event.stopImmediatePropagation();go("pinned");return;}
   if(event.target.closest(".v15-open-library")){event.preventDefault();event.stopImmediatePropagation();go("library");return;}
   if(event.target.closest("#openNotebook")){event.preventDefault();event.stopImmediatePropagation();go("notebook");return;}
+  if(event.target.closest("#openImageStudio")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;window.YESImageStudio?.open(null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#notebookBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
   if(event.target.closest("#v15LibraryBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
-  if(event.target.closest("#backFromPinned")){event.preventDefault();event.stopImmediatePropagation();go("library");return;}
+  if(event.target.closest("#backFromPinned")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
   if(event.target.closest("#readerBack")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
   if(event.target.closest("#imageStudioBack")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
  },true);
