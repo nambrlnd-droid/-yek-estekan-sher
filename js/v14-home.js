@@ -52,8 +52,19 @@
   let saved=null;try{saved=JSON.parse(localStorage.getItem(key)||"null");}catch(e){}
   const paint=item=>{if(!item)return;section._item=item;body.textContent=item.body||"";author.textContent=item.author?"— "+item.author:"";open.hidden=!item.id;};
   if(saved&&saved.id){paint(saved);return;}
-  if(window.YESArchive?.randomItems){window.YESArchive.randomItems(1).then(items=>{const item=items&&items[0];if(!item)return;paint(item);try{localStorage.setItem(key,JSON.stringify(item));}catch(e){}}).catch(()=>{body.textContent="امروز هم می‌شود میان واژه‌ها مکث کرد.";open.hidden=true;});}
-  else{body.textContent="امروز هم می‌شود میان واژه‌ها مکث کرد.";open.hidden=true;}
+  const entries=$("entries");
+  if(entries&&window.MutationObserver){
+   const observer=new MutationObserver(()=>{
+    const card=entries.querySelector(".entry[data-poem-id]");
+    if(!card)return;
+    const id=card.dataset.poemId;
+    const item=window.YESContent?.get(id)||(window.poemEntries||[]).find(x=>String(x.id)===String(id));
+    if(!item)return;
+    paint(item);try{localStorage.setItem(key,JSON.stringify(item));}catch(e){}
+    observer.disconnect();
+   });
+   observer.observe(entries,{childList:true,subtree:true});
+  }else{body.textContent="امروز هم می‌شود میان واژه‌ها مکث کرد.";open.hidden=true;}
  }
  function moveStatsAndHero(){
   const regular=$("regularView"),toolbar=regular?.querySelector(".toolbar"),hero=$("pinned"),stats=$("siteStats");
