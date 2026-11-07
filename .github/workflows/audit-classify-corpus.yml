@@ -1,0 +1,45 @@
+name: Audit and classify poetry corpus (stages 3-4)
+
+on:
+  push:
+    branches: [v1.3-content-expansion]
+    paths:
+      - "scripts/audit-classify-corpus.py"
+      - "scripts/export-site-corpus.js"
+      - ".github/workflows/audit-classify-corpus.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit-classify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout development branch
+        uses: actions/checkout@v4
+        with:
+          ref: v1.3-content-expansion
+      - name: Download stages 1-2 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ganjoor-stage1-stage2-corpus
+          github-token: \${{ secrets.GITHUB_TOKEN }}
+          repository: \${{ github.repository }}
+          run-id: 42334074027
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install duplicate-matching dependency
+        run: python -m pip install --disable-pip-version-check rapidfuzz
+      - name: Export current site corpus and run stages 3-4
+        run: python scripts/audit-classify-corpus.py --artifact-dir .
+      - name: Upload stage 3-4 audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: ganjoor-stage3-stage4-audit
+          path: stage3-stage4-output/
+          if-no-files-found: error
+          retention-days: 30
