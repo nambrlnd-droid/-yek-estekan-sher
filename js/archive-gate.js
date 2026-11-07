@@ -30,7 +30,15 @@ async function boot(){
   if(message)message.textContent="برای نمایش کامل کتابخانه، همهٔ دسته‌های شعر دریافت و بررسی می‌شوند.";
   const manifest=await window.YESArchive.manifest();
   paint(window.YESArchive.loadedCount(),manifest.total,null);
-  if(!progressListener){window.addEventListener("yes:archive-loaded",event=>paint(window.YESArchive.loadedCount(),manifest.total,event.detail));progressListener=true;}
+  if(!progressListener){
+   window.addEventListener("yes:archive-loaded",event=>paint(window.YESArchive.loadedCount(),manifest.total,event.detail));
+   window.addEventListener("yes:archive-loading",event=>{
+    const detail=event.detail||{};
+    if(category)category.textContent="در حال دریافت دستهٔ "+(detail.categoryIndex||"")+" از "+(detail.categoryTotal||"")+" · "+(detail.category||"");
+    if(message)message.textContent="آرشیو کامل در حال دریافت است؛ این مرحله ممکن است با توجه به سرعت اینترنت زمان ببرد.";
+   });
+   progressListener=true;
+  }
   await window.YESArchive.loadAll();
   if(window.YESArchive.loadedCount()!==manifest.total)throw new Error("تعداد آثار دریافت‌شده کامل نیست.");
   window.__YES_ARCHIVE_DATA_READY=true;window.dispatchEvent(new Event("yes:archive-data-ready"));
