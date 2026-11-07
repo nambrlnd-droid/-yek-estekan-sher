@@ -18,7 +18,7 @@ async function migrateLegacy(){
   localStorage.setItem("yes-v13-favorites-migrated","1");
  }catch(e){toast("انتقال علاقه‌مندی‌های قدیمی کامل نشد؛ دادهٔ قبلی دست‌نخورده باقی ماند.");}
 }
-function open(){document.body.classList.add("notebook-open");$("notebookView").hidden=false;$("regularView").hidden=true;$("pinnedView").hidden=true;$("readerView").hidden=true;window.scrollTo({top:0,behavior:"smooth"});render();}
+function open(initialTab){if(["favorites","history","notes","collections"].includes(initialTab))tab=initialTab;document.body.classList.add("notebook-open");$("notebookView").hidden=false;$("regularView").hidden=true;$("pinnedView").hidden=true;$("readerView").hidden=true;window.scrollTo({top:0,behavior:"smooth"});render();}
 function close(){document.body.classList.remove("notebook-open");$("notebookView").hidden=true;YESRouter.go("home");}
 async function render(){
  const root=$("notebookItems");root.replaceChildren();
