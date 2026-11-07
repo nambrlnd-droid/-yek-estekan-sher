@@ -61,7 +61,8 @@
   document.body.classList.remove("v16-page-home","v16-page-library","v16-page-search","v16-page-favorites","v16-page-notebook","v16-page-read","library-open","notebook-open","reader-open","reader-focus","image-studio-open");
   if(state.route==="pinned"){
    hideViews();if($("pinnedView"))$("pinnedView").hidden=false;
-   document.body.classList.add("v16-page-library");setActive("library");
+   document.body.classList.add("v16-page-home");setActive("library");
+   $("v16PageHeading").hidden=false;$("v16PageTitle").textContent="پیشنهاد‌ومیض";$("v16PageDescription").textContent="مجموعه‌ای ویژه از شعرها و نوشته‌های برگزیده.";
    window.renderPinned?.();return;
   }
   if(state.route==="read"){
@@ -102,6 +103,7 @@
   window.YESRouter?.onChange(route);
   route(window.YESRouter?.current?.()||{route:"home"});
   document.addEventListener("click",event=>{
+   if(event.target.closest("#pinned")){event.preventDefault();event.stopImmediatePropagation();window.YESRouter?.go("pinned");return;}
    if(event.target.closest("#v15LibraryBack,#notebookBack")){event.preventDefault();window.YESRouter?.go("home");}
   },true);
   window.addEventListener("yes:route",event=>{
