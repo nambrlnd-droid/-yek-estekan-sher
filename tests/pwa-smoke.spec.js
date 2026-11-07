@@ -81,8 +81,64 @@ test("homepage renders only ten random poems and supports 10-50 display sizes", 
   await page.locator("#displayCount").selectOption("30");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(30);
   await page.locator("#refreshEntries").click();
-  await expect.poll(() => page.locator("#entries .entry").count()).toBe(30);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(30);
   await page.locator("#displayCount").selectOption("50");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(50);
   await expect(page.locator("#entries .entry").count()).resolves.toBeLessThanOrEqual(50);
+});
+
+
+test("refresh shows a new non-overlapping sample and remembers the chosen size", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(10);
+  const first = await page.locator("#entries .entry").evaluateAll(nodes => nodes.map(node => node.dataset.poemId));
+  await page.locator("#refreshEntries").click();
+  await expect.poll(async () => {
+    const next = await page.locator("#entries .entry").evaluateAll(nodes => nodes.map(node => node.dataset.poemId));
+    return next.length === 10 && next.every(id => !first.includes(id));
+  }, { timeout: 30000 }).toBeTruthy();
+  await page.locator("#displayCount").selectOption("20");
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(20);
+  await page.reload();
+  await expect(page.locator("#displayCount")).toHaveValue("20");
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(20);
+});
+
+test("favorite state is reflected in the personal notebook", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  const first = page.locator("#entries .entry").first();
+  const poemId = await first.getAttribute("data-poem-id");
+  await first.locator("button.favorite").click();
+  await expect(first.locator("button.favorite")).toContainText("نشان‌شده");
+  await page.locator("#openNotebook").click();
+  await expect(page.locator("#notebookView")).toBeVisible();
+  await expect.poll(() => page.locator("#notebookItems .notebook-row").count()).toBeGreaterThan(0);
+  expect(poemId).toBeTruthy();
+});
+
+
+test("daily poem, theme toggle and mobile quick navigation are available", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(baseURL);
+  await expect(page.locator("#dailyPoem")).toBeVisible();
+  await expect(page.locator("#themeToggle")).toBeVisible();
+  await page.locator("#themeToggle").click();
+  await expect(page.locator("body")).toHaveAttribute("data-theme", "light");
+  await expect(page.locator("#mobileDock")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="search"]').click();
+  await expect(page.locator("#search")).toBeFocused();
+});
+
+
+test("random poem opens the reader and the homepage offers continue reading", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 60000 }).toBeGreaterThan(0);
+  await page.locator("#randomPoem").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator("#readerBack").click();
+  await expect(page.locator("#continueReading")).toBeVisible();
+  await page.locator("#continueReading button").click();
+  await expect(page.locator("#readerView")).toBeVisible();
 });

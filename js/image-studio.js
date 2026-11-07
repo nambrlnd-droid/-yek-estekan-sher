@@ -67,10 +67,10 @@ function open(item){
  sourceItem=item||null;
  if(item){$("imageText").value=item.body||"";$("imageAuthor").value=item.author||"";}
  $("imageStudioView").hidden=false;$("readerView").hidden=true;$("notebookView").hidden=true;$("regularView").hidden=true;$("pinnedView").hidden=true;
- document.body.classList.remove("reader-open","notebook-open");history.replaceState(null,"",location.pathname+"#image-studio");schedule();window.scrollTo({top:0,behavior:"smooth"});
+ document.body.classList.remove("reader-open","notebook-open");document.body.classList.add("image-studio-open");history.replaceState(null,"",location.pathname+"#image-studio");schedule();window.scrollTo({top:0,behavior:"smooth"});
 }
 function close(){
- $("imageStudioView").hidden=true;history.replaceState(null,"",location.pathname);
+ $("imageStudioView").hidden=true;document.body.classList.remove("image-studio-open");history.replaceState(null,"",location.pathname);
  if(sourceItem&&window.YESReader)window.YESReader.open(sourceItem.id);
  else{$("regularView").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
  sourceItem=null;
