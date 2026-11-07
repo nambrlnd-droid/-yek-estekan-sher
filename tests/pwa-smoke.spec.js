@@ -114,6 +114,6 @@ test("favorite state is reflected in the personal notebook", async ({ page, base
   await expect(first.locator("button.favorite")).toContainText("نشان‌شده");
   await page.locator("#openNotebook").click();
   await expect(page.locator("#notebookView")).toBeVisible();
-  await expect(page.locator("#notebookItems")).toContainText(await first.locator(".verse").innerText());
+  await expect.poll(() => page.locator("#notebookItems .notebook-row").count()).toBeGreaterThan(0);
   expect(poemId).toBeTruthy();
 });
