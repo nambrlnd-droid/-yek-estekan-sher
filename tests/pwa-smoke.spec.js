@@ -142,3 +142,30 @@ test("random poem opens the reader and the homepage offers continue reading", as
   await page.locator("#continueReading button").click();
   await expect(page.locator("#readerView")).toBeVisible();
 });
+
+test("v1.5 visual stylesheet loads and preserves responsive theme controls", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(baseURL);
+  const visualCss = await page.evaluate(async () => {
+    const link = document.querySelector('link[href*="v15-visual.css"]');
+    if (!link) return { linked: false };
+    await link.sheet;
+    return {
+      linked: true,
+      loaded: !!link.sheet,
+      bodyBackground: getComputedStyle(document.body).backgroundImage,
+      cardRadius: getComputedStyle(document.querySelector(".entry") || document.body).borderRadius,
+      dockVisible: getComputedStyle(document.querySelector("#mobileDock")).display !== "none"
+    };
+  });
+  expect(visualCss.linked).toBeTruthy();
+  expect(visualCss.loaded).toBeTruthy();
+  expect(visualCss.dockVisible).toBeTruthy();
+  await page.locator("#themeToggle").click();
+  await expect(page.locator("body")).toHaveAttribute("data-theme", "light");
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    page: document.documentElement.scrollWidth
+  }));
+  expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
