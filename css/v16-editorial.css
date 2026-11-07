@@ -146,3 +146,36 @@ body[data-theme="light"] .reader-paper{
   linear-gradient(145deg,#fffdf8,#f1ebdf);
  border-color:#d8cdbd;border-radius:2px;
 }
+
+/* Sharper editorial geometry: less app-like rounding, more printed-page character. */
+.v16-home-hero{border-radius:3px}
+.v16-page-card,.v16-favorite-item,.v16-favorites-toolbar{border-radius:3px}
+.v16-page-glyph,.v16-home-cta,.v16-favorite-remove{border-radius:2px}
+.v16-search-page .entry,.v16-favorite-item,.v16-favorites-toolbar,
+.v15-library-group,.v15-library-card,.v15-work{border-radius:3px}
+.v16-home-hero .v16-home-daily{max-width:760px;margin:22px 0 0}
+.v16-home-hero .v16-home-daily .daily-poem{
+ max-width:100%;margin:0;padding:17px 0 0;text-align:right;
+ border:0;border-top:1px solid #c7a66f66;border-radius:0;
+ background:transparent;box-shadow:none;
+}
+.v16-home-hero .v16-home-daily .daily-poem small{color:var(--gold2);font-size:10px}
+.v16-home-hero .v16-home-daily .daily-poem blockquote{
+ color:#f3eadc;font-size:clamp(16px,2vw,21px);line-height:2.5;
+}
+.v16-home-hero .v16-home-daily .daily-author{color:#c5c9c6}
+.v16-home-hero .v16-home-daily .daily-poem button{
+ border:1px solid #c7a66f88;border-radius:2px;background:#c7a66f12;color:#f2dcb6;
+ padding:7px 14px;font:inherit;font-size:11px;
+}
+.v16-home-hero .v16-home-daily .continue-reading{
+ background:#ffffff08;border-color:#c7a66f44;border-radius:2px;
+}
+body[data-theme="light"] .v16-home-hero .v16-home-daily .daily-poem{border-color:#a65f4355}
+body[data-theme="light"] .v16-home-hero .v16-home-daily .daily-poem blockquote{color:#2c3b42}
+body[data-theme="light"] .v16-home-hero .v16-home-daily .daily-author{color:#687477}
+body[data-theme="light"] .v16-home-hero .v16-home-daily .daily-poem button{border-color:#a65f4377;color:#81472f;background:#a65f430b}
+@media(max-width:760px){
+ .v16-home-hero{border-radius:3px}
+ .v16-page-card,.v16-favorite-item,.v16-favorites-toolbar{border-radius:3px}
+}
