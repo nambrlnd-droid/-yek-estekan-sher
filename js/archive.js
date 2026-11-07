@@ -26,7 +26,7 @@ async function loadCategory(name){
   for(const item of records){const key=bodyKey(item.body);if(!item.id||ids.has(item.id)||!key||bodies.has(key))continue;ids.add(item.id);bodies.add(key);target.push(item);addedItems.push(item);added++;}
   if(window.YESContent){window.YESContent.all.push(...records.filter(item=>!window.YESContent.all.some(existing=>existing.id===item.id)));window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");}
   loaded.set(meta.name,added);
-  status("گنجینهٔ گنجور: "+window.YESArchive.loadedCount().toLocaleString("fa-IR")+" اثر از "+m.total.toLocaleString("fa-IR")+" اثر بارگذاری شده است؛ منبع: گنجور؛ مجوز مجموعه CC BY 4.0 است، اما حقوق تک‌تک آثار جداگانه راستی‌آزمایی نشده.");
+  status(window.YESArchive.loadedCount().toLocaleString("fa-IR")+" اثر از "+m.total.toLocaleString("fa-IR")+" اثر بارگذاری شده است.");
   window.dispatchEvent(new CustomEvent("yes:archive-loaded",{detail:{category:meta.name,added,total:target.length}}));
   return added;
  })().catch(error=>{status("بارگذاری این دسته انجام نشد؛ اتصال را بررسی و دوباره انتخاب کنید.");throw error;}).finally(()=>pending.delete(meta.name));
@@ -66,5 +66,5 @@ window.YESArchive={
  loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0)},
  loaded(name){return loaded.has(name)}
 };
-manifest().then(m=>{window.YESArchive.manifestData=m;status("گنجینهٔ گنجور آماده است: "+m.total.toLocaleString("fa-IR")+" اثر در "+m.categories.length.toLocaleString("fa-IR")+" موضوع؛ منبع: گنجور و مجموعهٔ mabidan/ganjoor؛ مجوز مجموعه CC BY 4.0 است، اما حقوق تک‌تک آثار جداگانه راستی‌آزمایی نشده. دسته‌بندی ماشینی است؛ برای دریافت هر بخش، موضوع آن را انتخاب کنید.");window.dispatchEvent(new Event("yes:archive-manifest-loaded"));}).catch(()=>status("گنجینهٔ اشعار در حال حاضر در دسترس نیست."));
+manifest().then(m=>{window.YESArchive.manifestData=m;status("گنجینهٔ شعر آماده است: "+m.total.toLocaleString("fa-IR")+" اثر در "+m.categories.length.toLocaleString("fa-IR")+" موضوع؛ دسته‌بندی ماشینی است. برای دریافت هر بخش، موضوع آن را انتخاب کنید.");window.dispatchEvent(new Event("yes:archive-manifest-loaded"));}).catch(()=>status("گنجینهٔ اشعار در حال حاضر در دسترس نیست."));
 })();
