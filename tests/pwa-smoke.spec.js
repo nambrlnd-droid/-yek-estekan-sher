@@ -238,6 +238,10 @@ test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({
   await page.setViewportSize({ width: 360, height: 780 });
   await page.goto(baseURL);
   await expect(page.locator("#v15SearchMode")).toBeVisible();
+  await page.locator('#sections button[data-section="texts"]').click();
+  await expect(page.locator("#sectionTitle")).toContainText("متون");
+  await page.locator('#sections button[data-section="poems"]').click();
+  await expect(page.locator("#sectionTitle")).toContainText("اشعار");
   await page.locator('#mobileDock button[data-action="library"]').click();
   await expect(page.locator("#v15LibraryView")).toBeVisible();
   await page.locator('#mobileDock button[data-action="home"]').click();
