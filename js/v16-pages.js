@@ -164,5 +164,5 @@ document.addEventListener("DOMContentLoaded",()=>{
  showRoute(current);
  if(!location.hash)history.replaceState(null,"",location.pathname+location.search+"#/home");
 });
-window.YESPages={go,renderFavorites,current:()=>activeRoute};
+window.YESPages={go,renderFavorites,current:()=>activeRoute,backFromReader(){go(readerReturnRoute||"home");return true;}};
 })();
