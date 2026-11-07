@@ -95,7 +95,7 @@ async function renderFavorites(){
   await window.YESNotebook?.migrateLegacy?.();
   const records=await window.YESStorage.all("favorites");
   const normalized=records.map(x=>({...x,contentId:x.contentId||x.id}));
-  const usable=normalized.map(rec=>({rec,item:window.YESContent?.get(rec.contentId)})).filter(x=>x.item);
+  const usable=normalized.map(rec=>({rec,item:window.YESContent?.get(rec.contentId)||rec.itemSnapshot||null})).filter(x=>x.item);
   count.textContent=usable.length.toLocaleString("fa-IR")+" اثر نشان‌شده";
   if(!usable.length){root.append(make("div","v16-empty","هنوز اثری به علاقه‌مندی‌ها اضافه نکرده‌اید. از صفحهٔ جست‌وجو یا مطالعه، نشان قلب را انتخاب کنید."));return;}
   usable.sort((a,b)=>new Date(b.rec.createdAt||0)-new Date(a.rec.createdAt||0));
