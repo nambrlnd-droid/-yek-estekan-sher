@@ -59,3 +59,18 @@ test("cached app shell opens again while offline", async ({ page, context, baseU
   await expect(page.locator(".site-header")).toBeVisible();
   await context.setOffline(false);
 });
+
+
+test("Ganjoor archive loads a selected category lazily and paginates results", async ({ page, baseURL }) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto(baseURL);
+  await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
+  await page.locator("#category2Filter").selectOption({ label: "حماسی و ملی" });
+  await page.waitForFunction(() => window.poemEntries.filter(x => String(x.id).startsWith("ganjoor-")).length >= 200, null, { timeout: 15000 });
+  await expect(page.locator("#entries .entry")).toHaveCount(60);
+  await expect(page.locator("#loadMore")).toBeVisible();
+  await page.locator("#loadMore").click();
+  await expect(page.locator("#entries .entry")).toHaveCount(120);
+  expect(errors).toEqual([]);
+});
