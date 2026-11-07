@@ -4,7 +4,7 @@
 const $=id=>document.getElementById(id);
 const labels={home:"خانه",library:"کتابخانه",search:"جست‌وجو",favorites:"علاقه‌مندی‌ها",notebook:"دفتر من"};
 const routeIds={home:"homePageView",search:"searchPageView",library:"v15LibraryView",favorites:"favoritesPageView",notebook:"notebookView",pinned:"pinnedView",read:"readerView",image:"imageStudioView"};
-let activeRoute="home",returnRoute="home",internalClick=false,favoritesBusy=false;
+let activeRoute="home",returnRoute="home",returnReadId=null,currentReadId=null,internalClick=false,favoritesBusy=false;
 const allPageIds=Object.values(routeIds);
 function make(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 function link(route,title,description,glyph){
@@ -116,14 +116,14 @@ async function renderFavorites(){
  finally{favoritesBusy=false;}
 }
 function go(route,id){
- if(route==="read"&&activeRoute!=="read")returnRoute=activeRoute;
- if(route==="image"&&activeRoute!=="image")returnRoute=activeRoute;
+ if(route==="read"&&id)currentReadId=id;
+ if(route==="image"&&activeRoute!=="image"){returnRoute=activeRoute;returnReadId=activeRoute==="read"?currentReadId:null;}
  window.YESRouter.go(route,id);
 }
 function showRoute(state){
  const route=state?.route||"home";
- if(route==="read"){if(activeRoute!=="read")returnRoute=activeRoute;activeRoute="read";setVisible("read");return;}
- if(route==="image"||route==="image-studio"){if(activeRoute!=="image")returnRoute=activeRoute;activeRoute="image";setVisible("image");return;}
+ if(route==="read"){if(activeRoute!=="read")returnRoute=activeRoute;currentReadId=state?.id||currentReadId;activeRoute="read";setVisible("read");return;}
+ if(route==="image"||route==="image-studio"){if(activeRoute!=="image"){returnRoute=activeRoute;returnReadId=activeRoute==="read"?currentReadId:null;}activeRoute="image";setVisible("image");return;}
  if(route==="pinned"){if(activeRoute!=="pinned")returnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
  activeRoute=route;setVisible(route);
@@ -146,14 +146,14 @@ function installInteractions(){
   if(event.target.closest("#pinned")||(event.target.closest("#v15LibraryTabs button")&&event.target.closest("#v15LibraryTabs button").textContent.trim()==="پیشنهاد‌ومیض")){event.preventDefault();event.stopImmediatePropagation();go("pinned");return;}
   if(event.target.closest(".v15-open-library")){event.preventDefault();event.stopImmediatePropagation();go("library");return;}
   if(event.target.closest("#openNotebook")){event.preventDefault();event.stopImmediatePropagation();go("notebook");return;}
+  if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;returnReadId=activeRoute==="read"?currentReadId:null;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
-  if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
-  if(event.target.closest("#openImageStudio")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;window.YESImageStudio?.open(null);activeRoute="image";setVisible("image");return;}
+  if(event.target.closest("#openImageStudio")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;returnReadId=activeRoute==="read"?currentReadId:null;window.YESImageStudio?.open(null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#notebookBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
   if(event.target.closest("#v15LibraryBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
   if(event.target.closest("#backFromPinned")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
   if(event.target.closest("#readerBack")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
-  if(event.target.closest("#imageStudioBack")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
+  if(event.target.closest("#imageStudioBack")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home",returnRoute==="read"?returnReadId:undefined);return;}
  },true);
  window.addEventListener("yes:route",event=>showRoute(event.detail||{route:"home"}));
  window.addEventListener("yes:archive-loaded",()=>{if(activeRoute==="favorites")renderFavorites();});
