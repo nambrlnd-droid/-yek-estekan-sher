@@ -87,13 +87,7 @@ function tagSubject(item, body, isText) {
       }
     }
     const mapped = topicAliases.get(tag);
-    if (mapped && !genericTags.has(tag)) {
-      if (mapped === "اهل‌بیت علیهم‌السلام" || mapped === "مناسبت‌ها و آیین‌های دینی" || mapped === "سوگ و مرثیه") {
-        if (!broadTag) broadTag = mapped;
-      } else {
-        return {name:mapped, confidence:"high"};
-      }
-    }
+    if (mapped && !genericTags.has(tag) && !broadTag) broadTag = mapped;
     if (tag && !genericTags.has(tag) && !["ادبیات کلاسیک"].includes(tag)) {
       const hit = generalRules.find(([,re]) => re.test(tag));
       if (hit && !broadTag) broadTag = hit[0];
