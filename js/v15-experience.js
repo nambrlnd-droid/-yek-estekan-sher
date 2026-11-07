@@ -18,8 +18,8 @@ let searchMode="normal",libraryQuery="";
 const escapeHTML = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function toast(message){const n=$("toast");if(!n)return;n.textContent=message;n.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>n.classList.remove("show"),2000);}
 function setVisible(id){["regularView","pinnedView","readerView","notebookView","imageStudioView","v15LibraryView"].forEach(key=>{const n=$(key);if(n)n.hidden=key!==id;});}
-function openLibrary(mode="topics"){libraryMode=mode;activeAuthor="";activeTopic="";setVisible("v15LibraryView");document.body.classList.remove("reader-focus");renderLibrary();window.scrollTo({top:0,behavior:"smooth"});}
-function closeLibrary(){setVisible("regularView");window.scrollTo({top:0,behavior:"smooth"});}
+function openLibrary(mode="topics"){libraryMode=mode;activeAuthor="";activeTopic="";setVisible("v15LibraryView");document.body.classList.add("library-open");document.body.classList.remove("reader-focus");renderLibrary();window.scrollTo({top:0,behavior:"smooth"});}
+function closeLibrary(){document.body.classList.remove("library-open");setVisible("regularView");window.scrollTo({top:0,behavior:"smooth"});}
 function addButton(parent,label,action,cls="tool-button"){const b=document.createElement("button");b.type="button";b.className=cls;b.textContent=label;b.addEventListener("click",action);parent.append(b);return b;}
 function card(title,meta,action){const b=document.createElement("button");b.type="button";b.className="v15-library-card";const strong=document.createElement("strong");strong.textContent=title;const small=document.createElement("small");small.textContent=meta;b.append(strong,small);b.addEventListener("click",action);return b;}
 function makeTabs(root){root.replaceChildren();[["topics","مرور موضوعی"],["poets","شاعران و نویسندگان"],["collections","مجموعه‌های موضوعی"]].forEach(([key,label])=>addButton(root,label,()=>{libraryMode=key;activeAuthor="";activeTopic="";renderLibrary();},libraryMode===key?"active":""));}
@@ -141,7 +141,7 @@ function updateRelated(id){
  root.replaceChildren();candidates.slice(0,6).forEach(x=>root.append(makeWorkButton(x)));
  $("v15Related").hidden=!candidates.length;
 }
-window.addEventListener("yes:route",event=>{const s=event.detail||{};if(s.route==="read"&&s.id){setTimeout(()=>updateRelated(decodeURIComponent(s.id)),0);}});
+window.addEventListener("yes:route",event=>{const s=event.detail||{};if(s.route==="read"&&s.id){document.body.classList.remove("library-open");setVisible("readerView");setTimeout(()=>updateRelated(decodeURIComponent(s.id)),0);}else if(s.route==="home"&&document.body.classList.contains("library-open")){setVisible("v15LibraryView");}});
 window.addEventListener("yes:archive-loaded",()=>{if(libraryMode==="poets"||libraryMode==="topics"||libraryMode==="collections")renderLibrary();});
 window.addEventListener("yes:web-poems-loaded",()=>{if(libraryMode!=="topics"&&$("v15LibraryView")&&!$("v15LibraryView").hidden)renderLibrary();});
 document.addEventListener("DOMContentLoaded",()=>{
