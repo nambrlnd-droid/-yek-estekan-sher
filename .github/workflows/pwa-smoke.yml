@@ -2,7 +2,7 @@ name: PWA smoke tests
 
 on:
   push:
-    branches: [main, v1.3-development]
+    branches: [main, v1.3-development, v1.4-redesign]
   pull_request:
     branches: [main, v1.3-development]
   workflow_dispatch:
