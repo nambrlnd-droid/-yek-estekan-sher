@@ -19,9 +19,13 @@
     }catch(e){notify("ذخیرهٔ علاقه‌مندی در این مرورگر ممکن نشد");}
   }
   async function render(id){
-    const item=content().get(id);
+    let item=content().get(id);
+    if(!item){
+      try{const saved=JSON.parse(localStorage.getItem("yes-reader-last-item")||"null");if(saved&&saved.id===id&&saved.item){content().all.push(saved.item);item=saved.item;}}catch(e){}
+    }
     if(!item){document.body.classList.remove("reader-open");$("readerView").hidden=true;notify("این اثر پیدا نشد.");return;}
     currentId=id;
+    try{localStorage.setItem("yes-reader-last-item",JSON.stringify({id,item}));}catch(e){}
     document.body.classList.add("reader-open");
     $("readerView").hidden=false;
     $("readerTitle").textContent=item.title||"خواندن";
