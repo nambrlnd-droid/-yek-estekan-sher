@@ -81,7 +81,7 @@ function tagSubject(item, body, isText) {
     if (typeof raw !== "string" || !raw.trim() || /^\d+$/.test(raw.trim())) continue;
     const tag = norm(raw);
     for (const [name, re] of sacred) {
-      if (name !== "اهل‌بیت علیهم‌السلام" && re.test(tag)) return {name, confidence:"high"};
+      if (re.test(tag)) {\n        if (name === "اهل‌بیت علیهم‌السلام") { if (!broadTag) broadTag = name; }\n        else return {name, confidence:"high"};\n      }
     }
     const mapped = topicAliases.get(tag);
     if (mapped && !genericTags.has(tag)) {
