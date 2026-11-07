@@ -9,6 +9,9 @@
  .daily-poem small{display:block;color:var(--gold);font-size:10px;margin-bottom:9px}
  .daily-poem blockquote{margin:0;color:var(--text);font-size:16px;line-height:2.2;white-space:pre-line}
  .daily-poem .daily-author{display:block;color:var(--muted);font-size:11px;margin-top:9px}
+ .continue-reading{max-width:850px;margin:0 auto 16px;padding:12px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:12px}
+ .continue-reading strong{display:block;color:var(--gold2);font-size:12px;font-weight:500}.continue-reading span{display:block;color:var(--muted);font-size:11px;margin-top:4px;max-width:560px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .continue-reading button{border:1px solid var(--line);border-radius:20px;background:transparent;color:var(--gold2);padding:6px 13px;font:inherit;font-size:11px;white-space:nowrap}
  .daily-poem button{margin-top:11px;border:1px solid #80603f;border-radius:20px;background:transparent;color:var(--gold2);padding:6px 15px;font:inherit;font-size:11px}
  #themeToggle{border:1px solid var(--line);border-radius:22px;background:var(--surface);color:var(--gold2);padding:8px 12px;font:inherit;font-size:11px;white-space:nowrap}
  .site-stats{padding:10px 13px;margin-top:26px}
@@ -71,6 +74,21 @@
   if(regular&&toolbar&&hero)toolbar.insertAdjacentElement("afterend",hero);
   if(regular&&stats){const empty=$("empty");(empty||$("entries"))?.insertAdjacentElement("afterend",stats);}
  }
+ function createContinueCard(){
+  let card=$("continueReading");
+  if(!card){
+   card=document.createElement("section");card.className="continue-reading";card.id="continueReading";
+   const copy=document.createElement("div"),title=document.createElement("strong"),detail=document.createElement("span"),button=document.createElement("button");
+   title.textContent="ادامهٔ مطالعه";detail.id="continueReadingTitle";button.type="button";button.textContent="ادامه";
+   button.addEventListener("click",()=>{if(card._item)window.YESReader?.open(card._item.id);});
+   copy.append(title,detail);card.append(copy,button);$("dailyPoem")?.insertAdjacentElement("afterend",card);
+  }
+  let saved=null;try{saved=JSON.parse(localStorage.getItem("yes-reader-last-item")||"null");}catch(e){}
+  const item=saved?.item;
+  if(!item?.id){card.hidden=true;card._item=null;return;}
+  card.hidden=false;card._item=item;
+  $("continueReadingTitle").textContent=(item.title||String(item.body||"").split("\n")[0]||"اثر قبلی")+(item.author?" · "+item.author:"");
+ }
  function createDock(){
   if($("mobileDock"))return;
   const nav=document.createElement("nav");nav.id="mobileDock";nav.setAttribute("aria-label","پیمایش سریع");
@@ -93,5 +111,6 @@
   addStyle();moveStatsAndHero();addThemeButton();createDock();
   let theme="dark";try{theme=localStorage.getItem("yes-v14-theme")||"dark";}catch(e){}applyTheme(theme);
   const toolbar=document.querySelector("#regularView .toolbar");if(toolbar)createDailyCard(toolbar);
+  createContinueCard();window.addEventListener("yes:route",()=>createContinueCard());
  });
 })();
