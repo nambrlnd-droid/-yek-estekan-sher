@@ -104,6 +104,7 @@
   route(window.YESRouter?.current?.()||{route:"home"});
   document.addEventListener("click",event=>{
    if(event.target.closest("#pinned")){event.preventDefault();event.stopImmediatePropagation();window.YESRouter?.go("pinned");return;}
+   if(event.target.closest("#backFromPinned")&&document.body.classList.contains("v16-page-home")){event.preventDefault();event.stopImmediatePropagation();window.YESRouter?.go("home");return;}
    if(event.target.closest("#v15LibraryBack,#notebookBack")){event.preventDefault();window.YESRouter?.go("home");}
   },true);
   window.addEventListener("yes:route",event=>{
