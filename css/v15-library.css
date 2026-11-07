@@ -1,0 +1,52 @@
+/* v1.5 library and reading surfaces */
+.v15-search-mode{max-width:145px;min-width:118px;border:1px solid var(--line);border-radius:24px;background:var(--surface);color:var(--muted);padding:9px 10px;font:inherit;font-size:11px;outline:none}
+.v15-search-mode:focus,.v15-library-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d5a66f18}
+.v15-search-hint{display:block;color:var(--muted);font-size:10px;line-height:1.8;padding:4px 12px 0}
+.v15-open-library{border-color:#87633e;color:var(--gold2)}
+.v15-library-view{max-width:920px;margin:0 auto 34px;padding:0 4px 32px}
+.v15-library-view[hidden]{display:none!important}
+.v15-library-head{text-align:center;padding:16px 12px 18px}
+.v15-library-head>span{display:inline-block;color:var(--gold2);border:1px solid #80603f;border-radius:24px;padding:4px 12px;font-size:10px}
+.v15-library-head h2{font-size:25px;font-weight:500;color:var(--text);margin:12px 0 5px}
+.v15-library-head p,.v15-library-status{color:var(--muted);font-size:12px;line-height:2}
+.v15-library-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.v15-library-tabs button{border:1px solid var(--line);border-radius:24px;background:var(--surface);color:var(--muted);padding:9px 17px;font-size:12px}
+.v15-library-tabs button.active{background:var(--gold);border-color:var(--gold);color:#21170f}
+.v15-library-status{text-align:center;margin:8px 0 18px}
+.v15-library-title{font-size:18px;text-align:center;color:var(--gold2);font-weight:500;margin:18px 0}
+.v15-library-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:11px;margin:12px 0 24px}
+.v15-library-group{border:1px solid var(--line);border-radius:18px;padding:14px;background:color-mix(in srgb,var(--surface) 85%,transparent)}
+.v15-library-group h3{font-size:13px;font-weight:500;color:var(--gold2);margin:0 0 10px}
+.v15-library-card{display:flex;flex-direction:column;align-items:flex-start;text-align:right;width:100%;border:1px solid var(--line);border-radius:13px;padding:12px;margin:7px 0;background:var(--surface2);color:var(--text);cursor:pointer;transition:border-color .2s,transform .2s}
+.v15-library-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.v15-library-card strong{font-size:12px;font-weight:500;line-height:1.8}
+.v15-library-card small{font-size:10px;color:var(--muted);line-height:1.8;margin-top:3px}
+.v15-library-search{display:block;width:min(100%,500px);margin:0 auto 16px;border:1px solid var(--line);border-radius:25px;background:var(--surface);color:var(--text);padding:11px 15px;font:inherit;font-size:12px;outline:none}
+.v15-library-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:9px;margin:12px 0}
+.v15-work{display:flex;flex-direction:column;text-align:right;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:13px;cursor:pointer;min-width:0}
+.v15-work:hover{border-color:var(--gold)}
+.v15-work span{font-size:12px;line-height:2;overflow-wrap:anywhere}
+.v15-work small{font-size:10px;color:var(--muted);margin-top:5px}
+.v15-empty{color:var(--muted);text-align:center;padding:28px 12px;font-size:12px;line-height:2}
+.v15-focus-toggle{border:1px solid var(--gold)!important;color:var(--gold2)!important}
+.v15-related{margin:22px 0 10px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.v15-related[hidden]{display:none}
+.v15-related h3{font-size:14px;color:var(--gold2);font-weight:500;margin:0 0 10px}
+.v15-related-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:8px}
+.reader-focus .site-header,.reader-focus #siteStats,.reader-focus .hero-feature,.reader-focus #regularView,.reader-focus #pinnedView,.reader-focus #notebookView,.reader-focus #imageStudioView,.reader-focus #v15LibraryView,.reader-focus footer{display:none!important}
+.reader-focus main{max-width:760px;padding-top:18px}
+.reader-focus #readerView .reader-toolbar{opacity:.28;transition:opacity .2s}
+.reader-focus #readerView .reader-toolbar:focus-within,.reader-focus #readerView .reader-toolbar:hover{opacity:1}
+.reader-focus #readerView .reader-paper{min-height:65vh;display:flex;flex-direction:column;justify-content:center}
+.reader-focus #readerView .reader-body{font-size:clamp(20px,3vw,25px)!important;line-height:2.5}
+@media(max-width:600px){
+ .v15-search-mode{width:100%;max-width:none}
+ .v15-library-head h2{font-size:21px}
+ .v15-library-tabs{display:grid;grid-template-columns:1fr;gap:7px}
+ .v15-library-tabs button{width:100%}
+ .v15-library-grid,.v15-library-results{grid-template-columns:1fr}
+ .v15-library-group{padding:11px}
+ .v15-related{padding:12px}
+ .reader-focus main{padding-left:12px;padding-right:12px}
+}
+@media(prefers-reduced-motion:reduce){.v15-library-card,.v15-work{transition:none}}
