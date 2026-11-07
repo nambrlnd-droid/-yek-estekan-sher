@@ -130,3 +130,15 @@ test("daily poem, theme toggle and mobile quick navigation are available", async
   await page.locator('#mobileDock button[data-action="search"]').click();
   await expect(page.locator("#search")).toBeFocused();
 });
+
+
+test("random poem opens the reader and the homepage offers continue reading", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 60000 }).toBeGreaterThan(0);
+  await page.locator("#randomPoem").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await page.locator("#readerBack").click();
+  await expect(page.locator("#continueReading")).toBeVisible();
+  await page.locator("#continueReading button").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+});
