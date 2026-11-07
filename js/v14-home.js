@@ -75,12 +75,13 @@
   if($("mobileDock"))return;
   const nav=document.createElement("nav");nav.id="mobileDock";nav.setAttribute("aria-label","پیمایش سریع");
   const items=[["home","⌂","خانه"],["library","▤","کتابخانه"],["search","⌕","جست‌وجو"],["favorites","♡","علاقه‌ها"],["notebook","▣","دفتر من"]];
+  const showRegular=()=>{document.body.classList.remove("notebook-open","reader-open","image-studio-open","reading-mode");$("notebookView").hidden=true;$("readerView").hidden=true;$("imageStudioView").hidden=true;$("pinnedView").hidden=true;$("regularView").hidden=false;};
   items.forEach(([id,glyph,label])=>{const b=document.createElement("button");b.type="button";b.dataset.action=id;b.setAttribute("aria-label",label);const icon=document.createElement("span");icon.textContent=glyph;b.append(icon,document.createTextNode(label));b.addEventListener("click",()=>{
    nav.querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===b));
-   if(id==="home"){document.body.classList.remove("notebook-open","reader-open","image-studio-open");$("notebookView").hidden=true;$("readerView").hidden=true;$("imageStudioView").hidden=true;$("regularView").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
-   if(id==="library"){$("topics")?.scrollIntoView({behavior:"smooth",block:"start"});}
-   if(id==="search"){$("search")?.scrollIntoView({behavior:"smooth",block:"center"});$("search")?.focus();}
-   if(id==="favorites"||id==="notebook"){window.YESNotebook?.open();if(id==="favorites"){const first=$("notebookTabs")?.querySelector("button");first?.click();}}
+   if(id==="home"){showRegular();window.scrollTo({top:0,behavior:"smooth"});}
+   if(id==="library"){showRegular();$("topics")?.scrollIntoView({behavior:"smooth",block:"start"});}
+   if(id==="search"){showRegular();$("search")?.scrollIntoView({behavior:"smooth",block:"center"});$("search")?.focus();}
+   if(id==="favorites"||id==="notebook"){document.body.classList.remove("image-studio-open","reader-open");$("imageStudioView").hidden=true;$("readerView").hidden=true;window.YESNotebook?.open();if(id==="favorites"){const first=$("notebookTabs")?.querySelector("button");first?.click();}}
   });nav.append(b);});
   document.body.append(nav);
  }
