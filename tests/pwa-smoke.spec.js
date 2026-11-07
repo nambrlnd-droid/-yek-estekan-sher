@@ -259,3 +259,44 @@ test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({
   }));
   expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
+
+
+test("v1.6 primary sections are independent deep-linkable pages", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  await expect(page.locator("#homePageView")).toBeVisible();
+  await expect(page.locator("#searchPageView")).toBeHidden();
+
+  await page.locator('#v16PrimaryNav a[data-route="library"]').click();
+  await expect(page).toHaveURL(/#\/library$/);
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
+  await expect(page.locator("#homePageView")).toBeHidden();
+
+  await page.locator('#v16PrimaryNav a[data-route="search"]').click();
+  await expect(page).toHaveURL(/#\/search$/);
+  await expect(page.locator("#searchPageView")).toBeVisible();
+  await expect(page.locator("#search")).toBeVisible();
+
+  await page.locator('#v16PrimaryNav a[data-route="favorites"]').click();
+  await expect(page).toHaveURL(/#\/favorites$/);
+  await expect(page.locator("#favoritesPageView")).toBeVisible();
+
+  await page.locator('#v16PrimaryNav a[data-route="notebook"]').click();
+  await expect(page).toHaveURL(/#\/notebook$/);
+  await expect(page.locator("#notebookView")).toBeVisible();
+});
+
+test("v1.6 direct page links survive reload and mobile navigation changes routes", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(baseURL + "#/search");
+  await expect(page.locator("#searchPageView")).toBeVisible();
+  await page.reload();
+  await expect(page.locator("#searchPageView")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="favorites"]').click();
+  await expect(page).toHaveURL(/#\/favorites$/);
+  await expect(page.locator("#favoritesPageView")).toBeVisible();
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    page: document.documentElement.scrollWidth
+  }));
+  expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
