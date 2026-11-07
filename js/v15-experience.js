@@ -13,7 +13,7 @@ const allItems = () => {
  });
 };
 const unique = values => [...new Set(values.filter(Boolean))];
-let libraryMode="topics",activeAuthor="",activeTopic="",focusMode=false;
+let libraryMode="topics",activeAuthor="",activeTopic="",focusMode=false,returnToLibraryFromPinned=false;
 let searchMode="normal",libraryQuery="";
 const escapeHTML = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function toast(message){const n=$("toast");if(!n)return;n.textContent=message;n.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>n.classList.remove("show"),2000);}
@@ -22,7 +22,8 @@ function openLibrary(mode="topics"){libraryMode=mode;activeAuthor="";activeTopic
 function closeLibrary(){document.body.classList.remove("library-open");setVisible("regularView");window.scrollTo({top:0,behavior:"smooth"});}
 function addButton(parent,label,action,cls="tool-button"){const b=document.createElement("button");b.type="button";b.className=cls;b.textContent=label;b.addEventListener("click",action);parent.append(b);return b;}
 function card(title,meta,action){const b=document.createElement("button");b.type="button";b.className="v15-library-card";const strong=document.createElement("strong");strong.textContent=title;const small=document.createElement("small");small.textContent=meta;b.append(strong,small);b.addEventListener("click",action);return b;}
-function makeTabs(root){root.replaceChildren();[["topics","مرور موضوعی"],["poets","شاعران و نویسندگان"],["collections","مجموعه‌های موضوعی"]].forEach(([key,label])=>addButton(root,label,()=>{libraryMode=key;activeAuthor="";activeTopic="";renderLibrary();},libraryMode===key?"active":""));}
+function makeTabs(root){root.replaceChildren();[["topics","مرور موضوعی"],["poets","شاعران و نویسندگان"],["collections","مجموعه‌های موضوعی"],["pinned","پیشنهاد‌ومیض"]].forEach(([key,label])=>addButton(root,label,()=>{if(key==="pinned"){openPinnedFromLibrary();return;}libraryMode=key;activeAuthor="";activeTopic="";renderLibrary();},libraryMode===key?"active":""));}
+function openPinnedFromLibrary(){returnToLibraryFromPinned=true;document.body.classList.add("library-open");setVisible("pinnedView");window.renderPinned?.();window.scrollTo({top:0,behavior:"smooth"});}
 function makeWorkButton(item){const b=document.createElement("button");b.type="button";b.className="v15-work";const text=document.createElement("span");text.textContent=(item.title||String(item.body||"").split("\n")[0]||"بدون عنوان").slice(0,100);const meta=document.createElement("small");meta.textContent=[item.author,item.category2].filter(Boolean).join(" · ");b.append(text,meta);b.addEventListener("click",()=>{const id=String(item.id);if(window.YESContent&&!window.YESContent.get(id)){window.YESContent.all.push({...item,id,type:item.type||(item.section==="texts"?"text":"poem"),tags:Array.isArray(item.tags)?item.tags:[]});}if(!window.YESReader?.open(id))toast("باز کردن این اثر ممکن نشد؛ دوباره تلاش کنید.");});return b;}
 function renderItems(root,items,emptyText){root.replaceChildren();if(!items.length){const p=document.createElement("p");p.className="v15-empty";p.textContent=emptyText;root.append(p);return;}items.forEach(item=>root.append(makeWorkButton(item)));}
 function renderTopics(root){
@@ -128,6 +129,7 @@ function setupLibrary(){
  view.innerHTML='<button type="button" class="back" id="v15LibraryBack">← بازگشت به کتابخانه</button><header class="v15-library-head"><span>نسخهٔ ۱.۵</span><h2>کتابخانهٔ یک استکان شعر</h2><p>از راه موضوع، شاعر و مجموعه‌های پیشنهادی میان آثار جست‌وجو کنید.</p></header><nav id="v15LibraryTabs" class="v15-library-tabs" aria-label="راه‌های مرور کتابخانه"></nav><p id="v15LibraryStatus" class="v15-library-status"></p><div id="v15LibraryContent"></div><h3 id="v15LibraryTitle" class="v15-library-title"></h3><div id="v15LibraryResults" class="v15-library-results"></div>';
  $("regularView").insertAdjacentElement("afterend",view);
  $("v15LibraryBack").addEventListener("click",closeLibrary);
+ const pinnedBack=$("backFromPinned");if(pinnedBack)pinnedBack.addEventListener("click",event=>{if(!returnToLibraryFromPinned)return;event.preventDefault();event.stopImmediatePropagation();returnToLibraryFromPinned=false;document.body.classList.add("library-open");setVisible("v15LibraryView");renderLibrary();window.scrollTo({top:0,behavior:"smooth"});},true);
 }
 function setupDock(){
  const dock=$("mobileDock");if(!dock)return;
