@@ -1,11 +1,7 @@
 {
   "version": "1.0.0",
   "total": 56880,
-  "source": "Ganjoor corpus via mabidan/ganjoor",
-  "datasetUrl": "https://huggingface.co/datasets/mabidan/ganjoor",
-  "sourceUrl": "https://ganjoor.net",
   "license": "CC-BY-4.0 (dataset card; underlying individual-work rights are not independently verified)",
-  "attribution": "متن‌ها از گنجور (ganjoor.net)، از طریق مجموعهٔ دادهٔ mabidan/ganjoor گردآوری شده‌اند؛ گردآورندهٔ مجموعه: Navid Abbaspoor. این بازنشر به معنی تأیید یا وابستگی رسمی گنجور نیست.",
   "classification": "دسته‌بندی ماشینی؛ بدون تأیید انسانی",
   "categories": [
     {
