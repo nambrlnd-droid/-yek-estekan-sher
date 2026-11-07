@@ -16,6 +16,8 @@ test("image studio exposes expanded Persian fonts and twelve design templates", 
 
   await page.locator("#imageTemplate").selectOption("garden");
   await expect(page.locator("#imageTheme")).toHaveValue("garden");
+  await expect(page.locator("#imagePattern")).toHaveValue("leaves");
+  await expect(page.locator("#imageFont")).toHaveValue("Amiri");
   await page.locator('[data-template="tile"]').click();
   await expect(page.locator("#imageTheme")).toHaveValue("tile");
   await expect(page.locator("#imagePattern")).toHaveValue("geometry");
