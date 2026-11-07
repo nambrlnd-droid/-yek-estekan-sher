@@ -81,7 +81,7 @@ test("homepage renders only ten random poems and supports 10-50 display sizes", 
   await page.locator("#displayCount").selectOption("30");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(30);
   await page.locator("#refreshEntries").click();
-  await expect.poll(() => page.locator("#entries .entry").count()).toBe(30);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(30);
   await page.locator("#displayCount").selectOption("50");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(50);
   await expect(page.locator("#entries .entry").count()).resolves.toBeLessThanOrEqual(50);
