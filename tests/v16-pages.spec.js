@@ -158,6 +158,7 @@ test("Escape returns to the page from which a poem was opened", async ({ page })
 
 test("all archive poems load before the site is revealed", async ({ page }) => {
   test.setTimeout(240000);
+  await page.addInitScript(() => { Object.defineProperty(window, "YESWebPoemsReady", { configurable: true, get: () => new Promise(() => {}), set: () => {} }); });
   await page.goto("./");
   await expect(page.locator("#archiveBoot")).toBeVisible();
   await expect(page.locator("#homePageView")).toBeHidden();

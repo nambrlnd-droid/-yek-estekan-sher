@@ -32,12 +32,11 @@ async function boot(){
   paint(window.YESArchive.loadedCount(),manifest.total,null);
   if(!progressListener){window.addEventListener("yes:archive-loaded",event=>paint(window.YESArchive.loadedCount(),manifest.total,event.detail));progressListener=true;}
   await window.YESArchive.loadAll();
-  const webResult=window.YESWebPoemsReady?await Promise.race([window.YESWebPoemsReady,new Promise(resolve=>setTimeout(()=>resolve(false),20000))]):false;
   if(window.YESArchive.loadedCount()!==manifest.total)throw new Error("تعداد آثار دریافت‌شده کامل نیست.");
   window.__YES_ARCHIVE_DATA_READY=true;window.dispatchEvent(new Event("yes:archive-data-ready"));
   await window.YESNotebook?.migrateLegacy?.();
   paint(manifest.total,manifest.total,null);
-  if(message)message.textContent=webResult===false?"گنجینهٔ اصلی کامل شد؛ آثار تکمیلی حافظ در این اتصال در دسترس نبودند.":"همهٔ آثار با موفقیت آماده شدند؛ خوش آمدید.";
+  if(message)message.textContent="همهٔ آثار گنجینهٔ اصلی آماده شدند؛ خوش آمدید.";
   reveal();
  }catch(error){
   if(message)message.textContent="بارگذاری کامل نشد. سایت تا دریافت همهٔ آثار بسته می‌ماند؛ اتصال را بررسی و دوباره تلاش کنید.";

@@ -2,9 +2,11 @@
 (function(){
 "use strict";
 const base="./data/poetry-archive/";
+const workerURL=new URL("./archive-worker.js",document.currentScript.src);
 const ARCHIVE_CACHE="yes-poetry-archive-v1";
 let manifestPromise=null;
 const loaded=new Map(),pending=new Map(),categoryRecords=new Map();
+let seenIds=null,seenBodies=null,seenContentIds=null,bulkLoading=false;
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").trim();
 async function archiveFetch(path){
  const url=new URL(base+path,location.href).href;
@@ -23,6 +25,29 @@ async function manifest(){
  return manifestPromise;
 }
 function status(message){const node=document.getElementById("archiveStatus");if(node)node.textContent=message;}
+function bodyKey(s){return String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();}
+function initDedup(target){
+ if(!seenIds)seenIds=new Set(target.map(x=>x.id).filter(Boolean));
+ if(!seenBodies)seenBodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));
+ if(window.YESContent&&!seenContentIds)seenContentIds=new Set(window.YESContent.all.map(x=>x.id));
+}
+async function parseArchive(bytes){
+ if(typeof Worker!=="undefined"){
+  try{
+   return await new Promise((resolve,reject)=>{
+    const worker=new Worker(workerURL);
+    const done=fn=>value=>{worker.terminate();fn(value);};
+    worker.onmessage=event=>event.data&&event.data.error?done(reject)(new Error(event.data.error)):done(resolve)(event.data.records);
+    worker.onerror=done(reject);
+    const copy=bytes.slice(0);
+    worker.postMessage(copy,[copy]);
+   });
+  }catch(error){console.warn("Archive worker fallback:",error);}
+ }
+ if(typeof DecompressionStream==="undefined")throw Error("مرورگر از بازکردن آرشیو فشرده پشتیبانی نمی‌کند");
+ const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+ return new Response(stream).json();
+}
 async function loadCategory(name){
  const m=await manifest();const meta=m.categories.find(x=>norm(x.name)===norm(name));
  if(!meta)throw Error("موضوع در گنجینه پیدا نشد");
@@ -30,35 +55,49 @@ async function loadCategory(name){
  const job=(async()=>{
   status("در حال دریافت «"+meta.name+"»؛ "+meta.count.toLocaleString("fa-IR")+" اثر…");
   const response=await archiveFetch(meta.file);
-  if(typeof DecompressionStream==="undefined")throw Error("مرورگر از بازکردن آرشیو فشرده پشتیبانی نمی‌کند");
   const bytes=await response.arrayBuffer();
-  const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
-  const records=await new Response(stream).json();
+  const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
   categoryRecords.set(meta.name,records);
   const target=window.poemEntries||(window.poemEntries=[]);
-  const ids=new Set(target.map(x=>x.id));
-  const bodyKey=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
-  const bodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));
-  for(const item of records){const key=bodyKey(item.body);if(!item.id||ids.has(item.id)||!key||bodies.has(key))continue;ids.add(item.id);bodies.add(key);target.push(item);}
+  initDedup(target);
+  for(const item of records){
+   const key=bodyKey(item.body);
+   if(!item.id||seenIds.has(item.id)||!key||seenBodies.has(key))continue;
+   seenIds.add(item.id);seenBodies.add(key);target.push(item);
+  }
   if(window.YESContent){
-   const contentIds=new Set(window.YESContent.all.map(x=>x.id));
-   for(const item of records){if(!contentIds.has(item.id)){window.YESContent.all.push(item);contentIds.add(item.id);}}
-   window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");
+   for(const item of records){
+    if(seenContentIds.has(item.id))continue;
+    window.YESContent.all.push(item);seenContentIds.add(item.id);
+    if(item.type!=="text")window.YESContent.poems.push(item);
+   }
   }
   loaded.set(meta.name,records.length);
   const loadedRecords=window.YESArchive.loadedCount();
   status(loadedRecords.toLocaleString("fa-IR")+" از "+m.total.toLocaleString("fa-IR")+" اثر گنجینه بارگذاری شد.");
-  window.dispatchEvent(new CustomEvent("yes:archive-loaded",{detail:{category:meta.name,added:records.length,total:target.length,loadedRecords,loadedCategories:loaded.size,categoryIndex:m.categories.findIndex(x=>x.name===meta.name)+1,categoryTotal:m.categories.length,archiveTotal:m.total}}));
+  window.dispatchEvent(new CustomEvent("yes:archive-loaded",{detail:{category:meta.name,added:records.length,total:target.length,loadedRecords,loadedCategories:loaded.size,categoryIndex:m.categories.findIndex(x=>x.name===meta.name)+1,categoryTotal:m.categories.length,archiveTotal:m.total,batch:bulkLoading}}));
   return records.length;
  })().catch(error=>{status("بارگذاری این دسته کامل نشد؛ اتصال را بررسی و دوباره تلاش کنید.");throw error;}).finally(()=>pending.delete(meta.name));
  pending.set(meta.name,job);return job;
 }
 async function loadAll(){
  const m=await manifest();
- for(const item of m.categories)await loadCategory(item.name);
- if(loadedCount()!==m.total)throw Error("همهٔ آثار گنجینه بارگذاری نشدند.");
- return loadedCount();
+ bulkLoading=true;
+ try{
+  let cursor=0;
+  async function worker(){
+   while(cursor<m.categories.length){
+    const item=m.categories[cursor++];
+    await loadCategory(item.name);
+   }
+  }
+  const results=await Promise.allSettled(Array.from({length:Math.min(3,m.categories.length)},worker));
+  const failed=results.find(result=>result.status==="rejected");
+  if(failed)throw failed.reason;
+  if(loadedCount()!==m.total)throw Error("همهٔ آثار گنجینه بارگذاری نشدند.");
+  return loadedCount();
+ }finally{bulkLoading=false;}
 }
 function loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0);}
 window.YESArchive={
