@@ -182,7 +182,7 @@ test("v1.5 library provides topic browsing and lazy archive categories", async (
   await page.locator("#v15LibraryResults .v15-work").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
   await page.locator("#readerBack").click();
-  await expect(page.locator("#regularView")).toBeVisible();
+  await expect(page.locator("#v15LibraryView")).toBeVisible();
   expect(errors).toEqual([]);
 });
 
