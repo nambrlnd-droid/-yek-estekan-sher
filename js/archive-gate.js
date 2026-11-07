@@ -3,14 +3,16 @@
 "use strict";
 const root=document.getElementById("archiveBoot");
 const progress=document.getElementById("archiveBootProgress");
+const progressTrack=progress?.parentElement;
 const count=document.getElementById("archiveBootCount");
 const category=document.getElementById("archiveBootCategory");
 const message=document.getElementById("archiveBootMessage");
 const retry=document.getElementById("archiveBootRetry");
-let running=false,complete=false;
+let running=false,complete=false,progressListener=false;
 function paint(loaded,total,detail){
  const pct=total?Math.min(100,Math.round(loaded/total*100)):0;
- if(progress){progress.style.width=pct+"%";progress.setAttribute("aria-valuenow",String(pct));}
+ if(progress)progress.style.width=pct+"%";
+ if(progressTrack)progressTrack.setAttribute("aria-valuenow",String(pct));
  if(count)count.textContent=loaded.toLocaleString("fa-IR")+" از "+total.toLocaleString("fa-IR")+" اثر";
  if(category)category.textContent=detail?.categoryIndex?("دستهٔ "+detail.categoryIndex.toLocaleString("fa-IR")+" از "+detail.categoryTotal.toLocaleString("fa-IR")+" · "+detail.category):"در حال آماده‌سازی فهرست گنجینه";
 }
@@ -22,15 +24,17 @@ function reveal(){
 }
 async function boot(){
  if(running||complete)return;running=true;if(retry)retry.hidden=true;
- if(window.__YES_TEST_SKIP_ARCHIVE_GATE===true){reveal();running=false;return;}
+ if(window.__YES_TEST_SKIP_ARCHIVE_GATE===true){window.__YES_ARCHIVE_DATA_READY=true;window.dispatchEvent(new Event("yes:archive-data-ready"));await window.YESNotebook?.migrateLegacy?.();reveal();running=false;return;}
  try{
   if(message)message.textContent="برای نمایش کامل کتابخانه، همهٔ دسته‌های شعر دریافت و بررسی می‌شوند.";
   const manifest=await window.YESArchive.manifest();
   paint(window.YESArchive.loadedCount(),manifest.total,null);
-  window.addEventListener("yes:archive-loaded",event=>paint(window.YESArchive.loadedCount(),manifest.total,event.detail));
+  if(!progressListener){window.addEventListener("yes:archive-loaded",event=>paint(window.YESArchive.loadedCount(),manifest.total,event.detail));progressListener=true;}
   await window.YESArchive.loadAll();
   const webResult=window.YESWebPoemsReady?await window.YESWebPoemsReady:false;
   if(window.YESArchive.loadedCount()!==manifest.total)throw new Error("تعداد آثار دریافت‌شده کامل نیست.");
+  window.__YES_ARCHIVE_DATA_READY=true;window.dispatchEvent(new Event("yes:archive-data-ready"));
+  await window.YESNotebook?.migrateLegacy?.();
   paint(manifest.total,manifest.total,null);
   if(message)message.textContent=webResult===false?"گنجینهٔ اصلی کامل شد؛ آثار تکمیلی حافظ در این اتصال در دسترس نبودند.":"همهٔ آثار با موفقیت آماده شدند؛ خوش آمدید.";
   reveal();
