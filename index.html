@@ -6,7 +6,7 @@
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>یک استکان شعر | نسخهٔ ۱.۶</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Lalezar&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Serif+Arabic:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#171512;--surface:#211d19;--surface2:#29231d;--surface3:#33291f;--text:#f1e8dc;--muted:#b5a697;--gold:#d5a66f;--gold2:#f0c994;--line:#40362d;--green:#a9b49a;--shadow:0 18px 50px #0005}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -12%,#49332188,transparent 42%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}
@@ -98,6 +98,9 @@ body.reader-open main{max-width:850px;padding-top:22px}
 .display-controls #displayStatus{flex-basis:100%;text-align:center;color:var(--muted);font-size:10px;min-height:15px}
 #loadMore{display:none!important}
 @media(max-width:600px){.display-controls{gap:8px;padding:11px}.display-controls label{width:100%;text-align:center}.display-controls select{flex:1}.display-controls button{flex:1}}
+
+/* v1.7 image studio expansion */
+.image-presets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.image-presets button{border:1px solid var(--line);border-radius:11px;padding:8px 5px;background:var(--surface2);color:var(--muted);font-size:10px}.image-presets button.active{border-color:var(--gold);color:var(--gold2);background:#3a2c20}.image-preview-note{text-align:center;color:var(--muted);font-size:10px;padding:9px 2px 1px}.image-controls input[type=range]{width:100%;accent-color:var(--gold)}.image-actions #imageReset{flex:0 0 auto;background:transparent;color:var(--muted)}@media(max-width:420px){.image-presets{grid-template-columns:repeat(3,minmax(0,1fr))}.image-control-row{grid-template-columns:1fr 1fr}}
 </style><link rel="stylesheet" href="./css/v15-visual.css"><link rel="stylesheet" href="./css/v15-library.css"><link rel="stylesheet" href="./css/v16-editorial.css"><link rel="stylesheet" href="./css/archive-gate.css"></head>
 <body class="archive-gated" aria-busy="true"><div id="archiveBoot" class="archive-boot" role="status" aria-live="polite"><div class="archive-boot-card"><div class="archive-boot-cup" aria-hidden="true">☕</div><p class="archive-boot-kicker">یک استکان شعر</p><h2>در حال آماده‌سازی کتابخانه</h2><p class="archive-boot-message" id="archiveBootMessage">برای نمایش کامل کتابخانه، همهٔ دسته‌های شعر دریافت و بررسی می‌شوند.</p><div class="archive-boot-track" role="progressbar" aria-label="پیشرفت بارگذاری آثار" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="archive-boot-progress" id="archiveBootProgress"></div></div><strong class="archive-boot-count" id="archiveBootCount">۰ از ۵۶٬۸۸۰ اثر</strong><span class="archive-boot-category" id="archiveBootCategory">در حال آماده‌سازی فهرست گنجینه</span><button id="archiveBootRetry" class="archive-boot-retry" type="button" hidden>تلاش دوباره</button></div></div>
 <header class="site-header"><div class="topline"><span>دفتر کوچک واژه‌ها</span><span class="version">نسخهٔ ۱.۶</span></div><div class="brand-mark" aria-hidden="true">☕</div><h1>یک استکان شعر</h1><p class="tagline">گاهی یک فنجان چای و چند بیت شعر، حالِ دل را عوض می‌کند…<br><em>بفرمایید؛ این استکان شعر مهمان شماست.</em></p></header>
@@ -142,28 +145,37 @@ body.reader-open main{max-width:850px;padding-top:22px}
 
 <section class="image-studio" id="imageStudioView" hidden>
  <button class="back" id="imageStudioBack" type="button">← بازگشت</button>
- <div class="image-studio-head"><h2>استودیوی تصویر شعر</h2><p>متن را بنویسید یا از صفحهٔ مطالعه به این بخش بیاورید؛ سپس طرح را تنظیم و به‌صورت PNG ذخیره کنید.</p></div>
+ <div class="image-studio-head"><h2>استودیوی تصویر شعر</h2><p>قالب‌های آماده، قلم‌های فارسی متنوع و تنظیمات دقیق برای ساخت کارت شعر، پوستر و استوری؛ همهٔ پردازش‌ها در همین مرورگر انجام می‌شود.</p></div>
  <div class="image-studio-layout">
   <div class="image-controls">
    <label>متن شعر یا نوشته<textarea id="imageText" dir="rtl" placeholder="متن دلخواهتان را اینجا بنویسید…"></textarea></label>
    <label>نام شاعر یا نویسنده<input id="imageAuthor" type="text" dir="rtl" placeholder="نام شاعر"></label>
    <div class="image-control-row">
-    <label>قالب رنگی<select id="imageTheme"><option value="paper">کاغذ گرم</option><option value="night">شب و طلایی</option><option value="dawn">سپیده</option><option value="olive">زیتونی</option><option value="minimal">مینیمال روشن</option></select></label>
+    <label>قالب آماده<select id="imageTemplate"><option value="classic">نسخهٔ خطی</option><option value="garden">باغ ایرانی</option><option value="tile">کاشی فیروزه‌ای</option><option value="rose">گل‌سرخ</option><option value="ink">مرکب و کاغذ</option><option value="midnight">شب لاجوردی</option><option value="minimal">سپید مینیمال</option><option value="saffron">زعفرانی</option><option value="lavender">یاس بنفش</option><option value="copper">مسی و تیره</option><option value="sea">آبی دریا</option><option value="sand">شن و آفتاب</option></select></label>
+    <label>ابعاد خروجی<select id="imageFormat"><option value="portrait">عمودی ۴:۵</option><option value="square">مربع ۱:۱</option><option value="story">استوری ۹:۱۶</option><option value="landscape">افقی ۱۶:۹</option></select></label>
+   </div>
+   <div class="image-presets" id="imagePresetButtons" aria-label="قالب‌های آمادهٔ طراحی"></div>
+   <div class="image-control-row">
+    <label>قلم فارسی<select id="imageFont"><option value="Vazirmatn">وزیرمتن · خوانا و امروزی</option><option value="Noto Naskh Arabic">نوتو نسخ · کتابی</option><option value="Amiri">امیری · کلاسیک</option><option value="Noto Serif Arabic">نوتو سریف · ادبی</option><option value="Noto Sans Arabic">نوتو سنس · ساده</option><option value="IBM Plex Sans Arabic">آی‌بی‌ام پلکس · مدرن</option><option value="Lalezar">لاله‌زار · نمایشی</option><option value="Tahoma">Tahoma · سیستمی</option></select></label>
+    <label>وزن قلم<select id="imageFontWeight"><option value="400">معمولی</option><option value="500">متوسط</option><option value="600">نیمه‌ضخیم</option><option value="700">ضخیم</option></select></label>
+   </div>
+   <div class="image-control-row">
     <label>چیدمان متن<select id="imageAlign"><option value="center">وسط‌چین</option><option value="right">راست‌چین</option><option value="left">چپ‌چین</option></select></label>
+    <label>نقش پس‌زمینه<select id="imagePattern"><option value="none">ساده و خلوت</option><option value="stars">ستاره‌ها</option><option value="arch">قاب قوسی</option><option value="leaves">برگ‌ها</option><option value="geometry">هندسهٔ ایرانی</option><option value="waves">موج‌های نرم</option><option value="dots">نقطه‌چین</option></select></label>
    </div>
    <div class="image-control-row">
-    <label>قلم متن<select id="imageFont"><option value="Vazirmatn">وزیرمتن</option><option value="Tahoma">Tahoma</option><option value="serif">سریف</option></select></label>
-    <label>نقش پس‌زمینه<select id="imagePattern"><option value="none">ساده و خلوت</option><option value="stars">نقش ستاره‌ای</option><option value="arch">قاب قوسی</option><option value="leaves">نقش برگ</option></select></label>
+    <label>اندازهٔ قلم <input id="imageFontSize" type="range" min="24" max="76" value="42"></label>
+    <label>فاصلهٔ سطرها <input id="imageSpacing" type="range" min="1.3" max="3" step=".1" value="2"></label>
    </div>
    <div class="image-control-row">
-    <label>اندازهٔ قلم <input id="imageFontSize" type="range" min="28" max="58" value="40"></label>
-    <label>فاصلهٔ سطرها <input id="imageSpacing" type="range" min="1.5" max="2.8" step=".1" value="2"></label>
+    <label>فاصلهٔ حروف <input id="imageLetterSpacing" type="range" min="-1" max="4" step=".5" value="0"></label>
+    <label>حاشیهٔ قاب<select id="imageFrame"><option value="double">قاب دوخطی</option><option value="single">قاب ساده</option><option value="ornate">قاب تزئینی</option><option value="none">بدون قاب</option></select></label>
    </div>
    <div class="image-checks"><label><input id="imageShowAuthor" type="checkbox" checked> نمایش نام شاعر</label><label><input id="imageShowBrand" type="checkbox" checked> امضای یک استکان شعر</label></div>
-   <div class="image-actions"><button class="tool-button" id="imageDownload" type="button">دریافت تصویر PNG</button></div>
-   <div class="image-status" id="imageStatus" role="status">در حال آماده‌سازی پیش‌نمایش…</div>
+   <div class="image-actions"><button class="tool-button" id="imageDownload" type="button">دریافت تصویر PNG</button><button class="tool-button" id="imageReset" type="button">بازنشانی تنظیمات</button></div>
+   <div class="image-status" id="imageStatus" role="status" aria-live="polite">در حال آماده‌سازی پیش‌نمایش…</div>
   </div>
-  <div class="image-preview"><canvas id="poetryCanvas" width="1080" height="1350" aria-label="پیش‌نمایش تصویر شعر"></canvas></div>
+  <div class="image-preview"><canvas id="poetryCanvas" width="1080" height="1350" aria-label="پیش‌نمایش تصویر شعر"></canvas><div class="image-preview-note">پیش‌نمایش با کیفیت اصلی خروجی · ذخیره به‌صورت PNG</div></div>
  </div>
 </section>
 </main>
