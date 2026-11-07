@@ -40,12 +40,25 @@ window.YESArchive={
   const m=await manifest();
   const take=(list,n)=>{const a=list.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(n,a.length));};
   if(categoryName){await loadCategory(categoryName);const meta=m.categories.find(x=>norm(x.name)===norm(categoryName));return meta?take(categoryRecords.get(meta.name)||[],count):[];}
-  const chosen=new Map(),total=m.categories.reduce((s,x)=>s+x.count,0);
-  for(let i=0;i<count;i++){let r=Math.random()*total,meta=m.categories[m.categories.length-1];for(const item of m.categories){r-=item.count;if(r<0){meta=item;break;}}chosen.set(meta.name,(chosen.get(meta.name)||0)+1);}
-  await Promise.all([...chosen.keys()].map(name=>loadCategory(name)));
-  const result=[],seen=new Set();
-  for(const [name,n] of chosen){let added=0;for(const item of take(categoryRecords.get(name)||[],n*4)){const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(++added>=n)break;}}
-  if(result.length<count){const fallback=m.categories.flatMap(x=>categoryRecords.get(x.name)||[]);for(const item of take(fallback,count*3)){const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(result.length>=count)break;}}
+  const remaining=m.categories.slice(),selected=[],total=m.categories.reduce((sum,x)=>sum+x.count,0);
+  for(let i=0;i<Math.min(3,remaining.length);i++){
+   const weight=remaining.reduce((sum,x)=>sum+x.count,0);let r=Math.random()*weight,at=remaining.length-1;
+   for(let j=0;j<remaining.length;j++){r-=remaining[j].count;if(r<0){at=j;break;}}
+   selected.push(remaining.splice(at,1)[0]);
+  }
+  await Promise.all(selected.map(item=>loadCategory(item.name)));
+  const result=[],seen=new Set(),base=Math.floor(count/selected.length),extra=count%selected.length;
+  for(let i=0;i<selected.length;i++){
+   const meta=selected[i],wanted=base+(i<extra?1:0);let added=0;
+   for(const item of take(categoryRecords.get(meta.name)||[],wanted*8)){
+    const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(++added>=wanted)break;
+   }
+  }
+  if(result.length<count){
+   for(const meta of selected){for(const item of take(categoryRecords.get(meta.name)||[],count*5)){
+    const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(result.length>=count)break;
+   }if(result.length>=count)break;}
+  }
   return take(result,count);
  },
  isArchiveCategory(name){return !!(window.YESArchive.manifestData&&window.YESArchive.manifestData.categories.some(x=>norm(x.name)===norm(name)));},
