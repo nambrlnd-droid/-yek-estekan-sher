@@ -136,47 +136,38 @@ FORM_RULES = [
 ]
 
 def classify(row):
+    original_hint = row.get("category2")
     title = str(row.get("title") or "")
     author = str(row.get("author") or "").strip()
     body = str(row.get("body") or "")
-    text = norm(title + " " + body)
-    scores = collections.Counter()
-    for category, patterns in COMPILED:
-        for pattern in patterns:
-            scores[category] += len(pattern.findall(text))
+    raw = title + " " + body
+    scores = collections.Counter({
+        category: sum(1 for pattern in patterns if pattern.search(raw))
+        for category, patterns in COMPILED
+    })
     ranked = scores.most_common()
-    if not ranked or ranked[0][1] == 0:
+    if not ranked or ranked[0][1] < 2 or (len(ranked) > 1 and ranked[0][1] == ranked[1][1]):
         main, confidence = "نیازمند دسته‌بندی", "low"
     else:
         main, top = ranked[0]
         second = ranked[1][1] if len(ranked) > 1 else 0
-        if top == second:
-            main, confidence = "نیازمند دسته‌بندی", "low"
-        elif top >= 3 and top >= second + 2:
-            confidence = "medium"
-        else:
-            confidence = "low"
-    sub = "سایرِ " + main if main != "نیازمند دسته‌بندی" else "بازبینی موضوعی"
-    sub_scores = []
-    for label, pattern in SUB_RULES.get(main, []):
-        n = len(re.findall(pattern, text))
-        if n:
-            sub_scores.append((n, label))
-    if sub_scores:
-        sub_scores.sort(reverse=True)
+        confidence = "high" if top >= 3 and top >= second + 2 else "medium"
+    sub = "بازبینی موضوعی" if main == "نیازمند دسته‌بندی" else "سایرِ " + main
+    sub_scores = [(1, label) for label, pattern in SUB_RULES.get(main, []) if re.search(pattern, raw)]
+    if len(sub_scores) == 1:
         sub = sub_scores[0][1]
-        if len(sub_scores) > 1 and sub_scores[0][0] == sub_scores[1][0]:
-            sub = "چندموضوعی؛ بازبینی لازم"
-            confidence = "low"
+    elif len(sub_scores) > 1:
+        sub = "چندموضوعی؛ بازبینی لازم"
+        confidence = "low"
     form = "قالب نامشخص"
     for label, pattern in FORM_RULES:
-        if re.search(pattern, norm(row.get("sourceCategory") or "")):
+        if re.search(pattern, str(row.get("sourceCategory") or "")):
             form = label
             break
     flags = []
     if not author:
         flags.append("انتساب نامعلوم")
-    if RELIGIOUS_REVIEW.search(title + " " + body):
+    if RELIGIOUS_REVIEW.search(raw):
         flags.append("بازبینی انسانی برای احتمال محتوای مذهبی")
     if confidence == "low":
         flags.append("موضوع نیازمند بازبینی")
@@ -186,9 +177,10 @@ def classify(row):
     row["category2"] = main
     row["category3"] = sub
     row["form"] = form
-    row["taxonomyMethod"] = "weighted-keyword-v1"
+    row["taxonomyMethod"] = "multi-signal-keyword-v2"
     row["taxonomyConfidence"] = confidence
     row["taxonomyScores"] = dict(scores)
+    row["stage2CategoryHint"] = original_hint
     row["reviewFlags"] = flags
     row["publicationStatus"] = "نامزد؛ انتشار ممنوع تا کنترل مرحلهٔ ۵ و حقوق"
     return row
@@ -237,50 +229,52 @@ def main():
         row["duplicateStatus"] = "exact_unique"
         unique.append(row)
 
-    # Conservative near-duplicate review: SimHash locality bands, then full-string similarity.
-    # These pairs are flagged, never automatically discarded.
-    combined = []
-    for row in site:
-        body = norm(row.get("body"))
-        if len(body) >= 40:
-            combined.append(("site", row, body, simhash(body)))
+    # Conservative near-duplicate screening using author/title and first-line blocks.
+    # This avoids quadratic all-pairs matching; matches are retained for human review.
+    blocks = collections.defaultdict(list)
+    generic_title = re.compile(r"^(غزل|رباعی|قصیده|قطعه|مثنوی|دوبیتی)?شماره\d+$")
+    for kind, rows in (("site", site), ("candidate", unique)):
+        for idx, row in enumerate(rows):
+            body = norm(row.get("body"))
+            if len(body) < 40:
+                continue
+            author = norm(row.get("author"))
+            title = norm(row.get("title"))
+            if author and len(body[:32]) >= 16:
+                blocks[("author-first", author, body[:32])].append((kind, idx, row, body))
+            if author and title and not generic_title.fullmatch(title):
+                blocks[("author-title", author, title)].append((kind, idx, row, body))
     near_pairs = []
-    buckets = collections.defaultdict(list)
     candidate_near = collections.defaultdict(list)
     checked = set()
-    for idx, row in enumerate(unique):
-        body = norm(row.get("body"))
-        if len(body) < 40:
+    for key, entries in blocks.items():
+        if len(entries) < 2 or len(entries) > 120:
             continue
-        signature = simhash(body)
-        possible = set()
-        for band_index, band in enumerate(bands(signature)):
-            possible.update(buckets[(band_index, band)])
-        for previous_index in possible:
-            kind, previous, previous_body, previous_sig = combined[previous_index]
-            if abs(len(body)-len(previous_body)) / max(len(body),len(previous_body)) > 0.12:
+        for pos, current in enumerate(entries):
+            kind, idx, row, body = current
+            if kind != "candidate":
                 continue
-            if hamming(signature, previous_sig) > 5:
-                continue
-            score = ratio(body, previous_body)
-            if score >= 92:
-                pair = {
-                    "candidateSourceId": row.get("sourceId"),
-                    "candidateTitle": row.get("title"),
-                    "candidateAuthor": row.get("author"),
-                    "matchType": "near_duplicate_existing_site" if kind == "site" else "near_duplicate_candidate_pool",
-                    "matchedId": previous.get("id") if kind == "site" else previous.get("sourceId"),
-                    "matchedTitle": previous.get("title"),
-                    "matchedAuthor": previous.get("author"),
-                    "similarity": round(score, 2),
-                }
-                near_pairs.append(pair)
-                candidate_near[row.get("sourceId")].append(pair)
-        # Insert this candidate only after checking earlier records.
-        pos = len(combined)
-        combined.append(("candidate", row, body, signature))
-        for band_index, band in enumerate(bands(signature)):
-            buckets[(band_index, band)].append(pos)
+            for previous_kind, previous_idx, previous, previous_body in entries[:pos]:
+                pair_key = (row.get("sourceId"), previous.get("id") if previous_kind == "site" else previous.get("sourceId"))
+                if pair_key in checked:
+                    continue
+                checked.add(pair_key)
+                if abs(len(body) - len(previous_body)) / max(len(body), len(previous_body)) > 0.12:
+                    continue
+                score = ratio(body, previous_body)
+                if score >= 92:
+                    pair = {
+                        "candidateSourceId": row.get("sourceId"),
+                        "candidateTitle": row.get("title"),
+                        "candidateAuthor": row.get("author"),
+                        "matchType": "near_duplicate_existing_site" if previous_kind == "site" else "near_duplicate_candidate_pool",
+                        "matchedId": previous.get("id") if previous_kind == "site" else previous.get("sourceId"),
+                        "matchedTitle": previous.get("title"),
+                        "matchedAuthor": previous.get("author"),
+                        "similarity": round(score, 2),
+                    }
+                    near_pairs.append(pair)
+                    candidate_near[row.get("sourceId")].append(pair)
 
     for row in unique:
         matches = candidate_near.get(row.get("sourceId"), [])
