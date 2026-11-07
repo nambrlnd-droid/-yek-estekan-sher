@@ -45,7 +45,7 @@
   const label=document.createElement("small");label.textContent="✦ شعر امروز";
   const body=document.createElement("blockquote");body.textContent="در حال انتخاب شعر امروز…";
   const author=document.createElement("span");author.className="daily-author";
-  const open=document.createElement("button");open.type="button";open.textContent="خواندن این شعر";
+  const open=document.createElement("button");open.type="button";open.hidden=true;open.textContent="خواندن این شعر";
   open.addEventListener("click",()=>{if(section._item&&window.YESReader)window.YESReader.open(section._item.id);});
   section.append(label,body,author,open);toolbar.insertAdjacentElement("afterend",section);
   const key="yes-v14-daily-"+today();
