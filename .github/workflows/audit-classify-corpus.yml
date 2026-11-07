@@ -61,6 +61,7 @@ jobs:
           git add data/poetry-archive
           if ! git diff --cached --quiet; then
             git commit -m "Publish 56,880 categorized Ganjoor poems"
+            git pull --rebase origin main
             git push origin HEAD:main
           else
             echo "Archive is already up to date."
