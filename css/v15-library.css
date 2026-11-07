@@ -52,3 +52,5 @@
 @media(prefers-reduced-motion:reduce){.v15-library-card,.v15-work{transition:none}}
 
 body.library-open #siteStats,body.library-open .hero-feature{display:none!important}
+
+body.reader-open #siteStats{display:none!important}
