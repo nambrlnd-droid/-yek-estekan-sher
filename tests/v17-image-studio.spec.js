@@ -30,6 +30,12 @@ test("image studio exposes expanded Persian fonts and twelve design templates", 
   await page.locator("#imageAuthor").fill("فردوسی");
   await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height])).toEqual([1200, 1200]);
   await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => c.toDataURL("image/png").length)).toBeGreaterThan(1000);
+  await expect.poll(() => page.evaluate(async () => (await window.YESStorage.get("settings", "image-studio"))?.imageFont)).toBe("Amiri");
+  await page.reload();
+  await expect(page.locator("#openImageStudio")).toBeVisible();
+  await page.locator("#openImageStudio").click();
+  await expect(page.locator("#imageFont")).toHaveValue("Amiri");
+  await expect(page.locator("#imageFormat")).toHaveValue("square");
   await page.locator("#imageReset").click();
   await expect(page.locator("#imageFormat")).toHaveValue("portrait");
   await expect(page.locator("#imageFont")).toHaveValue("Noto Naskh Arabic");
