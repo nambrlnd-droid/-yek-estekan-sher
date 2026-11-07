@@ -279,3 +279,22 @@ body.v16-editorial[data-theme="light"] .daily-poem blockquote{color:var(--text)}
 body.v16-editorial[data-theme="light"] .continue-reading{background:var(--surface);border-color:var(--line);border-radius:2px}
 body.v16-editorial[data-theme="light"] #themeToggle{border-radius:2px;background:var(--surface);color:var(--gold2)}
 body.v16-editorial[data-theme="light"] .v16-primary-nav{background:#f3efe6ed}
+
+@keyframes v16-rise-in{
+ from{opacity:0;transform:translateY(12px)}
+ to{opacity:1;transform:translateY(0)}
+}
+body.v16-editorial .hero-feature,
+body.v16-editorial .entry,
+body.v16-editorial .pinned-item,
+body.v16-editorial .reader-paper,
+body.v16-editorial .v15-library-group{
+ animation:v16-rise-in .48s cubic-bezier(.2,.7,.2,1) both;
+}
+@media(prefers-reduced-motion:reduce){
+ body.v16-editorial .hero-feature,
+ body.v16-editorial .entry,
+ body.v16-editorial .pinned-item,
+ body.v16-editorial .reader-paper,
+ body.v16-editorial .v15-library-group{animation:none!important}
+}
