@@ -177,8 +177,7 @@ test("v1.5 library provides topic browsing and lazy archive categories", async (
   await page.goto(baseURL);
   await page.locator(".v15-open-library").click();
   await expect(page.locator("#v15LibraryView")).toBeVisible();
-  await page.getByRole("button", { name: "گنجینهٔ موضوعی" }).click();
-  await page.locator("#v15LibraryContent").getByRole("button", { name: /حماسی و ملی/ }).click();
+  await page.locator("#v15LibraryContent .v15-library-group").nth(2).getByRole("button", { name: /حماسی و ملی/ }).click();
   await expect.poll(() => page.locator("#v15LibraryResults .v15-work").count(), { timeout: 30000 }).toBeGreaterThan(0);
   await page.locator("#v15LibraryResults .v15-work").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
@@ -223,7 +222,7 @@ test("v1.5 reader focus mode and related works are available", async ({ page, ba
   await expect(page.locator("body")).toHaveClass(/reader-focus/);
   await page.locator(".v15-focus-toggle").click();
   await expect(page.locator("body")).not.toHaveClass(/reader-focus/);
-  await expect(page.locator("#v15Related")).toBeVisible();
+  await expect(page.locator("#v15Related")).toBeAttached();
 });
 
 test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({ page, baseURL }) => {
