@@ -131,7 +131,7 @@ function showRoute(state){
   const b=document.querySelector(".v15-open-library");
   if(b&&!internalClick){internalClick=true;b.click();internalClick=false;setVisible("library");}
  }
- if(route==="notebook"){window.YESNotebook?.open("collections");setVisible("notebook");}
+ if(route==="notebook"){window.YESNotebook?.open("favorites");setVisible("notebook");}
  if(route==="favorites")renderFavorites();
  if(route==="search"){const search=$("search");if(search)search.focus({preventScroll:true});}
 }
