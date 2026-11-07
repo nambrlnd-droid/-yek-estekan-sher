@@ -4,7 +4,7 @@
 window.__YES_DISCOVERY_ACTIVE=true;
 const $=id=>document.getElementById(id);
 const fmt=n=>new Intl.NumberFormat("fa-IR").format(n);
-let section="poems",generation=0,randomMode=true,selectedIds=new Set();
+let section="poems",generation=0,randomMode=true,selectedIds=new Set(),currentScope="";
 const normalize=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\u064B-\u065F\u0670\u0640]/g,"").replace(/[\u200c\u200d\u200e\u200f]/g," ").replace(/\s+/g," ").trim().toLowerCase();
 const sample=(list,n)=>{const a=list.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);};
 const count=()=>Number($("displayCount")?.value||10);
@@ -43,14 +43,14 @@ function filterList(list,f){
  });
 }
 function makeCard(item,index){
- const card=document.createElement("article");card.className="entry";
+ const card=document.createElement("article");card.className="entry";card.dataset.poemId=String(item.id||"");
  const cat=document.createElement("div");cat.className="category";cat.textContent=[item.category1,item.category2,item.category3].filter(Boolean).join(" · ");
  const body=document.createElement("div");body.className="verse";body.textContent=item.body;body.tabIndex=0;body.setAttribute("role","button");body.setAttribute("aria-label","باز کردن اثر در صفحهٔ مطالعه");body.addEventListener("click",()=>window.YESReader.open(item.id));body.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();window.YESReader.open(item.id);}});
  card.append(cat,body);
  if(item.author){const author=document.createElement("div");author.className="author";author.textContent="— "+item.author;card.append(author);}
  const bar=document.createElement("div");bar.className="card-actions";
  const copy=document.createElement("button");copy.className="action";copy.textContent="کپی متن";copy.onclick=()=>{const text=item.body+(item.author?"\n— "+item.author:"");navigator.clipboard?.writeText(text).then(()=>notify("متن کپی شد")).catch(()=>notify("کپی در این مرورگر در دسترس نیست"));};bar.append(copy);
- const fav=document.createElement("button");fav.className="action favorite";fav.textContent="♡ نشان‌کردن";fav.onclick=async()=>{try{const old=await window.YESStorage.get("favorites",item.id);if(old)await window.YESStorage.remove("favorites",item.id);else await window.YESStorage.put("favorites",{id:item.id,contentId:item.id,createdAt:new Date().toISOString()});fav.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";fav.classList.toggle("on",!old);notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد");}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست");}};bar.append(fav);
+ const fav=document.createElement("button");fav.className="action favorite";fav.textContent="♡ نشان‌کردن";window.YESStorage.get("favorites",item.id).then(saved=>{if(saved){fav.textContent="♥ نشان‌شده";fav.classList.add("on");}}).catch(()=>{});fav.onclick=async()=>{try{const old=await window.YESStorage.get("favorites",item.id);if(old)await window.YESStorage.remove("favorites",item.id);else await window.YESStorage.put("favorites",{id:item.id,contentId:item.id,createdAt:new Date().toISOString()});fav.textContent=old?"♡ نشان‌کردن":"♥ نشان‌شده";fav.classList.toggle("on",!old);notify(old?"از علاقه‌مندی‌ها برداشته شد":"به علاقه‌مندی‌ها افزوده شد");}catch(e){notify("ذخیره‌سازی در مرورگر در دسترس نیست");}};bar.append(fav);
  const share=document.createElement("button");share.className="action";share.textContent="اشتراک‌گذاری";share.onclick=()=>{const text=item.body+(item.author?"\n— "+item.author:"");if(navigator.share)navigator.share({title:item.title||"یک استکان شعر",text}).catch(()=>{});else navigator.clipboard?.writeText(text).then(()=>notify("متن کپی شد"));};bar.append(share);card.append(bar);return card;
 }
 async function getPool(f,limit){
@@ -61,19 +61,27 @@ async function getPool(f,limit){
  const source=(f.c2&&isArchiveCategory(f.c2))?(window.YESArchive.items(f.c2)||[]):all;
  let matches=dedupe(filterList(source,f));let totalMatches=matches.length;
  if(!f.q&&randomMode&&!f.c2&&f.c1==="عمومی"&&section==="poems"&&window.YESArchive?.randomItems){
-  const archiveSample=await window.YESArchive.randomItems(limit);
+  const archiveSample=await window.YESArchive.randomItems(limit*5);
   matches=dedupe(filterList([...archiveSample,...all],f));
   totalMatches=window.YESArchive.manifestData?.total||matches.length;
  }
  if(!f.q&&randomMode){
   if(!f.c1&&!f.c2&&!f.c3&&!f.author&&!f.credit&&section==="poems"&&window.YESArchive?.randomItems){
-   const random=await window.YESArchive.randomItems(limit);
+   const random=await window.YESArchive.randomItems(limit*5);
    const local=sample((window.poemEntries||[]).filter(x=>x.section==="poems"),Math.max(0,Math.floor(limit*.1)));
    matches=dedupe([...random,...local]);totalMatches=window.YESArchive.manifestData?.total||matches.length;
   }else matches=sample(matches,limit);
- }else if(f.q){matches.sort((a,b)=>window.YESSearch.score(b,f.q)-window.YESSearch.score(a,f.q));if(randomMode)matches=sample(matches.slice(0,Math.max(limit*4,limit)),limit);else matches=matches.slice(0,limit);}
+ }else if(f.q){matches.sort((a,b)=>window.YESSearch.score(b,f.q)-window.YESSearch.score(a,f.q));matches=matches.slice(0,limit);}
  else matches=sample(matches,limit);
  if(f.c2&&isArchiveCategory(f.c2)&&!f.q){const meta=window.YESArchive.categories().find(x=>normalize(x.name)===normalize(f.c2));if(meta)totalMatches=meta.count;}
+ const scope=JSON.stringify([section,f.c1,f.c2,f.c3,f.author,f.credit,f.q]);
+ if(scope!==currentScope){currentScope=scope;selectedIds.clear();}
+ if(!f.q&&randomMode){
+  const fresh=matches.filter(x=>!selectedIds.has(String(x.id)));
+  const prior=matches.filter(x=>selectedIds.has(String(x.id)));
+  matches=fresh.length>=limit?sample(fresh,limit):[...sample(fresh,fresh.length),...sample(prior,limit-fresh.length)];
+ }else matches=matches.slice(0,limit);
+ selectedIds.clear();matches.forEach(x=>selectedIds.add(String(x.id)));
  return {items:matches.slice(0,limit),total:totalMatches};
 }
 async function render(){
@@ -97,7 +105,8 @@ document.addEventListener("DOMContentLoaded",()=>{
  const controls=document.createElement("div");controls.className="display-controls";controls.id="displayControls";
  controls.innerHTML='<label for="displayCount">تعداد شعر در هر نوبت</label><select id="displayCount" aria-label="تعداد شعرهای قابل نمایش"><option value="10" selected>۱۰ شعر</option><option value="20">۲۰ شعر</option><option value="30">۳۰ شعر</option><option value="40">۴۰ شعر</option><option value="50">۵۰ شعر</option></select><button id="refreshEntries" class="tool-button" type="button">↻ نمایش اشعار تازه</button><span id="displayStatus" role="status" aria-live="polite">در هر نوبت فقط بخشی از کتابخانه نمایش داده می‌شود.</span>';
  $("topics").insertAdjacentElement("afterend",controls);
- $("displayCount").addEventListener("change",()=>{randomMode=true;render();});
+ try{const saved=Number(localStorage.getItem("yes-v14-display-count"));if([10,20,30,40,50].includes(saved))$("displayCount").value=String(saved);}catch(e){}
+ $("displayCount").addEventListener("change",()=>{randomMode=true;try{localStorage.setItem("yes-v14-display-count",String(count()));}catch(e){}render();});
  $("refreshEntries").addEventListener("click",()=>{randomMode=true;render();});
  document.querySelectorAll("#sections button").forEach(b=>intercept(b,"click",()=>changeSection(b.dataset.section)));
  ["search","authorFilter","creditFilter","category1Filter","category2Filter","category3Filter"].forEach(id=>intercept(id,id==="search"?"input":"change",()=>{randomMode=!$("search").value.trim();refreshFilters();render();}));
