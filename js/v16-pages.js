@@ -103,7 +103,11 @@ async function renderFavorites(){
   usable.forEach(({rec,item})=>{
    const card=make("article","v16-favorite-item"),open=make("button","v16-favorite-open");
    open.type="button";open.append(make("strong","",item.title||String(item.body||"").split("\n")[0]||"بدون عنوان"),make("span","",String(item.body||"").slice(0,230)),make("small","",[item.author,item.tags?.slice(0,2).join(" · ")].filter(Boolean).join(" · ")));
-   open.addEventListener("click",()=>window.YESReader.open(item.id));
+   open.addEventListener("click",()=>{
+    const ready={...item,id:String(item.id),type:item.type||(item.section==="texts"?"text":"poem"),tags:Array.isArray(item.tags)?item.tags:[]};
+    if(window.YESContent&&!window.YESContent.get(ready.id))window.YESContent.all.push(ready);
+    window.YESReader.open(ready.id);
+   });
    const remove=make("button","v16-favorite-remove","برداشتن از علاقه‌مندی‌ها");remove.type="button";
    remove.addEventListener("click",async()=>{await window.YESStorage.remove("favorites",rec.contentId);try{const old=JSON.parse(localStorage.getItem("yekestekan-favorites")||"[]");localStorage.setItem("yekestekan-favorites",JSON.stringify(old.filter(x=>x!==("poem-"+item.legacyIndex)&&x!==("pinned-"+item.legacyIndex))));}catch(e){}renderFavorites();});
    card.append(open,remove);root.append(card);
@@ -142,6 +146,7 @@ function installInteractions(){
   if(event.target.closest("#pinned")||(event.target.closest("#v15LibraryTabs button")&&event.target.closest("#v15LibraryTabs button").textContent.trim()==="پیشنهاد‌ومیض")){event.preventDefault();event.stopImmediatePropagation();go("pinned");return;}
   if(event.target.closest(".v15-open-library")){event.preventDefault();event.stopImmediatePropagation();go("library");return;}
   if(event.target.closest("#openNotebook")){event.preventDefault();event.stopImmediatePropagation();go("notebook");return;}
+  if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#readerMakeImage")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;const id=decodeURIComponent(location.hash.split("/").pop()||"");window.YESImageStudio?.open(window.YESContent?.get(id)||null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#openImageStudio")){event.preventDefault();event.stopImmediatePropagation();returnRoute=activeRoute;window.YESImageStudio?.open(null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#notebookBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
