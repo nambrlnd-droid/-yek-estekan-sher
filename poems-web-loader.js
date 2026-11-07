@@ -13,7 +13,7 @@ try{
  const candidates=(cat.Poems||[]).slice(0,260);
  const existing=new Set(list.map(x=>norm(x.body))), collected=[];
  let cursor=0;
- async function worker(){while(cursor<candidates.length&&collected.length<200){const item=candidates[cursor++];try{const p=await fetch(root+"poets"+item.FullUrl+".json").then(r=>r.ok?r.json():null);if(!p)continue;const body=(p.Sections||[]).map(s=>s.PlainText||"").filter(Boolean).join("\n\n").trim();const key=norm(body);if(body.length<35||!key||existing.has(key))continue;existing.add(key);collected.push({id:"web-hafez-"+String(collected.length+1).padStart(3,"0"),section:"poems",tags:["غزل حافظ"],author:"حافظ",body,source:"Ganjoor",sourceUrl:"https://ganjoor.net"+item.FullUrl});}catch(e){}}
+ async function worker(){while(cursor<candidates.length&&collected.length<200){const item=candidates[cursor++];try{const p=await fetch(root+"poets"+item.FullUrl+".json").then(r=>r.ok?r.json():null);if(!p)continue;const body=(p.Sections||[]).map(s=>s.PlainText||"").filter(Boolean).join("\n\n").trim();const key=norm(body);if(body.length<35||!key||existing.has(key)||collected.length>=200)continue;existing.add(key);collected.push({id:"web-hafez-"+String(collected.length+1).padStart(3,"0"),section:"poems",tags:["غزل حافظ"],author:"حافظ",body,source:"Ganjoor",sourceUrl:"https://ganjoor.net"+item.FullUrl});}catch(e){}}
  }
  await Promise.all(Array.from({length:8},worker));
  if(collected.length!==200)throw Error("only "+collected.length+" unique poems could be loaded");
