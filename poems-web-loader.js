@@ -1,5 +1,5 @@
 /* Loads 200 additional classical Hafez ghazals from Ganjoor's public static data. */
-(async function(){
+window.YESWebPoemsReady=(async function(){
 "use strict";
 const CACHE="yekestekan-webpoems-200-v1";
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
@@ -18,6 +18,6 @@ try{
  await Promise.all(Array.from({length:8},worker));
  if(collected.length!==200)throw Error("only "+collected.length+" unique poems could be loaded");
  add(collected);try{localStorage.setItem(CACHE,JSON.stringify(collected));}catch(e){}
- window.dispatchEvent(new Event("yes:web-poems-loaded"));
-}catch(error){console.warn("Ganjoor poem import:",error);window.dispatchEvent(new Event("yes:web-poems-load-failed"));}
+ window.dispatchEvent(new Event("yes:web-poems-loaded"));return true;
+}catch(error){console.warn("Ganjoor poem import:",error);window.dispatchEvent(new Event("yes:web-poems-load-failed"));return false;}
 })();
