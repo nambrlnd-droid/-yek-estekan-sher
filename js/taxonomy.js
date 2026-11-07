@@ -16,7 +16,7 @@ const sacred = [
   ["امیرالمؤمنین علیه‌السلام", /امیرالمؤمنین|امیر مومنان|امیرالمومنین|علی بن ابی.?طالب|امام علی|یا علی|یاعلی|حیدر|مرتضی|ذوالفقار|غدیر|نهج.?البلاغه|مولای متقیان|ابوتراب/],
   ["حضرت فاطمه زهرا سلام‌الله‌علیها", /حضرت زهرا|فاطمه زهرا|فاطمه|صدیقه|یاس کبود|ام.?ابیها|مادر سادات/],
   ["امام حسن مجتبی علیه‌السلام", /امام حسن|حسن مجتبی|مجتبی|حسن بن علی|کریم اهل.?بیت/],
-  ["امام حسین علیه‌السلام", /امام حسین|حسین بن علی|سیدالشهدا|سید الشهدا|کربلا|عاشورا|نینوا|اباعبدالله|یا حسین|یاحسین/],
+  ["امام حسین علیه‌السلام", /امام حسین|حسین بن علی|الحسين بن علي|سیدالشهدا|سید الشهدا|کربلا|عاشورا|نینوا|اباعبدالله|یا حسین|یاحسین/],
   ["امام سجاد علیه‌السلام", /امام سجاد|علی بن الحسین|زین العابدین|صحیفه سجادیه/],
   ["امام باقر علیه‌السلام", /امام باقر|محمد باقر|باقر العلوم/],
   ["امام صادق علیه‌السلام", /امام صادق|جعفر بن محمد|جعفر صادق/],
@@ -76,18 +76,28 @@ const generalRules = [
 const genericTags = new Set(["ادبیات کلاسیک","پیشنهاد‌ومیض","شعر","اشعار","متن","متون","غزل"].map(norm));
 function tagSubject(item, body, isText) {
   const tags = Array.isArray(item.tags) ? item.tags : [];
+  let broadTag = null;
   for (const raw of tags) {
     if (typeof raw !== "string" || !raw.trim() || /^\d+$/.test(raw.trim())) continue;
     const tag = norm(raw);
-    for (const [name, re] of sacred) if (re.test(tag)) return {name, confidence:"high"};
+    for (const [name, re] of sacred) {
+      if (name !== "اهل‌بیت علیهم‌السلام" && re.test(tag)) return {name, confidence:"high"};
+    }
     const mapped = topicAliases.get(tag);
-    if (mapped && !genericTags.has(tag)) return {name:mapped, confidence:"high"};
+    if (mapped && !genericTags.has(tag)) {
+      if (mapped === "اهل‌بیت علیهم‌السلام" || mapped === "مناسبت‌ها و آیین‌های دینی" || mapped === "سوگ و مرثیه") {
+        if (!broadTag) broadTag = mapped;
+      } else {
+        return {name:mapped, confidence:"high"};
+      }
+    }
     if (tag && !genericTags.has(tag) && !["ادبیات کلاسیک"].includes(tag)) {
       const hit = generalRules.find(([,re]) => re.test(tag));
-      if (hit) return {name:hit[0], confidence:"high"};
+      if (hit && !broadTag) broadTag = hit[0];
     }
   }
   for (const [name, re] of sacred) if (re.test(body)) return {name, confidence:"medium"};
+  if (broadTag) return {name:broadTag, confidence:"high"};
   const hit = generalRules.find(([,re]) => re.test(body));
   if (hit) return {name:hit[0], confidence:"medium"};
   if (tags.some(t => typeof t === "string" && /غزل|ادبیات کلاسیک/.test(norm(t)))) return {name:"غزل و ادبیات کلاسیک", confidence:"medium"};
