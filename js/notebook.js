@@ -14,7 +14,7 @@ function migrateLegacy(){
    if(localStorage.getItem("yes-v13-favorites-migrated")==="1")return;
    const old=JSON.parse(localStorage.getItem("yekestekan-favorites")||"[]");
    for(const key of old){
-    const m=/^(poem|pinned)-(\\d+)$/.exec(String(key));if(!m)continue;
+    const m=/^(poem|pinned)-(\d+)$/.exec(String(key));if(!m)continue;
     const list=m[1]==="poem"?content().poems:content().pinned;
     const item=list[Number(m[2])];if(item)await YESStorage.put("favorites",{id:item.id,contentId:item.id,itemSnapshot:item,createdAt:new Date().toISOString(),migrated:true});
    }
