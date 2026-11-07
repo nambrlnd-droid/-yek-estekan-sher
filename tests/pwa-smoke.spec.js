@@ -117,3 +117,16 @@ test("favorite state is reflected in the personal notebook", async ({ page, base
   await expect.poll(() => page.locator("#notebookItems .notebook-row").count()).toBeGreaterThan(0);
   expect(poemId).toBeTruthy();
 });
+
+
+test("daily poem, theme toggle and mobile quick navigation are available", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(baseURL);
+  await expect(page.locator("#dailyPoem")).toBeVisible();
+  await expect(page.locator("#themeToggle")).toBeVisible();
+  await page.locator("#themeToggle").click();
+  await expect(page.locator("body")).toHaveAttribute("data-theme", "light");
+  await expect(page.locator("#mobileDock")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="search"]').click();
+  await expect(page.locator("#search")).toBeFocused();
+});
