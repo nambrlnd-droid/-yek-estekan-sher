@@ -21,10 +21,10 @@ async function loadCategory(name){
   const bytes=await response.arrayBuffer();const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
   const records=await new Response(stream).json();const target=window.poemEntries||(window.poemEntries=[]);
   const ids=new Set(target.map(x=>x.id));
-  const bodyKey=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\\s\\p{P}\\p{S}\\u200c\\u200e\\u200fـ]/gu,"").toLowerCase();
-  const bodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));let added=0;
-  for(const item of records){const key=bodyKey(item.body);if(!item.id||ids.has(item.id)||!key||bodies.has(key))continue;ids.add(item.id);bodies.add(key);target.push(item);added++;}
-  if(window.YESContent){const known=new Set(window.YESContent.all.map(x=>x.id));for(const item of records){if(!known.has(item.id)){window.YESContent.all.push(item);known.add(item.id);}}window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");}
+  const bodyKey=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
+  const bodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));let added=0;const addedItems=[];
+  for(const item of records){const key=bodyKey(item.body);if(!item.id||ids.has(item.id)||!key||bodies.has(key))continue;ids.add(item.id);bodies.add(key);target.push(item);addedItems.push(item);added++;}
+  if(window.YESContent){window.YESContent.all.push(...addedItems);window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");}
   loaded.set(meta.name,added);
   status("گنجینهٔ گنجور: "+window.YESArchive.loadedCount().toLocaleString("fa-IR")+" اثر از "+m.total.toLocaleString("fa-IR")+" اثر بارگذاری شده است؛ منبع: گنجور (CC BY 4.0).");
   window.dispatchEvent(new CustomEvent("yes:archive-loaded",{detail:{category:meta.name,added,total:target.length}}));
