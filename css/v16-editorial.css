@@ -256,3 +256,26 @@ body.v16-editorial[data-theme="dark"] footer{border-color:var(--line)}
 @media(prefers-reduced-motion:reduce){
  body.v16-editorial *,body.v16-editorial *:before,body.v16-editorial *:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+/* Higher-specificity light-theme surfaces take precedence over legacy v1.4 injected styles. */
+body.v16-editorial[data-theme="light"] .entry,
+body.v16-editorial[data-theme="light"] .pinned-item,
+body.v16-editorial[data-theme="light"] .reader-paper,
+body.v16-editorial[data-theme="light"] .notebook-row,
+body.v16-editorial[data-theme="light"] .notebook-note,
+body.v16-editorial[data-theme="light"] .v15-library-card,
+body.v16-editorial[data-theme="light"] .v15-work,
+body.v16-editorial[data-theme="light"] .v15-library-group{
+ background:linear-gradient(145deg,#fffdf8,#f2ede3);border-color:var(--line);
+}
+body.v16-editorial[data-theme="light"] .verse,
+body.v16-editorial[data-theme="light"] .pinned-body,
+body.v16-editorial[data-theme="light"] .reader-body{color:var(--text)}
+body.v16-editorial[data-theme="light"] .daily-poem{
+ background:linear-gradient(110deg,#e8e2d5,#fbf8f1 78%);border:1px solid var(--line);
+ border-radius:2px;box-shadow:none;
+}
+body.v16-editorial[data-theme="light"] .daily-poem blockquote{color:var(--text)}
+body.v16-editorial[data-theme="light"] .continue-reading{background:var(--surface);border-color:var(--line);border-radius:2px}
+body.v16-editorial[data-theme="light"] #themeToggle{border-radius:2px;background:var(--surface);color:var(--gold2)}
+body.v16-editorial[data-theme="light"] .v16-primary-nav{background:#f3efe6ed}
