@@ -111,7 +111,7 @@ body[data-theme="light"] .v16-favorite-remove{border-color:#c7bda9;color:#765b32
  .v16-search-page .toolbar>div:last-child{width:100%;display:flex;flex-wrap:wrap;justify-content:center}
  .v16-search-page .toolbar>div:last-child button{flex:1 1 auto}
 }
-body.notebook-open #mobileDock{display:grid!important}
+@media(max-width:760px){body.notebook-open #mobileDock{display:grid!important}}
 @media(prefers-reduced-motion:reduce){.v16-page,.v16-page-card{animation:none!important;transition:none!important}}
 
 /* Magazine-like paper surfaces and restrained copper details for the light theme. */
