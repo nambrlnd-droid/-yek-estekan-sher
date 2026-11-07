@@ -102,6 +102,7 @@ function draw(){
 function schedule(){if(renderQueued)return;renderQueued=true;requestAnimationFrame(()=>{renderQueued=false;draw();});}
 async function ensureFont(){
  const family=$("imageFont").value,weight=$("imageFontWeight").value,size=$("imageFontSize").value;
+ schedule();
  if(document.fonts?.load){try{notify("در حال بارگذاری قلم انتخاب‌شده…");await document.fonts.load(weight+" "+size+"px \""+family+"\"");}catch(e){}}
  schedule();
 }
