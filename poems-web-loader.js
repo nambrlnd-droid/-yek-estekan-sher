@@ -2,7 +2,7 @@
 (async function(){
 "use strict";
 const CACHE="yekestekan-webpoems-200-v1";
-const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\\s\\p{P}\\p{S}\\u200c\\u200e\\u200fـ]/gu,"").toLowerCase();
+const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
 const list=window.poemEntries||(window.poemEntries=[]);
 const add=items=>{const seen=new Set(list.map(x=>norm(x.body)));let n=0;for(const x of items){const k=norm(x.body);if(!k||seen.has(k))continue;seen.add(k);list.push(x);n++;}return n;};
 try{
