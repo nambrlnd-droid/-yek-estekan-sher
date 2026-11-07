@@ -281,11 +281,11 @@ test("v1.6 primary sections are independent deep-linkable pages", async ({ page,
   await expect(page.locator("#searchPageView")).toBeVisible();
   await expect(page.locator("#search")).toBeVisible();
 
-  await page.locator('#v16PrimaryNav a[data-route="favorites"]').click();
+  await openPrimary(page, "favorites");
   await expect(page).toHaveURL(/#\/favorites$/);
   await expect(page.locator("#favoritesPageView")).toBeVisible();
 
-  await page.locator('#v16PrimaryNav a[data-route="notebook"]').click();
+  await openPrimary(page, "notebook");
   await expect(page).toHaveURL(/#\/notebook$/);
   await expect(page.locator("#notebookView")).toBeVisible();
 });
