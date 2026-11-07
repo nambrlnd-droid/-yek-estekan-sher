@@ -40,7 +40,7 @@ function notify(s){$("imageStatus").textContent=s;}
 function rounded(x,y,w,h,r){ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);}
 function font(family,size,weight){return weight+" "+size+"px \""+family+"\" , Tahoma, sans-serif";}
 function wrapParagraph(text,maxWidth,fontSpec){
- ctx.font=fontSpec;const words=text.split(/\\s+/);const lines=[];let line="";
+ ctx.font=fontSpec;const words=text.split(/\s+/);const lines=[];let line="";
  for(const word of words){const candidate=line?line+" "+word:word;if(line&&ctx.measureText(candidate).width>maxWidth){lines.push(line);line=word;}else line=candidate;}
  if(line)lines.push(line);return lines;
 }
@@ -84,7 +84,7 @@ function draw(){
  const raw=$("imageText").value||"چند سطر از شعر یا نوشتهٔ دلخواهتان را اینجا بنویسید.";
  const family=$("imageFont").value||"Vazirmatn",weight=$("imageFontWeight").value||"400",size=Number($("imageFontSize").value),spacing=Number($("imageSpacing").value),align=$("imageAlign").value;
  const textFont=font(family,size,weight),maxWidth=W*.74,lines=[];
- raw.replace(/\\r/g,"").split("\\n").forEach(par=>{if(!par.trim()){lines.push("");return;}lines.push(...wrapParagraph(par,maxWidth,textFont));});
+ raw.replace(/\r/g,"").split("\n").forEach(par=>{if(!par.trim()){lines.push("");return;}lines.push(...wrapParagraph(par,maxWidth,textFont));});
  const authorOn=$("imageShowAuthor").checked&&$("imageAuthor").value.trim().length>0,brandOn=$("imageShowBrand").checked;
  const top=H*.19,bottom=H*(authorOn ? .78 : brandOn ? .83 : .87),available=bottom-top;
  const lineHeight=size*spacing,scale=Math.min(1,available/Math.max(lineHeight,lines.length*lineHeight));
