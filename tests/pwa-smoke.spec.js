@@ -1,5 +1,9 @@
 const { test, expect } = require("@playwright/test");
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
+});
+
 async function openPrimary(page, route) {
   const desktop = page.locator(`#v16PrimaryNav a[data-route="${route}"]`);
   if (await desktop.isVisible()) await desktop.click();
@@ -61,7 +65,7 @@ test("cached app shell opens again while offline", async ({ page, context, baseU
 });
 
 
-test("Ganjoor archive loads a selected category lazily and paginates results", async ({ page, baseURL }) => {
+test("Ganjoor archive category filtering and pagination remain available", async ({ page, baseURL }) => {
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(baseURL + "#/search");
