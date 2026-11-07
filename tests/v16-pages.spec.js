@@ -2,7 +2,7 @@ const { test, expect } = require("@playwright/test");
 
 test.describe("Version 1.6 independent primary pages", () => {
   test("each primary destination opens its own routed view", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("./");
     await expect(page.locator("#v16PrimaryNav")).toBeVisible();
 
     await page.locator('#v16PrimaryNav a[data-route="library"]').click();
@@ -32,14 +32,14 @@ test.describe("Version 1.6 independent primary pages", () => {
   });
 
   test("library is directly addressable after a fresh page load", async ({ page }) => {
-    await page.goto("/#/library");
+    await page.goto("./#/library");
     await expect(page.locator("#v15LibraryView")).toBeVisible();
     await expect(page.locator("#v16PrimaryNav a[data-route='library']")).toHaveAttribute("aria-current", "page");
   });
 
   test("five-page navigation remains visible on mobile", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/");
+    await page.goto("./");
     const links = page.locator("#v16PrimaryNav a");
     await expect(links).toHaveCount(5);
     await expect(links.first()).toBeVisible();
