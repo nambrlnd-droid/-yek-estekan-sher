@@ -86,7 +86,7 @@ function draw(){
  const textFont=font(family,size,weight),maxWidth=W*.74,lines=[];
  raw.replace(/\\r/g,"").split("\\n").forEach(par=>{if(!par.trim()){lines.push("");return;}lines.push(...wrapParagraph(par,maxWidth,textFont));});
  const authorOn=$("imageShowAuthor").checked&&$("imageAuthor").value.trim().length>0,brandOn=$("imageShowBrand").checked;
- const top=H*.19,bottom=H*(authorOn?.78:brandOn?.83:.87),available=bottom-top;
+ const top=H*.19,bottom=H*(authorOn ? .78 : brandOn ? .83 : .87),available=bottom-top;
  const lineHeight=size*spacing,scale=Math.min(1,available/Math.max(lineHeight,lines.length*lineHeight));
  const actualSize=Math.max(13,size*scale),actualLine=lineHeight*scale;
  ctx.direction="rtl";ctx.textAlign=align;ctx.textBaseline="middle";ctx.fillStyle=p.ink;ctx.font=font(family,actualSize,weight);
