@@ -89,7 +89,9 @@ async function loadAll(){
     await loadCategory(item.name);
    }
   }
-  await Promise.all(Array.from({length:Math.min(3,m.categories.length)},worker));
+  const results=await Promise.allSettled(Array.from({length:Math.min(3,m.categories.length)},worker));
+  const failed=results.find(result=>result.status==="rejected");
+  if(failed)throw failed.reason;
   if(loadedCount()!==m.total)throw Error("همهٔ آثار گنجینه بارگذاری نشدند.");
   return loadedCount();
  }finally{bulkLoading=false;}
