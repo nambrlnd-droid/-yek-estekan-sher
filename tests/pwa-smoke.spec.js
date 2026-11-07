@@ -46,13 +46,7 @@ test("reader, favorite persistence and image studio work at this viewport", asyn
 test("cached app shell opens again while offline", async ({ page, context, baseURL }) => {
   await page.goto(baseURL);
   await page.waitForFunction(() => navigator.serviceWorker?.controller, null, { timeout: 15000 });
-  await page.evaluate(() => new Promise(resolve => {
-    const sw = navigator.serviceWorker.controller;
-    if (!sw) return resolve();
-    const timer = setTimeout(resolve, 500);
-    sw.postMessage({ type: "PING" });
-    setTimeout(() => { clearTimeout(timer); resolve(); }, 700);
-  }));
+  await page.waitForTimeout(500);
   await context.setOffline(true);
   await page.reload();
   await expect(page.locator("body")).toBeVisible();
