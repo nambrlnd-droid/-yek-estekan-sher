@@ -157,6 +157,11 @@ function installInteractions(){
  window.addEventListener("yes:route",event=>showRoute(event.detail||{route:"home"}));
  window.addEventListener("yes:archive-loaded",()=>{if(activeRoute==="favorites")renderFavorites();});
  window.addEventListener("yes:web-poems-loaded",()=>{if(activeRoute==="favorites")renderFavorites();});
+ window.addEventListener("yes:archive-ready",()=>{
+  if(activeRoute==="notebook")window.YESNotebook?.open("favorites");
+  else if(activeRoute==="favorites")renderFavorites();
+  else if(activeRoute==="read"){const state=window.YESRouter?.current?.();if(state)window.dispatchEvent(new CustomEvent("yes:route",{detail:state}));}
+ });
 }
 document.addEventListener("DOMContentLoaded",()=>{
  createNavigation();createHome();createSearchPage();createFavoritesPage();createSearchShell();movePageContent();installInteractions();
