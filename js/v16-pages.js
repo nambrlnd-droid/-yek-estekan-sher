@@ -20,6 +20,7 @@ function createNavigation(){
    const a=make("a","",label);a.href="#/"+route;a.dataset.route=route;nav.append(a);
   });
   $("siteHeader")?.insertAdjacentElement("afterend",nav) || document.querySelector(".site-header")?.insertAdjacentElement("afterend",nav);
+  const theme=$("themeToggle"),header=document.querySelector(".site-header");if(theme&&header){theme.classList.add("v16-theme-toggle");header.append(theme);}
  }
 }
 function createHome(){
