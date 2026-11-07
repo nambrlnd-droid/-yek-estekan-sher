@@ -100,6 +100,7 @@ function classify(item, isPinned) {
   const isText = isPinned ? (Array.isArray(item.tags) && item.tags.some(t => typeof t === "string" && /نامه‌ها و متون تاریخی|پیوندها و منابع/.test(t))) : oldSection === "texts";
   const type = isText ? "text" : "poem";
   const subject = tagSubject(item, norm(body));
+  if (isText && subject.name === "شعر آزاد و ادبی") subject.name = "نوشته عمومی";
   const primary = type === "poem" ? (subject.name && sacred.some(([n]) => n === subject.name) || /سوگ و مرثیه|مناسبت‌ها و آیین‌های دینی|زیارت و عتبات|دعا و مناجات|قرآن و معارف قرآنی|معارف و اعتقادات/.test(subject.name) ? "اشعار مذهبی" : "اشعار غیرمذهبی")
                               : (sacred.some(([n]) => n === subject.name) || /دعا و مناجات|قرآن و معارف قرآنی|مناسبت‌ها|زیارت و عتبات|معارف و اعتقادات/.test(subject.name) ? "متون مذهبی" : "متون عمومی");
   item.contentType = type;
