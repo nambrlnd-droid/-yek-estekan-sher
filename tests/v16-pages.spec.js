@@ -165,6 +165,14 @@ test("all archive poems load before the site is revealed", async ({ page }, test
   await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 210000 });
   await expect(page.locator("#archiveBoot")).toBeHidden({ timeout: 30000 });
   await expect(page.locator("#homePageView")).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
+    const poems = window.poemEntries.filter(x => x.section === "poems").length;
+    const texts = window.poemEntries.filter(x => x.section === "texts").length;
+    return document.querySelector("#statPoems").textContent === fmt(poems)
+      && document.querySelector("#statTexts").textContent === fmt(texts)
+      && document.querySelector("#statTotal").textContent === fmt(poems + texts);
+  }), { timeout: 15000 }).toBeTruthy();
   expect(await page.evaluate(() => window.YESArchive.loadedCategories())).toBe(9);
   await page.context().setOffline(true);
   await page.reload();
