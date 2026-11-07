@@ -117,8 +117,8 @@ function go(route,id){
 }
 function showRoute(state){
  const route=state?.route||"home";
- if(route==="read"){activeRoute="read";setVisible("read");return;}
- if(route==="image"){activeRoute="image";setVisible("image");return;}
+ if(route==="read"){if(activeRoute!=="read")returnRoute=activeRoute;activeRoute="read";setVisible("read");return;}
+ if(route==="image"||route==="image-studio"){if(activeRoute!=="image")returnRoute=activeRoute;activeRoute="image";setVisible("image");return;}
  if(route==="pinned"){activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
  activeRoute=route;setVisible(route);
