@@ -99,7 +99,7 @@ async function render(){
  }catch(error){if(token!==generation)return;setStatus("دریافت اشعار ممکن نشد؛ اتصال را بررسی و دوباره تلاش کنید.");$("empty").hidden=false;notify("بارگذاری اشعار ناموفق بود.");}
 }
 function changeSection(next){section=next;document.querySelectorAll("#sections button").forEach(b=>b.classList.toggle("active",b.dataset.section===section));["category1Filter","category2Filter","category3Filter","authorFilter","creditFilter"].forEach(id=>$(id).value="");$("search").value="";randomMode=true;refreshFilters();render();}
-function intercept(id,type,handler){const node=$(id);if(!node)return;node.addEventListener(type,e=>{e.stopImmediatePropagation();e.preventDefault?.();handler(e);},true);}
+function intercept(target,type,handler){const node=typeof target==="string"?$(target):target;if(!node)return;node.addEventListener(type,e=>{e.stopImmediatePropagation();e.preventDefault?.();handler(e);},true);}
 document.addEventListener("DOMContentLoaded",()=>{
  $("loadMore").hidden=true;
  const controls=document.createElement("div");controls.className="display-controls";controls.id="displayControls";
