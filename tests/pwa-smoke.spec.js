@@ -28,7 +28,7 @@ test("app shell, manifest and service worker register under GitHub Pages subpath
 });
 
 test("reader, favorite persistence and image studio work at this viewport", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
   await page.locator("#entries .verse").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
@@ -58,7 +58,7 @@ test("cached app shell opens again while offline", async ({ page, context, baseU
 test("Ganjoor archive loads a selected category lazily and paginates results", async ({ page, baseURL }) => {
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
   await page.locator("#category2Filter").selectOption({ label: "حماسی و ملی" });
   await page.waitForFunction(() => window.poemEntries.filter(x => String(x.id).startsWith("ganjoor-")).length >= 200, null, { timeout: 15000 });
@@ -74,7 +74,7 @@ test("Ganjoor archive loads a selected category lazily and paginates results", a
 });
 
 test("homepage renders only ten random poems and supports 10-50 display sizes", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
   await expect(page.locator("#displayCount")).toHaveValue("10");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(10);
@@ -89,7 +89,7 @@ test("homepage renders only ten random poems and supports 10-50 display sizes", 
 
 
 test("refresh shows a new non-overlapping sample and remembers the chosen size", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBe(10);
   const first = await page.locator("#entries .entry").evaluateAll(nodes => nodes.map(node => node.dataset.poemId));
@@ -106,13 +106,13 @@ test("refresh shows a new non-overlapping sample and remembers the chosen size",
 });
 
 test("favorite state is reflected in the personal notebook", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBeGreaterThan(0);
   const first = page.locator("#entries .entry").first();
   const poemId = await first.getAttribute("data-poem-id");
   await first.locator("button.favorite").click();
   await expect(first.locator("button.favorite")).toContainText("نشان‌شده");
-  await page.locator("#openNotebook").click();
+  await page.locator('#v16PrimaryNav a[data-route="notebook"]').click();
   await expect(page.locator("#notebookView")).toBeVisible();
   await expect.poll(() => page.locator("#notebookItems .notebook-row").count()).toBeGreaterThan(0);
   expect(poemId).toBeTruthy();
@@ -133,11 +133,12 @@ test("daily poem, theme toggle and mobile quick navigation are available", async
 
 
 test("random poem opens the reader and the homepage offers continue reading", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 60000 }).toBeGreaterThan(0);
   await page.locator("#randomPoem").click();
   await expect(page.locator("#readerView")).toBeVisible();
   await page.locator("#readerBack").click();
+  await page.locator('#v16PrimaryNav a[data-route="home"]').click();
   await expect(page.locator("#continueReading")).toBeVisible();
   await page.locator("#continueReading button").click();
   await expect(page.locator("#readerView")).toBeVisible();
@@ -174,8 +175,7 @@ test("v1.5 visual stylesheet loads and preserves responsive theme controls", asy
 test("v1.5 library provides topic browsing and lazy archive categories", async ({ page, baseURL }) => {
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto(baseURL);
-  await page.locator(".v15-open-library").click();
+  await page.goto(baseURL + "#/library");
   await expect(page.locator("#v15LibraryView")).toBeVisible();
   await page.locator("#v15LibraryContent .v15-library-group").nth(2).getByRole("button", { name: /حماسی و ملی/ }).click();
   await expect.poll(() => page.locator("#v15LibraryResults .v15-work").count(), { timeout: 30000 }).toBeGreaterThan(0);
@@ -187,8 +187,7 @@ test("v1.5 library provides topic browsing and lazy archive categories", async (
 });
 
 test("v1.5 poet index opens author work lists", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
-  await page.locator(".v15-open-library").click();
+  await page.goto(baseURL + "#/library");
   await page.getByRole("button", { name: "شاعران و نویسندگان" }).click();
   await expect.poll(() => page.locator("#v15LibraryContent .v15-library-card").count()).toBeGreaterThan(0);
   await page.locator("#v15LibraryContent .v15-library-card").first().click();
@@ -197,7 +196,7 @@ test("v1.5 poet index opens author work lists", async ({ page, baseURL }) => {
 });
 
 test("v1.5 advanced search supports exact phrase and full-line matching", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await expect(page.locator("#v15SearchMode")).toBeVisible();
   const sample = await page.evaluate(() => {
     const item = window.poemEntries.find(x => x.section === "poems" && String(x.body || "").includes("\n"));
@@ -223,7 +222,7 @@ test("v1.5 advanced search supports exact phrase and full-line matching", async 
 });
 
 test("v1.5 reader focus mode and related works are available", async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
   await page.locator("#entries .verse").first().click();
   await expect(page.locator("#readerView")).toBeVisible();
@@ -236,7 +235,7 @@ test("v1.5 reader focus mode and related works are available", async ({ page, ba
 
 test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({ page, baseURL }) => {
   await page.setViewportSize({ width: 360, height: 780 });
-  await page.goto(baseURL);
+  await page.goto(baseURL + "#/search");
   await expect(page.locator("#v15SearchMode")).toBeVisible();
   await page.locator('#sections button[data-section="texts"]').click();
   await expect(page.locator("#sectionTitle")).toContainText("متون");
@@ -245,8 +244,8 @@ test("v1.5 library and advanced controls fit a narrow mobile viewport", async ({
   await page.locator('#mobileDock button[data-action="library"]').click();
   await expect(page.locator("#v15LibraryView")).toBeVisible();
   await page.locator('#mobileDock button[data-action="home"]').click();
-  await expect(page.locator("#regularView")).toBeVisible();
-  await page.locator(".v15-open-library").click();
+  await expect(page.locator("#homePageView")).toBeVisible();
+  await page.locator('#mobileDock button[data-action="library"]').click();
   await expect(page.locator("#v15LibraryView")).toBeVisible();
   await page.getByRole("button", { name: "پیشنهاد‌ومیض" }).click();
   await expect(page.locator("#pinnedView")).toBeVisible();
