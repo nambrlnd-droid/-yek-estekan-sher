@@ -4,7 +4,7 @@
 const $=id=>document.getElementById(id);
 const labels={home:"خانه",library:"کتابخانه",search:"جست‌وجو",favorites:"علاقه‌مندی‌ها",notebook:"دفتر من"};
 const routeIds={home:"homePageView",search:"searchPageView",library:"v15LibraryView",favorites:"favoritesPageView",notebook:"notebookView",pinned:"pinnedView",read:"readerView",image:"imageStudioView"};
-let activeRoute="home",returnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,internalClick=false,favoritesBusy=false;
+let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,internalClick=false,favoritesBusy=false;
 const allPageIds=Object.values(routeIds);
 function make(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 function link(route,title,description,glyph){
@@ -122,9 +122,9 @@ function go(route,id){
 }
 function showRoute(state){
  const route=state?.route||"home";
- if(route==="read"){if(activeRoute!=="read"&&!(activeRoute==="image"&&imageReturnRoute==="read"))returnRoute=activeRoute;currentReadId=state?.id?decodeURIComponent(state.id):currentReadId;activeRoute="read";setVisible("read");return;}
+ if(route==="read"){if(activeRoute!=="read"&&!(activeRoute==="image"&&imageReturnRoute==="read"))readerReturnRoute=activeRoute;currentReadId=state?.id?decodeURIComponent(state.id):currentReadId;activeRoute="read";setVisible("read");return;}
  if(route==="image"||route==="image-studio"){if(activeRoute!=="image"){imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;}activeRoute="image";setVisible("image");return;}
- if(route==="pinned"){if(activeRoute!=="pinned")returnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
+ if(route==="pinned"){if(activeRoute!=="pinned")pinnedReturnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
  activeRoute=route;setVisible(route);
  if(route==="library"){
@@ -150,8 +150,8 @@ function installInteractions(){
   if(event.target.closest("#openImageStudio")){event.preventDefault();event.stopImmediatePropagation();imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;window.YESImageStudio?.open(null);activeRoute="image";setVisible("image");return;}
   if(event.target.closest("#notebookBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
   if(event.target.closest("#v15LibraryBack")){event.preventDefault();event.stopImmediatePropagation();go("home");return;}
-  if(event.target.closest("#backFromPinned")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
-  if(event.target.closest("#readerBack")){event.preventDefault();event.stopImmediatePropagation();go(returnRoute||"home");return;}
+  if(event.target.closest("#backFromPinned")){event.preventDefault();event.stopImmediatePropagation();go(pinnedReturnRoute||"home");return;}
+  if(event.target.closest("#readerBack")){event.preventDefault();event.stopImmediatePropagation();go(readerReturnRoute||"home");return;}
   if(event.target.closest("#imageStudioBack")){event.preventDefault();event.stopImmediatePropagation();go(imageReturnRoute||"home",imageReturnRoute==="read"?imageReturnId:undefined);return;}
  },true);
  window.addEventListener("yes:route",event=>showRoute(event.detail||{route:"home"}));
