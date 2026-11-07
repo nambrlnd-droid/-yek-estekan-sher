@@ -48,29 +48,45 @@ def bands(value):
 
 MAIN_RULES = [
  ("عاشقانه و دلدادگی", [
-  r"عشق|عاشق|معشوق|دلدار|دلبر|نگار|جانان|وصال|بوسه|آغوش|دلداد|یار|محبوب",
-  r"فراق|هجران|جدایی|دوری|دلتنگ|بی تو|بی‌تو|انتظار دیدار|چشم به راه",
+  r"عشق|عاشق|معشوق|دلدار|دلبر|جانان|نگار|محبوب|دلداد",
+  r"وصال|فراق|هجران|جدایی|دوری|دلتنگ|چشم.?به.?راه|بی.?تو",
+  r"بوسه|آغوش|زلف|گیسو|رخسار|لب لعل|قامت یار",
  ]),
  ("اجتماعی و انتقادی", [
-  r"وطن|ایران|ملت|مردم|جامعه|آزادی|ستم|ظلم|عدالت|فقیر|غنی|حاکم|سلطان|شاه|وزیر|استبداد|قانون|جنگ|صلح",
+  r"وطن|میهن|ایران|ایرانی|ملت|مردم|آزادی",
+  r"ستم|ظلم|عدالت|حق.?و.?حقوق|فقیر|غنی|برابری",
+  r"شاه|سلطان|حاکم|وزیر|سیاست|استبداد|فساد|قانون|جنگ|صلح",
  ]),
  ("حکمی و اخلاقی", [
-  r"خرد|دانش|نادان|جهل|اخلاق|نیکی|بدی|راستی|دروغ|غرور|تواضع|انصاف|قناعت|حرص|آز|بخشش|جوانمرد",
+  r"خرد|عقل|دانش|نادان|جهل|آموختن|دانایی",
+  r"نیکی|بدی|اخلاق|راستی|دروغ|انصاف|تواضع|جوانمرد|بخشش",
+  r"غرور|حسد|حرص|قناعت|آز|ریا|وفا|مروت",
  ]),
  ("طبیعت و توصیف", [
-  r"بهار|پاییز|زمستان|تابستان|باران|دریا|کوه|گل|بلبل|باغ|آسمان|خورشید|ماه|ستاره|ابر|باد|چشمه|رود|دشت|صحرا|لاله|سنبل",
+  r"بهار|پاییز|زمستان|تابستان|باران|برف|باد|ابر|تگرگ",
+  r"گل|بلبل|باغ|لاله|سنبل|سرو|چمن|شکوفه|درخت",
+  r"دریا|رود|چشمه|کوه|دشت|صحرا|موج|آبشار",
+  r"آسمان|خورشید|ماه|ستاره|سپهر|فلک|سپیده|شفق",
  ]),
  ("حماسی و ملی", [
-  r"رستم|سهراب|اسفندیار|زال|تهمتن|کاوه|فریدون|جمشید|ضحاک|ایرج|سیاوش|افراسیاب|توران|ایران زمین|پهلوان|سپاه|نبرد|رزْم|شمشیر",
+  r"رستم|سهراب|اسفندیار|زال|تهمتن|کاوه|فریدون|جمشید|ضحاک|سیاوش|افراسیاب",
+  r"پهلوان|سپاه|نبرد|رزم|شمشیر|گرز|تیر و کمان",
+  r"ایران|ایرانی|توران|درفش|نامداران|نیاکان",
  ]),
  ("فلسفی و تأملی", [
-  r"هستی|نیستی|جهان|زندگی|مرگ|عمر|زمان|روزگار|سرنوشت|اختیار|قضا|قدر|حقیقت|معنا|راز|فنا|بقا|عدم|وجود|هستی",
+  r"هستی|نیستی|وجود|عدم|حقیقت|معنا|جهان|آفرینش",
+  r"مرگ|عمر|پیری|اجل|قبر|خاک|فنا|بقا",
+  r"زمان|روزگار|سرنوشت|اختیار|قضا|قدر|بخت|قسمت",
  ]),
  ("روایی و داستانی", [
-  r"حکایت|روایت|داستان|قصه|گفتا|گفتم|بگفت|بشنو|روزی|پادشاه|درویش|بازرگان|مردی بود|زنی بود|شبی",
+  r"حکایت|روایت|داستان|قصه|افسانه|تمثیل",
+  r"روزی|شبی|پادشاه|درویش|بازرگان|پیرزنی|جوانی بود",
+  r"گفتا|بگفت|گفتم|بشنو|حکایت کرد|چنین گفت",
  ]),
  ("طنز و هجو", [
-  r"خنده|خندید|بخند|طنز|هجو|مسخره|ریشخند|شوخی|لطیفه|مضحک|احمق|خر|دزد|بخندید",
+  r"طنز|هجو|مسخره|ریشخند|لطیفه|شوخی|مضحک",
+  r"خنده|خندید|بخند|قهقهه|لبخند",
+  r"احمق|نادان|خر|دزد|ریاکار|بخندید",
  ]),
 ]
 COMPILED = [(name, [re.compile(p) for p in patterns]) for name, patterns in MAIN_RULES]
@@ -181,6 +197,8 @@ def classify(row):
     row["taxonomyConfidence"] = confidence
     row["taxonomyScores"] = dict(scores)
     row["stage2CategoryHint"] = original_hint
+    row["category2Suggestion"] = main if main != "نیازمند دسته‌بندی" else original_hint
+    row["category2SuggestionConfidence"] = confidence if main != "نیازمند دسته‌بندی" else "low; from stage 2 heuristic"
     row["reviewFlags"] = flags
     row["publicationStatus"] = "نامزد؛ انتشار ممنوع تا کنترل مرحلهٔ ۵ و حقوق"
     return row
@@ -294,6 +312,8 @@ def main():
     write_jsonl(OUT / "site-corpus-index.jsonl", site)
 
     topic_counts = collections.Counter(x["category2"] for x in classified)
+    stage2_hint_counts = collections.Counter(x.get("stage2CategoryHint") or "بدون پیشنهاد مرحلهٔ ۲" for x in classified)
+    unresolved_hint_counts = collections.Counter(x.get("stage2CategoryHint") or "بدون پیشنهاد مرحلهٔ ۲" for x in classified if x["category2"] == "نیازمند دسته‌بندی")
     subtopic_counts = collections.Counter((x["category2"], x["category3"]) for x in classified)
     flag_counts = collections.Counter(flag for x in classified for flag in x["reviewFlags"])
     author_counts = collections.Counter(x.get("author") or "بدون انتساب" for x in classified)
@@ -310,6 +330,8 @@ def main():
       "stage3NearDuplicatePairCount":len(near_pairs),
       "stage3CandidatesFlaggedForNearReview":sum(1 for x in unique if x.get("duplicateStatus")=="near_duplicate_review"),
       "stage4TopicCounts":dict(topic_counts),
+      "stage2HintCountsAfterDedup":dict(stage2_hint_counts),
+      "stage2HintsForUnresolvedItems":dict(unresolved_hint_counts),
       "stage4SubtopicCounts":{f"{a} / {b}":n for (a,b),n in sorted(subtopic_counts.items())},
       "stage4ReviewFlagCounts":dict(flag_counts),
       "topAuthors":author_counts.most_common(30),
