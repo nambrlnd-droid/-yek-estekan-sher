@@ -15,6 +15,8 @@ h1{color:#f3ead9;font-weight:600;letter-spacing:-1.5px}
 .v16-primary-nav{position:sticky;top:0;z-index:25;display:flex;justify-content:center;gap:8px;padding:10px 14px;margin:0 auto 22px;background:#111923eF;border-top:1px solid #ffffff0a;border-bottom:1px solid #394754aa;backdrop-filter:blur(18px)}
 .v16-primary-nav a{min-width:104px;text-align:center;text-decoration:none;color:#b8c0c4;border:1px solid transparent;border-radius:12px;padding:10px 14px;font-size:12px;transition:background .2s,border-color .2s,color .2s}
 .v16-primary-nav a:hover,.v16-primary-nav a.active{color:#f0dfbd;background:#253443;border-color:#5d6b74}
+.v16-theme-toggle{display:block;width:max-content;margin:16px auto 0;border:1px solid #66737a;border-radius:12px;background:#1b2a37;color:#e4c99a;padding:8px 15px;font:inherit;font-size:11px}
+body[data-theme="light"] .v16-theme-toggle{background:#fffaf1;border-color:#d4cabb;color:#765b32}
 main{width:min(1160px,100%);padding:0 24px 76px}
 .v16-page{width:100%;max-width:1050px;margin:0 auto 40px;animation:v16-enter .35s ease both}
 @keyframes v16-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
