@@ -3,7 +3,7 @@
 "use strict";
 const base="./data/poetry-archive/";
 let manifestPromise=null;
-const loaded=new Map(),pending=new Map();
+const loaded=new Map(),pending=new Map(),categoryRecords=new Map();
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").trim();
 async function manifest(){
  if(!manifestPromise)manifestPromise=fetch(base+"manifest.json").then(r=>{if(!r.ok)throw Error("فهرست گنجینه دریافت نشد");return r.json();});
@@ -19,7 +19,7 @@ async function loadCategory(name){
   const response=await fetch(base+meta.file);if(!response.ok)throw Error("دریافت دستهٔ شعر ناموفق بود");
   if(typeof DecompressionStream==="undefined")throw Error("مرورگر از بازکردن آرشیو فشرده پشتیبانی نمی‌کند");
   const bytes=await response.arrayBuffer();const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
-  const records=await new Response(stream).json();const target=window.poemEntries||(window.poemEntries=[]);
+  const records=await new Response(stream).json();categoryRecords.set(meta.name,records);const target=window.poemEntries||(window.poemEntries=[]);
   const ids=new Set(target.map(x=>x.id));
   const bodyKey=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
   const bodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));let added=0;const addedItems=[];
@@ -35,6 +35,19 @@ async function loadCategory(name){
 async function loadAll(){const m=await manifest();let n=0;for(const item of m.categories)n+=await loadCategory(item.name);return n;}
 window.YESArchive={
  manifest,loadCategory,loadAll,
+ items(name){const key=[...categoryRecords.keys()].find(x=>norm(x)===norm(name));return key?categoryRecords.get(key):[];},
+ async randomItems(count=10,categoryName=null){
+  const m=await manifest();
+  const take=(list,n)=>{const a=list.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(n,a.length));};
+  if(categoryName){await loadCategory(categoryName);const meta=m.categories.find(x=>norm(x.name)===norm(categoryName));return meta?take(categoryRecords.get(meta.name)||[],count):[];}
+  const chosen=new Map(),total=m.categories.reduce((s,x)=>s+x.count,0);
+  for(let i=0;i<count;i++){let r=Math.random()*total,meta=m.categories[m.categories.length-1];for(const item of m.categories){r-=item.count;if(r<0){meta=item;break;}}chosen.set(meta.name,(chosen.get(meta.name)||0)+1);}
+  await Promise.all([...chosen.keys()].map(name=>loadCategory(name)));
+  const result=[],seen=new Set();
+  for(const [name,n] of chosen){let added=0;for(const item of take(categoryRecords.get(name)||[],n*4)){const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(++added>=n)break;}}
+  if(result.length<count){const fallback=m.categories.flatMap(x=>categoryRecords.get(x.name)||[]);for(const item of take(fallback,count*3)){const key=item.id||String(item.body||"").slice(0,100);if(seen.has(key))continue;seen.add(key);result.push(item);if(result.length>=count)break;}}
+  return take(result,count);
+ },
  isArchiveCategory(name){return !!(window.YESArchive.manifestData&&window.YESArchive.manifestData.categories.some(x=>norm(x.name)===norm(name)));},
  categories(){return window.YESArchive.manifestData?.categories||[];},
  loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0)},
