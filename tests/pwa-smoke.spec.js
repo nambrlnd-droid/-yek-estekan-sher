@@ -1,5 +1,11 @@
 const { test, expect } = require("@playwright/test");
 
+async function openPrimary(page, route) {
+  const desktop = page.locator(`#v16PrimaryNav a[data-route="${route}"]`);
+  if (await desktop.isVisible()) await desktop.click();
+  else await page.locator(`#mobileDock button[data-action="${route}"]`).click();
+}
+
 test("app shell, manifest and service worker register under GitHub Pages subpath", async ({ page, baseURL }) => {
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
@@ -112,7 +118,7 @@ test("favorite state is reflected in the personal notebook", async ({ page, base
   const poemId = await first.getAttribute("data-poem-id");
   await first.locator("button.favorite").click();
   await expect(first.locator("button.favorite")).toContainText("نشان‌شده");
-  await page.locator('#v16PrimaryNav a[data-route="notebook"]').click();
+  await openPrimary(page, "notebook");
   await expect(page.locator("#notebookView")).toBeVisible();
   await expect.poll(() => page.locator("#notebookItems .notebook-row").count()).toBeGreaterThan(0);
   expect(poemId).toBeTruthy();
@@ -138,7 +144,7 @@ test("random poem opens the reader and the homepage offers continue reading", as
   await page.locator("#randomPoem").click();
   await expect(page.locator("#readerView")).toBeVisible();
   await page.locator("#readerBack").click();
-  await page.locator('#v16PrimaryNav a[data-route="home"]').click();
+  await openPrimary(page, "home");
   await expect(page.locator("#continueReading")).toBeVisible();
   await page.locator("#continueReading button").click();
   await expect(page.locator("#readerView")).toBeVisible();
@@ -265,12 +271,12 @@ test("v1.6 primary sections are independent deep-linkable pages", async ({ page,
   await expect(page.locator("#homePageView")).toBeVisible();
   await expect(page.locator("#searchPageView")).toBeHidden();
 
-  await page.locator('#v16PrimaryNav a[data-route="library"]').click();
+  await openPrimary(page, "library");
   await expect(page).toHaveURL(/#\/library$/);
   await expect(page.locator("#v15LibraryView")).toBeVisible();
   await expect(page.locator("#homePageView")).toBeHidden();
 
-  await page.locator('#v16PrimaryNav a[data-route="search"]').click();
+  await openPrimary(page, "search");
   await expect(page).toHaveURL(/#\/search$/);
   await expect(page.locator("#searchPageView")).toBeVisible();
   await expect(page.locator("#search")).toBeVisible();
