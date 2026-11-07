@@ -154,9 +154,9 @@ document.addEventListener("DOMContentLoaded",async()=>{
  $("openImageStudio").onclick=()=>open(null);
  const readerImageButton=$("readerMakeImage");
  if(readerImageButton)readerImageButton.onclick=()=>{const id=decodeURIComponent(location.hash.split("/").pop()||"");open(window.YESContent.get(id)||null);};
- $("imageStudioBack").onclick=close;$("imageDownload").onclick=download;$("imageReset").onclick=resetSettings;
- settingIds.forEach(id=>{$(id).addEventListener("input",()=>{schedule();saveSettings();if(id==="imageFont"||id==="imageFontWeight")ensureFont();if(id==="imageTemplate")document.querySelectorAll("#imagePresetButtons button").forEach(b=>b.classList.toggle("active",b.dataset.template===$(id).value));});$(id).addEventListener("change",()=>{schedule();saveSettings();});});
- ["imageText","imageAuthor"].forEach(id=>$(id).addEventListener("input",schedule));
+ const back=$("imageStudioBack"),exportButton=$("imageDownload"),resetButton=$("imageReset");if(back)back.onclick=close;if(exportButton)exportButton.onclick=download;if(resetButton)resetButton.onclick=resetSettings;
+ settingIds.forEach(id=>{const control=$(id);if(!control)return;control.addEventListener("input",()=>{schedule();saveSettings();if(id==="imageFont"||id==="imageFontWeight")ensureFont();if(id==="imageTemplate")document.querySelectorAll("#imagePresetButtons button").forEach(b=>b.classList.toggle("active",b.dataset.template===control.value));});control.addEventListener("change",()=>{schedule();saveSettings();});});
+ ["imageText","imageAuthor"].forEach(id=>{const control=$(id);if(control)control.addEventListener("input",schedule);});
  if(document.fonts?.ready)document.fonts.ready.then(schedule);
  await loadSettings();document.querySelectorAll("#imagePresetButtons button").forEach(b=>b.classList.toggle("active",b.dataset.template===$("imageTemplate").value));
  await ensureFont();draw();
