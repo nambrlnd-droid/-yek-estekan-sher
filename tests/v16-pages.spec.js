@@ -151,7 +151,7 @@ test("Escape returns to the page from which a poem was opened", async ({ page })
   await page.locator(".v16-favorite-open").click();
   await expect(page.locator("#readerView")).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page).toHaveURL(/#\\/favorites$/);
+  await expect(page).toHaveURL(/#\/favorites$/);
   await expect(page.locator("#favoritesPageView")).toBeVisible();
 });
 
