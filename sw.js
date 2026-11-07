@@ -1,11 +1,11 @@
 /* PWA service worker for GitHub Pages subpath deployment. */
 const CACHE_PREFIX="yes-v13-";
-const CACHE_NAME=CACHE_PREFIX+"shell-18";
+const CACHE_NAME=CACHE_PREFIX+"shell-19";
 const CORE=[
- "./","./index.html","./manifest.webmanifest","./icons/icon.svg","./css/v15-visual.css",
+ "./","./index.html","./manifest.webmanifest","./icons/icon.svg","./css/v15-visual.css","./css/v15-library.css",
  "./poems.js","./poems-extra.js","./poems-user-collection.js","./poems-hasan-collection.js","./telegram-poems.js","./internet-poems.js","./poems-web-loader.js","./pinned.js",
  "./js/taxonomy.js","./js/content.js","./js/router.js","./js/storage.js","./js/reader.js",
- "./js/notebook.js","./js/search.js","./js/image-studio.js","./js/pwa.js","./js/archive.js","./js/discovery.js","./js/v14-home.js"
+ "./js/notebook.js","./js/search.js","./js/image-studio.js","./js/pwa.js","./js/archive.js","./js/discovery.js","./js/v14-home.js","./js/v15-experience.js"
 ];
 self.addEventListener("install",event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
