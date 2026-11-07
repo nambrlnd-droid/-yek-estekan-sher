@@ -129,6 +129,16 @@ function setupLibrary(){
  $("regularView").insertAdjacentElement("afterend",view);
  $("v15LibraryBack").addEventListener("click",closeLibrary);
 }
+function setupDock(){
+ const dock=$("mobileDock");if(!dock)return;
+ const bind=(action,handler)=>{const button=dock.querySelector('button[data-action="'+action+'"]');if(!button)return;button.addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();handler();},true);};
+ bind("home",()=>{document.body.classList.remove("library-open","reader-focus");focusMode=false;setVisible("regularView");window.scrollTo({top:0,behavior:"smooth"});});
+ bind("library",()=>openLibrary("topics"));
+ bind("search",()=>{closeLibrary();$("search")?.focus();$("search")?.scrollIntoView({behavior:"smooth",block:"center"});});
+ const openNotebook=tab=>{closeLibrary();window.YESNotebook?.open();if(tab==="favorites")$("notebookTabs")?.querySelector("button")?.click();};
+ bind("favorites",()=>openNotebook("favorites"));
+ bind("notebook",()=>openNotebook("notebook"));
+}
 function setupReader(){
  const toolbar=document.querySelector("#readerView .reader-tools");if(!toolbar)return;
  addButton(toolbar,"تمرکز بر خواندن",()=>{focusMode=!focusMode;document.body.classList.toggle("reader-focus",focusMode);toast(focusMode?"حالت تمرکز فعال شد":"حالت تمرکز غیرفعال شد");},"v15-focus-toggle");
@@ -146,6 +156,6 @@ window.addEventListener("yes:archive-loaded",()=>{if(libraryMode==="poets"||libr
 window.addEventListener("yes:archive-manifest-loaded",()=>{if($("v15LibraryView")&&!$("v15LibraryView").hidden&&libraryMode==="topics")renderLibrary();});
 window.addEventListener("yes:web-poems-loaded",()=>{if(libraryMode!=="topics"&&$("v15LibraryView")&&!$("v15LibraryView").hidden)renderLibrary();});
 document.addEventListener("DOMContentLoaded",()=>{
- setupSearch();setupLibrary();setupReader();
+ setupSearch();setupLibrary();setupReader();setupDock();
 });
 })();
