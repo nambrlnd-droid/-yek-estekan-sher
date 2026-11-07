@@ -22,7 +22,6 @@ function reveal(){
  document.body.classList.remove("archive-gated");document.body.removeAttribute("aria-busy");
  if(root)root.hidden=true;
  window.dispatchEvent(new Event("yes:archive-ready"));
- const route=window.YESRouter?.current?.();if(route)window.dispatchEvent(new CustomEvent("yes:route",{detail:route}));
 }
 async function boot(){
  if(running||complete)return;running=true;if(retry)retry.hidden=true;
