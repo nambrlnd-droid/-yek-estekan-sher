@@ -13,12 +13,25 @@ async function archiveFetch(path){
  const request=new Request(url,{credentials:"same-origin"});
  let cache=null,cached=null;
  try{if("caches"in window){cache=await caches.open(ARCHIVE_CACHE);cached=await cache.match(request);if(cached)return cached;}}catch(e){}
- try{
-  const response=await fetch(request);
-  if(!response.ok)throw Error("دریافت فایل گنجینه ناموفق بود: "+path);
-  if(cache)try{await cache.put(request,response.clone());}catch(e){}
-  return response;
- }catch(error){if(cached)return cached;throw error;}
+ let lastError=null;
+ for(let attempt=0;attempt<2;attempt++){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(new Error("مهلت دریافت فایل گنجینه به پایان رسید")),90000);
+  try{
+   const response=await fetch(request,{signal:controller.signal});
+   if(!response.ok)throw Error("دریافت فایل گنجینه ناموفق بود ("+response.status+"): "+path);
+   if(cache)try{await cache.put(request,response.clone());}catch(e){}
+   return response;
+  }catch(error){
+   lastError=error;
+   if(attempt===0){
+    status("ارتباط با گنجینه ناپایدار است؛ دریافت «"+path+"» دوباره تلاش می‌شود…");
+    await new Promise(resolve=>setTimeout(resolve,900));
+   }
+  }finally{clearTimeout(timeout);}
+ }
+ if(cached)return cached;
+ throw lastError||Error("دریافت فایل گنجینه ناموفق بود: "+path);
 }
 async function manifest(){
  if(!manifestPromise)manifestPromise=archiveFetch("manifest.json").then(r=>r.json()).catch(error=>{manifestPromise=null;throw error;});
@@ -53,7 +66,9 @@ async function loadCategory(name){
  if(!meta)throw Error("موضوع در گنجینه پیدا نشد");
  if(loaded.has(meta.name))return 0;if(pending.has(meta.name))return pending.get(meta.name);
  const job=(async()=>{
+  const categoryIndex=m.categories.findIndex(x=>x.name===meta.name)+1;
   status("در حال دریافت «"+meta.name+"»؛ "+meta.count.toLocaleString("fa-IR")+" اثر…");
+  window.dispatchEvent(new CustomEvent("yes:archive-loading",{detail:{category:meta.name,categoryIndex,categoryTotal:m.categories.length}}));
   const response=await archiveFetch(meta.file);
   const bytes=await response.arrayBuffer();
   const records=await parseArchive(bytes);
@@ -92,7 +107,9 @@ async function loadAll(){
     await loadCategory(item.name);
    }
   }
-  const results=await Promise.allSettled(Array.from({length:Math.min(3,m.categories.length)},worker));
+  // Four concurrent shard downloads improve first-load throughput without
+  // creating an excessive number of simultaneous decompression workers on mobile.
+  const results=await Promise.allSettled(Array.from({length:Math.min(4,m.categories.length)},worker));
   const failed=results.find(result=>result.status==="rejected");
   if(failed)throw failed.reason;
   if(loadedCount()!==m.total)throw Error("همهٔ آثار گنجینه بارگذاری نشدند.");
