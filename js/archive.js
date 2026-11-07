@@ -1,4 +1,4 @@
-/* Lazy, category-based loader for the Ganjoor poetry archive. */
+/* Lazy, category-based loader for the poetry archive. */
 (function(){
 "use strict";
 const base="./data/poetry-archive/";
