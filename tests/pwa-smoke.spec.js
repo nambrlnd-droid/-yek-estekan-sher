@@ -198,8 +198,11 @@ test("v1.5 poet index opens author work lists", async ({ page, baseURL }) => {
 
 test("v1.5 advanced search supports exact phrase and full-line matching", async ({ page, baseURL }) => {
   await page.goto(baseURL);
+  await expect.poll(() => page.locator("#entries .entry").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  const previousId = await page.locator("#entries .entry").first().getAttribute("data-poem-id");
   await page.locator('#sections button[data-section="texts"]').click();
-  await expect.poll(() => page.locator("#entries .verse").count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await expect(page.locator("#sectionTitle")).toContainText("متون");
+  await expect.poll(async () => (await page.locator("#entries .entry").first().getAttribute("data-poem-id")) !== previousId, { timeout: 30000 }).toBeTruthy();
   const firstBody = await page.locator("#entries .verse").first().innerText();
   const phrase = firstBody.split(/\r?\n/).map(x => x.trim()).find(Boolean);
   expect(phrase).toBeTruthy();
