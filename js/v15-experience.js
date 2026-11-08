@@ -36,8 +36,8 @@ function renderTopics(root){
  const groups=[
   {heading:"طبقهٔ اول",values:first,field:"category1"},
   {heading:"موضوع‌های اصلی",values:second,field:"category2"},
-  {heading:"زیرموضوع‌ها",values:third,field:"category3"},
-  {heading:"گنجینهٔ موضوعی",values:archiveNames,archive:true}
+  {heading:"گنجینهٔ موضوعی",values:archiveNames,archive:true},
+  {heading:"زیرموضوع‌ها",values:third,field:"category3"}
  ];
  groups.forEach(({heading,values,field,archive})=>{
   const group=document.createElement("section");group.className="v15-library-group";const h=document.createElement("h3");h.textContent=heading;group.append(h);
