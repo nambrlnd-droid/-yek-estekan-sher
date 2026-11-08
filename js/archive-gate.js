@@ -42,6 +42,7 @@ async function boot(){
   const manifest=await window.YESArchive.manifest();
   update("فهرست آرشیو دریافت شد؛ "+fmt(manifest.total)+" اثر در "+fmt(manifest.categories.length)+" دسته باید بارگذاری شود.",0,manifest.total);
   await window.YESArchive.loadAll();
+  await window.YES_TAXONOMY?.ready;
   const loaded=window.YESArchive.loadedCount();
   if(loaded!==manifest.total)throw new Error("تعداد آثار دریافت‌شده کامل نیست ("+fmt(loaded)+" از "+fmt(manifest.total)+").");
   window.__YES_ARCHIVE_DATA_READY=true;
