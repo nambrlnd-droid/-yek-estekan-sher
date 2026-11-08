@@ -169,7 +169,7 @@ test("full-screen archive gate opens only after the archive-ready signal", async
 
 
 test("archive loading failure keeps the site covered and offers retry", async ({ page, baseURL }) => {
-  await page.goto(baseURL + "/#/home");
+  await page.goto(baseURL + "#/home");
   await expect(page.locator("#archiveBootScreen")).toBeVisible();
   await expect(page.locator("#archiveBootScreen")).toHaveClass(/has-error/);
   await expect(page.locator("#archiveBootRetry")).toBeVisible();
