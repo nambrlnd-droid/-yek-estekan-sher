@@ -67,3 +67,41 @@ test("related poem suggestions prioritize shared taxonomy topics", async ({ page
   expect(result[0]).toBe("related");
   expect(result).not.toContain("source");
 });
+
+test("stage 5 creates a deep-linkable poet profile and opens works", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  await page.evaluate(() => {
+    window.YESContent.all.push({
+      id: "stage5-poet-work", type: "poem", title: "نمونهٔ صفحهٔ شاعر",
+      body: "این یک شعر آزمایشی است", author: "شاعر آزمایشی",
+      tags: ["آزمایش"], category1: "عمومی", category2: "تأمل و اندیشه",
+      category3: "هستی و شناخت"
+    });
+    location.hash = "#/poet/" + encodeURIComponent("شاعر آزمایشی");
+  });
+  await expect(page.locator("#poetPageView")).toBeVisible();
+  await expect(page.locator("#poetPageName")).toHaveText("شاعر آزمایشی");
+  await expect(page.locator(".poet-work")).toHaveCount(1);
+  await page.locator(".poet-work").click();
+  await expect(page.locator("#readerView")).toBeVisible();
+  await expect(page.locator("#readerTitle")).toHaveText("نمونهٔ صفحهٔ شاعر");
+});
+
+test("poem page exposes taxonomy, prosody status, share and correction link", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  await page.evaluate(() => {
+    window.YESContent.all.push({
+      id: "stage5-reader-work", type: "poem", title: "اثر با شناسنامه",
+      body: "مصراع نخست\nمصراع دوم", author: "شاعر دارای صفحه",
+      tags: ["آزمایش"], category1: "عمومی", category2: "طبیعت و توصیف",
+      category3: "فصل‌ها و پدیده‌های طبیعی"
+    });
+    window.YESReader.open("stage5-reader-work");
+  });
+  await expect(page.locator("#readerTitle")).toHaveText("اثر با شناسنامه");
+  await expect(page.locator("#readerAuthor a")).toHaveAttribute("href", /#\/poet\//);
+  await expect(page.locator("#readerMetadata")).toContainText("طبیعت و توصیف");
+  await expect(page.locator("#readerProsody")).toBeVisible();
+  await expect(page.locator("#readerProsody")).toContainText("تأیید نشده");
+  await expect(page.locator(".reader-report a")).toHaveAttribute("href", /github.com\/nambrlnd-droid\/\-yek-estekan-sher\/issues\/new/);
+});
