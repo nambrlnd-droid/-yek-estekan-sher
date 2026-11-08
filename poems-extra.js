@@ -103,5 +103,8 @@ const rows=[
 ["امید و تاب‌آوری|حکمت و اخلاق","شیرازی","آن صبر که در حوصلهٔ غیر نگنجد،\nدر ماست که خارج بود از طاقت ایوب."]
 ];
 const start=101;
-window.poemEntries.push(...rows.map((r,i)=>({id:"poem-"+String(start+i).padStart(4,"0"),section:"poems",tags:r[0].split("|"),author:r[1],body:r[2]})));
+const addedRows=rows.map((r,i)=>({id:"poem-"+String(start+i).padStart(4,"0"),section:"poems",tags:r[0].split("|"),author:r[1],body:r[2]}));
+window.poemEntries.push(...addedRows);
+window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};
+window.YES_SOURCE_AUDIT["poems-extra.js"]={sourceRows:rows.length,added:addedRows.length,duplicateBodySkipped:0,emptyBodySkipped:0};
 })();
