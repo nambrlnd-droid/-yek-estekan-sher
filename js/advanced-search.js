@@ -1,7 +1,7 @@
 /* V1.8 Stage 4 — composable literary search filters. */
 (function(){
 "use strict";
-const state={type:"",meter:"",rhyme:"",radif:""};let statusNode=null,archiveAnalysisStarted=false;
+const state={type:"",meter:"",rhyme:"",radif:"",reviewStatus:""};let statusNode=null,archiveAnalysisStarted=false;
 const types=[["","همهٔ قالب‌ها"],["couplet","دو مصراعی"],["multi-line","چندمصراعی"],["single-line","تک‌مصراعی"],["fragment","قطعه / متن ناقص"]];
 function setStatus(message){if(statusNode)statusNode.textContent=message;}
 function node(tag,attrs,text){const n=document.createElement(tag);Object.entries(attrs||{}).forEach(([k,v])=>n.setAttribute(k,v));if(text)n.textContent=text;return n;}
@@ -13,14 +13,17 @@ function mount(){
  const meter=node("input",{id:"prosodyMeterFilter",type:"search",placeholder:"وزن یا بحر (فقط تأییدشده)","aria-label":"جست‌وجو بر اساس وزن یا بحر"});
  const rhyme=node("input",{id:"prosodyRhymeFilter",type:"search",placeholder:"قافیهٔ پیشنهادی","aria-label":"قافیهٔ پیشنهادی"});
  const radif=node("input",{id:"prosodyRadifFilter",type:"search",placeholder:"ردیف پیشنهادی","aria-label":"ردیف پیشنهادی"});
+ const review=node("select",{id:"prosodyReviewFilter","aria-label":"وضعیت بازبینی عروضی"});
+ [["","همهٔ وضعیت‌های عروضی"],["review_required","نیازمند بازبینی عروضی"],["confirmed","دارای بازبینی انسانی"]].forEach(([v,t])=>review.append(node("option",{value:v},t)));
  statusNode=node("small",{id:"prosodySearchStatus","aria-live":"polite"},"قافیه و ردیف فعلاً پیشنهاد ماشینی‌اند؛ وزن/بحر فقط پس از تأیید قابل جست‌وجوست.");
- panel.append(type,meter,rhyme,radif,statusNode);anchor.after(panel);
- const changed=()=>{state.type=type.value;state.meter=meter.value.trim();state.rhyme=rhyme.value.trim();state.radif=radif.value.trim();window.dispatchEvent(new Event("yes:advanced-search-change"));};
- [type,meter,rhyme,radif].forEach(n=>n.addEventListener("input",changed));
+ panel.append(type,meter,rhyme,radif,review,statusNode);anchor.after(panel);
+ const changed=()=>{state.type=type.value;state.meter=meter.value.trim();state.rhyme=rhyme.value.trim();state.radif=radif.value.trim();state.reviewStatus=review.value;window.dispatchEvent(new Event("yes:advanced-search-change"));};
+ [type,meter,rhyme,radif,review].forEach(n=>n.addEventListener("input",changed));
 }
 function matches(item){
- if(!state.type&&!state.meter&&!state.rhyme&&!state.radif)return true;
+ if(!state.type&&!state.meter&&!state.rhyme&&!state.radif&&!state.reviewStatus)return true;
  const p=item?.prosody||window.YESProsody?.analyze(item);if(!p)return false;
+ if(state.reviewStatus&&p.status!==state.reviewStatus)return false;
  if(state.type&&p.poemType!==state.type)return false;
  if(state.meter){
   if(p.status!=="confirmed"||!p.meter&&!p.bahr)return false;
@@ -57,7 +60,7 @@ async function analyzeArchive(){
   }catch(e){}
   const contentItems=window.YESContent?.all||window.poemEntries||[];
   if(existingSummary&&existingSummary.version==="1.8.0-prosody.3"&&existingSummary.total===contentItems.length){
-   contentItems.forEach(item=>{const profile=item&&item.id?existingProfiles.get(String(item.id)):null;if(profile&&profile.status==="confirmed"){item.prosody=profile;if(Number.isInteger(item.legacyIndex)&&window.poemEntries&&window.poemEntries[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=profile;}});
+   contentItems.forEach(item=>{const profile=item&&item.id?existingProfiles.get(String(item.id)):null;if(profile){item.prosody=profile;if(Number.isInteger(item.legacyIndex)&&window.poemEntries&&window.poemEntries[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=profile;}});
    setStatus("پروفایل عروضی ذخیره‌شدهٔ "+contentItems.length.toLocaleString("fa-IR")+" اثر بازیابی شد؛ بازبینی‌های انسانی حفظ شده‌اند.");
    return;
   }
