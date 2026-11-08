@@ -1,5 +1,6 @@
 const { test, expect } = require("@playwright/test");
 const { gzipSync } = require("node:zlib");
+const { createHash } = require("node:crypto");
 
 // This file mocks archive network requests; a registered service worker would
 // bypass Playwright route interception and turn the synthetic shard into a 404.
@@ -69,11 +70,20 @@ test("v1.7 search view keeps the visible result batch bounded", async ({ page })
 
 test("archive bootstrap retries a transient shard failure and completes the full gate", async ({ page }) => {
   await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
+  const shardBytes = {
+    "first.json.gz": gzipSync(Buffer.from(JSON.stringify([{
+      id: "bootstrap-first.json.gz", section: "poems", body: "متن آزمایشی first.json.gz", author: "آزمایش"
+    }]))),
+    "second.json.gz": gzipSync(Buffer.from(JSON.stringify([{
+      id: "bootstrap-second.json.gz", section: "poems", body: "متن آزمایشی second.json.gz", author: "آزمایش"
+    }]))),
+  };
+  const sha256 = file => createHash("sha256").update(shardBytes[file]).digest("hex");
   const manifest = {
     total: 2,
     categories: [
-      { name: "آزمایش اول", file: "first.json.gz", count: 1 },
-      { name: "آزمایش دوم", file: "second.json.gz", count: 1 }
+      { name: "آزمایش اول", file: "first.json.gz", count: 1, sha256: sha256("first.json.gz") },
+      { name: "آزمایش دوم", file: "second.json.gz", count: 1, sha256: sha256("second.json.gz") }
     ]
   };
   const attempts = new Map();
@@ -88,16 +98,10 @@ test("archive bootstrap retries a transient shard failure and completes the full
       await route.abort("failed");
       return;
     }
-    const record = {
-      id: "bootstrap-" + name,
-      section: "poems",
-      body: "متن آزمایشی " + name,
-      author: "آزمایش"
-    };
     await route.fulfill({
       status: 200,
       contentType: "application/gzip",
-      body: gzipSync(Buffer.from(JSON.stringify([record])))
+      body: shardBytes[name]
     });
   });
 
