@@ -38,9 +38,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dataset reader
-        run: python -m pip install --upgrade pip datasets
-
       - name: Build exact-match index
         run: python tools/build_prosody_index.py
 
