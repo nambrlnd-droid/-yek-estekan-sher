@@ -56,7 +56,7 @@ async function analyzeArchive(){
    existingProfiles=new Map(saved.filter(record=>record&&record.id&&record.id!=="archive-v1.8-summary").map(record=>[String(record.id),record]));
   }catch(e){}
   const contentItems=window.YESContent?.all||window.poemEntries||[];
-  if(existingSummary&&existingSummary.version==="1.8.0-prosody.2"&&existingSummary.total===contentItems.length){
+  if(existingSummary&&existingSummary.version==="1.8.0-prosody.3"&&existingSummary.total===contentItems.length){
    contentItems.forEach(item=>{const profile=item&&item.id?existingProfiles.get(String(item.id)):null;if(profile&&profile.status==="confirmed"){item.prosody=profile;if(Number.isInteger(item.legacyIndex)&&window.poemEntries&&window.poemEntries[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=profile;}});
    setStatus("پروفایل عروضی ذخیره‌شدهٔ "+contentItems.length.toLocaleString("fa-IR")+" اثر بازیابی شد؛ بازبینی‌های انسانی حفظ شده‌اند.");
    return;
