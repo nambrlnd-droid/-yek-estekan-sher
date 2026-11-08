@@ -128,7 +128,7 @@ function classify(item, isPinned) {
  }
  let category1,category2,category3,confidence,review="";
  if(entity){category1="مذهبی";category2=entity;const sacredSubtopic=matchRule(tagText+" "+body,sacredSubtopics);category3=sacredSubtopic?sacredSubtopic[0]:"یادکرد و معارف";confidence=tagEvidence? "high":"medium";}
- else if(religious){category1="مذهبی";category2=religious[0];category3="موضوع دینی";confidence=tagText?"high":"medium";}
+ else if(religious){category1="مذهبی";category2=religious[0];category3="موضوع دینی";confidence=tagEvidence?"high":"medium";}
  else if(general){category1="عمومی";category2=general[0];category3=general[1];confidence=tagText?"high":"medium";}
  else if(archiveFallback.has(sourceCategory)){
   [category2,category3]=archiveFallback.get(sourceCategory);category1="عمومی";confidence="low";review="برچسب کلی آرشیو؛ نیازمند بازبینی موضوعی";
