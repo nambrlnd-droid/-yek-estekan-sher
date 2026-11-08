@@ -2,10 +2,17 @@ const { test, expect } = require("@playwright/test");
 
 test.beforeEach(async ({ page }, testInfo) => {
   const forceArchiveError = testInfo.title.includes("archive loading failure");
-  await page.addInitScript(flags => {
-    window.__YES_TEST_SKIP_ARCHIVE_GATE = flags.skipArchive;
-    window.__YES_TEST_FORCE_ARCHIVE_ERROR = flags.forceArchiveError;
-  }, { skipArchive: !forceArchiveError, forceArchiveError });
+  if (forceArchiveError) {
+    await page.addInitScript(() => {
+      window.__YES_TEST_SKIP_ARCHIVE_GATE = false;
+      window.__YES_TEST_FORCE_ARCHIVE_ERROR = true;
+    });
+  } else {
+    await page.addInitScript(() => {
+      window.__YES_TEST_SKIP_ARCHIVE_GATE = true;
+      window.__YES_TEST_FORCE_ARCHIVE_ERROR = false;
+    });
+  }
 });
 
 test("prosody analyzer preserves source and never invents a confirmed meter", async ({ page, baseURL }) => {
