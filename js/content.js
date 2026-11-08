@@ -24,4 +24,7 @@
     get(id){return this.all.find(x=>x.id===id)||null;},
     collections:[{id:"pishnahad-vamiz",title:"پیشنهاد‌ومیض",itemIds:pinned.map(x=>x.id)}]
   };
+  // The V1.8 taxonomy script is loaded immediately before this adapter.
+  // Re-apply derived fields now that the normalized reader records exist.
+  window.YES_TAXONOMY?.apply?.();
 })();
