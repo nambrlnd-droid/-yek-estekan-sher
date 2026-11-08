@@ -1,18 +1,10 @@
 const { test, expect } = require("@playwright/test");
 
-test.beforeEach(async ({ page }, testInfo) => {
-  const forceArchiveError = testInfo.title.includes("archive loading failure");
-  if (forceArchiveError) {
-    await page.addInitScript(() => {
-      window.__YES_TEST_SKIP_ARCHIVE_GATE = false;
-      window.__YES_TEST_FORCE_ARCHIVE_ERROR = true;
-    });
-  } else {
-    await page.addInitScript(() => {
-      window.__YES_TEST_SKIP_ARCHIVE_GATE = true;
-      window.__YES_TEST_FORCE_ARCHIVE_ERROR = false;
-    });
-  }
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__YES_TEST_SKIP_ARCHIVE_GATE = true;
+    window.__YES_TEST_FORCE_ARCHIVE_ERROR = false;
+  });
 });
 
 test("prosody analyzer preserves source and never invents a confirmed meter", async ({ page, baseURL }) => {
@@ -171,7 +163,7 @@ test("full-screen archive gate opens only after the archive-ready signal", async
 
 
 test("archive loading failure keeps the site covered and offers retry", async ({ page, baseURL }) => {
-  await page.goto(baseURL + "#/home");
+  await page.goto(baseURL + "?yesTestArchiveError=1#/home");
   await expect(page.locator("#archiveBootScreen")).toBeVisible();
   await expect(page.locator("#archiveBootScreen")).toHaveClass(/has-error/);
   await expect(page.locator("#archiveBootRetry")).toBeVisible();
