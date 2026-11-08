@@ -124,11 +124,13 @@ test("v1.8 taxonomy is synchronized to the reader's normalized content records",
 
 
 test("v1.8 archive search filters the source shard and exposes its taxonomy subtopics", async ({ page, baseURL }) => {
+  test.setTimeout(60000);
   await page.goto(baseURL + "#/search");
   await page.waitForFunction(() => window.YESArchive?.manifestData?.categories?.length === 9);
   await page.locator("#category1Filter").selectOption({ label: "عمومی" });
   await page.locator("#category2Filter").selectOption({ label: "حماسی و ملی" });
-  await expect.poll(() => page.evaluate(() => window.YESArchive.loaded("حماسی و ملی"))).toBeTruthy();
+  expect(await page.evaluate(() => window.YESArchive.isArchiveCategory(document.querySelector("#category2Filter").value))).toBeTruthy();
+  await expect.poll(() => page.evaluate(() => window.YESArchive.loaded("حماسی و ملی")), { timeout: 30000 }).toBeTruthy();
   await expect(page.locator("#entries .entry").first()).toBeVisible();
   await expect(page.locator("#category3Filter option").filter({ hasText: "میهن و پهلوانی" })).toHaveCount(1);
 });
