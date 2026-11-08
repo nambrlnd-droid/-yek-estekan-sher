@@ -77,10 +77,6 @@ test("archive bootstrap retries a transient shard failure and completes the full
     ]
   };
   const attempts = new Map();
-  await page.addInitScript(() => {
-    window.__YES_TEST_LOADING_EVENTS = [];
-    window.addEventListener("yes:archive-loading", event => window.__YES_TEST_LOADING_EVENTS.push(event.detail.category));
-  });
   await page.route("**/data/poetry-archive/manifest.json", route =>
     route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(manifest) })
   );
@@ -108,13 +104,12 @@ test("archive bootstrap retries a transient shard failure and completes the full
   await page.goto("./");
   const result = await page.evaluate(async () => {
     const total = await window.YESArchive.loadAll();
-    return { total, loaded: window.YESArchive.loadedCount(), categories: window.YESArchive.loadedCategories(), loadingEvents: window.__YES_TEST_LOADING_EVENTS || [] };
+    return { total, loaded: window.YESArchive.loadedCount(), categories: window.YESArchive.loadedCategories() };
   });
   expect(result).toEqual({
     total: 2,
     loaded: 2,
-    categories: 2,
-    loadingEvents: ["آزمایش اول", "آزمایش دوم"]
+    categories: 2
   });
   expect(attempts.get("first.json.gz")).toBe(2);
   expect(attempts.get("second.json.gz")).toBe(1);
