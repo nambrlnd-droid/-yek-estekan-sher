@@ -73,6 +73,8 @@ async function loadCategory(name){
   const bytes=await response.arrayBuffer();
   const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
+  // Preserve the shard origin as derived runtime metadata for hierarchical taxonomy.
+  records.forEach(item=>{if(item&&typeof item==="object"&&!item.archiveCategory)item.archiveCategory=meta.name;});
   categoryRecords.set(meta.name,records);
   const target=window.poemEntries||(window.poemEntries=[]);
   initDedup(target);
