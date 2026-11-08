@@ -12,4 +12,5 @@
     putMany:async(s,values)=>{const db=await open();return new Promise((resolve,reject)=>{const tx=db.transaction(s,"readwrite"),os=tx.objectStore(s);for(const value of values||[])os.put(value);tx.oncomplete=()=>{db.close();resolve(true);};tx.onerror=()=>{db.close();reject(tx.error);};tx.onabort=()=>{db.close();reject(tx.error||new Error("IndexedDB batch write aborted"));};});},
     remove:(s,id)=>run(s,"readwrite",o=>o.delete(id))
   };
+  window.dispatchEvent(new Event("yes:storage-ready"));
 })();
