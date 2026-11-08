@@ -108,6 +108,8 @@ test("poem page exposes taxonomy, prosody status, share and correction link", as
   await expect(page.locator("#readerMetadata")).toContainText("طبیعت و توصیف");
   await expect(page.locator("#readerProsody")).toBeVisible();
   await expect(page.locator("#readerProsody")).toContainText("تأیید نشده");
+  await expect(page.locator("#readerProsody")).toContainText("قافیهٔ پیشنهادی");
+  await expect(page.locator("#readerProsody")).toContainText("ردیف پیشنهادی");
   await expect(page.locator(".reader-report a")).toHaveAttribute("href", /github.com\/nambrlnd-droid\/\-yek-estekan-sher\/issues\/new/);
 });
 
