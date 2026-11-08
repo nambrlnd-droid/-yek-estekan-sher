@@ -120,9 +120,12 @@
       const meter=$("readerProsodyMeter").value.trim(),bahr=$("readerProsodyBahr").value.trim(),arkan=$("readerProsodyArkan").value.trim(),scansion=$("readerProsodyScansion").value.trim();
       if(!$("readerProsodyVerified").checked){$("readerProsodyReviewStatus").textContent="برای ثبت به‌عنوان تأییدشده، ابتدا بازبینی شخصی را تأیید کنید.";return;}
       if(!meter||!bahr||!arkan||!scansion){$("readerProsodyReviewStatus").textContent="ثبت وزن، بحر، ارکان و تقطیع برای تأیید الزامی است.";return;}
+      const requiredLines=Math.max(1,String(content().get(currentId)?.body||"").split(/\r?\n/).filter(line=>line.trim()).length);
+      const scansionLines=scansion.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
+      if(scansionLines.length<requiredLines){$("readerProsodyReviewStatus").textContent="تقطیع باید برای همهٔ "+requiredLines+" سطر/مصراع ثبت شود؛ هر سطر تقطیع را در یک خط جداگانه بنویسید.";return;}
       try{
         const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
-        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
+        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,scansionLines,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
         await window.YESStorage.put("prosodyReview",record);
         const item=content().get(currentId);if(item){item.prosody=record;if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;}
         $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";
