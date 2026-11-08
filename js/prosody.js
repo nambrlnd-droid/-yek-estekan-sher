@@ -68,7 +68,7 @@ async function analyzeAll(items,options={}){
  const flush=async()=>{if(batch.length&&typeof options.onBatch==="function")await options.onBatch(batch);batch=[];};
  for(let i=0;i<list.length;i++){
   const item=list[i],saved=item?.id?existing.get(String(item.id)):null;
-  const p=saved?.status==="confirmed"?saved:analyze(item,false);done++;
+  const p=saved?.status==="confirmed"?{...saved,version:"1.8.0-prosody.3"}:analyze(item,false);done++;
   if(p.status==="confirmed"){confirmed++;if(item&&typeof item==="object")item.prosody=p;}
   else{review++;if(item&&item.id)lastQueue.push(String(item.id));}
   if(item&&item.id)batch.push({
