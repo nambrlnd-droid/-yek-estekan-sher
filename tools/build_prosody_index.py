@@ -133,6 +133,10 @@ def main() -> None:
     matched_local_couplets = 0
     total_archive = 0
     matched_archive = 0
+    site_data = json.loads(SITE_POEMS.read_text(encoding="utf-8")) if SITE_POEMS.exists() else {"poems": [], "pinned": []}
+    local_records = [("site-poem", item) for item in site_data.get("poems", [])]
+    local_records += [("pinned-entry", item) for item in site_data.get("pinned", [])]
+    local_ids = {str(item.get("id")) for _, item in local_records if isinstance(item, dict) and item.get("id") is not None}
     archive_files = sorted(path for path in ARCHIVE.glob("*.json.gz") if path.name != OUT.name)
 
     for shard in archive_files:
@@ -140,7 +144,7 @@ def main() -> None:
             records = json.load(handle)
         for record in records:
             total_archive += 1
-            if not isinstance(record, dict) or record.get("id") is None:
+            if not isinstance(record, dict) or record.get("id") is None or str(record["id"]) in local_ids:
                 continue
             profile, ambiguous = classify_record(record, pair_labels, "archive")
             if ambiguous:
@@ -150,25 +154,19 @@ def main() -> None:
                 matched_archive += 1
                 matched_archive_couplets += profile["matchedCouplets"]
 
-    local_total = 0
+    local_total = len(local_records)
     local_matched = 0
-    if SITE_POEMS.exists():
-        site_data = json.loads(SITE_POEMS.read_text(encoding="utf-8"))
-        for record_type, records in (("site-poem", site_data.get("poems", [])), ("pinned-entry", site_data.get("pinned", []))):
-            for record in records:
-                local_total += 1
-                if not isinstance(record, dict) or record.get("id") is None:
-                    continue
-                item_id = str(record["id"])
-                if item_id in matches:
-                    continue
-                profile, ambiguous = classify_record(record, pair_labels, record_type)
-                if ambiguous:
-                    ambiguous_local += 1
-                if profile:
-                    matches[item_id] = profile
-                    local_matched += 1
-                    matched_local_couplets += profile["matchedCouplets"]
+    for record_type, record in local_records:
+        if not isinstance(record, dict) or record.get("id") is None:
+            continue
+        item_id = str(record["id"])
+        profile, ambiguous = classify_record(record, pair_labels, record_type)
+        if ambiguous:
+            ambiguous_local += 1
+        if profile:
+            matches[item_id] = profile
+            local_matched += 1
+            matched_local_couplets += profile["matchedCouplets"]
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(OUT, "wt", encoding="utf-8", compresslevel=9) as handle:
