@@ -117,12 +117,12 @@
     $("readerSaveNote").onclick=async()=>{try{await window.YESReader.saveNote(currentId,$("readerNote").value);notify("یادداشت ذخیره شد");}catch(e){notify("ذخیرهٔ یادداشت ممکن نشد");}};
     $("readerProsodyReviewToggle").onclick=()=>{$("readerProsodyReviewForm").hidden=!$("readerProsodyReviewForm").hidden;};
     $("readerProsodySave").onclick=async()=>{
-      const meter=$("readerProsodyMeter").value.trim(),bahr=$("readerProsodyBahr").value.trim(),scansion=$("readerProsodyScansion").value.trim();
+      const meter=$("readerProsodyMeter").value.trim(),bahr=$("readerProsodyBahr").value.trim(),arkan=$("readerProsodyArkan").value.trim(),scansion=$("readerProsodyScansion").value.trim();
       if(!$("readerProsodyVerified").checked){$("readerProsodyReviewStatus").textContent="برای ثبت به‌عنوان تأییدشده، ابتدا بازبینی شخصی را تأیید کنید.";return;}
-      if(!meter||!bahr||!scansion){$("readerProsodyReviewStatus").textContent="ثبت وزن، بحر و تقطیع برای تأیید الزامی است.";return;}
+      if(!meter||!bahr||!arkan||!scansion){$("readerProsodyReviewStatus").textContent="ثبت وزن، بحر، ارکان و تقطیع برای تأیید الزامی است.";return;}
       try{
         const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
-        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan:$("readerProsodyArkan").value.trim(),scansion,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
+        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
         await window.YESStorage.put("prosodyReview",record);
         const item=content().get(currentId);if(item){item.prosody=record;if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;}
         $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";
