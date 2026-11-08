@@ -19,6 +19,10 @@ function update(text,done,total){
 }
 function reveal(){if(screen()){screen().hidden=false;screen().classList.remove("has-error");}document.body.classList.add("archive-booting");}
 function hide(){if(screen())screen().hidden=true;document.body.classList.remove("archive-booting");}
+async function migrateNotebookSafely(){
+ try{await window.YESNotebook?.migrateLegacy?.();}
+ catch(error){console.warn("Legacy notebook migration was skipped:",error);window.dispatchEvent(new CustomEvent("yes:notebook-migration-error",{detail:{message:String(error?.message||error)}}));}
+}
 async function boot(){
  if(running||complete)return;
  running=true;reveal();
@@ -28,7 +32,7 @@ async function boot(){
   if(window.__YES_TEST_SKIP_ARCHIVE_GATE===true){
    window.__YES_ARCHIVE_DATA_READY=true;
    window.dispatchEvent(new Event("yes:archive-data-ready"));
-   await window.YESNotebook?.migrateLegacy?.();
+   await migrateNotebookSafely();
    complete=true;window.__YES_ARCHIVE_READY=true;
    window.dispatchEvent(new Event("yes:archive-ready"));
    return;
@@ -41,7 +45,7 @@ async function boot(){
   window.__YES_ARCHIVE_DATA_READY=true;
   window.dispatchEvent(new Event("yes:archive-data-ready"));
   update("همهٔ آثار بارگذاری شدند؛ در حال آماده‌سازی اطلاعات شخصی و نهایی‌سازی کتابخانه.",loaded,manifest.total);
-  await window.YESNotebook?.migrateLegacy?.();
+  await migrateNotebookSafely();
   complete=true;window.__YES_ARCHIVE_READY=true;
   update("کتابخانه آماده است.",loaded,manifest.total);
   window.dispatchEvent(new Event("yes:archive-ready"));
