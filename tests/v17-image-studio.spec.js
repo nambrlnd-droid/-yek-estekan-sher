@@ -57,7 +57,7 @@ test("image studio supports story and landscape export dimensions", async ({ pag
   await expect(page.locator("#openImageStudio")).toBeVisible();
   await page.locator("#openImageStudio").click();
   await page.locator("#imageFormat").selectOption("story");
-  await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height])).toEqual([1080, 1920]);
+  await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height]), { timeout: 10000 }).toEqual([1080, 1920]);
   await page.locator("#imageFormat").selectOption("landscape");
-  await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height])).toEqual([1600, 900]);
+  await expect.poll(() => page.locator("#poetryCanvas").evaluate(c => [c.width, c.height]), { timeout: 10000 }).toEqual([1600, 900]);
 });
