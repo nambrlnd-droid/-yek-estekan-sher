@@ -50,7 +50,7 @@ function analyze(item,useCache=true){
  const result={
   version:"1.8.0-prosody.2",status:"review_required",confidence:"low",
   poemType:type,lineCount:ls.length,lines:estimates,
-  rhyme:rhyme.rhyme,radif:rhyme.radif,
+  rhyme:rhyme.rhyme,radif:rhyme.radif,rhymeConfidence:"low",radifConfidence:"low",
   meter:null,bahr:null,arkan:null,scansion:null,
   syllableMethod:"orthographic-estimate-not-pronunciation",
   reviewReasons:["نبودِ فرهنگ تلفظ و اعراب‌گذاری معتبر","اختیارات شاعری و تلفظ‌های بدیل نیازمند داوری انسانی","وزن و بحر هنوز با تطبیق عروضیِ تأییدشده احراز نشده‌اند"],
