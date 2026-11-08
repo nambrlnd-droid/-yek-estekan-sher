@@ -45,10 +45,19 @@
       let profile=null;try{profile=await window.YESStorage.get("prosodyReview",id);}catch(e){}
       if(!profile&&window.YESProsody)profile=window.YESProsody.analyze(item);
       const grid=document.createElement("div");grid.className="reader-prosody-grid";
-      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن","تأیید نشده"],["بحر","تأیید نشده"],["قافیه",profile?.rhyme||"نیازمند بررسی"],["ردیف",profile?.radif||"نیازمند بررسی"]];
+      const verified=profile?.status==="confirmed";
+      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):"تأیید نشده"],["قافیه",profile?.rhyme||"نیازمند بررسی"],["ردیف",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":"در انتظار بازبینی"]];
       rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
       if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
       prosodyDetails.append(grid);
+      $("readerProsodyMeter").value=profile?.meter||"";
+      $("readerProsodyBahr").value=profile?.bahr||"";
+      $("readerProsodyArkan").value=profile?.arkan||"";
+      $("readerProsodyScansion").value=profile?.scansion||"";
+      $("readerProsodyReviewerNote").value=profile?.reviewerNote||"";
+      $("readerProsodyVerified").checked=false;
+      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
+      $("readerProsodyReviewForm").hidden=true;
     }
     const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
     if(relatedRoot&&relatedItems&&window.YESAdvancedSearch?.similar){
