@@ -1,3 +1,5 @@
+import { test, expect } from "@playwright/test";
+
 
 test("external P3R exact matches are searchable but remain distinct from human confirmation", async ({ page, baseURL }) => {
   await page.goto(baseURL + "#/search");
