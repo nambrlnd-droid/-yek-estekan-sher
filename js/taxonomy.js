@@ -188,7 +188,7 @@ function refreshSummary(){
   secondLevel:[...new Set(all.map(x=>x.category2).filter(Boolean))],
   thirdLevel:[...new Set(all.map(x=>x.category3).filter(Boolean))],
   count:(level,value)=>count(level==="first"? "category1":level==="second"?"category2":"category3",value),
-  classify:item=>classify(item,false),apply:applyAll,saveReview,ready
+  classify:item=>classify(item,false),apply:applyAll,saveReview,reloadReviews:loadReviews,ready
  };
  return window.YES_TAXONOMY;
 }
