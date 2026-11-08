@@ -63,17 +63,17 @@ async function snapshotRecords(store){
 }
 async function exportData(){
  const collections=(await YESStorage.all("collections")).map(c=>{const itemSnapshots={...(c.itemSnapshots||{})};for(const id of c.itemIds||[]){const item=content().get(id);if(item)itemSnapshots[id]=item;}return {...c,itemSnapshots};});
- return {format:"yek-estekan-sher-notebook",version:3,exportedAt:new Date().toISOString(),favorites:await snapshotRecords("favorites"),notes:await snapshotRecords("notes"),history:await snapshotRecords("history"),collections,settings:await YESStorage.all("settings"),prosodyReview:await YESStorage.all("prosodyReview")};
+ return {format:"yek-estekan-sher-notebook",version:4,exportedAt:new Date().toISOString(),favorites:await snapshotRecords("favorites"),notes:await snapshotRecords("notes"),history:await snapshotRecords("history"),collections,settings:await YESStorage.all("settings"),prosodyReview:await YESStorage.all("prosodyReview"),taxonomyReview:await YESStorage.all("taxonomyReview")};
 }
 async function backup(){
  const data=await exportData();
- const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=node("a");a.href=url;a.download="yek-estekan-sher-backup.json";a.click();URL.revokeObjectURL(url);toast("نسخهٔ پشتیبان شامل بازبینی‌های عروضی آماده شد");
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=node("a");a.href=url;a.download="yek-estekan-sher-backup.json";a.click();URL.revokeObjectURL(url);toast("نسخهٔ پشتیبان شامل بازبینی‌های عروضی و موضوعی آماده شد");
 }
 async function restore(file){
  try{
   const data=JSON.parse(await file.text());if(!data||data.format!=="yek-estekan-sher-notebook")throw Error("فرمت فایل معتبر نیست");
   let restored=0;
-  for(const store of ["favorites","notes","history","collections","settings","prosodyReview"]){
+  for(const store of ["favorites","notes","history","collections","settings","prosodyReview","taxonomyReview"]){
    for(const item of (Array.isArray(data[store])?data[store]:[])){
     if(!item||!item.id)continue;
     const record={...item};
