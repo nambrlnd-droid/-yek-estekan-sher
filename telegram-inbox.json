@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-08T16:02:43.764282+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 1930,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-08T20:30:56.631961+00:00",
+  "fetched_this_run": 804,
+  "archive_cursor": null,
+  "archive_pages_this_run": 40,
   "posts": [
     {
       "id": "1",
@@ -25240,6 +25240,15 @@
       "source_url": "https://t.me/Poemestic/7677",
       "status": "needs_review",
       "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
+    },
+    {
+      "id": "7680",
+      "text": "امشب منم و جرعه ای از تنهایی \nانگار که رفته ای، ولی اینجایی \nاز خاطرهایت قلمم رقصانست \nبا شعر نشسته ام، مگر باز آیی.",
+      "author": "",
+      "date": "2026-11-08T16:44:23+00:00",
+      "source_url": "https://t.me/Poemestic/7680",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T20:29:32.806049+00:00"
     }
   ]
 }
