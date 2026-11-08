@@ -1,7 +1,7 @@
 /* V1.8 Stage 4 — composable literary search filters. */
 (function(){
 "use strict";
-const state={type:"",meter:"",rhyme:"",radif:""};
+const state={type:"",meter:"",rhyme:"",radif:""};let statusNode=null;
 const types=[["","همهٔ قالب‌ها"],["couplet","دو مصراعی"],["multi-line","چندمصراعی"],["single-line","تک‌مصراعی"],["fragment","قطعه / متن ناقص"]];
 function node(tag,attrs,text){const n=document.createElement(tag);Object.entries(attrs||{}).forEach(([k,v])=>n.setAttribute(k,v));if(text)n.textContent=text;return n;}
 function mount(){
@@ -34,6 +34,6 @@ function matches(item){
 }
 function getState(){return {...state};}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
-window.addEventListener("yes:archive-ready",async()=>{if(!window.YESProsody)return;status.textContent="در حال ساخت صف بازبینی عروضی برای آرشیو بارگذاری‌شده…";try{const result=await window.YESProsody.analyzeAll(window.YESContent?.all||window.poemEntries||[],{batchSize:400,onProgress:p=>{status.textContent="تحلیل اولیهٔ ساختار: "+p.done.toLocaleString("fa-IR")+" از "+p.total.toLocaleString("fa-IR")+" · نیازمند بازبینی: "+p.reviewRequired.toLocaleString("fa-IR");}});status.textContent="تحلیل اولیهٔ "+result.analyzed.toLocaleString("fa-IR")+" اثر انجام شد؛ "+result.reviewRequired.toLocaleString("fa-IR")+" مورد در صف بازبینی‌اند و وزن تأییدشده‌ای ثبت نشده است.";}catch(error){status.textContent="ساخت صف بازبینی کامل نشد؛ "+String(error?.message||error);}});
+window.addEventListener("yes:archive-ready",async()=>{if(!window.YESProsody)return;if(statusNode)statusNode.textContent="در حال ساخت صف بازبینی عروضی برای آرشیو بارگذاری‌شده…";try{const result=await window.YESProsody.analyzeAll(window.YESContent?.all||window.poemEntries||[],{batchSize:400,onProgress:p=>{status.textContent="تحلیل اولیهٔ ساختار: "+p.done.toLocaleString("fa-IR")+" از "+p.total.toLocaleString("fa-IR")+" · نیازمند بازبینی: "+p.reviewRequired.toLocaleString("fa-IR");}});status.textContent="تحلیل اولیهٔ "+result.analyzed.toLocaleString("fa-IR")+" اثر انجام شد؛ "+result.reviewRequired.toLocaleString("fa-IR")+" مورد در صف بازبینی‌اند و وزن تأییدشده‌ای ثبت نشده است.";}catch(error){status.textContent="ساخت صف بازبینی کامل نشد؛ "+String(error?.message||error);}});
 window.YESAdvancedSearch={matches,getState,reset(){Object.keys(state).forEach(k=>state[k]="");const root=document.getElementById("prosodyFilters");if(root)root.querySelectorAll("input,select").forEach(n=>n.value="");window.dispatchEvent(new Event("yes:advanced-search-change"));}};
 })();
