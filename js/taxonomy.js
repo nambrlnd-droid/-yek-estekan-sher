@@ -106,8 +106,15 @@ function classify(item, isPinned) {
  if(!entity)religious=matchRule(tagText,religiousRules)||matchRule(body,religiousRules);
  let general=null;
  if(!entity&&!religious){
-  for(const tag of tags){const alias=aliases.get(tag);if(alias){general=[alias,"موضوع برگرفته از برچسب موجود"];break;}}
-  if(!general)general=matchRule(tagText,generalRules)||matchRule(body,generalRules);
+  const religiousAliases=new Set(["مناسبت‌ها و آیین‌های دینی","زیارت و عتبات","دعا و مناجات","قرآن و معارف قرآنی","معارف و اعتقادات","تاریخ و سیره دینی","سوگ و مرثیه"]);
+  for(const tag of tags){
+   const alias=aliases.get(tag);
+   if(!alias)continue;
+   if(religiousAliases.has(alias))religious=[alias,/./];
+   else general=[alias,"موضوع برگرفته از برچسب موجود"];
+   break;
+  }
+  if(!general&&!religious)general=matchRule(tagText,generalRules)||matchRule(body,generalRules);
  }
  let category1,category2,category3,confidence,review="";
  if(entity){category1="مذهبی";category2=entity;const sacredSubtopic=matchRule(tagText+" "+body,sacredSubtopics);category3=sacredSubtopic?sacredSubtopic[0]:"یادکرد و معارف";confidence=tagText? "high":"medium";}
