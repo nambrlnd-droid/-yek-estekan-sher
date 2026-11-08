@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "workflow": "V1.8 stage 1 archive audit",
-  "run_id": 42450469640,
+  "run_id": 42457748928,
   "source_commit": "eb13e6380e4acf5dca4c8b39c1e4a719ec90d595",
   "manifest_total": 56880,
   "decoded_total": 56880,
@@ -82,6 +82,8 @@
   "notes": [
     "No source poem or poet metadata was modified.",
     "Duplicate-text detection reported no matches within the nine compressed archive shards.",
-    "This report does not assert cross-source deduplication across separately loaded JavaScript collections or the runtime external loader."
-  ]
+    "This archive-only result is complemented by docs/V1.8-STAGE-1-SOURCE-RESULT.json for legacy and dynamic sources.",
+    "The runtime loader preserves uniquely identified archive records even when normalized text repeats."
+  ],
+  "audit_commit": "949dfaa8fd442853f19aa1202d3c1371432a1677"
 }
