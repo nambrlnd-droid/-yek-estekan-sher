@@ -61,6 +61,9 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
       duplicateIdsAcrossSources: duplicateIds,
       duplicateBodyAnnotations: shard.filter(x => x.normalizedBodyDuplicate).length,
       missingTaxonomyInReaderContent: missingTaxonomy,
+      taxonomySummaryTotal: window.YES_TAXONOMY?.total || 0,
+      taxonomySummaryReview: window.YES_TAXONOMY?.review || 0,
+      readerContentTotal: content.length,
       firstLevelCounts: ["مذهبی", "عمومی"].map(label => ({
         label,
         count: content.filter(x => x.category1 === label).length
@@ -100,4 +103,6 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
   expect(report.legacyPoems).toBeGreaterThan(0);
   expect(report.pinnedRecords).toBe(19);
   expect(report.missingTaxonomyInReaderContent).toBe(0);
+  expect(report.taxonomySummaryTotal).toBe(report.readerContentTotal);
+  expect(report.taxonomySummaryReview).toBe(report.reviewQueue);
 });
