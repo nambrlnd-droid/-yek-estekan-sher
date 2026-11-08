@@ -43,7 +43,7 @@
       const related=window.YESAdvancedSearch.similar(item,items(),4);
       related.forEach(({item:match,reason})=>{
         const button=document.createElement("button");button.type="button";button.className="reader-related-item";
-        const title=document.createElement("strong");title.textContent=match.title||String(match.body||"").split("\\n")[0]||"اثر مشابه";
+        const title=document.createElement("strong");title.textContent=match.title||String(match.body||"").split("\n")[0]||"اثر مشابه";
         const meta=document.createElement("span");meta.textContent=[match.author,reason].filter(Boolean).join(" · ");
         button.append(title,meta);button.addEventListener("click",()=>window.YESReader.open(match.id));relatedItems.append(button);
       });
