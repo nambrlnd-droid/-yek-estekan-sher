@@ -106,23 +106,28 @@ def read_corpus() -> tuple[dict[tuple[str, str], Counter], dict[str, str]]:
 
 def classify_record(record: dict, pair_labels: dict[tuple[str, str], Counter], prosody_map: dict[str, str], record_type: str):
     lines = [line.strip() for line in str(record.get("body") or "").splitlines() if line.strip()]
-    votes: Counter = Counter()
-    exact_pairs = 0
-    for index in range(0, len(lines) - 1, 2):
-        key = (norm(lines[index]), norm(lines[index + 1]))
-        labels = pair_labels.get(key)
-        if not labels:
-            continue
-        total_votes = sum(labels.values())
-        meter_key, count = labels.most_common(1)[0]
-        if count / total_votes < 0.9:
-            continue
-        votes[meter_key] += 1
-        exact_pairs += 1
-    if not votes:
+    alignments = []
+    for offset in (0, 1):
+        votes: Counter = Counter()
+        exact_pairs = 0
+        for index in range(offset, len(lines) - 1, 2):
+            key = (norm(lines[index]), norm(lines[index + 1]))
+            labels = pair_labels.get(key)
+            if not labels:
+                continue
+            total_votes = sum(labels.values())
+            meter_key, count = labels.most_common(1)[0]
+            if count / total_votes < 0.9:
+                continue
+            votes[meter_key] += 1
+            exact_pairs += 1
+        if votes:
+            meter_key, count = votes.most_common(1)[0]
+            support = count / sum(votes.values())
+            alignments.append((exact_pairs, support, offset, meter_key))
+    if not alignments:
         return None, False
-    meter_key, count = votes.most_common(1)[0]
-    support = count / sum(votes.values())
+    exact_pairs, support, _, meter_key = max(alignments, key=lambda item: (item[0], item[1], -item[2]))
     if support < 0.8:
         return None, True
     prosody_label = prosody_map.get(str(meter_key), str(meter_key))
@@ -212,7 +217,7 @@ def main() -> None:
         "datasetUrl": CORPUS_REPOSITORY,
         "datasetRevision": CORPUS_REVISION,
         "license": "MIT and CC BY 4.0",
-        "matchingMethod": "exact adjacent hemistich-pair text after Unicode/Persian-character normalization; no fuzzy matching",
+        "matchingMethod": "exact adjacent hemistich-pair text after Unicode/Persian-character normalization; both possible two-line offsets checked; no fuzzy matching",
         "corpusRows": sum(sum(labels.values()) for labels in pair_labels.values()),
         "uniqueExactCoupletKeys": len(pair_labels),
         "prosodyDefinitions": len(prosody_map),
