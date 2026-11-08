@@ -41,7 +41,7 @@ function status(message){const node=document.getElementById("archiveStatus");if(
 function bodyKey(s){return String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();}
 function initDedup(target){
  if(!seenIds)seenIds=new Set(target.map(x=>x.id).filter(Boolean));
- if(!seenBodies)seenBodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));
+ if(!seenBodies){seenBodies=new Map();for(const item of target){const key=bodyKey(item.body);if(key&&!seenBodies.has(key))seenBodies.set(key,item.id);}}
  if(window.YESContent&&!seenContentIds)seenContentIds=new Set(window.YESContent.all.map(x=>x.id));
 }
 async function parseArchive(bytes){
@@ -81,8 +81,16 @@ async function loadCategory(name){
   initDedup(target);
   for(const item of records){
    const key=bodyKey(item.body);
-   if(!item.id||seenIds.has(item.id)||!key||seenBodies.has(key))continue;
-   seenIds.add(item.id);seenBodies.add(key);target.push(item);
+   if(!item.id||seenIds.has(item.id)||!key)continue;
+   const duplicateOf=seenBodies.get(key);
+   seenIds.add(item.id);
+   if(duplicateOf){
+    // Keep every uniquely identified source record. A repeated normalized
+    // body is an audit annotation, not a reason to silently drop an item.
+    item.normalizedBodyDuplicate=true;
+    item.normalizedBodyDuplicateOf=duplicateOf;
+   }else seenBodies.set(key,item.id);
+   target.push(item);
   }
   if(window.YESContent){
    for(const item of records){
