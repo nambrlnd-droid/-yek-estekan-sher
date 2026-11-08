@@ -24,7 +24,7 @@ test("v1.8 taxonomy assigns a three-level path without changing source text or t
   });
   expect(result.category1).toBe("مذهبی");
   expect(result.category2).toContain("امیرالمؤمنین");
-  expect(result.category3).toBeTruthy();
+  expect(result.category3).toBe("عدالت و سیره");
   expect(result.version).toBe("1.8.0");
   expect(result.unchanged).toBeTruthy();
 });
@@ -60,4 +60,17 @@ test("v1.8 library exposes third-level subtopic browsing", async ({ page, baseUR
   await page.goto(baseURL + "#/library");
   await expect(page.locator(".v15-library-group h3").filter({ hasText: "زیرموضوع‌ها" })).toBeVisible();
   await expect(page.locator(".v15-library-group h3").filter({ hasText: "گنجینهٔ موضوعی" })).toBeVisible();
+});
+
+
+test("v1.8 sacred-person branches distinguish mourning from praise", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const item = { id: "taxonomy-test-mourning", section: "poems", tags: ["کربلا و عاشورا"], body: "در عزای حسین اشک از دیده روان شد" };
+    window.YES_TAXONOMY.classify(item);
+    return { first: item.category1, person: item.category2, subtopic: item.category3 };
+  });
+  expect(result.first).toBe("مذهبی");
+  expect(result.person).toContain("امام حسین");
+  expect(result.subtopic).toBe("شهادت و سوگ");
 });
