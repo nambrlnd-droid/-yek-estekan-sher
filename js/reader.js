@@ -124,7 +124,7 @@
         const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
         const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan:$("readerProsodyArkan").value.trim(),scansion,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
         await window.YESStorage.put("prosodyReview",record);
-        const item=content().get(currentId);if(item)item.prosody=record;
+        const item=content().get(currentId);if(item){item.prosody=record;if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;}
         $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";
         window.dispatchEvent(new CustomEvent("yes:prosody-updated",{detail:{id:currentId,record}}));
         notify("بازبینی عروضی ذخیره شد");
