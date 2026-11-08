@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: v18-stage3-5-${{ github.event.pull_request.number || github.ref }}
+  group: v18-stage3-5-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 permissions:
