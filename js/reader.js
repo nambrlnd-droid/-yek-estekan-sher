@@ -60,7 +60,8 @@
       const imported=profile?.status==="external_source_matched";
       const sourceLabel="پیکرهٔ عروضی بیرونی";
       const scansionLabel=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان":"تقطیع مصراع‌ها";
-      const provenanceNote=profile?.sourceProvenance||profile?.enrichedSourceProvenance||"";
+      const rawProvenanceNote=profile?.sourceProvenance||profile?.enrichedSourceProvenance||"";
+      const provenanceNote=rawProvenanceNote.startsWith("dataset documentation")?"در فایل CSV منشأ هر ردیف مشخص نشده؛ مستندات مجموعه می‌گوید بخشی از وزن/تقطیع‌ها بازسازی‌شده‌اند.":rawProvenanceNote;
       const scansionWarning=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید. ":"";
       const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified||imported?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):imported?(profile.bahr||"در منبع جداگانه تعیین نشده"):"تأیید نشده"],["ارکان",verified||imported?(profile.arkan||"ثبت نشده"):"تأیید نشده"],[scansionLabel,verified||imported?(profile.scansion||"در فایل منبع موجود نیست"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":imported?"تطبیق دقیق با "+sourceLabel+"؛ بدون بازبینی انسانی":"در انتظار بازبینی"]];
       if(imported&&provenanceNote)rows.push(["محدودیت منبع",provenanceNote]);
