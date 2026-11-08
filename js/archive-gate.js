@@ -29,6 +29,7 @@ async function boot(){
  if(retry())retry().disabled=true;
  update("در حال دریافت و بررسی همهٔ دسته‌های آرشیو؛ تا پایان این مرحله سایت باز نمی‌شود.");
  try{
+  if(window.__YES_TEST_FORCE_ARCHIVE_ERROR===true)throw new Error("خطای آزمایشی دریافت آرشیو");
   if(window.__YES_TEST_SKIP_ARCHIVE_GATE===true){
    window.__YES_ARCHIVE_DATA_READY=true;
    window.dispatchEvent(new Event("yes:archive-data-ready"));
