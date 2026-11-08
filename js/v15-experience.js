@@ -47,6 +47,24 @@ function renderTopics(root){
   });wrap.append(group);
  });root.append(wrap);
 }
+async function showTopic(name,isArchive,field="category2"){
+ activeTopic=name;libraryMode="topic";renderLibrary();
+ const result=$("v15LibraryResults"),title=$("v15LibraryTitle");
+ title.textContent=name;result.replaceChildren();
+ if(isArchive){
+  const status=document.createElement("p");status.className="v15-empty";status.textContent="در حال بارگذاری این بخش از گنجینه…";result.append(status);
+  try{
+   await window.YESArchive.loadCategory(name);
+   const items=window.YESArchive.items(name)||[];
+   renderItems(result,items,"در این دسته اثری در دسترس نیست.");
+  }catch(e){
+   result.replaceChildren();const p=document.createElement("p");p.className="v15-empty";p.textContent="بارگذاری این دسته انجام نشد؛ اتصال را بررسی و دوباره تلاش کنید.";result.append(p);
+  }
+ }else{
+  const items=allItems().filter(x=>norm(x[field])===norm(name));
+  renderItems(result,items,"در محتوای بارگذاری‌شده اثری با این موضوع پیدا نشد.");
+ }
+}
 function renderPoets(root){
  const items=allItems(),counts=new Map();
  items.forEach(x=>{const name=String(x.author||"").trim();if(name)counts.set(name,(counts.get(name)||0)+1);});
