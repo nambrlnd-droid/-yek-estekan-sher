@@ -86,6 +86,7 @@ async function restore(file){
     await YESStorage.put(store,record);restored++;
    }
   }
+  if(Array.isArray(data.taxonomyReview))await window.YES_TAXONOMY?.reloadReviews?.();
   toast(restored.toLocaleString("fa-IR")+" رکورد بازیابی شد");await render();
  }catch(e){toast("فایل پشتیبان معتبر نیست یا بازیابی نشد");}
 }
