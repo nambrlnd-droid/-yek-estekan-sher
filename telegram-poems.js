@@ -18446,6 +18446,14 @@ const incoming=[
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,'').toLowerCase();
 const list=window.poemEntries||(window.poemEntries=[]);
 const seen=new Set(list.map(x=>norm(x.body)));
-for(const item of incoming){const k=norm(item.body);if(!k||seen.has(k))continue;seen.add(k);list.push(item);}
+let added=0,duplicateBodySkipped=0,emptyBodySkipped=0;
+for(const item of incoming){
+ const k=norm(item.body);
+ if(!k){emptyBodySkipped++;continue;}
+ if(seen.has(k)){duplicateBodySkipped++;continue;}
+ seen.add(k);list.push(item);added++;
+}
 window.telegramArchiveImported=incoming.length;
+window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};
+window.YES_SOURCE_AUDIT["telegram-poems.js"]={sourceRows:incoming.length,added,duplicateBodySkipped,emptyBodySkipped};
 })();
