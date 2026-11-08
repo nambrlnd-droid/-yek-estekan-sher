@@ -52,6 +52,23 @@ async function verifyShard(bytes,expected,path){
  if(actual.toLowerCase()!==String(expected).toLowerCase())throw Error("اعتبارسنجی SHA-256 فایل آرشیو ناموفق بود: "+path);
  return true;
 }
+async function verifiedShard(meta){
+ let response=await archiveFetch(meta.file),bytes=await response.arrayBuffer();
+ try{await verifyShard(bytes,meta.sha256,meta.file);return bytes;}
+ catch(firstError){
+  // A corrupted cached response must not poison every subsequent retry.
+  try{
+   if("caches"in window){
+    const cache=await caches.open(ARCHIVE_CACHE);
+    const url=new URL(base+meta.file,location.href).href;
+    await cache.delete(new Request(url,{credentials:"same-origin"}));
+   }
+  }catch(error){}
+  response=await archiveFetch(meta.file);bytes=await response.arrayBuffer();
+  await verifyShard(bytes,meta.sha256,meta.file);
+  return bytes;
+ }
+}
 async function parseArchive(bytes){
  if(typeof Worker!=="undefined"){
   try{
@@ -77,9 +94,7 @@ async function loadCategory(name){
   const categoryIndex=m.categories.findIndex(x=>x.name===meta.name)+1;
   status("در حال دریافت «"+meta.name+"»؛ "+meta.count.toLocaleString("fa-IR")+" اثر…");
   window.dispatchEvent(new CustomEvent("yes:archive-loading",{detail:{category:meta.name,categoryIndex,categoryTotal:m.categories.length}}));
-  const response=await archiveFetch(meta.file);
-  const bytes=await response.arrayBuffer();
-  await verifyShard(bytes,meta.sha256,meta.file);
+  const bytes=await verifiedShard(meta);
   const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
   // Keep the source shard category explicit so the hierarchical taxonomy can
@@ -138,7 +153,7 @@ async function loadAll(){
 }
 function loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0);}
 window.YESArchive={
- manifest,loadCategory,loadAll,verifyShard,
+ manifest,loadCategory,loadAll,verifyShard,verifiedShard,
  items(name){const key=[...categoryRecords.keys()].find(x=>norm(x)===norm(name));return key?categoryRecords.get(key):[];},
  async randomItems(count=10,categoryName=null){
   const m=await manifest();
