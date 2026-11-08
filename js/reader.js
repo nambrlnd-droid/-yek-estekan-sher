@@ -60,6 +60,7 @@
       const imported=profile?.status==="external_source_matched";
       const sourceLabel=profile?.sourceDataset?.includes("P3R")?"P3R":profile?.sourceDataset?.includes("persian-poetry-meters")?"پیکرهٔ وزن‌های گنجور":"پیکرهٔ بیرونی";
       const scansionLabel=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان":"تقطیع مصراع‌ها";
+      const provenanceNote=profile?.sourceProvenance||profile?.enrichedSourceProvenance||"";
       const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified||imported?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):imported?(profile.bahr||"در منبع جداگانه تعیین نشده"):"تأیید نشده"],["ارکان",verified||imported?(profile.arkan||"ثبت نشده"):"تأیید نشده"],[scansionLabel,verified||imported?(profile.scansion||"در فایل منبع موجود نیست"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":imported?"تطبیق دقیق با "+sourceLabel+"؛ بدون بازبینی انسانی":"در انتظار بازبینی"]];
       rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
       if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
@@ -70,7 +71,7 @@
       $("readerProsodyScansion").value=profile?.scansionType==="arkan-signs"?"":profile?.scansion||"";
       $("readerProsodyReviewerNote").value=profile?.reviewerNote||"";
       $("readerProsodyVerified").checked=false;
-      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":imported?"وزن از تطبیق دقیق با پیکرهٔ منبع وارد شده؛ این داده بازبینی انسانی مستقل نشده است. نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید.":"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
+      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":imported?"وزن از تطبیق دقیق با پیکرهٔ منبع وارد شده؛ این داده بازبینی انسانی مستقل نشده است. نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید. "+provenanceNote:"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
       $("readerProsodyReviewForm").hidden=true;
     }
     const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
