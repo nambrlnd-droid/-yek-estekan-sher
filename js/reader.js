@@ -39,6 +39,17 @@
     (Array.isArray(item.tags)?item.tags:[]).forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
     const metadata=$("readerMetadata");metadata.replaceChildren();
     [["طبقهٔ اصلی",item.category1],["موضوع",item.category2],["زیرموضوع",item.category3]].forEach(([label,value])=>{if(value){const span=document.createElement("span");span.textContent=label+" · "+value;metadata.append(span);}});
+    const taxonomyRoot=$("readerTaxonomyReview");
+    if(taxonomyRoot){
+      taxonomyRoot.hidden=false;
+      $("readerTaxonomyCategory1").value=item.category1||"عمومی";
+      $("readerTaxonomyCategory2").value=item.category2||"";
+      $("readerTaxonomyCategory3").value=item.category3||"";
+      $("readerTaxonomySecondary").value=(item.category2Alternates||[]).join("، ");
+      $("readerTaxonomyVerified").checked=false;
+      $("readerTaxonomyReviewStatus").textContent=item.taxonomyConfidence==="human-reviewed"?"طبقه‌بندی این اثر در همین مرورگر بازبینی و ذخیره شده است.":item.taxonomyReview||"در صورت نیاز می‌توانید موضوعات را اصلاح کنید.";
+      $("readerTaxonomyReviewForm").hidden=true;
+    }
     const prosodyRoot=$("readerProsody"),prosodyDetails=$("readerProsodyDetails");
     if(prosodyRoot&&prosodyDetails){
       prosodyRoot.hidden=false;prosodyDetails.replaceChildren();
@@ -115,6 +126,22 @@
     $("readerLarger").onclick=()=>{fontSize=Math.min(30,fontSize+1);$("readerBody").style.fontSize=fontSize+"px";};
     $("readerPrevious").onclick=()=>goRelative(-1);$("readerNext").onclick=()=>goRelative(1);
     $("readerSaveNote").onclick=async()=>{try{await window.YESReader.saveNote(currentId,$("readerNote").value);notify("یادداشت ذخیره شد");}catch(e){notify("ذخیرهٔ یادداشت ممکن نشد");}};
+    $("readerTaxonomyReviewToggle").onclick=()=>{$("readerTaxonomyReviewForm").hidden=!$("readerTaxonomyReviewForm").hidden;};
+    $("readerTaxonomySave").onclick=async()=>{
+      if(!$("readerTaxonomyVerified").checked){$("readerTaxonomyReviewStatus").textContent="برای ثبت بازبینی انسانی، ابتدا بررسی شخصی را تأیید کنید.";return;}
+      try{
+        await window.YES_TAXONOMY.saveReview(currentId,{
+          category1:$("readerTaxonomyCategory1").value,
+          category2:$("readerTaxonomyCategory2").value,
+          category3:$("readerTaxonomyCategory3").value,
+          secondaryTopics:$("readerTaxonomySecondary").value.split(/[،,]/)
+        });
+        const item=content().get(currentId),metadata=$("readerMetadata");metadata.replaceChildren();
+        [["طبقهٔ اصلی",item.category1],["موضوع",item.category2],["زیرموضوع",item.category3]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;metadata.append(span);});
+        $("readerTaxonomyReviewStatus").textContent="بازبینی موضوعی ذخیره شد؛ در همین مرورگر و نسخهٔ پشتیبان قابل بازیابی است.";
+        notify("طبقه‌بندی بازبینی و ذخیره شد");
+      }catch(error){$("readerTaxonomyReviewStatus").textContent="ذخیرهٔ بازبینی ممکن نشد: "+String(error?.message||error);}
+    };
     $("readerProsodyReviewToggle").onclick=()=>{$("readerProsodyReviewForm").hidden=!$("readerProsodyReviewForm").hidden;};
     $("readerProsodySave").onclick=async()=>{
       const meter=$("readerProsodyMeter").value.trim(),bahr=$("readerProsodyBahr").value.trim(),arkan=$("readerProsodyArkan").value.trim(),scansion=$("readerProsodyScansion").value.trim();
