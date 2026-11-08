@@ -48,3 +48,28 @@ test("archive loader rejects a shard whose SHA-256 does not match the manifest",
   expect(result.valid).toBeTruthy();
   expect(result.rejected).toBeTruthy();
 });
+
+
+test("corrupt cached archive shard is evicted and fetched again before acceptance", async ({ page, baseURL }) => {
+  const shardPath = "v18-cache-retry-test.gz";
+  const validText = "valid archive bytes";
+  await page.route("**/data/poetry-archive/" + shardPath, route => route.fulfill({ status: 200, body: validText }));
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(async ({ shardPath, validText }) => {
+    const cache = await caches.open("yes-poetry-archive-v1");
+    const url = new URL("./data/poetry-archive/" + shardPath, location.href).href;
+    const request = new Request(url, { credentials: "same-origin" });
+    await cache.put(request, new Response("tampered cached bytes"));
+    const bytes = new TextEncoder().encode(validText).buffer;
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    const sha256 = Array.from(new Uint8Array(digest), value => value.toString(16).padStart(2, "0")).join("");
+    const verified = await window.YESArchive.verifiedShard({ file: shardPath, sha256 });
+    const cached = await cache.match(request);
+    return {
+      text: new TextDecoder().decode(verified),
+      cachedText: cached ? await cached.text() : null
+    };
+  }, { shardPath, validText });
+  expect(result.text).toBe(validText);
+  expect(result.cachedText).toBe(validText);
+});
