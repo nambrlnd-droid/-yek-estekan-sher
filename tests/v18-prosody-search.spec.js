@@ -218,3 +218,19 @@ test("taxonomy review filter exposes uncertain classifications without hiding ot
   expect(result.classifiedMatch).toBeFalsy();
   expect(result.highMatch).toBeTruthy();
 });
+
+
+test("notebook backup preserves human-reviewed prosody records", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(async () => {
+    const record = { id: "backup-prosody-review", status: "confirmed", meter: "فعولن", bahr: "متقارب", arkan: "فعولن × ۳، فعل", scansion: "U ـ ـ | U ـ ـ" };
+    await window.YESStorage.put("prosodyReview", record);
+    const backup = await window.YESNotebook.exportData();
+    await window.YESStorage.remove("prosodyReview", record.id);
+    const saved = backup.prosodyReview.find(item => item.id === record.id);
+    return { version: backup.version, savedStatus: saved?.status, savedMeter: saved?.meter };
+  });
+  expect(result.version).toBe(3);
+  expect(result.savedStatus).toBe("confirmed");
+  expect(result.savedMeter).toBe("فعولن");
+});
