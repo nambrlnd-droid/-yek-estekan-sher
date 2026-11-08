@@ -54,3 +54,10 @@ test("v1.8 taxonomy retains archive provenance and maps broad archive classes", 
   expect(result.source).toBe("حکمی و اخلاقی");
   expect(result.review).toContain("بازبینی");
 });
+
+
+test("v1.8 library exposes third-level subtopic browsing", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/library");
+  await expect(page.locator(".v15-library-group h3").filter({ hasText: "زیرموضوع‌ها" })).toBeVisible();
+  await expect(page.locator(".v15-library-group h3").filter({ hasText: "گنجینهٔ موضوعی" })).toBeVisible();
+});
