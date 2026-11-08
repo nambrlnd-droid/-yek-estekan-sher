@@ -115,6 +115,21 @@
     $("readerLarger").onclick=()=>{fontSize=Math.min(30,fontSize+1);$("readerBody").style.fontSize=fontSize+"px";};
     $("readerPrevious").onclick=()=>goRelative(-1);$("readerNext").onclick=()=>goRelative(1);
     $("readerSaveNote").onclick=async()=>{try{await window.YESReader.saveNote(currentId,$("readerNote").value);notify("یادداشت ذخیره شد");}catch(e){notify("ذخیرهٔ یادداشت ممکن نشد");}};
+    $("readerProsodyReviewToggle").onclick=()=>{$("readerProsodyReviewForm").hidden=!$("readerProsodyReviewForm").hidden;};
+    $("readerProsodySave").onclick=async()=>{
+      const meter=$("readerProsodyMeter").value.trim(),bahr=$("readerProsodyBahr").value.trim(),scansion=$("readerProsodyScansion").value.trim();
+      if(!$("readerProsodyVerified").checked){$("readerProsodyReviewStatus").textContent="برای ثبت به‌عنوان تأییدشده، ابتدا بازبینی شخصی را تأیید کنید.";return;}
+      if(!meter||!bahr||!scansion){$("readerProsodyReviewStatus").textContent="ثبت وزن، بحر و تقطیع برای تأیید الزامی است.";return;}
+      try{
+        const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
+        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan:$("readerProsodyArkan").value.trim(),scansion,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
+        await window.YESStorage.put("prosodyReview",record);
+        const item=content().get(currentId);if(item)item.prosody=record;
+        $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";
+        window.dispatchEvent(new CustomEvent("yes:prosody-updated",{detail:{id:currentId,record}}));
+        notify("بازبینی عروضی ذخیره شد");
+      }catch(error){$("readerProsodyReviewStatus").textContent="ذخیرهٔ بازبینی ممکن نشد: "+String(error?.message||error);}
+    };
     $("readerAddCollection").onclick=async()=>{try{const cols=await window.YESStorage.all("collections");if(!cols.length){notify("ابتدا در دفتر شخصی یک مجموعه بسازید");return;}const choice=prompt("شناسهٔ مجموعه را وارد کنید:\n"+cols.map(c=>c.id+" — "+c.title).join("\n"));const col=cols.find(c=>c.id===choice);if(!col){notify("مجموعه پیدا نشد");return;}col.itemIds=col.itemIds||[];if(!col.itemIds.includes(currentId))col.itemIds.push(currentId);col.itemSnapshots=col.itemSnapshots||{};col.itemSnapshots[currentId]=content().get(currentId);await window.YESStorage.put("collections",col);notify("به مجموعه افزوده شد");}catch(e){notify("افزودن به مجموعه ممکن نشد");}};
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("reader-open")){if(window.YESPages?.backFromReader)window.YESPages.backFromReader();else window.YESRouter.go("home");}});
   },{once:true});
