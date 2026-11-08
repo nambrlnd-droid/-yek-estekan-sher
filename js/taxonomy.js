@@ -218,7 +218,7 @@ async function loadReviews(){
 let resolveReady;
 ready=new Promise(resolve=>{resolveReady=resolve;});
 window.addEventListener("yes:storage-ready",()=>{loadReviews().then(resolveReady);},{once:true});
-window.YES_TAXONOMY={apply:applyAll,classify:item=>classify(item,false),saveReview,ready};
+window.YES_TAXONOMY={apply:applyAll,classify:item=>classify(item,false),saveReview,reloadReviews:loadReviews,ready};
 applyAll();
 window.addEventListener("yes:web-poems-loaded",applyAll);
 window.addEventListener("yes:archive-loaded",event=>{
