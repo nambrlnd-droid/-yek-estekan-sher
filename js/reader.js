@@ -37,6 +37,18 @@
     $("readerKicker").textContent=item.type==="text"?"متن برگزیده":"از کتابخانهٔ اشعار";
     const tags=$("readerTags");tags.replaceChildren();
     item.tags.forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
+    const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
+    if(relatedRoot&&relatedItems&&window.YESAdvancedSearch?.similar){
+      relatedItems.replaceChildren();
+      const related=window.YESAdvancedSearch.similar(item,items(),4);
+      related.forEach(({item:match,reason})=>{
+        const button=document.createElement("button");button.type="button";button.className="reader-related-item";
+        const title=document.createElement("strong");title.textContent=match.title||String(match.body||"").split("\\n")[0]||"اثر مشابه";
+        const meta=document.createElement("span");meta.textContent=[match.author,reason].filter(Boolean).join(" · ");
+        button.append(title,meta);button.addEventListener("click",()=>window.YESReader.open(match.id));relatedItems.append(button);
+      });
+      relatedRoot.hidden=related.length===0;
+    }
     $("readerFavorite").textContent=await favoriteState(id)?"♥ نشان‌شده":"♡ نشان‌کردن";
     try{const note=await window.YESStorage.get("notes",id);$("readerNote").value=note?.text||"";}catch(e){$("readerNote").value="";}
     const list=items(),index=list.findIndex(x=>x.id===id);
