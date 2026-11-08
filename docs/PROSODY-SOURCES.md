@@ -32,7 +32,7 @@ A second source is used only as an exact full-poem match or to enrich a P3R reco
 
 The dataset provides the full poem text, Persian meter pattern, Arabic meter name, diacritized Persian feet, and `meter_signs`. Only exact normalized full-poem matches are imported. If a P3R match and this source disagree on the meter pattern, the P3R record is retained without enrichment and the conflict is counted. If the P3R source has no usable match, the exact full-poem record can be used as a separately identified external match.
 
-The `meter_signs` field represents quantitative signs by foot/arkan, not an independently verified phonetic scansion for each individual hemistich. The reader therefore labels it as «نشانه‌های کمّی ارکان», not as line-by-line scansion. Records from this dataset are not treated as independently human-reviewed by this project.
+The `meter_signs` field represents quantitative signs by foot/arkan, not an independently verified phonetic scansion for each individual hemistich. The reader therefore labels it as «نشانه‌های کمّی ارکان», not as line-by-line scansion. The CSV does not include a per-row field distinguishing original Ganjoor values from reconstructed values; the dataset documentation states that some missing scansion values were reconstructed. This uncertainty is carried into the record and displayed in the poem details. Records from this dataset are not treated as independently human-reviewed by this project.
 
 
 ## Current archive match report
