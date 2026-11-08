@@ -1,6 +1,19 @@
 name: V1.8 stages 3-5 prosody, search and independent pages
 
 on:
+  push:
+    branches: [feature/prosody-corpus-import]
+    paths:
+      - "index.html"
+      - "js/**"
+      - "css/**"
+      - "data/poetry-archive/**"
+      - "tests/**"
+      - "poems*.js"
+      - "pinned.js"
+      - "sw.js"
+      - "package.json"
+      - ".github/workflows/v18-stage3-4.yml"
   pull_request:
     branches: [main, feature/v18-stage-1-audit]
   workflow_dispatch:
