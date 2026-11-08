@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 
 test.beforeEach(async ({ page }, testInfo) => {
-  if (testInfo.title !== "full archive loads in the background without blocking the site") {
+  if (testInfo.title !== "full archive gate stays visible until every shard is loaded") {
     await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
   }
 });
@@ -156,15 +156,22 @@ test("Escape returns to the page from which a poem was opened", async ({ page })
 });
 
 
-test("full archive loads in the background without blocking the site", async ({ page }) => {
-  test.setTimeout(240000);
+test("full archive gate stays visible until every shard is loaded", async ({ page }) => {
+  test.setTimeout(300000);
   await page.addInitScript(() => { Object.defineProperty(window, "YESWebPoemsReady", { configurable: true, get: () => new Promise(() => {}), set: () => {} }); });
   await page.goto("./");
+  await expect(page.locator("#archiveBootScreen")).toBeVisible();
+  await expect(page.locator("#archiveBootProgress")).toBeAttached();
+  await page.waitForFunction(() =>
+    window.YESArchive?.loadedCount() === 56880
+    && window.__YES_ARCHIVE_READY === true
+    && window.YESArchiveGate?.isReady() === true,
+    null,
+    { timeout: 240000 }
+  );
+  await expect(page.locator("#archiveBootScreen")).toBeHidden();
   await expect(page.locator(".site-header")).toBeVisible();
   await expect(page.locator("#homePageView")).toBeVisible();
-  await expect(page.locator("#archiveBoot")).toHaveCount(0);
-  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 210000 });
-  await expect(page.locator(".site-header")).toBeVisible();
   await expect.poll(() => page.evaluate(() => {
     const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
     const poems = window.poemEntries.filter(x => x.section === "poems").length;
@@ -176,7 +183,13 @@ test("full archive loads in the background without blocking the site", async ({ 
   expect(await page.evaluate(() => window.YESArchive.loadedCategories())).toBe(9);
   await page.context().setOffline(true);
   await page.reload();
+  await expect(page.locator("#archiveBootScreen")).toBeVisible();
+  await page.waitForFunction(() =>
+    window.YESArchive?.loadedCount() === 56880 && window.__YES_ARCHIVE_READY === true,
+    null,
+    { timeout: 120000 }
+  );
+  await expect(page.locator("#archiveBootScreen")).toBeHidden();
   await expect(page.locator(".site-header")).toBeVisible();
-  await expect(page.locator("#archiveBoot")).toHaveCount(0);
   await page.context().setOffline(false);
 });

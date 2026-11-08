@@ -1,0 +1,44 @@
+{
+  "sources": [
+    {
+      "name": "P3R — Prosody Recognition in Persian Poetry",
+      "url": "https://github.com/m-shahrestani/Prosody-Recognition-in-Persian-Poetry",
+      "revision": "4a2dcea81967778fc42140dab57e45365723bf7d",
+      "license": "MIT and CC BY 4.0",
+      "rows": 1339689,
+      "uniqueExactCoupletKeys": 1336695,
+      "meterDefinitions": 177
+    },
+    {
+      "name": "cnababaie/persian-poetry-meters",
+      "url": "https://huggingface.co/datasets/cnababaie/persian-poetry-meters",
+      "revision": "408b79e",
+      "license": "Apache-2.0",
+      "rows": 118802,
+      "uniqueExactFullPoemKeys": 118410,
+      "conflictingFullPoemKeysExcluded": 7,
+      "sha256": "42830c43cfcd758debe88eefe8b8578d553a3218d940c60d7917447ba7075cf1"
+    }
+  ],
+  "matchingMethod": "P3R exact adjacent hemistich-pair text with both possible two-line offsets; secondary dataset exact full-poem text; Unicode/Persian normalization only; no fuzzy matching",
+  "archiveRecords": 56880,
+  "matchedArchiveRecords": 53344,
+  "unmatchedArchiveRecords": 3536,
+  "archiveMatchedByP3R": 52808,
+  "archiveEnrichedByFullPoemDataset": 41477,
+  "archiveMatchedByFullPoemOnly": 536,
+  "archiveP3RAmbiguous": 19,
+  "archiveRecordsShadowedByStaticSiteIds": 0,
+  "staticSiteSourceRecords": 2214,
+  "matchedStaticSiteSourceRecords": 560,
+  "staticSiteMatchedByP3R": 559,
+  "staticSiteEnrichedByFullPoemDataset": 31,
+  "staticSiteMatchedByFullPoemOnly": 1,
+  "unmatchedStaticSiteSourceRecords": 1654,
+  "ambiguousStaticSiteRecordsExcluded": 0,
+  "totalMatchedSiteRecords": 53904,
+  "importedStatus": "external_source_matched (not independently human-reviewed in this project)",
+  "bahr": "P3R parenthetical definitions and full-poem dataset arabic_meter field; absent values remain empty",
+  "scansion": "full-poem dataset meter_signs are per-arkan signs, not line-by-line phonetic scansion; P3R-only records have no scansion",
+  "output": "data/poetry-archive/prosody-index.json.gz"
+}

@@ -57,17 +57,24 @@
       if(!profile&&window.YESProsody)profile=window.YESProsody.analyze(item);
       const grid=document.createElement("div");grid.className="reader-prosody-grid";
       const verified=profile?.status==="confirmed";
-      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":"در انتظار بازبینی"]];
+      const imported=profile?.status==="external_source_matched";
+      const sourceLabel="پیکرهٔ عروضی بیرونی";
+      const scansionLabel=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان":"تقطیع مصراع‌ها";
+      const rawProvenanceNote=profile?.sourceProvenance||profile?.enrichedSourceProvenance||"";
+      const provenanceNote=rawProvenanceNote.startsWith("dataset documentation")?"در فایل CSV منشأ هر ردیف مشخص نشده؛ مستندات مجموعه می‌گوید بخشی از وزن/تقطیع‌ها بازسازی‌شده‌اند.":rawProvenanceNote;
+      const scansionWarning=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید. ":"";
+      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified||imported?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):imported?(profile.bahr||"در منبع جداگانه تعیین نشده"):"تأیید نشده"],["ارکان",verified||imported?(profile.arkan||"ثبت نشده"):"تأیید نشده"],[scansionLabel,verified||imported?(profile.scansion||"در فایل منبع موجود نیست"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":imported?"تطبیق دقیق با "+sourceLabel+"؛ بدون بازبینی انسانی":"در انتظار بازبینی"]];
+      if(imported&&provenanceNote)rows.push(["محدودیت منبع",provenanceNote]);
       rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
       if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
       prosodyDetails.append(grid);
       $("readerProsodyMeter").value=profile?.meter||"";
       $("readerProsodyBahr").value=profile?.bahr||"";
       $("readerProsodyArkan").value=profile?.arkan||"";
-      $("readerProsodyScansion").value=profile?.scansion||"";
+      $("readerProsodyScansion").value=profile?.scansionType==="arkan-signs"?"":profile?.scansion||"";
       $("readerProsodyReviewerNote").value=profile?.reviewerNote||"";
       $("readerProsodyVerified").checked=false;
-      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
+      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":imported?("وزن از تطبیق دقیق با پیکرهٔ منبع وارد شده؛ این داده بازبینی انسانی مستقل نشده است. "+scansionWarning+provenanceNote):"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
       $("readerProsodyReviewForm").hidden=true;
     }
     const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
@@ -152,7 +159,7 @@
       if(scansionLines.length<requiredLines){$("readerProsodyReviewStatus").textContent="تقطیع باید برای همهٔ "+requiredLines+" سطر/مصراع ثبت شود؛ هر سطر تقطیع را در یک خط جداگانه بنویسید.";return;}
       try{
         const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
-        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,scansionLines,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
+        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,scansionType:"line-by-line-human",scansionLines,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
         await window.YESStorage.put("prosodyReview",record);
         const item=content().get(currentId);if(item){item.prosody=record;if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;}
         $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";

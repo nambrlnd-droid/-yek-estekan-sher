@@ -68,7 +68,7 @@ async function analyzeAll(items,options={}){
  const flush=async()=>{if(batch.length&&typeof options.onBatch==="function")await options.onBatch(batch);batch=[];};
  for(let i=0;i<list.length;i++){
   const item=list[i],saved=item?.id?existing.get(String(item.id)):null;
-  const p=saved?.status==="confirmed"?{...saved,version:"1.8.0-prosody.3"}:analyze(item,false);done++;
+  const p=["confirmed","external_source_matched"].includes(saved?.status)?{...saved,version:saved.version||"1.8.0-prosody.3"}:analyze(item,false);done++;
   if(item&&typeof item==="object")item.prosody=p;
   if(p.status==="confirmed")confirmed++;
   else{review++;if(item&&item.id)lastQueue.push(String(item.id));}

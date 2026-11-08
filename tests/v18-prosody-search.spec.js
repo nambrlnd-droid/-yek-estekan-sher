@@ -139,8 +139,9 @@ test("human prosody review is saved locally and becomes searchable as confirmed"
   await page.locator("#readerProsodyScansion").fill("U ـ ـ | U ـ ـ\nU ـ ـ | U ـ");
   await page.locator("#readerProsodySave").click();
   await expect(page.locator("#readerProsodyReviewStatus")).toContainText("ذخیره شد");
-  const status = await page.evaluate(async () => (await window.YESStorage.get("prosodyReview", "stage3-human-review")).status);
-  expect(status).toBe("confirmed");
+  const saved = await page.evaluate(async () => { const record = await window.YESStorage.get("prosodyReview", "stage3-human-review"); return { status: record.status, scansionType: record.scansionType }; });
+  expect(saved.status).toBe("confirmed");
+  expect(saved.scansionType).toBe("line-by-line-human");
   await page.goto(baseURL + "#/search");
   await page.locator("#prosodyMeterFilter").fill("متقارب");
   const match = await page.evaluate(() => window.YESAdvancedSearch.matches(window.poemEntries.find(x => x.id === "stage3-human-review")));

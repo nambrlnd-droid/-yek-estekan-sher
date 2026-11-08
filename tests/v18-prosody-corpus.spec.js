@@ -1,0 +1,113 @@
+import { test, expect } from "@playwright/test";
+
+
+test.beforeEach(async ({ page }, testInfo) => {
+  const skipGate = !testInfo.title.includes("full archive boot");
+  await page.addInitScript(skip => { window.__YES_TEST_SKIP_ARCHIVE_GATE = skip; }, skipGate);
+});
+
+test("external P3R exact matches are searchable but remain distinct from human confirmation", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/search");
+  const result = await page.evaluate(() => {
+    const item = { id: "p3r-external", body: "مصراع یک\\nمصراع دو", prosody: {
+      status: "external_source_matched", meter: "فاعلاتن فاعلاتن فاعلاتن فاعلن",
+      bahr: null, arkan: "فاعلاتن فاعلاتن فاعلاتن فاعلن"
+    }};
+    document.getElementById("prosodyMeterFilter").value = "فاعلاتن";
+    document.getElementById("prosodyMeterFilter").dispatchEvent(new Event("input", { bubbles: true }));
+    const meterMatch = window.YESAdvancedSearch.matches(item);
+    document.getElementById("prosodyReviewFilter").value = "external_source_matched";
+    document.getElementById("prosodyReviewFilter").dispatchEvent(new Event("input", { bubbles: true }));
+    const externalStatusMatch = window.YESAdvancedSearch.matches(item);
+    document.getElementById("prosodyReviewFilter").value = "confirmed";
+    document.getElementById("prosodyReviewFilter").dispatchEvent(new Event("input", { bubbles: true }));
+    const humanConfirmedMatch = window.YESAdvancedSearch.matches(item);
+    return { meterMatch, externalStatusMatch, humanConfirmedMatch };
+  });
+  expect(result.meterMatch).toBeTruthy();
+  expect(result.externalStatusMatch).toBeTruthy();
+  expect(result.humanConfirmedMatch).toBeFalsy();
+});
+
+test("the published exact-match index applies real source annotations to local poems", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(async () => {
+    const outcome = await window.YESProsodyCorpus.apply(window.YESContent.all);
+    const matched = window.YESContent.all.find(item => item.prosody?.status === "external_source_matched");
+    return {
+      available: outcome.available,
+      indexRecords: outcome.indexRecords,
+      applied: outcome.applied,
+      status: matched?.prosody?.status,
+      meter: matched?.prosody?.meter,
+      poemType: matched?.prosody?.poemType,
+      source: matched?.prosody?.sourceDataset
+    };
+  });
+  expect(result.available).toBeTruthy();
+  expect(result.indexRecords).toBeGreaterThan(0);
+  expect(result.applied).toBeGreaterThan(0);
+  expect(result.status).toBe("external_source_matched");
+  expect(result.meter).toBeTruthy();
+  expect(result.poemType).toBeTruthy();
+  expect(result.source).toBeTruthy();
+});
+
+
+test("batch analysis preserves external-source meter annotations instead of replacing them with provisional estimates", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(async () => {
+    const id = "preserve-external-prosody";
+    const item = { id, body: "بهار آمد و گل‌ها شکفتند\\nجهان از عطر باران تازه شد" };
+    const imported = {
+      id,
+      status: "external_source_matched",
+      confidence: "multiple_exact_couplets",
+      meter: "فاعلاتن فاعلاتن فاعلاتن فاعلن",
+      bahr: "رمل",
+      arkan: "فاعلاتن فاعلاتن فاعلاتن فاعلن",
+      sourceDataset: "P3R",
+      version: "1.8.2-multi-source-exact-match"
+    };
+    let persisted = null;
+    await window.YESProsody.analyzeAll([item], {
+      existingProfiles: new Map([[id, imported]]),
+      onBatch: async batch => { persisted = batch[0]; }
+    });
+    return {
+      status: item.prosody?.status,
+      meter: item.prosody?.meter,
+      source: item.prosody?.sourceDataset,
+      persistedStatus: persisted?.status,
+      persistedMeter: persisted?.meter
+    };
+  });
+  expect(result.status).toBe("external_source_matched");
+  expect(result.meter).toBe("فاعلاتن فاعلاتن فاعلاتن فاعلن");
+  expect(result.source).toBe("P3R");
+  expect(result.persistedStatus).toBe("external_source_matched");
+  expect(result.persistedMeter).toBe("فاعلاتن فاعلاتن فاعلاتن فاعلن");
+});
+
+
+test("full archive boot completes only after the exact-match prosody index is applied", async ({ page, baseURL }) => {
+  test.setTimeout(180000);
+  await page.goto(baseURL + "#/home");
+  await page.waitForFunction(() => window.__YES_ARCHIVE_READY === true, null, { timeout: 150000 });
+  const result = await page.evaluate(() => ({
+    archiveReady: window.__YES_ARCHIVE_READY === true,
+    prosodyReady: window.__YES_PROSODY_CORPUS_READY === true,
+    total: window.YESContent.all.length,
+    matched: window.YESContent.all.filter(item => item.prosody?.status === "external_source_matched").length,
+    scansion: window.YESContent.all.filter(item => item.prosody?.scansionType === "arkan-signs").length,
+    provenanceText: (() => { const item = window.YESContent.all.find(entry => entry.prosody?.sourceProvenance || entry.prosody?.enrichedSourceProvenance); return item?.prosody?.sourceProvenance || item?.prosody?.enrichedSourceProvenance || ""; })(),
+    index: window.YESProsodyCorpus ? "loaded" : "missing"
+  }));
+  expect(result.archiveReady).toBeTruthy();
+  expect(result.prosodyReady).toBeTruthy();
+  expect(result.total).toBeGreaterThanOrEqual(59000);
+  expect(result.matched).toBeGreaterThan(53000);
+  expect(result.scansion).toBeGreaterThan(0);
+  expect(result.provenanceText).toContain("منشأ");
+  expect(result.index).toBe("loaded");
+});
