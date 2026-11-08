@@ -1,10 +1,11 @@
 const { test, expect } = require("@playwright/test");
 
 test.beforeEach(async ({ page }, testInfo) => {
-  await page.addInitScript(() => {
-    window.__YES_TEST_SKIP_ARCHIVE_GATE = !testInfo.title.includes("archive loading failure");
-    window.__YES_TEST_FORCE_ARCHIVE_ERROR = testInfo.title.includes("archive loading failure");
-  });
+  const archiveFailure = testInfo.title.includes("archive loading failure");
+  await page.addInitScript(flags => {
+    window.__YES_TEST_SKIP_ARCHIVE_GATE = !flags.archiveFailure;
+    window.__YES_TEST_FORCE_ARCHIVE_ERROR = flags.archiveFailure;
+  }, { archiveFailure });
 });
 
 test("prosody analyzer preserves source and never invents a confirmed meter", async ({ page, baseURL }) => {
