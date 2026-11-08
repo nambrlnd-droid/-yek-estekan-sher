@@ -39,7 +39,15 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
     const crossSourceBodies = [...bodyCounts.values()].filter(count => count > 1).length;
     const duplicateIds = [...idCounts.values()].filter(count => count > 1).length;
     const missingTaxonomy = content.filter(x => !x.category1 || !x.category2 || !x.category3).length;
+    const sourceInventory = window.YES_SOURCE_AUDIT || {};
+    const sourceRows = Object.values(sourceInventory).reduce((sum, item) => sum + (item.sourceRows || 0), 0);
+    const sourceAdded = Object.values(sourceInventory).reduce((sum, item) => sum + (item.added || 0), 0);
+    const sourceDuplicateSkipped = Object.values(sourceInventory).reduce((sum, item) => sum + (item.duplicateBodySkipped || 0), 0);
     const report = {
+      sourceInventory,
+      sourceRows,
+      sourceAdded,
+      sourceDuplicateSkipped,
       manifestTotal: manifest?.total || 0,
       archiveRecords: shard.length,
       archiveItemsInContent: archiveItems.length,
@@ -64,6 +72,14 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
     return report;
   });
   console.log("V1.8_CROSS_SOURCE_AUDIT", JSON.stringify(report));
+  expect(report.sourceInventory["poems.js"]?.sourceRows).toBe(100);
+  expect(report.sourceInventory["poems-extra.js"]?.sourceRows).toBe(100);
+  expect(report.sourceInventory["poems-hasan-collection.js"]?.sourceRows).toBe(26);
+  expect(report.sourceInventory["poems-user-collection.js"]?.sourceRows).toBe(100);
+  expect(report.sourceInventory["telegram-poems.js"]?.sourceRows).toBe(1844);
+  expect(report.sourceInventory["internet-poems.js"]?.sourceRows).toBe(200);
+  expect(report.sourceInventory["pinned.js"]?.sourceRows).toBe(19);
+  expect(report.sourceRows).toBeGreaterThanOrEqual(2389);
   expect(report.manifestTotal).toBe(56880);
   expect(report.archiveRecords).toBe(56880);
   expect(report.archiveItemsInContent).toBe(56880);
