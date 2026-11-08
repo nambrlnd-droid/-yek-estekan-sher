@@ -197,7 +197,7 @@ function installInteractions(){
  });
 }
 document.addEventListener("DOMContentLoaded",()=>{
- createNavigation();createHome();createSearchPage();createFavoritesPage();createSearchShell();movePageContent();installInteractions();
+ createNavigation();createHome();createSearchPage();createFavoritesPage();createPoetPage();createSearchShell();movePageContent();installInteractions();
  const current=window.YESRouter?.current?.()||{route:"home"};
  showRoute(current);
  if(!location.hash)history.replaceState(null,"",location.pathname+location.search+"#/home");
