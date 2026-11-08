@@ -99,11 +99,15 @@ test("full archive boot completes only after the exact-match prosody index is ap
     prosodyReady: window.__YES_PROSODY_CORPUS_READY === true,
     total: window.YESContent.all.length,
     matched: window.YESContent.all.filter(item => item.prosody?.status === "external_source_matched").length,
+    scansion: window.YESContent.all.filter(item => item.prosody?.scansionType === "arkan-signs").length,
+    provenance: window.YESContent.all.some(item => item.prosody?.sourceProvenance || item.prosody?.enrichedSourceProvenance),
     index: window.YESProsodyCorpus ? "loaded" : "missing"
   }));
   expect(result.archiveReady).toBeTruthy();
   expect(result.prosodyReady).toBeTruthy();
   expect(result.total).toBeGreaterThanOrEqual(59000);
   expect(result.matched).toBeGreaterThan(53000);
+  expect(result.scansion).toBeGreaterThan(0);
+  expect(result.provenance).toBeTruthy();
   expect(result.index).toBe("loaded");
 });
