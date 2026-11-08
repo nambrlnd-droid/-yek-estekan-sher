@@ -73,6 +73,9 @@ async function loadCategory(name){
   const bytes=await response.arrayBuffer();
   const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
+  // Keep the source shard category explicit so the hierarchical taxonomy can
+  // retain provenance while deriving the new editorial category fields.
+  records.forEach(item=>{if(item&&typeof item==="object"&&!item.archiveCategory)item.archiveCategory=meta.name;});
   categoryRecords.set(meta.name,records);
   const target=window.poemEntries||(window.poemEntries=[]);
   initDedup(target);
