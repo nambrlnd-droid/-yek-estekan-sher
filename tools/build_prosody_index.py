@@ -151,7 +151,9 @@ def read_full_poem_corpus() -> tuple[dict[str, dict], set[str], int]:
                 "sourceDatasetRevision": FULL_REVISION,
                 "sourceDatasetUrl": FULL_REPOSITORY,
                 "sourceLicense": FULL_LICENSE,
-                "meterSource": "Ganjoor meter metadata as distributed by the dataset",
+                "meterSource": "dataset meter label; row-level origin is not included in poems.csv",
+                "sourceProvenance": "dataset documentation states some meter/scansion values are derived; row-level source is unavailable in this CSV",
+                "scansionProvenance": "dataset documentation states some scansion values are reconstructed; row-level source is unavailable in this CSV",
                 "status": "external_source_matched",
                 "confidence": "exact_full_poem_match",
                 "lineScansionAvailable": False,
@@ -233,6 +235,8 @@ def resolve_record(record: dict, pair_labels, prosody_map, full_poem_index, reco
             enriched["scansion"] = full_profile.get("scansion")
             enriched["scansionType"] = full_profile.get("scansionType")
             enriched["scansionSource"] = full_profile.get("scansionSource")
+            enriched["scansionProvenance"] = full_profile.get("scansionProvenance")
+            enriched["enrichedSourceProvenance"] = full_profile.get("sourceProvenance")
             enriched["enrichedByDataset"] = FULL_NAME
             enriched["enrichedByDatasetRevision"] = FULL_REVISION
             enriched["enrichedByDatasetUrl"] = FULL_REPOSITORY
