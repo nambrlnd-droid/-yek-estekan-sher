@@ -48,7 +48,7 @@ function analyze(item,useCache=true){
  const estimates=ls.map(line=>({line,wordCount:words(line).length,syllableEstimate:words(line).reduce((n,w)=>n+syllableEstimate(w),0)}));
  const rhyme=inferRhyme(ls);
  const result={
-  version:"1.8.0-prosody.2",status:"review_required",confidence:"low",
+  version:"1.8.0-prosody.3",status:"review_required",confidence:"low",
   poemType:type,lineCount:ls.length,lines:estimates,
   rhyme:rhyme.rhyme,radif:rhyme.radif,rhymeConfidence:"low",radifConfidence:"low",
   meter:null,bahr:null,arkan:null,scansion:null,
@@ -72,7 +72,7 @@ async function analyzeAll(items,options={}){
   if(p.status==="confirmed"){confirmed++;if(item&&typeof item==="object")item.prosody=p;}
   else{review++;if(item&&item.id)lastQueue.push(String(item.id));}
   if(item&&item.id)batch.push({
-   ...p,id:String(item.id),version:p.version||"1.8.0-prosody.2",
+   ...p,id:String(item.id),version:p.version||"1.8.0-prosody.3",
    lines:Array.isArray(p.lines)?p.lines.map((line,index)=>({index,wordCount:line.wordCount,syllableEstimate:line.syllableEstimate})):[],
    updatedAt:p.reviewedAt||new Date().toISOString()
   });
@@ -80,7 +80,7 @@ async function analyzeAll(items,options={}){
  }
  await flush();
  if(typeof options.onProgress==="function")options.onProgress({done,total:list.length,confirmed,reviewRequired:review,complete:true});
- return {total:list.length,analyzed:done,confirmed,reviewRequired:review,reviewQueueIds:lastQueue.slice(),version:"1.8.0-prosody.2"};
+ return {total:list.length,analyzed:done,confirmed,reviewRequired:review,reviewQueueIds:lastQueue.slice(),version:"1.8.0-prosody.3"};
 }
 function reviewQueue(){return lastQueue.slice();}
 window.YESProsody={normalize,lines,syllableEstimate,analyze,attach,analyzeAll,reviewQueue};
