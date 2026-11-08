@@ -63,6 +63,7 @@
       const provenanceNote=profile?.sourceProvenance||profile?.enrichedSourceProvenance||"";
       const scansionWarning=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید. ":"";
       const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified||imported?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):imported?(profile.bahr||"در منبع جداگانه تعیین نشده"):"تأیید نشده"],["ارکان",verified||imported?(profile.arkan||"ثبت نشده"):"تأیید نشده"],[scansionLabel,verified||imported?(profile.scansion||"در فایل منبع موجود نیست"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":imported?"تطبیق دقیق با "+sourceLabel+"؛ بدون بازبینی انسانی":"در انتظار بازبینی"]];
+      if(imported&&provenanceNote)rows.push(["محدودیت منبع",provenanceNote]);
       rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
       if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
       prosodyDetails.append(grid);
