@@ -17,3 +17,19 @@ Imported records are marked `external_source_matched`. This means the archive te
 P3R provides meter patterns and a separate meter-ID definition file; some definitions include a named bahr in parentheses, which is preserved as a separate field. A bahr is not inferred when the source does not specify one. The source meter pattern is preserved as the meter/arkan pattern. P3R does not provide binary syllabic scansion for every line in the CSV, so line-by-line scansion remains empty rather than being fabricated.
 
 The generated index is a derived matching artifact. Keep this attribution document with any redistribution of the imported index and comply with the upstream license terms.
+
+
+## Secondary exact full-poem source
+
+A second source is used only as an exact full-poem match or to enrich a P3R record when its meter pattern agrees:
+
+- Dataset: `cnababaie/persian-poetry-meters`
+- Repository: https://huggingface.co/datasets/cnababaie/persian-poetry-meters
+- File: `poems.csv`
+- File revision: `408b79e`
+- SHA-256: `42830c43cfcd758debe88eefe8b8578d553a3218d940c60d7917447ba7075cf1`
+- License declared by the dataset page: Apache-2.0
+
+The dataset provides the full poem text, Persian meter pattern, Arabic meter name, diacritized Persian feet, and `meter_signs`. Only exact normalized full-poem matches are imported. If a P3R match and this source disagree on the meter pattern, the P3R record is retained without enrichment and the conflict is counted. If the P3R source has no usable match, the exact full-poem record can be used as a separately identified external match.
+
+The `meter_signs` field represents quantitative signs by foot/arkan, not an independently verified phonetic scansion for each individual hemistich. The reader therefore labels it as «نشانه‌های کمّی ارکان», not as line-by-line scansion. Records from this dataset are not treated as independently human-reviewed by this project.
