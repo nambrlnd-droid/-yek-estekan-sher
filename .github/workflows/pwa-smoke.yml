@@ -18,6 +18,10 @@ on:
     branches: [main, v1.3-development]
   workflow_dispatch:
 
+concurrency:
+  group: pwa-smoke-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
