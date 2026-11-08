@@ -215,7 +215,9 @@ async function loadReviews(){
  try{const records=await window.YESStorage?.all("taxonomyReview")||[];reviewed.clear();records.forEach(record=>{if(record?.id)reviewed.set(String(record.id),record);});applyAll();return true;}
  catch(error){console.warn("Taxonomy review records could not be loaded:",error);return false;}
 }
-ready=loadReviews();
+let resolveReady;
+ready=new Promise(resolve=>{resolveReady=resolve;});
+window.addEventListener("yes:storage-ready",()=>{loadReviews().then(resolveReady);},{once:true});
 window.YES_TAXONOMY={apply:applyAll,classify:item=>classify(item,false),saveReview,ready};
 applyAll();
 window.addEventListener("yes:web-poems-loaded",applyAll);
