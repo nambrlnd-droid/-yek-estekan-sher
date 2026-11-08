@@ -4,7 +4,7 @@
 const $=id=>document.getElementById(id);
 const labels={home:"خانه",library:"کتابخانه",search:"جست‌وجو",favorites:"علاقه‌مندی‌ها",notebook:"دفتر من"};
 const routeIds={home:"homePageView",search:"searchPageView",library:"v15LibraryView",favorites:"favoritesPageView",notebook:"notebookView",pinned:"pinnedView",read:"readerView",image:"imageStudioView",poet:"poetPageView"};
-let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,poetReturnRoute="home",internalClick=false,favoritesBusy=false,poetPageLimit=50;
+let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,poetReturnRoute="home",currentPoetName="",internalClick=false,favoritesBusy=false,poetPageLimit=50;
 const allPageIds=Object.values(routeIds);
 function make(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 function link(route,title,description,glyph){
@@ -55,6 +55,7 @@ function createPoetPage(){
  $("poetPageMore").addEventListener("click",()=>{poetPageLimit+=50;renderPoetPage(decodeURIComponent(window.YESRouter.current().id));});
 }
 function renderPoetPage(author){
+ if(author!==currentPoetName){currentPoetName=author;poetPageLimit=50;}
  const root=$("poetPageWorks"),name=$("poetPageName"),bio=$("poetPageBio"),stats=$("poetPageStats"),more=$("poetPageMore");
  if(!root||!name||!stats)return;
  const normalize=value=>window.YESSearch?.normalize(value)||String(value||"").trim().toLowerCase();
