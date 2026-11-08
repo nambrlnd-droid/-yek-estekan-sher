@@ -49,16 +49,25 @@ async function analyzeArchive(){
  archiveAnalysisStarted=true;mount();
  setStatus("در حال تحلیل ساختاری آرشیو و ذخیرهٔ پروفایل تک‌تک آثار…");
  try{
-  const result=await window.YESProsody.analyzeAll(window.YESContent?.all||window.poemEntries||[],{
-   batchSize:400,
+  let existingProfiles=new Map();
+  try{
+   const saved=await window.YESStorage?.all("prosodyReview")||[];
+   existingProfiles=new Map(saved.filter(record=>record&&record.id&&record.id!=="archive-v1.8-summary").map(record=>[String(record.id),record]));
+  }catch(e){}
+  const contentItems=window.YESContent?.all||window.poemEntries||[];
+  const result=await window.YESProsody.analyzeAll(contentItems,{
+   batchSize:400,existingProfiles,
    onBatch:async batch=>{if(window.YESStorage?.putMany)await window.YESStorage.putMany("prosodyReview",batch);},
-   onProgress:p=>setStatus("تحلیل مقدماتی: "+p.done.toLocaleString("fa-IR")+" از "+p.total.toLocaleString("fa-IR")+" · در صف بازبینی: "+p.reviewRequired.toLocaleString("fa-IR"))
+   onProgress:p=>setStatus("تحلیل مقدماتی: "+p.done.toLocaleString("fa-IR")+" از "+p.total.toLocaleString("fa-IR")+" · تأییدشده: "+p.confirmed.toLocaleString("fa-IR")+" · در صف بازبینی: "+p.reviewRequired.toLocaleString("fa-IR"))
   });
-  let saved=false;try{if(window.YESStorage?.put){await window.YESStorage.put("prosodyReview",{id:"archive-v1.8-summary",version:result.version,total:result.total,analyzed:result.analyzed,confirmed:result.confirmed,reviewRequired:result.reviewRequired,updatedAt:new Date().toISOString()});saved=true;}}catch(e){}
-  setStatus("پروفایل مقدماتی "+result.analyzed.toLocaleString("fa-IR")+" اثر ذخیره شد؛ "+result.reviewRequired.toLocaleString("fa-IR")+" اثر نیازمند بازبینی‌اند. "+(saved?"گزارش در حافظهٔ پایدار مرورگر ثبت شد.":"ذخیرهٔ گزارش نهایی ممکن نشد.")+" وزن تأییدشده‌ای ثبت نشده است.");
+  contentItems.forEach(item=>{if(item?.prosody?.status==="confirmed"&&Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=item.prosody;});
+  let savedSummary=false;
+  try{if(window.YESStorage?.put){await window.YESStorage.put("prosodyReview",{id:"archive-v1.8-summary",version:result.version,total:result.total,analyzed:result.analyzed,confirmed:result.confirmed,reviewRequired:result.reviewRequired,updatedAt:new Date().toISOString()});savedSummary=true;}}catch(e){}
+  setStatus("پروفایل مقدماتی "+result.analyzed.toLocaleString("fa-IR")+" اثر ذخیره شد؛ "+result.confirmed.toLocaleString("fa-IR")+" مورد تأیید انسانی و "+result.reviewRequired.toLocaleString("fa-IR")+" مورد در صف بازبینی است. "+(savedSummary?"گزارش پایدار ذخیره شد.":"ذخیرهٔ گزارش نهایی ممکن نشد."));
  }catch(error){archiveAnalysisStarted=false;setStatus("تحلیل/ذخیرهٔ دسته‌ای کامل نشد؛ "+String(error?.message||error));}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
 window.addEventListener("yes:archive-ready",analyzeArchive);
+window.addEventListener("yes:prosody-updated",()=>window.dispatchEvent(new Event("yes:advanced-search-change")));
 window.YESAdvancedSearch={matches,getState,similar,reset(){Object.keys(state).forEach(k=>state[k]="");const root=document.getElementById("prosodyFilters");if(root)root.querySelectorAll("input,select").forEach(n=>n.value="");window.dispatchEvent(new Event("yes:advanced-search-change"));}};
 })();
