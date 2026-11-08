@@ -67,7 +67,7 @@
       $("readerProsodyMeter").value=profile?.meter||"";
       $("readerProsodyBahr").value=profile?.bahr||"";
       $("readerProsodyArkan").value=profile?.arkan||"";
-      $("readerProsodyScansion").value=profile?.scansion||"";
+      $("readerProsodyScansion").value=profile?.scansionType==="arkan-signs"?"":profile?.scansion||"";
       $("readerProsodyReviewerNote").value=profile?.reviewerNote||"";
       $("readerProsodyVerified").checked=false;
       $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":imported?"وزن از تطبیق دقیق با پیکرهٔ منبع وارد شده؛ این داده بازبینی انسانی مستقل نشده است. نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید.":"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
@@ -155,7 +155,7 @@
       if(scansionLines.length<requiredLines){$("readerProsodyReviewStatus").textContent="تقطیع باید برای همهٔ "+requiredLines+" سطر/مصراع ثبت شود؛ هر سطر تقطیع را در یک خط جداگانه بنویسید.";return;}
       try{
         const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
-        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,scansionLines,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
+        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,scansionType:"line-by-line-human",scansionLines,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
         await window.YESStorage.put("prosodyReview",record);
         const item=content().get(currentId);if(item){item.prosody=record;if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;}
         $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";
