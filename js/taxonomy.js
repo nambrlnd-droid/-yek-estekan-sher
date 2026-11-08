@@ -94,6 +94,9 @@ const aliases = new Map([
  ["فلسفی و تأملی","تأمل و اندیشه"],["رنج و دل‌شکستگی","رنج و دل‌شکستگی"]
 ].map(([a,b])=>[norm(a),b]));
 
+const reviewed = new Map();
+let ready = Promise.resolve();
+
 const archiveFallback = new Map([
  ["اجتماعی و انتقادی",["اجتماعی و انتقادی","نقد جامعه و زمانه"]],
  ["حماسی و ملی",["حماسی و ملی","میهن و پهلوانی"]],
@@ -161,6 +164,14 @@ function classify(item, isPinned) {
  item.taxonomyConfidence=confidence;item.taxonomyReview=review;
  item.taxonomyVersion="1.8.0";
  if(sourceCategory)item.sourceCategory=sourceCategory;
+ const human=reviewed.get(String(item.id||""));
+ if(human){
+  item.category1=human.category1;item.category2=human.category2;item.category3=human.category3;
+  item.category2Alternates=[...(human.secondaryTopics||[])];
+  item.taxonomyTopics=[human.category2,...item.category2Alternates].filter(Boolean);
+  item.taxonomyConfidence="human-reviewed";item.taxonomyReview="";
+  item.taxonomyReviewedAt=human.reviewedAt;
+ }
  return item;
 }
 function apply(list){(Array.isArray(list)?list:[]).forEach(item=>{if(item&&typeof item==="object")classify(item,false);});}
@@ -177,7 +188,7 @@ function refreshSummary(){
   secondLevel:[...new Set(all.map(x=>x.category2).filter(Boolean))],
   thirdLevel:[...new Set(all.map(x=>x.category3).filter(Boolean))],
   count:(level,value)=>count(level==="first"? "category1":level==="second"?"category2":"category3",value),
-  classify:item=>classify(item,false),apply:applyAll
+  classify:item=>classify(item,false),apply:applyAll,saveReview,ready
  };
  return window.YES_TAXONOMY;
 }
@@ -189,7 +200,23 @@ function applyAll(){
  (Array.isArray(window.YESContent?.pinned)?window.YESContent.pinned:[]).forEach(item=>classify(item,true));
  return refreshSummary();
 }
-window.YES_TAXONOMY={apply:applyAll,classify:item=>classify(item,false)};
+async function saveReview(id,fields){
+ const key=String(id||"").trim(),category1=String(fields?.category1||"").trim();
+ const category2=String(fields?.category2||"").trim(),category3=String(fields?.category3||"").trim();
+ const secondaryTopics=[...new Set((Array.isArray(fields?.secondaryTopics)?fields.secondaryTopics:[]).map(x=>String(x).trim()).filter(Boolean))];
+ if(!key||!["مذهبی","عمومی"].includes(category1)||!category2||!category3)throw new Error("شناسه و هر سه سطح طبقه‌بندی معتبر الزامی است.");
+ const record={id:key,category1,category2,category3,secondaryTopics,reviewer:"بازبینی محلی",reviewedAt:new Date().toISOString()};
+ await window.YESStorage.put("taxonomyReview",record);
+ reviewed.set(key,record);applyAll();
+ window.dispatchEvent(new CustomEvent("yes:taxonomy-updated",{detail:{id:key,record}}));
+ return record;
+}
+async function loadReviews(){
+ try{const records=await window.YESStorage?.all("taxonomyReview")||[];reviewed.clear();records.forEach(record=>{if(record?.id)reviewed.set(String(record.id),record);});applyAll();return true;}
+ catch(error){console.warn("Taxonomy review records could not be loaded:",error);return false;}
+}
+ready=loadReviews();
+window.YES_TAXONOMY={apply:applyAll,classify:item=>classify(item,false),saveReview,ready};
 applyAll();
 window.addEventListener("yes:web-poems-loaded",applyAll);
 window.addEventListener("yes:archive-loaded",event=>{
