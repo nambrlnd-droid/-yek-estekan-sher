@@ -74,7 +74,7 @@
       $("readerProsodyScansion").value=profile?.scansionType==="arkan-signs"?"":profile?.scansion||"";
       $("readerProsodyReviewerNote").value=profile?.reviewerNote||"";
       $("readerProsodyVerified").checked=false;
-      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":imported?"وزن از تطبیق دقیق با پیکرهٔ منبع وارد شده؛ این داده بازبینی انسانی مستقل نشده است. scansionWarning+provenanceNote:"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
+      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":imported?("وزن از تطبیق دقیق با پیکرهٔ منبع وارد شده؛ این داده بازبینی انسانی مستقل نشده است. "+scansionWarning+provenanceNote):"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
       $("readerProsodyReviewForm").hidden=true;
     }
     const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
