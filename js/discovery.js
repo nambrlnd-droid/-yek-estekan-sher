@@ -20,7 +20,21 @@ function refreshFilters(){
  const c1=$("category1Filter").value;
  fillSelect("category2Filter",[...sectionItems.filter(x=>!c1||x.category1===c1).map(x=>x.category2),...(section==="poems"&&(!c1||c1==="عمومی")?archive:[])],"همهٔ موضوعات");
  const c2=$("category2Filter").value;
- fillSelect("category3Filter",sectionItems.filter(x=>(!c1||x.category1===c1)&&(!c2||x.category2===c2)).map(x=>x.category3),"همهٔ زیرموضوعات");
+ const archiveSubtopics={
+  "اجتماعی و انتقادی":["نقد جامعه و زمانه"],
+  "حماسی و ملی":["نبرد و دلاوری"],
+  "حکمی و اخلاقی":["فضیلت و رذیلت"],
+  "روایی و داستانی":["روایت و حکایت"],
+  "طبیعت و توصیف":["فصل‌ها و پدیده‌های طبیعی"],
+  "طنز و هجو":["طنز و نکته‌پردازی"],
+  "عاشقانه و دلدادگی":["عشق و وصال"],
+  "فلسفی و تأملی":["هستی و شناخت"],
+  "متفرقه و چندموضوعی":["چندموضوعی / نامشخص"]
+ };
+ fillSelect("category3Filter",[
+  ...sectionItems.filter(x=>(!c1||x.category1===c1)&&(!c2||x.category2===c2)).map(x=>x.category3),
+  ...(isArchiveCategory(c2)?(archiveSubtopics[c2]||[]):[])
+ ],"همهٔ زیرموضوعات");
  fillSelect("authorFilter",sectionItems.map(x=>x.author),"همهٔ شاعران");
 }
 function isArchiveCategory(name){return !!name&&!!window.YESArchive?.isArchiveCategory(name);}
