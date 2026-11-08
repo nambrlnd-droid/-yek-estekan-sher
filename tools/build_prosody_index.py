@@ -1,150 +1,163 @@
 #!/usr/bin/env python3
-"""Build an exact-text prosody index for the site's archive from the CC BY 4.0 corpus.
+"""Build an exact-couplet prosody index from the MIT / CC BY 4.0 P3R corpus.
 
-Only exact normalized full-poem matches are imported. Conflicting matches are
-excluded. Imported labels remain externally sourced, not human-reviewed.
+Only exact normalized hemistich-pair matches are used. No fuzzy inference is
+performed; conflicting meter votes are excluded from the published index.
 """
 from __future__ import annotations
 
+import csv
 import gzip
 import json
 import re
 import unicodedata
-from collections import Counter
+import urllib.request
+from collections import Counter, defaultdict
 from pathlib import Path
-
-from datasets import load_dataset
 
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "data" / "poetry-archive"
+CORPUS = ROOT / ".cache" / "P3R.csv"
 OUT = ARCHIVE / "prosody-index.json.gz"
 SUMMARY = ARCHIVE / "prosody-index-summary.json"
-DATASET_ID = "nafisehNik/ganjoor-ipa-scansion"
-DATASET_REVISION = "main"
-
-CHAR_MAP = str.maketrans({"ي": "ی", "ى": "ی", "ك": "ک", "ۀ": "ه", "ة": "ه"})
-REMOVE_RE = re.compile(r"[\s\W_]+", re.UNICODE)
+CORPUS_URL = "https://media.githubusercontent.com/media/m-shahrestani/Prosody-Recognition-in-Persian-Poetry/master/dataset/P3R.csv"
+CORPUS_NAME = "P3R — Prosody Recognition in Persian Poetry"
+CORPUS_REPOSITORY = "https://github.com/m-shahrestani/Prosody-Recognition-in-Persian-Poetry"
+CORPUS_REVISION = "master"
 
 
 def norm(value: object) -> str:
-    value = unicodedata.normalize("NFKC", str(value or "")).translate(CHAR_MAP)
-    value = value.replace("\u200c", "").replace("\u200e", "").replace("\u200f", "")
-    return REMOVE_RE.sub("", value).lower()
+    value = unicodedata.normalize("NFKC", str(value or ""))
+    value = value.translate(str.maketrans({
+        "ي": "ی", "ى": "ی", "ك": "ک", "ۀ": "ه", "ة": "ه",
+        "\u200c": "", "\u200e": "", "\u200f": "", "\u0640": "",
+    }))
+    value = re.sub(r"[\u064b-\u065f\u0670]", "", value)
+    return re.sub(r"[\s\W_]+", "", value, flags=re.UNICODE).lower()
 
 
-def dataset_key(row: dict) -> str:
-    verses = row.get("verses") or []
-    parts = []
-    for verse in verses:
-        if not isinstance(verse, dict):
-            continue
-        for field in ("fa_1", "fa_2"):
-            text = verse.get(field)
-            if text:
-                parts.append(str(text))
-    return norm("".join(parts))
+def download_corpus() -> None:
+    if CORPUS.exists() and CORPUS.stat().st_size > 100_000_000:
+        print(f"Using cached corpus ({CORPUS.stat().st_size:,} bytes)")
+        return
+    CORPUS.parent.mkdir(parents=True, exist_ok=True)
+    print(f"Downloading P3R corpus from {CORPUS_URL}")
+    request = urllib.request.Request(CORPUS_URL, headers={"User-Agent": "YekEstekanSher-ProsodyIndexer/1.0"})
+    with urllib.request.urlopen(request, timeout=90) as response, CORPUS.open("wb") as output:
+        total = 0
+        while True:
+            chunk = response.read(1024 * 1024)
+            if not chunk:
+                break
+            output.write(chunk)
+            total += len(chunk)
+            if total and total % (25 * 1024 * 1024) < 1024 * 1024:
+                print(f"Downloaded {total / (1024 * 1024):.0f} MiB")
+    if CORPUS.stat().st_size < 100_000_000:
+        raise RuntimeError(f"Corpus download looks incomplete: {CORPUS.stat().st_size} bytes")
 
 
-def archive_key(record: dict) -> str:
-    return norm(record.get("body", ""))
-
-
-def profile_for(row: dict) -> dict | None:
-    meter = row.get("meter") or {}
-    if not isinstance(meter, dict):
-        return None
-    rhythm = meter.get("rhythm_fa") or meter.get("rhythm_name_fa")
-    feet = meter.get("feet_fa") or []
-    scansion = meter.get("scansion")
-    if not rhythm or not feet or not scansion:
-        return None
-    return {
-        "meter": str(rhythm),
-        "bahr": str(meter.get("base_meter") or meter.get("rhythm_name_fa") or ""),
-        "arkan": " / ".join(str(x) for x in feet),
-        "scansion": str(scansion),
-        "meterSource": str(meter.get("source") or "dataset"),
-        "sourceDataset": DATASET_ID,
-        "sourceDatasetRevision": DATASET_REVISION,
-        "sourcePoemId": row.get("poem_id"),
-        "sourcePoemUrl": row.get("poem_url"),
-        "status": "external_source_matched",
-        "confidence": "exact_text_match_external_corpus",
-        "reviewer": None,
-        "reviewedAt": None,
-        "lineScansionAvailable": False,
-    }
+def read_corpus() -> dict[tuple[str, str], Counter]:
+    download_corpus()
+    pair_labels: dict[tuple[str, str], Counter] = defaultdict(Counter)
+    rows = 0
+    with CORPUS.open("r", encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        required = {"VERSE1", "VERSE2", "PROSODY"}
+        if not reader.fieldnames or not required.issubset(set(reader.fieldnames)):
+            raise RuntimeError(f"Unexpected P3R columns: {reader.fieldnames}")
+        for row in reader:
+            first, second = norm(row.get("VERSE1")), norm(row.get("VERSE2"))
+            meter = " ".join(str(row.get("PROSODY") or "").split())
+            if first and second and meter:
+                pair_labels[(first, second)][meter] += 1
+            rows += 1
+            if rows % 200_000 == 0:
+                print(f"Read {rows:,} P3R couplets; unique exact pairs: {len(pair_labels):,}")
+    print(f"Finished P3R: {rows:,} rows; {len(pair_labels):,} unique exact pairs")
+    return pair_labels
 
 
 def main() -> None:
-    print(f"Loading streaming dataset: {DATASET_ID}")
-    stream = load_dataset(DATASET_ID, split="train", streaming=True)
-    index_by_text: dict[str, dict] = {}
-    conflicts: set[str] = set()
-    corpus_rows = 0
-    valid_rows = 0
-
-    for row in stream:
-        corpus_rows += 1
-        key = dataset_key(row)
-        profile = profile_for(row)
-        if not key or not profile:
-            continue
-        valid_rows += 1
-        previous = index_by_text.get(key)
-        if previous is None:
-            index_by_text[key] = profile
-        elif any(previous.get(k) != profile.get(k) for k in ("meter", "arkan", "scansion")):
-            conflicts.add(key)
-
-        if corpus_rows % 10000 == 0:
-            print(f"Corpus rows: {corpus_rows:,}; usable keys: {len(index_by_text):,}; conflicts: {len(conflicts):,}")
-
-    for key in conflicts:
-        index_by_text.pop(key, None)
-
+    pair_labels = read_corpus()
     matches: dict[str, dict] = {}
-    duplicate_texts = 0
+    ambiguous = 0
+    matched_couplets = 0
     total_archive = 0
     archive_files = sorted(ARCHIVE.glob("*.json.gz"))
+
     for shard in archive_files:
         with gzip.open(shard, "rt", encoding="utf-8") as handle:
             records = json.load(handle)
         for record in records:
             total_archive += 1
-            if not isinstance(record, dict):
+            if not isinstance(record, dict) or record.get("id") is None:
                 continue
-            key = archive_key(record)
-            profile = index_by_text.get(key) if key else None
-            if not profile:
+            lines = [line.strip() for line in str(record.get("body") or "").splitlines() if line.strip()]
+            votes: Counter = Counter()
+            exact_pairs = 0
+            for index in range(0, len(lines) - 1, 2):
+                key = (norm(lines[index]), norm(lines[index + 1]))
+                labels = pair_labels.get(key)
+                if not labels:
+                    continue
+                # Preserve source labels; a conflicting source pair contributes
+                # only its majority label when the vote is unambiguous.
+                total_votes = sum(labels.values())
+                meter, count = labels.most_common(1)[0]
+                if count / total_votes < 0.9:
+                    continue
+                votes[meter] += 1
+                exact_pairs += 1
+            if not votes:
                 continue
-            item_id = record.get("id")
-            if item_id is None:
+            meter, count = votes.most_common(1)[0]
+            support = count / sum(votes.values())
+            if support < 0.8:
+                ambiguous += 1
                 continue
-            item_id = str(item_id)
-            if item_id in matches:
-                duplicate_texts += 1
-                continue
-            matches[item_id] = {"id": item_id, **profile}
+            item_id = str(record["id"])
+            matches[item_id] = {
+                "id": item_id,
+                "meter": meter,
+                "bahr": None,
+                "arkan": meter,
+                "scansion": None,
+                "meterSource": "P3R exact couplet corpus",
+                "sourceDataset": CORPUS_NAME,
+                "sourceDatasetRevision": CORPUS_REVISION,
+                "sourceDatasetUrl": CORPUS_REPOSITORY,
+                "sourceLicense": "MIT and CC BY 4.0",
+                "status": "external_source_matched",
+                "confidence": "multiple_exact_couplets" if exact_pairs > 1 else "one_exact_couplet",
+                "matchedCouplets": exact_pairs,
+                "meterVoteShare": round(support, 4),
+                "lineScansionAvailable": False,
+                "reviewer": None,
+                "reviewedAt": None,
+            }
+            matched_couplets += exact_pairs
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(OUT, "wt", encoding="utf-8", compresslevel=9) as handle:
         json.dump(matches, handle, ensure_ascii=False, separators=(",", ":"))
 
     summary = {
-        "dataset": DATASET_ID,
-        "datasetRevision": DATASET_REVISION,
-        "license": "CC BY 4.0",
-        "matchingMethod": "exact full-poem text after Unicode/Persian-character normalization; no fuzzy matching",
-        "corpusRowsRead": corpus_rows,
-        "corpusRowsWithUsableMeter": valid_rows,
-        "ambiguousCorpusTextKeysExcluded": len(conflicts),
+        "dataset": CORPUS_NAME,
+        "datasetUrl": CORPUS_REPOSITORY,
+        "datasetRevision": CORPUS_REVISION,
+        "license": "MIT and CC BY 4.0",
+        "matchingMethod": "exact adjacent hemistich-pair text after Unicode/Persian-character normalization; no fuzzy matching",
+        "corpusRows": sum(sum(labels.values()) for labels in pair_labels.values()),
+        "uniqueExactCoupletKeys": len(pair_labels),
         "archiveRecords": total_archive,
         "matchedArchiveRecords": len(matches),
         "unmatchedArchiveRecords": total_archive - len(matches),
-        "duplicateArchiveTextMatches": duplicate_texts,
+        "ambiguousArchiveRecordsExcluded": ambiguous,
+        "matchedExactCouplets": matched_couplets,
         "importedStatus": "external_source_matched (not human-reviewed)",
-        "lineScansion": "not provided by source dataset; do not infer",
+        "bahr": "not provided separately in source; left empty",
+        "scansion": "binary per-line scansion not provided in source; left empty",
         "output": str(OUT.relative_to(ROOT)),
     }
     SUMMARY.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
