@@ -169,4 +169,7 @@ test("archive loading failure keeps the site covered and offers retry", async ({
   await expect(page.locator("#archiveBootScreen")).toHaveClass(/has-error/);
   await expect(page.locator("#archiveBootRetry")).toBeVisible();
   await expect(page.locator("#archiveBootMessage")).toContainText("بارگذاری کامل نشد");
+  await page.locator("#archiveBootRetry").click();
+  await expect(page.locator("#archiveBootScreen")).toBeVisible();
+  await expect(page.locator("#archiveBootRetry")).toBeVisible();
 });
