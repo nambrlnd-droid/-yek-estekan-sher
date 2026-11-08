@@ -24,7 +24,7 @@ test("prosody output explicitly distinguishes orthographic syllable estimates fr
 });
 
 test("advanced search filters are present and compose with existing search", async ({ page, baseURL }) => {
-  await page.goto(baseURL + "#/home");
+  await page.goto(baseURL + "#/search");
   await expect(page.locator("#prosodyTypeFilter")).toBeVisible();
   await expect(page.locator("#prosodyMeterFilter")).toBeVisible();
   await expect(page.locator("#prosodyRhymeFilter")).toBeVisible();
