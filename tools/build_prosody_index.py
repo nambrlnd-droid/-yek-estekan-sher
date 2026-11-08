@@ -84,7 +84,7 @@ def main() -> None:
     ambiguous = 0
     matched_couplets = 0
     total_archive = 0
-    archive_files = sorted(ARCHIVE.glob("*.json.gz"))
+    archive_files = sorted(path for path in ARCHIVE.glob("*.json.gz") if path.name != OUT.name)
 
     for shard in archive_files:
         with gzip.open(shard, "rt", encoding="utf-8") as handle:
