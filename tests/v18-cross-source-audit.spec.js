@@ -66,6 +66,15 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
         count: content.filter(x => x.category1 === label).length
       })),
       reviewQueue: content.filter(x => x.taxonomyReview).length,
+      reviewByReason: [...new Set(content.map(x => x.taxonomyReview).filter(Boolean))].map(reason => ({
+        reason, count: content.filter(x => x.taxonomyReview === reason).length
+      })),
+      confidenceCounts: ["high", "medium", "low"].map(level => ({
+        level, count: content.filter(x => x.taxonomyConfidence === level).length
+      })),
+      secondLevelCount: new Set(content.map(x => x.category2).filter(Boolean)).size,
+      thirdLevelCount: new Set(content.map(x => x.category3).filter(Boolean)).size,
+      multiTopicRecords: content.filter(x => (x.category2Alternates || []).length > 0).length,
       sampleReviewIds: content.filter(x => x.taxonomyReview).slice(0, 10).map(x => x.id),
       archiveIdCollisionsWithLegacy: shard.filter(x => legacyIds.has(String(x.id))).length
     };
