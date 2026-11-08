@@ -7,6 +7,14 @@ async function boot(){
  if(running||complete)return;
  running=true;
  try{
+  if(window.__YES_TEST_SKIP_ARCHIVE_GATE===true){
+   window.__YES_ARCHIVE_DATA_READY=true;
+   window.dispatchEvent(new Event("yes:archive-data-ready"));
+   await window.YESNotebook?.migrateLegacy?.();
+   complete=true;window.__YES_ARCHIVE_READY=true;
+   window.dispatchEvent(new Event("yes:archive-ready"));
+   return;
+  }
   const manifest=await window.YESArchive.manifest();
   await window.YESArchive.loadAll();
   const loaded=window.YESArchive.loadedCount();
@@ -14,8 +22,7 @@ async function boot(){
   window.__YES_ARCHIVE_DATA_READY=true;
   window.dispatchEvent(new Event("yes:archive-data-ready"));
   await window.YESNotebook?.migrateLegacy?.();
-  complete=true;
-  window.__YES_ARCHIVE_READY=true;
+  complete=true;window.__YES_ARCHIVE_READY=true;
   window.dispatchEvent(new Event("yes:archive-ready"));
  }catch(error){
   window.dispatchEvent(new CustomEvent("yes:archive-error",{detail:{message:String(error?.message||error)}}));
