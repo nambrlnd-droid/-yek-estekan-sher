@@ -1,0 +1,21 @@
+name: V1.8 stages 3-4 prosody and advanced search
+
+on:
+  pull_request:
+    branches: [feature/v18-stage-1-audit]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prosody-search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:pwa
