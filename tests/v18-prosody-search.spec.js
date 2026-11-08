@@ -38,6 +38,7 @@ test("advanced search filters are present and compose with existing search", asy
   await expect(page.locator("#prosodyRhymeFilter")).toBeVisible();
   await expect(page.locator("#prosodyRadifFilter")).toBeVisible();
   await expect(page.locator("#prosodyReviewFilter")).toBeVisible();
+  await expect(page.locator("#taxonomyReviewFilter")).toBeVisible();
   const result = await page.evaluate(() => {
     const item = { body: "بهار آمد و گل از خاک سر برآورد\nنسیم صبحگاهی خبر آورد" };
     const initial = window.YESAdvancedSearch.matches(item);
@@ -196,4 +197,24 @@ test("prosody review queue filter distinguishes pending and human-reviewed works
   expect(result.pendingMatch).toBeTruthy();
   expect(result.confirmedMatch).toBeFalsy();
   expect(result.confirmedAfter).toBeTruthy();
+});
+
+
+test("taxonomy review filter exposes uncertain classifications without hiding other records", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const uncertain = { id: "taxonomy-pending", body: "نمونه", taxonomyConfidence: "low", taxonomyReview: "نیازمند بازبینی" };
+    const classified = { id: "taxonomy-high", body: "نمونه", taxonomyConfidence: "high", taxonomyReview: "" };
+    const filter = document.getElementById("taxonomyReviewFilter");
+    filter.value = "review";
+    filter.dispatchEvent(new Event("input", { bubbles: true }));
+    const uncertainMatch = window.YESAdvancedSearch.matches(uncertain);
+    const classifiedMatch = window.YESAdvancedSearch.matches(classified);
+    filter.value = "high";
+    filter.dispatchEvent(new Event("input", { bubbles: true }));
+    return { uncertainMatch, classifiedMatch, highMatch: window.YESAdvancedSearch.matches(classified) };
+  });
+  expect(result.uncertainMatch).toBeTruthy();
+  expect(result.classifiedMatch).toBeFalsy();
+  expect(result.highMatch).toBeTruthy();
 });
