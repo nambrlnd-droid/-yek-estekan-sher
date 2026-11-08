@@ -128,7 +128,20 @@ function classify(item, isPinned) {
  if(isPinned && tags.some(x=>/نامه‌ها و متون تاریخی|پیوندها و منابع/.test(x))){
   category1="عمومی";category2="متون و اسناد";category3="نامه‌ها و منابع";confidence="high";review="";
  }
+ // Retain additional independently supplied topic tags as secondary facets.
+ const secondary=[];
+ for(const tag of tags){
+  const alias=aliases.get(tag);
+  if(alias&&alias!==category2&&!secondary.includes(alias))secondary.push(alias);
+  for(const rule of generalRules){
+   if(rule[2].test(tag)&&rule[0]!==category2&&!secondary.includes(rule[0]))secondary.push(rule[0]);
+  }
+  if(/وفاداری|همدمی|رفاقت/.test(tag)&&!secondary.includes("وفاداری و رفاقت"))secondary.push("وفاداری و رفاقت");
+  if(/طنز و لطافت|طنز|هجو/.test(tag)&&!secondary.includes("طنز و هجو"))secondary.push("طنز و هجو");
+ }
  item.category1=category1;item.category2=category2;item.category3=category3;
+ item.category2Alternates=secondary;
+ item.taxonomyTopics=[category2,...secondary].filter(Boolean);
  item.taxonomyConfidence=confidence;item.taxonomyReview=review;
  item.taxonomyVersion="1.8.0";
  if(sourceCategory)item.sourceCategory=sourceCategory;
@@ -137,6 +150,10 @@ function classify(item, isPinned) {
 function apply(list){(Array.isArray(list)?list:[]).forEach(item=>{if(item&&typeof item==="object")classify(item,false);});}
 function applyAll(){
  apply(entries);pinned.forEach(item=>classify(item,true));
+ // YESContent is a normalized copy used by the reader/search APIs. Keep its
+ // derived taxonomy in sync without mutating the original text or tag arrays.
+ apply(window.YESContent?.poems);
+ (Array.isArray(window.YESContent?.pinned)?window.YESContent.pinned:[]).forEach(item=>classify(item,true));
  const all=entries.concat(pinned);
  const count=(field,value)=>all.filter(x=>x[field]===value).length;
  const review=all.filter(x=>x.taxonomyReview);
