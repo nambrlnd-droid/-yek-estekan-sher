@@ -19,8 +19,8 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
     const content = window.YESContent?.all || [];
     const pinnedIds = new Set((window.pinnedEntries || []).map(x => String(x.id)));
     const archiveItems = content.filter(x => x.archiveCategory);
-    const webItems = content.filter(x => String(x.id).startsWith("ganjoor-"));
-    const legacyItems = content.filter(x => !x.archiveCategory && !String(x.id).startsWith("ganjoor-") && !pinnedIds.has(String(x.id)));
+    const webItems = content.filter(x => String(x.id).startsWith("web-hafez-"));
+    const legacyItems = content.filter(x => !x.archiveCategory && !String(x.id).startsWith("web-hafez-") && !pinnedIds.has(String(x.id)));
     const legacyIds = new Set(legacyItems.map(x => String(x.id)));
     const pinned = content.filter(x => pinnedIds.has(String(x.id)));
     const key = value => String(value || "").normalize("NFKC")
