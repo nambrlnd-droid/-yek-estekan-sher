@@ -5,6 +5,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("image studio exposes expanded Persian fonts and twelve design templates", async ({ page }) => {
+  // This end-to-end flow includes a reload, font restoration and a full-resolution canvas render.
+  // Give the final native-select interaction room on slower desktop CI workers.
+  test.setTimeout(90000);
   await page.goto("./#/search");
   await expect(page.locator("#openImageStudio")).toBeVisible();
   await page.locator("#openImageStudio").click();
@@ -44,7 +47,11 @@ test("image studio exposes expanded Persian fonts and twelve design templates", 
   await page.locator("#imageReset").click();
   await expect(page.locator("#imageFormat")).toHaveValue("portrait");
   await expect(page.locator("#imageFont")).toHaveValue("Noto Naskh Arabic");
-  await page.locator("#imageFormat").selectOption("square");
+  // Wait for the restored font/render work to settle before interacting with the native control.
+  await page.evaluate(() => document.fonts?.ready);
+  await expect(page.locator("#imageFormat")).toBeVisible();
+  await expect(page.locator("#imageFormat")).toBeEnabled();
+  await page.locator("#imageFormat").selectOption("square", { timeout: 60000 });
 
   const downloadPromise = page.waitForEvent("download");
   await page.locator("#imageDownload").click();
