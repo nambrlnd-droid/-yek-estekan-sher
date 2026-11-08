@@ -32,7 +32,7 @@ test("v1.8 taxonomy assigns a three-level path without changing source text or t
 test("v1.8 taxonomy does not classify a bare ambiguous name as a sacred person", async ({ page, baseURL }) => {
   await page.goto(baseURL + "#/home");
   const result = await page.evaluate(() => {
-    const item = { id: "taxonomy-test-ambiguous", section: "poems", tags: [], body: "فاطمه آمد و از کنار باغ گذشت" };
+    const item = { id: "taxonomy-test-ambiguous", section: "poems", tags: [], body: "فاطمه آمد و سخن گفت" };
     window.YES_TAXONOMY.classify(item);
     return { category1: item.category1, category2: item.category2, review: item.taxonomyReview };
   });
