@@ -43,6 +43,17 @@ const religiousRules = [
  ["سوگ و مرثیه", /ماتم|عزا|روضه|مرثیه|گریه بر|خون گلو|خون خدا|شهید کربلا/]
 ];
 
+const sacredSubtopics = [
+ ["شهادت و سوگ", /شهادت|شهید|مقتل|کربلا|عاشورا|روضه|گریه|ماتم|عزا|خون خدا/],
+ ["غدیر و ولایت", /غدیر|ولایت|امامت|وصایت|مولی|مولای|بیعت/],
+ ["عدالت و سیره", /عدالت|قسط|دادگری|حکومت|قضاوت|سیره|حق.?الناس/],
+ ["شجاعت و جهاد", /ذوالفقار|شمشیر|نبرد|جهاد|شجاعت|پهلوان|خیبر/],
+ ["ولادت و میلاد", /ولادت|میلاد|مولود|تولد|آمده به جهان/],
+ ["زیارت و شوق دیدار", /زیارت|حرم|مزار|بین الحرمین|بقیع|نجف|کربلا/],
+ ["مدح و منقبت", /مدح|مناقب|فضائل|فضیلت|منقبت|ستایش|ثنا/],
+ ["دعا و مناجات", /دعا|مناجات|دعای|خدایا|الهی|پروردگارا/]
+];
+
 const generalRules = [
  ["عاشقانه و دلدادگی", "عشق و وصال", /عشق|عاشق|معشوق|دلدار|دلبر|نگار|جانان|بوسه|آغوش|وصال|دلداد|دوستت دارم/],
  ["فراق و دلتنگی", "هجران و دوری", /فراق|هجر|هجران|دوری|دلتنگ|جدایی|بی.?تو|رفتی|نماندی|مهجور/],
@@ -99,7 +110,7 @@ function classify(item, isPinned) {
   if(!general)general=matchRule(tagText,generalRules)||matchRule(body,generalRules);
  }
  let category1,category2,category3,confidence,review="";
- if(entity){category1="مذهبی";category2=entity;category3="مدح، منقبت یا یادکرد";confidence=tagText? "high":"medium";}
+ if(entity){category1="مذهبی";category2=entity;const sacredSubtopic=matchRule(tagText+" "+body,sacredSubtopics);category3=sacredSubtopic?sacredSubtopic[0]:"یادکرد و معارف";confidence=tagText? "high":"medium";}
  else if(religious){category1="مذهبی";category2=religious[0];category3="موضوع دینی";confidence=tagText?"high":"medium";}
  else if(general){category1="عمومی";category2=general[0];category3=general[1];confidence=tagText?"high":"medium";}
  else if(archiveFallback.has(sourceCategory)){
