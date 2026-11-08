@@ -33,3 +33,18 @@ A second source is used only as an exact full-poem match or to enrich a P3R reco
 The dataset provides the full poem text, Persian meter pattern, Arabic meter name, diacritized Persian feet, and `meter_signs`. Only exact normalized full-poem matches are imported. If a P3R match and this source disagree on the meter pattern, the P3R record is retained without enrichment and the conflict is counted. If the P3R source has no usable match, the exact full-poem record can be used as a separately identified external match.
 
 The `meter_signs` field represents quantitative signs by foot/arkan, not an independently verified phonetic scansion for each individual hemistich. The reader therefore labels it as «نشانه‌های کمّی ارکان», not as line-by-line scansion. Records from this dataset are not treated as independently human-reviewed by this project.
+
+
+## Current archive match report
+
+Latest successful corpus build:
+
+- Compressed archive: 53,344 of 56,880 records have an exact source match; 3,536 remain unmatched.
+- Static site collections: 560 of 2,214 records have an exact source match; 1,654 remain unmatched.
+- Total: 53,904 of 59,094 site records have source-matched prosody.
+- 41,477 archive records were enriched with named bahr and arkan-sign data from the full-poem corpus after the P3R meter pattern agreed.
+- 536 archive records were matched by the exact full-poem corpus alone.
+- 19 archive records had ambiguous P3R meter votes and were not assigned a P3R label.
+- 5,190 records remain without an exact source match. No guessed meter is assigned to them.
+
+These counts are from the generated `data/poetry-archive/prosody-index-summary.json` report. They describe corpus matching, not independent human review of the website archive.
