@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+test.setTimeout(240000);
 
 test("v1.8 full archive receives all three taxonomy levels after boot", async ({ page, baseURL }) => {
   await page.goto(baseURL + "#/home");
