@@ -33,7 +33,18 @@ function matches(item){
  return true;
 }
 function getState(){return {...state};}
+function similar(item,items,limit=5){
+ const topics=x=>[x.category1,x.category2,x.category3,...(x.taxonomyTopics||[]),...(x.category2Alternates||[])].filter(Boolean).map(v=>window.YESSearch.normalize(v));
+ const tokens=x=>window.YESSearch.normalize([x.title,x.body].join(" ")).split(" ").filter(t=>t.length>2);
+ const baseTopics=new Set(topics(item)),baseTokens=new Set(tokens(item));
+ return (items||[]).filter(x=>x&&x.id!==item.id).map(x=>{
+  const shared=topics(x).filter(t=>baseTopics.has(t)).length;
+  const overlap=tokens(x).filter(t=>baseTokens.has(t)).length;
+  const score=shared*8+Math.min(overlap,12);
+  return {item:x,score,reason:shared?"هم‌موضوع":"هم‌واژه"};
+ }).filter(x=>x.score>=4).sort((a,b)=>b.score-a.score).slice(0,Math.max(1,limit));
+}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
 window.addEventListener("yes:archive-ready",async()=>{if(!window.YESProsody)return;if(statusNode)statusNode.textContent="در حال ساخت صف بازبینی عروضی برای آرشیو بارگذاری‌شده…";try{const result=await window.YESProsody.analyzeAll(window.YESContent?.all||window.poemEntries||[],{batchSize:400,onProgress:p=>{statusNode.textContent="تحلیل اولیهٔ ساختار: "+p.done.toLocaleString("fa-IR")+" از "+p.total.toLocaleString("fa-IR")+" · نیازمند بازبینی: "+p.reviewRequired.toLocaleString("fa-IR");}});let saved=false;try{if(window.YESStorage?.put){await window.YESStorage.put("prosodyReview",{id:"archive-v1.8",version:result.version,total:result.total,analyzed:result.analyzed,confirmed:result.confirmed,reviewRequired:result.reviewRequired,reviewQueueIds:result.reviewQueueIds,updatedAt:new Date().toISOString()});saved=true;}}catch(e){}statusNode.textContent="تحلیل اولیهٔ "+result.analyzed.toLocaleString("fa-IR")+" اثر انجام شد؛ "+result.reviewRequired.toLocaleString("fa-IR")+" مورد در صف بازبینی‌اند. "+(saved?"صف در حافظهٔ پایدار مرورگر ذخیره شد.":"ذخیرهٔ پایدار در این مرورگر ممکن نشد.")+" وزن تأییدشده‌ای ثبت نشده است.";}catch(error){statusNode.textContent="ساخت صف بازبینی کامل نشد؛ "+String(error?.message||error);}});
-window.YESAdvancedSearch={matches,getState,reset(){Object.keys(state).forEach(k=>state[k]="");const root=document.getElementById("prosodyFilters");if(root)root.querySelectorAll("input,select").forEach(n=>n.value="");window.dispatchEvent(new Event("yes:advanced-search-change"));}};
+window.YESAdvancedSearch={matches,getState,similar,reset(){Object.keys(state).forEach(k=>state[k]="");const root=document.getElementById("prosodyFilters");if(root)root.querySelectorAll("input,select").forEach(n=>n.value="");window.dispatchEvent(new Event("yes:advanced-search-change"));}};
 })();
