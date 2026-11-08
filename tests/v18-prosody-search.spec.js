@@ -55,3 +55,15 @@ test("weight search excludes unverified automatic guesses", async ({ page, baseU
   });
   expect(result).toBeFalsy();
 });
+
+test("related poem suggestions prioritize shared taxonomy topics", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const source = { id: "source", title: "علی", body: "عدالت و مردانگی", category1: "مذهبی", category2: "امیرالمؤمنین علیه‌السلام", category3: "عدالت و سیره" };
+    const related = { id: "related", title: "سیره", body: "عدالت و سیره", category1: "مذهبی", category2: "امیرالمؤمنین علیه‌السلام", category3: "عدالت و سیره" };
+    const unrelated = { id: "other", title: "باران", body: "باران و دریا", category1: "عمومی", category2: "طبیعت و توصیف", category3: "فصل‌ها" };
+    return window.YESAdvancedSearch.similar(source, [source, unrelated, related], 3).map(x => x.item.id);
+  });
+  expect(result[0]).toBe("related");
+  expect(result).not.toContain("source");
+});
