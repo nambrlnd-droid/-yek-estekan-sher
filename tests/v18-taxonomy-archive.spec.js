@@ -53,7 +53,17 @@ test("archive loader rejects a shard whose SHA-256 does not match the manifest",
 test("corrupt cached archive shard is evicted and fetched again before acceptance", async ({ page, baseURL }) => {
   const shardPath = "v18-cache-retry-test.gz";
   const validText = "valid archive bytes";
-  await page.route("**/data/poetry-archive/" + shardPath, route => route.fulfill({ status: 200, body: validText }));
+  await page.addInitScript(({ shardPath, validText }) => {
+    window.__YES_TEST_SKIP_ARCHIVE_GATE = true;
+    const originalFetch = window.fetch.bind(window);
+    window.fetch = async (input, init) => {
+      const url = typeof input === "string" ? input : input.url;
+      if (url.includes("/data/poetry-archive/" + shardPath)) {
+        return new Response(validText, { status: 200, headers: { "Content-Type": "application/octet-stream" } });
+      }
+      return originalFetch(input, init);
+    };
+  }, { shardPath, validText });
   await page.goto(baseURL + "#/home");
   const result = await page.evaluate(async ({ shardPath, validText }) => {
     const cache = await caches.open("yes-poetry-archive-v1");
