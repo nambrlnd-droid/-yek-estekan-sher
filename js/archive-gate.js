@@ -2,7 +2,7 @@
 (function(){
 "use strict";
 window.__YES_ARCHIVE_BOOTING=true;
-let running=false,complete=false;
+let running=false,complete=false,failed=false;
 const screen=()=>document.getElementById("archiveBootScreen");
 const message=()=>document.getElementById("archiveBootMessage");
 const bar=()=>document.getElementById("archiveBootProgress");
@@ -25,7 +25,7 @@ async function migrateNotebookSafely(){
 }
 async function boot(){
  if(running||complete)return;
- running=true;reveal();
+ running=true;failed=false;reveal();
  if(retry())retry().disabled=true;
  update("در حال دریافت و بررسی همهٔ دسته‌های آرشیو؛ تا پایان این مرحله سایت باز نمی‌شود.");
  try{
@@ -52,6 +52,7 @@ async function boot(){
   update("کتابخانه آماده است.",loaded,manifest.total);
   window.dispatchEvent(new Event("yes:archive-ready"));
  }catch(error){
+  failed=true;
   const detail=String(error?.message||error);
   update("بارگذاری کامل نشد: "+detail+"؛ برای نمایش سایت باید همهٔ آثار دریافت شوند.");
   if(screen())screen().classList.add("has-error");
@@ -63,10 +64,12 @@ async function boot(){
  }
 }
 window.addEventListener("yes:archive-loading",event=>{
+ if(failed)return;
  const d=event.detail||{};
  update("در حال بارگذاری دستهٔ "+fmt(d.categoryIndex)+" از "+fmt(d.categoryTotal)+" · "+String(d.category||"")+"…");
 });
 window.addEventListener("yes:archive-loaded",event=>{
+ if(failed)return;
  const d=event.detail||{};
  update("آرشیو در حال بارگذاری است؛ "+fmt(d.loadedCategories)+" از "+fmt(d.categoryTotal)+" دسته تکمیل شد.",Number(d.loadedRecords)||0,Number(d.archiveTotal)||0);
 });
