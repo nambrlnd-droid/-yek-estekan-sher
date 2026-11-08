@@ -37,7 +37,7 @@ const religiousRules = [
  ["قرآن و معارف قرآنی", /قرآن|آیه|سوره|بسم الله|آیت الکرسی|کلام وحی/],
  ["دعا و مناجات", /دعای|دعا|مناجات|استغفار|توبه|یا رب|پروردگارا|الهی/],
  ["زیارت و عتبات", /زیارت|حرم|عتبات|نجف|کاظمین|سامرا|بین الحرمین|بقیع/],
- ["مناسبت‌ها و آیین‌های دینی", /رمضان|شب قدر|محرم|صفر|اربعین|نیمه شعبان|فاطمیه|ولادت|شهادت|عید مبعث|عید غدیر/],
+ ["مناسبت‌ها و آیین‌های دینی", /رمضان|شب قدر|محرم|صفر|اربعین|نیمه شعبان|فاطمیه|عید مبعث|عید غدیر/],
  ["تاریخ و سیره دینی", /سیره اهل بیت|تاریخ اسلام|هجرت پیامبر|غزوه|جنگ بدر|صفین|جمل|کوفه|مدینه|مکه/],
  ["معارف و اعتقادات", /توحید|نبوت|امامت|معاد|ولایت|شفاعت|بهشت|دوزخ|قیامت|ملائکه|نماز|روزه|حج|عبادت/],
  ["سوگ و مرثیه", /ماتم|عزا|روضه|مرثیه|گریه بر|خون گلو|خون خدا|شهید کربلا/]
@@ -108,25 +108,26 @@ function classify(item, isPinned) {
  const body=norm(item.body), tags=(Array.isArray(item.tags)?item.tags:[]).filter(x=>typeof x==="string").map(norm);
  const tagText=tags.filter(x=>x&&!genericTags.has(x)).join(" ");
  const sourceCategory=String(item.category||item.archiveCategory||"");
- let entity=null;
- for(const [name,re] of sacredEntities){if(re.test(tagText)){entity=name;break;}}
+ let entity=null,tagEvidence=false;
+ for(const [name,re] of sacredEntities){if(re.test(tagText)){entity=name;tagEvidence=true;break;}}
  if(!entity)for(const [name,re] of sacredEntities){if(re.test(body)){entity=name;break;}}
  let religious=null;
- if(!entity)religious=matchRule(tagText,religiousRules)||matchRule(body,religiousRules);
+ if(!entity){religious=matchRule(tagText,religiousRules);if(religious)tagEvidence=true;else religious=matchRule(body,religiousRules);}
  let general=null;
  if(!entity&&!religious){
   const religiousAliases=new Set(["مناسبت‌ها و آیین‌های دینی","زیارت و عتبات","دعا و مناجات","قرآن و معارف قرآنی","معارف و اعتقادات","تاریخ و سیره دینی","سوگ و مرثیه"]);
   for(const tag of tags){
    const alias=aliases.get(tag);
    if(!alias)continue;
+   tagEvidence=true;
    if(religiousAliases.has(alias))religious=[alias,/./];
    else general=[alias,"موضوع برگرفته از برچسب موجود"];
    break;
   }
-  if(!general&&!religious)general=matchRule(tagText,generalRules)||matchRule(body,generalRules);
+  if(!general&&!religious){general=matchRule(tagText,generalRules);if(general)tagEvidence=true;else general=matchRule(body,generalRules);}
  }
  let category1,category2,category3,confidence,review="";
- if(entity){category1="مذهبی";category2=entity;const sacredSubtopic=matchRule(tagText+" "+body,sacredSubtopics);category3=sacredSubtopic?sacredSubtopic[0]:"یادکرد و معارف";confidence=tagText? "high":"medium";}
+ if(entity){category1="مذهبی";category2=entity;const sacredSubtopic=matchRule(tagText+" "+body,sacredSubtopics);category3=sacredSubtopic?sacredSubtopic[0]:"یادکرد و معارف";confidence=tagEvidence? "high":"medium";}
  else if(religious){category1="مذهبی";category2=religious[0];category3="موضوع دینی";confidence=tagText?"high":"medium";}
  else if(general){category1="عمومی";category2=general[0];category3=general[1];confidence=tagText?"high":"medium";}
  else if(archiveFallback.has(sourceCategory)){
