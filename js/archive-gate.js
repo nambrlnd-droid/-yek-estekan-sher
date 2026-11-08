@@ -49,6 +49,19 @@ async function boot(){
   window.dispatchEvent(new Event("yes:archive-data-ready"));
   update("همهٔ آثار بارگذاری شدند؛ در حال آماده‌سازی اطلاعات شخصی و نهایی‌سازی کتابخانه.",loaded,manifest.total);
   await migrateNotebookSafely();
+  // Register the exact-match external prosody annotations before the public
+  // interface is revealed. Failure is non-fatal: unmatched/offline sessions
+  // can still use the library, but imported labels are never fabricated.
+  if(window.YESProsodyCorpus?.apply){
+   update("همهٔ آثار بارگذاری شدند؛ در حال ثبت وزن‌های دارای تطبیق دقیق با پیکرهٔ عروضی.",loaded,manifest.total);
+   try{
+    const prosodyResult=await window.YESProsodyCorpus.apply(window.YESContent?.all||window.poemEntries||[]);
+    window.__YES_PROSODY_CORPUS_READY=!!prosodyResult?.available;
+   }catch(prosodyError){
+    window.__YES_PROSODY_CORPUS_READY=false;
+    console.warn("External prosody index could not be applied:",prosodyError);
+   }
+  }
   complete=true;window.__YES_ARCHIVE_READY=true;
   update("کتابخانه آماده است.",loaded,manifest.total);
   window.dispatchEvent(new Event("yes:archive-ready"));
