@@ -1,5 +1,9 @@
 const { test, expect } = require("@playwright/test");
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
+});
+
 test("v1.8 taxonomy assigns a three-level path without changing source text or tags", async ({ page, baseURL }) => {
   await page.goto(baseURL + "#/home");
   const result = await page.evaluate(() => {
