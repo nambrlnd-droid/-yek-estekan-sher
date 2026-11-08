@@ -74,3 +74,15 @@ test("v1.8 sacred-person branches distinguish mourning from praise", async ({ pa
   expect(result.person).toContain("امام حسین");
   expect(result.subtopic).toBe("شهادت و سوگ");
 });
+
+
+test("religious legacy tags remain under the religious first-level branch", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const item = { id: "taxonomy-test-legacy-religious", section: "poems", tags: ["دینی و آیینی"], body: "متن آیینی نمونه" };
+    window.YES_TAXONOMY.classify(item);
+    return { first: item.category1, second: item.category2 };
+  });
+  expect(result.first).toBe("مذهبی");
+  expect(result.second).toBe("مناسبت‌ها و آیین‌های دینی");
+});
