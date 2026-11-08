@@ -148,12 +148,7 @@ function classify(item, isPinned) {
  return item;
 }
 function apply(list){(Array.isArray(list)?list:[]).forEach(item=>{if(item&&typeof item==="object")classify(item,false);});}
-function applyAll(){
- apply(entries);pinned.forEach(item=>classify(item,true));
- // YESContent is a normalized copy used by the reader/search APIs. Keep its
- // derived taxonomy in sync without mutating the original text or tag arrays.
- apply(window.YESContent?.poems);
- (Array.isArray(window.YESContent?.pinned)?window.YESContent.pinned:[]).forEach(item=>classify(item,true));
+function refreshSummary(){
  const all=entries.concat(pinned);
  const count=(field,value)=>all.filter(x=>x[field]===value).length;
  const review=all.filter(x=>x.taxonomyReview);
@@ -166,9 +161,17 @@ function applyAll(){
   secondLevel:[...new Set(all.map(x=>x.category2).filter(Boolean))],
   thirdLevel:[...new Set(all.map(x=>x.category3).filter(Boolean))],
   count:(level,value)=>count(level==="first"? "category1":level==="second"?"category2":"category3",value),
-  classify:item=>classify(item,false),apply
+  classify:item=>classify(item,false),apply:applyAll
  };
  return window.YES_TAXONOMY;
+}
+function applyAll(){
+ apply(entries);pinned.forEach(item=>classify(item,true));
+ // YESContent is a normalized copy used by the reader/search APIs. Keep its
+ // derived taxonomy in sync without mutating the original text or tag arrays.
+ apply(window.YESContent?.poems);
+ (Array.isArray(window.YESContent?.pinned)?window.YESContent.pinned:[]).forEach(item=>classify(item,true));
+ return refreshSummary();
 }
 window.YES_TAXONOMY={apply:applyAll,classify:item=>classify(item,false)};
 applyAll();
@@ -177,6 +180,7 @@ window.addEventListener("yes:archive-loaded",event=>{
  const name=event.detail?.category;
  const records=name&&window.YESArchive?.items?window.YESArchive.items(name):[];
  apply(records);
+ refreshSummary();
 });
 window.addEventListener("yes:archive-ready",applyAll);
 })();
