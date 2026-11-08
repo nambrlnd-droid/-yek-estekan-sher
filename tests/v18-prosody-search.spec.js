@@ -234,3 +234,29 @@ test("notebook backup preserves human-reviewed prosody records", async ({ page, 
   expect(result.savedStatus).toBe("confirmed");
   expect(result.savedMeter).toBe("فعولن");
 });
+
+
+test("human taxonomy review is persisted locally and reapplied after reload", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(async () => {
+    await window.YES_TAXONOMY.ready;
+    const item = window.YESContent.poems[0], id = item.id;
+    await window.YES_TAXONOMY.saveReview(id, {
+      category1: "عمومی", category2: "آزمایش موضوعی",
+      category3: "زیرموضوع بازبینی‌شده", secondaryTopics: ["موضوع فرعی"]
+    });
+    const saved = await window.YESStorage.get("taxonomyReview", id);
+    return { id, category2: item.category2, category3: item.category3, confidence: item.taxonomyConfidence, saved: saved?.category2 };
+  });
+  expect(result.category2).toBe("آزمایش موضوعی");
+  expect(result.category3).toBe("زیرموضوع بازبینی‌شده");
+  expect(result.confidence).toBe("human-reviewed");
+  expect(result.saved).toBe("آزمایش موضوعی");
+  await page.reload();
+  const restored = await page.evaluate(async id => {
+    await window.YES_TAXONOMY.ready;
+    const item = window.YESContent.get(id);
+    return { category2: item?.category2, confidence: item?.taxonomyConfidence };
+  }, result.id);
+  expect(restored).toEqual({ category2: "آزمایش موضوعی", confidence: "human-reviewed" });
+});
