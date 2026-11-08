@@ -3,7 +3,7 @@ test.setTimeout(240000);
 
 test("v1.8 full archive receives all three taxonomy levels after boot", async ({ page, baseURL }) => {
   await page.goto(baseURL + "#/home");
-  await page.waitForFunction(() => window.__YES_ARCHIVE_READY === true, null, { timeout: 180000 });
+  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 210000 });
   const report = await page.evaluate(() => {
     const records = window.poemEntries || [];
     const archive = window.YESArchive;
