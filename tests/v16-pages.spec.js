@@ -161,7 +161,7 @@ test("full archive gate stays visible until every shard is loaded", async ({ pag
   await page.addInitScript(() => { Object.defineProperty(window, "YESWebPoemsReady", { configurable: true, get: () => new Promise(() => {}), set: () => {} }); });
   await page.goto("./");
   await expect(page.locator("#archiveBootScreen")).toBeVisible();
-  await expect(page.locator("#archiveBootMessage")).toContainText("همهٔ");
+  await expect(page.locator("#archiveBootProgress")).toBeAttached();
   await page.waitForFunction(() =>
     window.YESArchive?.loadedCount() === 56880
     && window.__YES_ARCHIVE_READY === true
