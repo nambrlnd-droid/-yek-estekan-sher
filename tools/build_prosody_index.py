@@ -133,6 +133,7 @@ def main() -> None:
     matched_local_couplets = 0
     total_archive = 0
     matched_archive = 0
+    shadowed_archive = 0
     site_data = json.loads(SITE_POEMS.read_text(encoding="utf-8")) if SITE_POEMS.exists() else {"poems": [], "pinned": []}
     local_records = [("site-poem", item) for item in site_data.get("poems", [])]
     local_records += [("pinned-entry", item) for item in site_data.get("pinned", [])]
@@ -144,7 +145,10 @@ def main() -> None:
             records = json.load(handle)
         for record in records:
             total_archive += 1
-            if not isinstance(record, dict) or record.get("id") is None or str(record["id"]) in local_ids:
+            if not isinstance(record, dict) or record.get("id") is None:
+                continue
+            if str(record["id"]) in local_ids:
+                shadowed_archive += 1
                 continue
             profile, ambiguous = classify_record(record, pair_labels, "archive")
             if ambiguous:
@@ -182,7 +186,8 @@ def main() -> None:
         "uniqueExactCoupletKeys": len(pair_labels),
         "archiveRecords": total_archive,
         "matchedArchiveRecords": matched_archive,
-        "unmatchedArchiveRecords": total_archive - matched_archive,
+        "unmatchedArchiveRecords": total_archive - matched_archive - shadowed_archive,
+        "archiveRecordsShadowedByStaticSiteIds": shadowed_archive,
         "ambiguousArchiveRecordsExcluded": ambiguous_archive,
         "staticSiteSourceRecords": local_total,
         "matchedStaticSiteSourceRecords": local_matched,
