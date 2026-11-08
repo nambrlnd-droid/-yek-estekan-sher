@@ -27,7 +27,7 @@ async function apply(items){
    const previous=savedById.get(String(item.id));
    if(previous?.status==="confirmed"){item.prosody=previous;preservedHuman++;continue;}
    const structural=window.YESProsody?.analyze(item,false)||{};
-   const record={...structural,...imported,id:String(item.id),version:"1.8.1-p3r-exact-match",updatedAt:new Date().toISOString()};
+   const record={...structural,...imported,id:String(item.id),version:"1.8.2-multi-source-exact-match",updatedAt:new Date().toISOString()};
    item.prosody=record;
    if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;
    writes.push(record);applied++;
