@@ -6,6 +6,8 @@
   "matchingMethod": "exact adjacent hemistich-pair text after Unicode/Persian-character normalization; no fuzzy matching",
   "corpusRows": 1339689,
   "uniqueExactCoupletKeys": 1336695,
+  "prosodyDefinitions": 177,
+  "prosodyDefinitionsSource": "https://raw.githubusercontent.com/m-shahrestani/Prosody-Recognition-in-Persian-Poetry/4a2dcea81967778fc42140dab57e45365723bf7d/dataset/prosodies.txt",
   "archiveRecords": 56880,
   "matchedArchiveRecords": 52795,
   "unmatchedArchiveRecords": 4085,
@@ -19,7 +21,7 @@
   "matchedExactArchiveCouplets": 283518,
   "matchedExactStaticSiteCouplets": 1864,
   "importedStatus": "external_source_matched (not human-reviewed)",
-  "bahr": "not provided separately in source; left empty",
+  "bahr": "mapped from the upstream prosodies.txt definition where an explicit parenthetical bahr label exists; otherwise left empty",
   "scansion": "binary per-line scansion not provided in source; left empty",
   "output": "data/poetry-archive/prosody-index.json.gz"
 }
