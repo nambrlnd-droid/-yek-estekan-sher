@@ -47,5 +47,7 @@ jobs:
             echo "No generated changes to commit."
           else
             git commit -m "Import exact-match external prosody annotations"
+            git fetch origin feature/prosody-corpus-import
+            git rebase origin/feature/prosody-corpus-import
             git push origin HEAD:feature/prosody-corpus-import
           fi
