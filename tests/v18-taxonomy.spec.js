@@ -11,7 +11,7 @@ test("v1.8 taxonomy separates religious and general subjects", async ({ page }) 
     const ali = classify({ body: "به نام خدا، مدح امیرالمؤمنین و یاد غدیر", tags: ["مدح و مناقب امیرالمؤمنین"] });
     const hasan = classify({ body: "نام حسن مجتبی در شعر آمده است", tags: ["امام حسن مجتبی"] });
     const romantic = classify({ body: "دل به عشق تو سپردم و در انتظار وصالم", tags: ["عاشقانه و دلدادگی"] });
-    const ambiguous = classify({ body: "از این روزگار چیزی نمی‌دانم", tags: [0, 0] });
+    const ambiguous = classify({ body: "متن کوتاه و بی‌نام", tags: [0, 0] });
     const text = classify({ section: "texts", body: "نامه‌ای برای دوست", tags: ["نامه‌ها و متون تاریخی"] });
     const multi = classify({ body: "یا زهرا، از نجف و زیارت بگو", tags: ["حضرت زهرا", "شوق زیارت و عتبات"] });
     return { ali, hasan, romantic, ambiguous, text, multi };
