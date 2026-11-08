@@ -58,7 +58,7 @@
       const grid=document.createElement("div");grid.className="reader-prosody-grid";
       const verified=profile?.status==="confirmed";
       const imported=profile?.status==="external_source_matched";
-      const sourceLabel=profile?.sourceDataset?.includes("P3R")?"P3R":profile?.sourceDataset?.includes("persian-poetry-meters")?"پیکرهٔ وزن‌های گنجور":"پیکرهٔ بیرونی";
+      const sourceLabel="پیکرهٔ عروضی بیرونی";
       const scansionLabel=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان":"تقطیع مصراع‌ها";
       const provenanceNote=profile?.sourceProvenance||profile?.enrichedSourceProvenance||"";
       const scansionWarning=profile?.scansionType==="arkan-signs"?"نشانه‌های کمّی ارکان را با تقطیع واقعی مصراع‌ها یکسان نگیرید. ":"";
