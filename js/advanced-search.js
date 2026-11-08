@@ -49,12 +49,18 @@ async function analyzeArchive(){
  archiveAnalysisStarted=true;mount();
  setStatus("در حال تحلیل ساختاری آرشیو و ذخیرهٔ پروفایل تک‌تک آثار…");
  try{
-  let existingProfiles=new Map();
+  let existingProfiles=new Map(),existingSummary=null;
   try{
    const saved=await window.YESStorage?.all("prosodyReview")||[];
+   existingSummary=saved.find(record=>record&&record.id==="archive-v1.8-summary")||null;
    existingProfiles=new Map(saved.filter(record=>record&&record.id&&record.id!=="archive-v1.8-summary").map(record=>[String(record.id),record]));
   }catch(e){}
   const contentItems=window.YESContent?.all||window.poemEntries||[];
+  if(existingSummary&&existingSummary.version==="1.8.0-prosody.2"&&existingSummary.total===contentItems.length){
+   contentItems.forEach(item=>{const profile=item&&item.id?existingProfiles.get(String(item.id)):null;if(profile&&profile.status==="confirmed"){item.prosody=profile;if(Number.isInteger(item.legacyIndex)&&window.poemEntries&&window.poemEntries[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=profile;}});
+   setStatus("پروفایل عروضی ذخیره‌شدهٔ "+contentItems.length.toLocaleString("fa-IR")+" اثر بازیابی شد؛ بازبینی‌های انسانی حفظ شده‌اند.");
+   return;
+  }
   const result=await window.YESProsody.analyzeAll(contentItems,{
    batchSize:400,existingProfiles,
    onBatch:async batch=>{if(window.YESStorage?.putMany)await window.YESStorage.putMany("prosodyReview",batch);},
