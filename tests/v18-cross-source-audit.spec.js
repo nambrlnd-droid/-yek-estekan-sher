@@ -43,12 +43,14 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
       manifestTotal: manifest?.total || 0,
       archiveRecords: shard.length,
       archiveItemsInContent: archiveItems.length,
+      archiveRecordsInLiveLibrary: (window.poemEntries || []).filter(x => x.archiveCategory).length,
       legacyPoems: legacyItems.length,
       pinnedRecords: pinned.length,
       webHafezRecords: webItems.length,
       telegramImportedSourceRows: window.telegramArchiveImported || 0,
       crossSourceOrRepeatedBodies: crossSourceBodies,
       duplicateIdsAcrossSources: duplicateIds,
+      duplicateBodyAnnotations: shard.filter(x => x.normalizedBodyDuplicate).length,
       missingTaxonomyInReaderContent: missingTaxonomy,
       firstLevelCounts: ["مذهبی", "عمومی"].map(label => ({
         label,
@@ -65,6 +67,9 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
   expect(report.manifestTotal).toBe(56880);
   expect(report.archiveRecords).toBe(56880);
   expect(report.archiveItemsInContent).toBe(56880);
+  expect(report.archiveRecordsInLiveLibrary).toBe(56880);
+  expect(report.archiveIdCollisionsWithLegacy).toBe(0);
+  expect(report.duplicateIdsAcrossSources).toBe(0);
   expect(report.legacyPoems).toBeGreaterThan(0);
   expect(report.pinnedRecords).toBe(19);
   expect(report.missingTaxonomyInReaderContent).toBe(0);
