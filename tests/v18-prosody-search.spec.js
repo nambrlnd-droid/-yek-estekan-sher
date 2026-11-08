@@ -37,6 +37,7 @@ test("advanced search filters are present and compose with existing search", asy
   await expect(page.locator("#prosodyMeterFilter")).toBeVisible();
   await expect(page.locator("#prosodyRhymeFilter")).toBeVisible();
   await expect(page.locator("#prosodyRadifFilter")).toBeVisible();
+  await expect(page.locator("#prosodyReviewFilter")).toBeVisible();
   const result = await page.evaluate(() => {
     const item = { body: "بهار آمد و گل از خاک سر برآورد\nنسیم صبحگاهی خبر آورد" };
     const initial = window.YESAdvancedSearch.matches(item);
@@ -133,6 +134,9 @@ test("human prosody review is saved locally and becomes searchable as confirmed"
   await expect(page.locator("#readerProsodyReviewStatus")).toContainText("ارکان");
   await page.locator("#readerProsodyArkan").fill("فعولن × ۳، فعل");
   await page.locator("#readerProsodySave").click();
+  await expect(page.locator("#readerProsodyReviewStatus")).toContainText("همهٔ 2");
+  await page.locator("#readerProsodyScansion").fill("U ـ ـ | U ـ ـ\nU ـ ـ | U ـ");
+  await page.locator("#readerProsodySave").click();
   await expect(page.locator("#readerProsodyReviewStatus")).toContainText("ذخیره شد");
   const status = await page.evaluate(async () => (await window.YESStorage.get("prosodyReview", "stage3-human-review")).status);
   expect(status).toBe("confirmed");
@@ -172,4 +176,24 @@ test("archive loading failure keeps the site covered and offers retry", async ({
   await page.locator("#archiveBootRetry").click();
   await expect(page.locator("#archiveBootScreen")).toBeVisible();
   await expect(page.locator("#archiveBootRetry")).toBeVisible();
+});
+
+
+test("prosody review queue filter distinguishes pending and human-reviewed works", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const pending = { id: "review-pending", body: "نمونه", prosody: { status: "review_required", poemType: "single-line" } };
+    const confirmed = { id: "review-confirmed", body: "نمونه", prosody: { status: "confirmed", poemType: "single-line", meter: "فعولن", bahr: "متقارب" } };
+    const filter = document.getElementById("prosodyReviewFilter");
+    filter.value = "review_required";
+    filter.dispatchEvent(new Event("input", { bubbles: true }));
+    const pendingMatch = window.YESAdvancedSearch.matches(pending);
+    const confirmedMatch = window.YESAdvancedSearch.matches(confirmed);
+    filter.value = "confirmed";
+    filter.dispatchEvent(new Event("input", { bubbles: true }));
+    return { pendingMatch, confirmedMatch, confirmedAfter: window.YESAdvancedSearch.matches(confirmed) };
+  });
+  expect(result.pendingMatch).toBeTruthy();
+  expect(result.confirmedMatch).toBeFalsy();
+  expect(result.confirmedAfter).toBeTruthy();
 });
