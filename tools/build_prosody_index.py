@@ -20,10 +20,10 @@ ARCHIVE = ROOT / "data" / "poetry-archive"
 CORPUS = ROOT / ".cache" / "P3R.csv"
 OUT = ARCHIVE / "prosody-index.json.gz"
 SUMMARY = ARCHIVE / "prosody-index-summary.json"
-CORPUS_URL = "https://media.githubusercontent.com/media/m-shahrestani/Prosody-Recognition-in-Persian-Poetry/master/dataset/P3R.csv"
+CORPUS_URL = "https://media.githubusercontent.com/media/m-shahrestani/Prosody-Recognition-in-Persian-Poetry/4a2dcea81967778fc42140dab57e45365723bf7d/dataset/P3R.csv"
 CORPUS_NAME = "P3R — Prosody Recognition in Persian Poetry"
 CORPUS_REPOSITORY = "https://github.com/m-shahrestani/Prosody-Recognition-in-Persian-Poetry"
-CORPUS_REVISION = "master"
+CORPUS_REVISION = "4a2dcea81967778fc42140dab57e45365723bf7d"
 
 
 def norm(value: object) -> str:
