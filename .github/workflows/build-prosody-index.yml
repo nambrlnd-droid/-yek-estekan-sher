@@ -1,0 +1,52 @@
+name: Build exact-match prosody corpus index
+
+on:
+  push:
+    branches:
+      - feature/prosody-corpus-import
+    paths:
+      - tools/build_prosody_index.py
+      - .github/workflows/build-prosody-index.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prosody-corpus-index
+  cancel-in-progress: false
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/prosody-corpus-import
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dataset reader
+        run: python -m pip install --upgrade pip datasets
+
+      - name: Build exact-match index
+        run: python tools/build_prosody_index.py
+
+      - name: Commit generated index and audit summary
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/poetry-archive/prosody-index.json.gz data/poetry-archive/prosody-index-summary.json
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "Import exact-match external prosody annotations"
+            git push origin HEAD:feature/prosody-corpus-import
+          fi
