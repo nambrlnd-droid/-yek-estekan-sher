@@ -46,7 +46,7 @@
       if(!profile&&window.YESProsody)profile=window.YESProsody.analyze(item);
       const grid=document.createElement("div");grid.className="reader-prosody-grid";
       const verified=profile?.status==="confirmed";
-      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):"تأیید نشده"],["قافیه",profile?.rhyme||"نیازمند بررسی"],["ردیف",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":"در انتظار بازبینی"]];
+      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":"در انتظار بازبینی"]];
       rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
       if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
       prosodyDetails.append(grid);
