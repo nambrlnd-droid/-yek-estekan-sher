@@ -4,7 +4,7 @@
 const $=id=>document.getElementById(id);
 const labels={home:"خانه",library:"کتابخانه",search:"جست‌وجو",favorites:"علاقه‌مندی‌ها",notebook:"دفتر من"};
 const routeIds={home:"homePageView",search:"searchPageView",library:"v15LibraryView",favorites:"favoritesPageView",notebook:"notebookView",pinned:"pinnedView",read:"readerView",image:"imageStudioView",poet:"poetPageView"};
-let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,poetReturnRoute="home",currentPoetName="",internalClick=false,favoritesBusy=false,poetPageLimit=50;
+let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,poetReturnRoute="home",poetReturnId=null,currentPoetName="",internalClick=false,favoritesBusy=false,poetPageLimit=50;
 const allPageIds=Object.values(routeIds);
 function make(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 function link(route,title,description,glyph){
@@ -51,7 +51,7 @@ function createPoetPage(){
  const page=make("section","v16-page poet-page");page.id="poetPageView";
  page.innerHTML='<button class="back" id="poetPageBack" type="button">← بازگشت</button><header class="poet-page-head"><span class="v16-eyebrow">شناسنامهٔ شاعر</span><h2 id="poetPageName">نام شاعر</h2><p id="poetPageBio">آثار ثبت‌شده در کتابخانهٔ یک استکان شعر</p><div class="poet-page-stats" id="poetPageStats"></div></header><div class="poet-page-list" id="poetPageWorks"></div><button class="tool-button poet-page-more" id="poetPageMore" type="button" hidden>نمایش آثار بیشتر</button>';
  document.querySelector("main").append(page);
- $("poetPageBack").addEventListener("click",()=>go(poetReturnRoute||"home"));
+ $("poetPageBack").addEventListener("click",()=>go(poetReturnRoute||"home",poetReturnRoute==="read"?poetReturnId:undefined));
  $("poetPageMore").addEventListener("click",()=>{poetPageLimit+=50;renderPoetPage(decodeURIComponent(window.YESRouter.current().id));});
 }
 function renderPoetPage(author){
@@ -155,7 +155,7 @@ function go(route,id){
 function showRoute(state){
  const route=state?.route||"home";
  if(route==="read"){if(activeRoute!=="read"&&!(activeRoute==="image"&&imageReturnRoute==="read"))readerReturnRoute=activeRoute;currentReadId=state?.id?decodeURIComponent(state.id):currentReadId;activeRoute="read";setVisible("read");return;}
- if(route==="poet"){if(activeRoute!=="poet")poetReturnRoute=activeRoute;activeRoute="poet";setVisible("poet");renderPoetPage(state?.id?decodeURIComponent(state.id):"");return;}
+ if(route==="poet"){if(activeRoute!=="poet"){poetReturnRoute=activeRoute;poetReturnId=activeRoute==="read"?currentReadId:null;}activeRoute="poet";setVisible("poet");renderPoetPage(state?.id?decodeURIComponent(state.id):"");return;}
  if(route==="image"||route==="image-studio"){if(activeRoute!=="image"){imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;}activeRoute="image";setVisible("image");return;}
  if(route==="pinned"){if(activeRoute!=="pinned")pinnedReturnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
