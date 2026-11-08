@@ -3,6 +3,7 @@
 "use strict";
 const state={type:"",meter:"",rhyme:"",radif:""};let statusNode=null;
 const types=[["","همهٔ قالب‌ها"],["couplet","دو مصراعی"],["multi-line","چندمصراعی"],["single-line","تک‌مصراعی"],["fragment","قطعه / متن ناقص"]];
+function setStatus(message){setStatus(message;}
 function node(tag,attrs,text){const n=document.createElement(tag);Object.entries(attrs||{}).forEach(([k,v])=>n.setAttribute(k,v));if(text)n.textContent=text;return n;}
 function mount(){
  const anchor=document.querySelector(".search-filters");if(!anchor||document.getElementById("prosodyFilters"))return;
@@ -48,7 +49,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 let archiveAnalysisStarted=false;
 window.addEventListener("yes:archive-ready",async()=>{
  if(archiveAnalysisStarted||!window.YESProsody)return;archiveAnalysisStarted=true;
- if(statusNode)statusNode.textContent="در حال تحلیل ساختاری آرشیو و ذخیرهٔ پروفایل تک‌تک آثار…";
+ if(statusNode)setStatus("در حال تحلیل ساختاری آرشیو و ذخیرهٔ پروفایل تک‌تک آثار…");
  try{
   const result=await window.YESProsody.analyzeAll(window.YESContent?.all||window.poemEntries||[],{
    batchSize:400,
