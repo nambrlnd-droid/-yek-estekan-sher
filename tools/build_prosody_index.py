@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Build the reproducible exact-couplet prosody index from the MIT / CC BY 4.0 P3R corpus.
+"""Build an exact-couplet prosody index from the MIT / CC BY 4.0 P3R corpus.
 
 Only exact normalized hemistich-pair matches are used. No fuzzy inference is
 performed; conflicting meter votes are excluded from the published index.
+Both the compressed archive and all static site poem collections are scanned.
 """
 from __future__ import annotations
 
@@ -18,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "data" / "poetry-archive"
 CORPUS = ROOT / ".cache" / "P3R.csv"
+SITE_POEMS = ROOT / ".cache" / "site-poems.json"
 OUT = ARCHIVE / "prosody-index.json.gz"
 SUMMARY = ARCHIVE / "prosody-index-summary.json"
 CORPUS_URL = "https://media.githubusercontent.com/media/m-shahrestani/Prosody-Recognition-in-Persian-Poetry/4a2dcea81967778fc42140dab57e45365723bf7d/dataset/P3R.csv"
@@ -78,12 +80,59 @@ def read_corpus() -> dict[tuple[str, str], Counter]:
     return pair_labels
 
 
+def classify_record(record: dict, pair_labels: dict[tuple[str, str], Counter], record_type: str):
+    lines = [line.strip() for line in str(record.get("body") or "").splitlines() if line.strip()]
+    votes: Counter = Counter()
+    exact_pairs = 0
+    for index in range(0, len(lines) - 1, 2):
+        key = (norm(lines[index]), norm(lines[index + 1]))
+        labels = pair_labels.get(key)
+        if not labels:
+            continue
+        total_votes = sum(labels.values())
+        meter, count = labels.most_common(1)[0]
+        if count / total_votes < 0.9:
+            continue
+        votes[meter] += 1
+        exact_pairs += 1
+    if not votes:
+        return None, False
+    meter, count = votes.most_common(1)[0]
+    support = count / sum(votes.values())
+    if support < 0.8:
+        return None, True
+    item_id = str(record["id"])
+    return {
+        "id": item_id,
+        "meter": meter,
+        "bahr": None,
+        "arkan": meter,
+        "scansion": None,
+        "meterSource": "P3R exact couplet corpus",
+        "sourceDataset": CORPUS_NAME,
+        "sourceDatasetRevision": CORPUS_REVISION,
+        "sourceDatasetUrl": CORPUS_REPOSITORY,
+        "sourceLicense": "MIT and CC BY 4.0",
+        "sourceRecordType": record_type,
+        "status": "external_source_matched",
+        "confidence": "multiple_exact_couplets" if exact_pairs > 1 else "one_exact_couplet",
+        "matchedCouplets": exact_pairs,
+        "meterVoteShare": round(support, 4),
+        "lineScansionAvailable": False,
+        "reviewer": None,
+        "reviewedAt": None,
+    }, False
+
+
 def main() -> None:
     pair_labels = read_corpus()
     matches: dict[str, dict] = {}
-    ambiguous = 0
-    matched_couplets = 0
+    ambiguous_archive = 0
+    ambiguous_local = 0
+    matched_archive_couplets = 0
+    matched_local_couplets = 0
     total_archive = 0
+    matched_archive = 0
     archive_files = sorted(path for path in ARCHIVE.glob("*.json.gz") if path.name != OUT.name)
 
     for shard in archive_files:
@@ -93,50 +142,33 @@ def main() -> None:
             total_archive += 1
             if not isinstance(record, dict) or record.get("id") is None:
                 continue
-            lines = [line.strip() for line in str(record.get("body") or "").splitlines() if line.strip()]
-            votes: Counter = Counter()
-            exact_pairs = 0
-            for index in range(0, len(lines) - 1, 2):
-                key = (norm(lines[index]), norm(lines[index + 1]))
-                labels = pair_labels.get(key)
-                if not labels:
+            profile, ambiguous = classify_record(record, pair_labels, "archive")
+            if ambiguous:
+                ambiguous_archive += 1
+            if profile:
+                matches[profile["id"]] = profile
+                matched_archive += 1
+                matched_archive_couplets += profile["matchedCouplets"]
+
+    local_total = 0
+    local_matched = 0
+    if SITE_POEMS.exists():
+        site_data = json.loads(SITE_POEMS.read_text(encoding="utf-8"))
+        for record_type, records in (("site-poem", site_data.get("poems", [])), ("pinned-entry", site_data.get("pinned", []))):
+            for record in records:
+                local_total += 1
+                if not isinstance(record, dict) or record.get("id") is None:
                     continue
-                # Preserve source labels; a conflicting source pair contributes
-                # only its majority label when the vote is unambiguous.
-                total_votes = sum(labels.values())
-                meter, count = labels.most_common(1)[0]
-                if count / total_votes < 0.9:
+                item_id = str(record["id"])
+                if item_id in matches:
                     continue
-                votes[meter] += 1
-                exact_pairs += 1
-            if not votes:
-                continue
-            meter, count = votes.most_common(1)[0]
-            support = count / sum(votes.values())
-            if support < 0.8:
-                ambiguous += 1
-                continue
-            item_id = str(record["id"])
-            matches[item_id] = {
-                "id": item_id,
-                "meter": meter,
-                "bahr": None,
-                "arkan": meter,
-                "scansion": None,
-                "meterSource": "P3R exact couplet corpus",
-                "sourceDataset": CORPUS_NAME,
-                "sourceDatasetRevision": CORPUS_REVISION,
-                "sourceDatasetUrl": CORPUS_REPOSITORY,
-                "sourceLicense": "MIT and CC BY 4.0",
-                "status": "external_source_matched",
-                "confidence": "multiple_exact_couplets" if exact_pairs > 1 else "one_exact_couplet",
-                "matchedCouplets": exact_pairs,
-                "meterVoteShare": round(support, 4),
-                "lineScansionAvailable": False,
-                "reviewer": None,
-                "reviewedAt": None,
-            }
-            matched_couplets += exact_pairs
+                profile, ambiguous = classify_record(record, pair_labels, record_type)
+                if ambiguous:
+                    ambiguous_local += 1
+                if profile:
+                    matches[item_id] = profile
+                    local_matched += 1
+                    matched_local_couplets += profile["matchedCouplets"]
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(OUT, "wt", encoding="utf-8", compresslevel=9) as handle:
@@ -151,10 +183,16 @@ def main() -> None:
         "corpusRows": sum(sum(labels.values()) for labels in pair_labels.values()),
         "uniqueExactCoupletKeys": len(pair_labels),
         "archiveRecords": total_archive,
-        "matchedArchiveRecords": len(matches),
-        "unmatchedArchiveRecords": total_archive - len(matches),
-        "ambiguousArchiveRecordsExcluded": ambiguous,
-        "matchedExactCouplets": matched_couplets,
+        "matchedArchiveRecords": matched_archive,
+        "unmatchedArchiveRecords": total_archive - matched_archive,
+        "ambiguousArchiveRecordsExcluded": ambiguous_archive,
+        "staticSiteSourceRecords": local_total,
+        "matchedStaticSiteSourceRecords": local_matched,
+        "unmatchedStaticSiteSourceRecords": local_total - local_matched,
+        "ambiguousStaticSiteRecordsExcluded": ambiguous_local,
+        "totalMatchedSiteRecords": len(matches),
+        "matchedExactArchiveCouplets": matched_archive_couplets,
+        "matchedExactStaticSiteCouplets": matched_local_couplets,
         "importedStatus": "external_source_matched (not human-reviewed)",
         "bahr": "not provided separately in source; left empty",
         "scansion": "binary per-line scansion not provided in source; left empty",
