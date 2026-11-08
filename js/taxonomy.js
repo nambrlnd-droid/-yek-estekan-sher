@@ -1,144 +1,182 @@
-/* Two-level editorial taxonomy for Yek Estekan Sher.
-   Source poem/text bodies, authors, IDs and original tags are preserved.
-   Only derived classification fields are added/updated. */
-(function () {
+/* Hierarchical taxonomy engine for Yek Estekan Sher — v3.0.0.
+   Original source fields are immutable; only derived taxonomy fields are assigned. */
+(function(){
 "use strict";
-
-const entries = Array.isArray(window.poemEntries) ? window.poemEntries : [];
-const pinned = Array.isArray(window.pinnedEntries) ? window.pinnedEntries : [];
-
-const norm = value => String(value == null ? "" : value)
-  .normalize("NFKC").replace(/[يى]/g, "ی").replace(/ك/g, "ک")
-  .replace(/[\u064B-\u065F\u0670]/g, "").replace(/[\u200c\u200e\u200f]/g, " ")
-  .replace(/\s+/g, " ").trim().toLowerCase();
-
-const sacred = [
-  ["امیرالمؤمنین علیه‌السلام", /امیرالمؤمنین|امیر مومنان|امیرالمومنین|علی بن ابی.?طالب|امام علی|یا علی|یاعلی|حیدر|مرتضی|ذوالفقار|غدیر|نهج.?البلاغه|مولای متقیان|ابوتراب/],
-  ["حضرت فاطمه زهرا سلام‌الله‌علیها", /حضرت زهرا|فاطمه زهرا|فاطمه|صدیقه|یاس کبود|ام.?ابیها|مادر سادات/],
-  ["امام حسن مجتبی علیه‌السلام", /امام حسن|حسن مجتبی|مجتبی|حسن بن علی|کریم اهل.?بیت/],
-  ["امام حسین علیه‌السلام", /امام حسین|حسین بن علی|الحسین بن علی|سیدالشهدا|سید الشهدا|کربلا|عاشورا|نینوا|اباعبدالله|یا حسین|یاحسین/],
-  ["امام سجاد علیه‌السلام", /امام سجاد|علی بن الحسین|زین العابدین|صحیفه سجادیه/],
-  ["امام باقر علیه‌السلام", /امام باقر|محمد باقر|باقر العلوم/],
-  ["امام صادق علیه‌السلام", /امام صادق|جعفر بن محمد|جعفر صادق/],
-  ["امام کاظم علیه‌السلام", /امام کاظم|موسی بن جعفر|باب الحوائج/],
-  ["امام رضا علیه‌السلام", /امام رضا|علی بن موسی|سلطان خراسان|ضامن آهو/],
-  ["امام جواد علیه‌السلام", /امام جواد|محمد تقی|جواد الائمه/],
-  ["امام هادی علیه‌السلام", /امام هادی|علی نقی|هادی الائمه/],
-  ["امام حسن عسکری علیه‌السلام", /امام حسن عسکری|حسن عسکری/],
-  ["امام زمان عجل‌الله‌تعالی‌فرجه", /امام زمان|صاحب الزمان|حضرت مهدی|مهدی موعود|قائم آل محمد|ظهور|فرج|غیبت کبری/],
-  ["پیامبر اکرم صلی‌الله‌علیه‌وآله", /پیامبر|رسول خدا|محمد مصطفی|خاتم الانبیا|حضرت محمد|مصطفی احمد/],
-  ["حضرت زینب سلام‌الله‌علیها", /حضرت زینب|زینب کبری|عقیله بنی هاشم/],
-  ["حضرت عباس علیه‌السلام", /حضرت عباس|ابوالفضل|قمر بنی هاشم|عباس بن علی/],
-  ["حضرت علی‌اکبر علیه‌السلام", /علی اکبر|حضرت علی.?اکبر/],
-  ["حضرت علی‌اصغر علیه‌السلام", /علی اصغر|طفل شیرخوار/],
-  ["اهل‌بیت علیهم‌السلام", /اهل.?بیت|آل.?الله|عترت|چهارده معصوم|معصومین|ائمه اطهار/],
-  ["قرآن و معارف قرآنی", /قرآن|آیه|سوره|بسم الله|آیت الکرسی|کلام وحی/],
-  ["دعا و مناجات", /دعای|دعا|مناجات|استغفار|توبه|یا رب|پروردگارا|الهی/],
-  ["زیارت و عتبات", /زیارت|حرم|عتبات|نجف|کاظمین|سامرا|بین الحرمین|بقیع/],
-  ["مناسبت‌ها و آیین‌های دینی", /رمضان|شب قدر|محرم|صفر|اربعین|نیمه شعبان|فاطمیه|ولادت|شهادت|عید مبعث|عید غدیر/],
-  ["تاریخ و سیره دینی", /سیره|تاریخ اسلام|هجرت|غزوه|جنگ بدر|صفین|جمل|کوفه|مدینه|مکه/],
-  ["معارف و اعتقادات", /توحید|نبوت|امامت|معاد|ولایت|شفاعت|بهشت|دوزخ|قیامت|ملائکه/]
+const entries=Array.isArray(window.poemEntries)?window.poemEntries:[];
+const pinned=Array.isArray(window.pinnedEntries)?window.pinnedEntries:[];
+const norm=v=>String(v==null?"":v).normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک")
+ .replace(/[\u064b-\u065f\u0670]/g,"").replace(/[\u200c\u200e\u200fـ]/g," ")
+ .replace(/\s+/g," ").trim().toLowerCase();
+const make=(c1,c2,c3,confidence,reason)=>({category1:c1,category2:c2,category3:c3||"",confidence,reason});
+const sacred=[
+ ["امیرالمؤمنین علیه‌السلام",/(امیرالمؤمنین|امیر مومنان|امیرالمومنین|علی بن ابی.?طالب|امام علی|یا علی|یاعلی|حیدر|مرتضی|ذوالفقار|غدیر|نهج.?البلاغه|مولای متقیان|ابوتراب|نجف)/],
+ ["حضرت فاطمه زهرا سلام‌الله‌علیها",/(حضرت زهرا|فاطمه زهرا|یا زهرا|یازهرا|صدیقه کبری|ام.?ابیها|مادر سادات)/],
+ ["امام حسن مجتبی علیه‌السلام",/(امام حسن|حسن مجتبی|مجتبی|حسن بن علی|کریم اهل.?بیت|سبط اکبر)/],
+ ["امام حسین علیه‌السلام",/(امام حسین|حسین بن علی|سیدالشهدا|سید الشهدا|کربلا|عاشورا|نینوا|اباعبدالله|یا حسین|یاحسین)/],
+ ["امام سجاد علیه‌السلام",/(امام سجاد|علی بن الحسین|زین العابدین|صحیفه سجادیه)/],
+ ["امام باقر علیه‌السلام",/(امام باقر|محمد باقر|باقر العلوم)/],
+ ["امام صادق علیه‌السلام",/(امام صادق|جعفر بن محمد|جعفر صادق)/],
+ ["امام کاظم علیه‌السلام",/(امام کاظم|موسی بن جعفر|باب الحوائج)/],
+ ["امام رضا علیه‌السلام",/(امام رضا|علی بن موسی|سلطان خراسان|ضامن آهو)/],
+ ["امام جواد علیه‌السلام",/(امام جواد|محمد تقی|جواد الائمه)/],
+ ["امام هادی علیه‌السلام",/(امام هادی|علی نقی|هادی الائمه)/],
+ ["امام حسن عسکری علیه‌السلام",/(امام حسن عسکری|حسن عسکری)/],
+ ["امام زمان عجل‌الله‌تعالی‌فرجه",/(امام زمان|صاحب الزمان|حضرت مهدی|مهدی موعود|قائم آل محمد|یا مهدی|یامهدی|غیبت کبری)/],
+ ["پیامبر اکرم صلی‌الله‌علیه‌وآله",/(پیامبر|رسول خدا|محمد مصطفی|خاتم الانبیا|حضرت محمد|مصطفی احمد)/],
+ ["حضرت زینب سلام‌الله‌علیها",/(حضرت زینب|زینب کبری|عقیله بنی هاشم)/],
+ ["حضرت عباس علیه‌السلام",/(حضرت عباس|ابوالفضل|قمر بنی هاشم|عباس بن علی|یا عباس)/],
+ ["حضرت علی‌اکبر علیه‌السلام",/(علی اکبر|حضرت علی.?اکبر)/],
+ ["حضرت علی‌اصغر علیه‌السلام",/(علی اصغر|طفل شیرخوار|رباب)/],
+ ["اهل‌بیت علیهم‌السلام",/(اهل.?بیت|آل.?الله|عترت|چهارده معصوم|معصومین|ائمه اطهار)/]
 ];
-
-const topicAliases = new Map([
-  ["عاشقانه و دلدادگی","عاشقانه و دلدادگی"],["عاشقانه و عاطفی","عاشقانه و دلدادگی"],["عشق و دلدادگی","عاشقانه و دلدادگی"],
-  ["فراق و دلتنگی","فراق و دلتنگی"],["اندوه و دلتنگی","فراق و دلتنگی"],["انتظار و دلتنگی","فراق و دلتنگی"],
-  ["تنهایی و غربت","تنهایی و غربت"],["اندوه و تنهایی","تنهایی و غربت"],["رنج و دل‌شکستگی","رنج و دل‌شکستگی"],["رنج و دلشکستگی","رنج و دل‌شکستگی"],
-  ["امید و تاب‌آوری","امید و تاب‌آوری"],["امید و انتظار","امید و انتظار"],["امید و دیدار","امید و انتظار"],
-  ["عرفان و معنویت","عرفان و معنویت"],["حکمت و اخلاق","حکمت و اخلاق"],["اجتماعی و انتقادی","اجتماعی و انتقادی"],
-  ["طبیعت و توصیف","طبیعت و توصیف"],["مرگ و گذر عمر","مرگ و گذر عمر"],["طنز و لطافت","طنز و لطافت"],
-  ["تأمل و اندیشه","تأمل و اندیشه"],["تأمل و تفکر","تأمل و اندیشه"],["تأملی و ادبی","تأمل و اندیشه"],["هویت و خودشناسی","هویت و خودشناسی"],
-  ["وفاداری","وفاداری"],["همدمی و رفاقت","همدمی و رفاقت"],["خاطره","خاطره"],
-  ["غزل","غزل و ادبیات کلاسیک"],["ادبیات کلاسیک","غزل و ادبیات کلاسیک"],["غزل حافظ","غزل و ادبیات کلاسیک"],
-  ["مدح و مناقب امیرالمؤمنین","امیرالمؤمنین علیه‌السلام"],["مدح و مناقب اهل‌بیت","اهل‌بیت علیهم‌السلام"],
-  ["کربلا و عاشورا","امام حسین علیه‌السلام"],["امام حسن مجتبی","امام حسن مجتبی علیه‌السلام"],
-  ["دینی و آیینی","مناسبت‌ها و آیین‌های دینی"],["سوگ و دلدادگی","سوگ و مرثیه"],["سوگ و مرثیه","سوگ و مرثیه"],
-  ["شوق زیارت و عتبات","زیارت و عتبات"],["معارف و مناجات","دعا و مناجات"],
-  ["نامه‌ها و متون تاریخی","نامه‌ها و متون تاریخی"],["پیوندها و منابع","پیوندها و منابع"],
-  ["پیشنهاد‌ومیض","مجموعه پیشنهاد‌ومیض"]
-].map(([key, value]) => [norm(key), value]));
-
-const generalRules = [
- ["عاشقانه و دلدادگی", /عشق|عاشق|معشوق|دلدار|دلبر|نگار|جانان|بوسه|آغوش|وصال|دلداد|دوستت دارم/],
- ["فراق و دلتنگی", /فراق|هجر|هجران|دوری|دلتنگ|جدایی|بی.?تو|رفتی|نماندی|مهجور/],
- ["تنهایی و غربت", /تنهایی|تنها|غربت|غریب|بی.?کسی|بیگانه|خلوت|انزوا|بی.?همدم/],
- ["امید و انتظار", /امید|انتظار|منتظر|چشم.?به.?راه|سپیده|گشایش|بازآ|بازگرد/],
- ["رنج و دل‌شکستگی", /غم|اندوه|رنج|شکست|درد|گریه|اشک|زخم|آزار|دلگیر|خسته/],
- ["عرفان و معنویت", /خدا|خدایا|پروردگار|نماز|سجده|محراب|ذکر|توحید|سلوک|عارف|ملکوت|عبادت/],
- ["حکمت و اخلاق", /خرد|عقل|اخلاق|نیکی|حسادت|غرور|تواضع|انصاف|عدالت|راستی|دروغ|جوانمرد|قناعت|حرص/],
- ["اجتماعی و انتقادی", /مردم|جامعه|وطن|ایران|ستم|ظلم|فقیر|غنی|آزادی|جنگ|صلح|حاکم|ریا|زمانه/],
- ["طبیعت و توصیف", /بهار|پاییز|زمستان|باران|دریا|کوه|گل|بلبل|باغ|آسمان|خورشید|ماه|ستاره/],
- ["مرگ و گذر عمر", /مرگ|مردن|قبر|خاک|کفن|پیری|عمر|اجل|فنا|زوال/],
- ["طنز و لطافت", /خنده|خندید|شوخی|طنز|لبخند|بخند|شوخ|لطیفه/],
- ["تأمل و اندیشه", /اندیشه|تفکر|تأمل|معنا|زندگی|جهان|هستی|حقیقت|راز|فلسفه|بودن|نیستی|سرنوشت/]
+const religiousTags=new Map([
+ ["قرآن و معارف قرآنی",["قرآن","آیات و سوره‌ها"]],
+ ["دعا و مناجات",["دعا و نیایش","مناجات"]],
+ ["زیارت و عتبات",["زیارت و اشتیاق","عتبات"]],
+ ["مناسبت‌ها و آیین‌های دینی",["مناسبت و آیین","رمضان و شب‌های قدر","محرم و صفر","اربعین"]],
+ ["معارف و اعتقادات",["توحید و معرفت","ولایت و امامت","معاد و قیامت"]],
+ ["تاریخ و سیره دینی",["سیره و تاریخ","تاریخ اسلام"]],
+ ["سوگ و مرثیه",["مرثیه و سوگ","روضه","سوگواری"]]
+]);
+const generalAliases=new Map([
+ ["عاشقانه و عاطفی","عاشقانه و دلدادگی"],["عشق و دلدادگی","عاشقانه و دلدادگی"],["فراق و دلتنگی","فراق و دلتنگی"],
+ ["تنهایی و غربت","فراق و دلتنگی"],["رنج و دل‌شکستگی","عاشقانه و دلدادگی"],["امید و تاب‌آوری","فلسفی و تأملی"],
+ ["حکمی و اخلاقی","حکمت و اخلاق"],["اجتماعی و انتقادی","اجتماعی و انتقادی"],["طبیعت و توصیف","طبیعت و توصیف"],
+ ["طنز و لطافت","طنز و هجو"],["تأمل و اندیشه","فلسفی و تأملی"],["فلسفی و تأملی","فلسفی و تأملی"],
+ ["روایی و داستانی","روایی و داستانی"],["حماسی و ملی","حماسی و ملی"],["متفرقه و چندموضوعی","متفرقه و چندموضوعی"],
+ ["غزل","غزل و ادبیات کلاسیک"],["ادبیات کلاسیک","غزل و ادبیات کلاسیک"]
+]);
+const archiveMap=new Map([
+ ["اجتماعی و انتقادی","اجتماعی و انتقادی"],["حماسی و ملی","حماسی و ملی"],["حکمی و اخلاقی","حکمت و اخلاق"],
+ ["روایی و داستانی","روایی و داستانی"],["طبیعت و توصیف","طبیعت و توصیف"],["طنز و هجو","طنز و هجو"],
+ ["عاشقانه و دلدادگی","عاشقانه و دلدادگی"],["فلسفی و تأملی","فلسفی و تأملی"],["متفرقه و چندموضوعی","متفرقه و چندموضوعی"]
+]);
+const generalRules=[
+ ["عاشقانه و دلدادگی",/(عشق|عاشق|معشوق|دلدار|دلبر|نگار|جانان|وصال|دلداد|دوستت دارم)/],
+ ["فراق و دلتنگی",/(فراق|هجران|دوری از تو|دلتنگ|جدایی|بی.?تو|مهجور)/],
+ ["حکمت و اخلاق",/(خرد|عقل|اخلاق|نیکی|حسادت|غرور|تواضع|انصاف|عدالت|راستی|دروغ|جوانمرد|قناعت|حرص)/],
+ ["اجتماعی و انتقادی",/(ستم|ظلم|فقیر|آزادی|وطن|ایران|حاکم|ریا|عدالت اجتماعی|زمانه)/],
+ ["طبیعت و توصیف",/(بهار|پاییز|زمستان|باران|دریا|کوه|گلستان|بلبل|باغ|آسمان|خورشید|ستاره)/],
+ ["طنز و هجو",/(طنز|هجو|لطیفه|خنده|لبخند|شوخی|بخند)/],
+ ["فلسفی و تأملی",/(هستی|حقیقت|معنای زندگی|سرنوشت|فنا|زوال|گذر عمر|مرگ|جهان|زندگی)/],
+ ["روایی و داستانی",/(حکایت|روایت|قصه|داستان)/],
+ ["حماسی و ملی",/(پهلوان|رستم|سیاوش|ایران زمین|حماسه)/]
 ];
-
-const genericTags = new Set(["ادبیات کلاسیک","پیشنهاد‌ومیض","شعر","اشعار","متن","متون","غزل"].map(norm));
-function tagSubject(item, body, isText) {
-  const tags = Array.isArray(item.tags) ? item.tags : [];
-  let broadTag = null;
-  for (const raw of tags) {
-    if (typeof raw !== "string" || !raw.trim() || /^\d+$/.test(raw.trim())) continue;
-    const tag = norm(raw);
-    for (const [name, re] of sacred) {
-      if (re.test(tag)) {
-        if (name === "اهل‌بیت علیهم‌السلام") { if (!broadTag) broadTag = name; }
-        else return {name, confidence:"high"};
-      }
-    }
-    const mapped = topicAliases.get(tag);
-    if (mapped && !genericTags.has(tag) && !broadTag) broadTag = mapped;
-    if (tag && !genericTags.has(tag) && !["ادبیات کلاسیک"].includes(tag)) {
-      const hit = generalRules.find(([,re]) => re.test(tag));
-      if (hit && !broadTag) broadTag = hit[0];
-    }
-  }
-  for (const [name, re] of sacred) if (re.test(body)) return {name, confidence:"medium"};
-  if (broadTag) return {name:broadTag, confidence:"high"};
-  const hit = generalRules.find(([,re]) => re.test(body));
-  if (hit) return {name:hit[0], confidence:"medium"};
-  if (tags.some(t => typeof t === "string" && /غزل|ادبیات کلاسیک/.test(norm(t)))) return {name:"غزل و ادبیات کلاسیک", confidence:"medium"};
-  const author = String(item.author || "").replace(/[\u200c\u200e\u200f]/g, " ").replace(/\s+/g, " ").trim();
-  if (author) return {name:"اشعار "+author, confidence:"medium"};
-  return {name:isText ? "نوشته عمومی" : "اشعار متفرقه و موضوع نامشخص", confidence:"low"};
+const subRules=[
+ ["مدح و منقبت",/(مدح|مناقب|ستایش|ثنا|فدایت|فدای تو|یا علی|یا حسین)/],
+ ["مرثیه و سوگ",/(عزا|عزاداری|ماتم|گریه|اشک|مصیبت|سوگ|روضه|شهید|شهادت|قتلگاه|تشییع)/],
+ ["ولادت",/(ولادت|میلاد|متولد|قدم مبارک)/],
+ ["شهادت",/(شهادت|شهید|ضربت|مسموم|قتلگاه)/],
+ ["غدیر و ولایت",/(غدیر|ولایت|وصایت|جانشین|بیعت)/],
+ ["زیارت و اشتیاق",/(زیارت|حرم|ضریح|عتبات|نجف|کربلا|مشهد|بقیع)/],
+ ["انتظار و فرج",/(انتظار|منتظر|ظهور|فرج|دوران غیبت)/],
+ ["دعا و نیایش",/(دعا|مناجات|یا رب|الهی|پروردگارا|استغفار)/],
+ ["توحید و معرفت",/(توحید|خالق|خداوند|معرفت|اسماء الهی)/],
+ ["قرآن و آیات",/(قرآن|آیه|سوره|بسم الله|آیت الکرسی)/],
+ ["سیره و تاریخ",/(سیره|هجرت|غزوه|بدر|صفین|جمل|تاریخ اسلام)/],
+ ["مناسبت و آیین",/(رمضان|شب قدر|محرم|صفر|اربعین|فاطمیه|عید مبعث|عید غدیر)/],
+ ["وصال و دیدار",/(وصال|دیدار|به وصلم|رسیدن به یار)/],
+ ["جدایی و هجران",/(فراق|هجر|هجران|جدایی|دوری)/],
+ ["وفاداری",/(وفا|وفادار|پیمان|عهد)/],
+ ["شوق و دلدادگی",/(شوق|اشتیاق|دلدادگی|دل سپردن)/],
+ ["رنج و دل‌شکستگی",/(دل‌شکسته|دلشکسته|رنج|اندوه|غم|زخم)/],
+ ["خرد و دانایی",/(خرد|دانایی|دانش|عقل|حکمت)/],
+ ["فضیلت و رذیلت",/(فضیلت|رذیلت|حسادت|غرور|تواضع|قناعت)/],
+ ["عدالت و انصاف",/(عدالت|انصاف|ستم|ظلم)/],
+ ["نصیحت و پند",/(پند|نصیحت|باید|مبادا|عبرت)/],
+ ["وطن و هویت",/(وطن|ایران|میهن|هویت)/],
+ ["ستم و عدالت‌خواهی",/(ستم|ظلم|استبداد|عدالت‌خواهی)/],
+ ["نقد جامعه و زمانه",/(جامعه|مردم|زمانه|حاکم|ریا)/],
+ ["جنگ و صلح",/(جنگ|صلح|نبرد|آشتی)/],
+ ["بهار و شکوفایی",/(بهار|شکوفه|نوروز)/],
+ ["پاییز و زمستان",/(پاییز|زمستان|برف|سرما)/],
+ ["آب و باران و دریا",/(باران|دریا|موج|رود|باران)/],
+ ["گل و باغ",/(گل|باغ|بلبل|لاله|نرگس)/],
+ ["آسمان و اجرام آسمانی",/(آسمان|خورشید|ماه|ستاره|سپهر)/],
+ ["هستی و حقیقت",/(هستی|حقیقت|وجود|معنا)/],
+ ["زندگی و سرنوشت",/(زندگی|سرنوشت|روزگار)/],
+ ["مرگ و گذر عمر",/(مرگ|عمر|اجل|پیری|فنا|زوال)/],
+ ["خودشناسی و هویت",/(خودشناسی|خویشتن|هویت|من کیستم)/],
+ ["روایت و حکایت",/(حکایت|روایت|قصه|داستان)/],
+ ["حماسه و پهلوانی",/(پهلوان|رستم|سیاوش|حماسه)/]
+];
+const generic=new Set(["شعر","اشعار","متن","متون","غزل","ادبیات کلاسیک","پیشنهاد ومیض"]);
+function strings(tags){return (Array.isArray(tags)?tags:[]).filter(x=>typeof x==="string"&&x.trim()&&!/^\d+$/.test(x.trim())).map(x=>norm(x));}
+function classify(item,isPinned){
+ const body=norm(item.body), tags=strings(item.tags), combined=tags.join(" ");
+ const text=isPinned ? tags.some(t=>/(نامه‌ها و متون تاریخی|پیوندها و منابع)/.test(t)) : item.section==="texts";
+ const isText=!!text;
+ const paths=[];
+ const add=(c1,c2,c3,confidence,reason)=>{
+  if(!c2)return;
+  const p=make(c1,c2,c3,confidence,reason);
+  if(!paths.some(x=>x.category1===p.category1&&x.category2===p.category2&&x.category3===p.category3))paths.push(p);
+ };
+ // Explicit entity labels and strong entity phrases are the most specific religious evidence.
+ for(const [name,re] of sacred){
+  const explicit=tags.some(t=>re.test(t)||norm(name)===t);
+  const inBody=re.test(body);
+  if(explicit||inBody)add("مذهبی",name,subRules.find(([,sr])=>sr.test(combined+" "+body))?.[0]||"",explicit?"high":"medium",explicit?"برچسب صریح":"قرینهٔ متنی");
+ }
+ // Explicit religious-domain tags.
+ for(const [name,aliases] of religiousTags){
+  if(tags.some(t=>aliases.some(a=>norm(a)===t)||norm(name)===t))add("مذهبی",name,subRules.find(([,sr])=>sr.test(combined+" "+body))?.[0]||"", "high","برچسب صریح");
+ }
+ // General source tags are accepted only as exact/known labels.
+ for(const tag of tags){
+  if(generic.has(tag))continue;
+  const mapped=generalAliases.get(tag);
+  if(mapped)add("عمومی",mapped,subRules.find(([,sr])=>sr.test(tag+" "+body))?.[0]||"", "high","برچسب موضوعی");
+ }
+ // Detect clear general subjects only when no explicit religious path competes.
+ if(!paths.some(p=>p.category1==="مذهبی")){
+  for(const [name,re] of generalRules)if(re.test(body))add("عمومی",name,subRules.find(([,sr])=>sr.test(body))?.[0]||"","medium","قرینهٔ متنی");
+ }
+ // Keep multiple explicitly-supported paths, but do not promote vague single words.
+ if(!paths.length){
+  const archiveLabel=String(item.archiveCategory||item.archive_category||item.genre||item.category||"").trim();
+  const mapped=archiveMap.get(archiveLabel);
+  if(mapped)add("عمومی",mapped,"","medium","دستهٔ کلان آرشیو");
+ }
+ if(!paths.length){
+  if(isText)add("عمومی","نوشته‌ها و متون","","low","نوع محتوا؛ موضوع نامشخص");
+  else add("عمومی","متفرقه و چندموضوعی","موضوع نامشخص","low","موضوع از دادهٔ موجود احراز نشد");
+ }
+ // If a source tag contains several distinct topics, retain each supported path.
+ const primary=paths[0];
+ item.contentType=isText?"text":"poem";
+ item.category1=primary.category1;
+ item.category2=primary.category2;
+ item.category3=primary.category3||"";
+ item.taxonomyPaths=paths.map(p=>({category1:p.category1,category2:p.category2,category3:p.category3}));
+ item.taxonomyConfidence=primary.confidence;
+ item.taxonomyReason=primary.reason;
+ item.taxonomyReview=primary.confidence==="low"?"نیازمند بازبینی":(primary.confidence==="medium"?"بازبینی نمونه‌ای":"");
 }
-
-function classify(item, isPinned) {
-  const body = String(item.body || "").trim();
-  const oldSection = item.section || "";
-  const isText = isPinned ? (Array.isArray(item.tags) && item.tags.some(t => typeof t === "string" && /نامه‌ها و متون تاریخی|پیوندها و منابع/.test(t))) : oldSection === "texts";
-  const type = isText ? "text" : "poem";
-  const subject = tagSubject(item, norm(body));
-  if (isText && subject.name === "شعر آزاد و ادبی") subject.name = "نوشته عمومی";
-  const isReligious = sacred.some(([n]) => n === subject.name) || /سوگ و مرثیه|مناسبت‌ها|زیارت و عتبات|دعا و مناجات|قرآن و معارف قرآنی|معارف و اعتقادات|تاریخ و سیره دینی/.test(subject.name);
-  const primary = isReligious ? "مذهبی" : "عمومی";
-  item.contentType = type;
-  item.category1 = primary;
-  item.category2 = subject.name;
-  item.taxonomyConfidence = subject.confidence;
-  item.taxonomyReview = subject.confidence === "low" ? "نیازمند بازبینی" : "";
-  // Keep the source's original section and all original metadata intact.
-  if (isPinned) item.tags = Array.isArray(item.tags) ? item.tags : [];
+function applyTaxonomy(list,pinnedList){
+ (list||entries).forEach(x=>classify(x,false));
+ (pinnedList||pinned).forEach(x=>classify(x,true));
+ const all=(list||entries).concat(pinnedList||pinned);
+ const counts={total:all.length,review:0,multiPath:0,byPrimary:{},bySecondary:{}};
+ for(const x of all){
+  if(x.taxonomyReview)counts.review++;
+  if((x.taxonomyPaths||[]).length>1)counts.multiPath++;
+  counts.byPrimary[x.category1]=(counts.byPrimary[x.category1]||0)+1;
+  counts.bySecondary[x.category2]=(counts.bySecondary[x.category2]||0)+1;
+ }
+ window.YES_TAXONOMY={version:"3.0.0",...counts,apply:applyTaxonomy,classify:item=>classify(item,false)};
+ return window.YES_TAXONOMY;
 }
-
-function applyTaxonomy() {
-  entries.forEach(item => classify(item, false));
-  pinned.forEach(item => classify(item, true));
-  const all = entries.concat(pinned);
-  const count = (name, value) => all.filter(x => x.category1 === name && (!value || x.category2 === value)).length;
-  window.YES_TAXONOMY = {
-    version:"2.2.0", total:all.length, libraryTotal:entries.length,
-    poems:entries.filter(x => x.section !== "texts").length,
-    texts:entries.filter(x => x.section === "texts").length,
-    pinned:pinned.length, review:all.filter(x => x.taxonomyReview).length,
-    firstLevel:[...new Set(all.map(x => x.category1))],
-    secondLevel:[...new Set(all.map(x => x.category2))],
-    count
-  };
-  return window.YES_TAXONOMY;
-}
-
-window.YES_TAXONOMY = {apply:applyTaxonomy};
 applyTaxonomy();
-window.addEventListener("yes:web-poems-loaded", applyTaxonomy);
+window.addEventListener("yes:web-poems-loaded",()=>applyTaxonomy());
+window.addEventListener("yes:archive-loaded",event=>{
+ const records=window.YESArchive?.items(event.detail?.category)||[];
+ records.forEach(x=>classify(x,false));
+});
+window.addEventListener("yes:archive-data-ready",()=>{
+ const all=window.poemEntries||[];
+ all.forEach(x=>{if(!x.category1||!x.taxonomyPaths)classify(x,false);});
+ applyTaxonomy(all,pinned);
+});
+window.addEventListener("yes:content-ready",()=>applyTaxonomy());
 })();
