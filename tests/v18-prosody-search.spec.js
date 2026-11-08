@@ -140,3 +140,12 @@ test("all public version labels are unified to V1.8", async ({ page, baseURL }) 
   const html = await page.content();
   expect(html).not.toContain("نسخهٔ ۱.۷");
 });
+
+
+test("full-screen archive gate opens only after the archive-ready signal", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  await expect(page.locator("#archiveBootScreen")).toBeAttached();
+  await expect(page.locator("#archiveBootScreen")).toBeHidden();
+  const ready = await page.evaluate(() => window.__YES_ARCHIVE_READY === true && window.YESArchiveGate?.isReady() === true);
+  expect(ready).toBeTruthy();
+});
