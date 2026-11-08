@@ -2,7 +2,18 @@ name: PWA smoke tests
 
 on:
   push:
-    branches: [main, v1.3-development, v1.4-redesign]
+    branches: [main, v1.3-development, v1.4-redesign, feature/prosody-corpus-import]
+    paths:
+      - "index.html"
+      - "js/**"
+      - "css/**"
+      - "data/poetry-archive/**"
+      - "tests/**"
+      - "poems*.js"
+      - "pinned.js"
+      - "sw.js"
+      - "package.json"
+      - ".github/workflows/pwa-smoke.yml"
   pull_request:
     branches: [main, v1.3-development]
   workflow_dispatch:
