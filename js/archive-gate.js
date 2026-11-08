@@ -64,6 +64,7 @@ window.addEventListener("yes:archive-loaded",event=>{
  const d=event.detail||{};
  update("آرشیو در حال بارگذاری است؛ "+fmt(d.loadedCategories)+" از "+fmt(d.categoryTotal)+" دسته تکمیل شد.",Number(d.loadedRecords)||0,Number(d.archiveTotal)||0);
 });
+window.addEventListener("yes:archive-ready",hide);
 window.addEventListener("online",()=>{if(!complete)boot();});
 if(retry())retry().addEventListener("click",boot);
 window.YESArchiveGate={retry:boot,isReady:()=>complete};
