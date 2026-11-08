@@ -149,3 +149,14 @@ test("full-screen archive gate opens only after the archive-ready signal", async
   const ready = await page.evaluate(() => window.__YES_ARCHIVE_READY === true && window.YESArchiveGate?.isReady() === true);
   expect(ready).toBeTruthy();
 });
+
+
+test("archive loading failure keeps the site covered and offers retry", async ({ page, baseURL }) => {
+  await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = false; });
+  await page.route("**/data/poetry-archive/manifest.json", route => route.abort("failed"));
+  await page.goto(baseURL + "#/home");
+  await expect(page.locator("#archiveBootScreen")).toBeVisible();
+  await expect(page.locator("#archiveBootScreen")).toHaveClass(/has-error/);
+  await expect(page.locator("#archiveBootRetry")).toBeVisible();
+  await expect(page.locator("#archiveBootMessage")).toContainText("بارگذاری کامل نشد");
+});
