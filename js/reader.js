@@ -32,11 +32,24 @@
     $("readerTitle").textContent=item.title||"خواندن";
     $("readerBody").textContent=item.body;
     $("readerBody").style.fontSize=fontSize+"px";
-    $("readerAuthor").textContent=item.author?"— "+item.author:"";
-    $("readerAuthor").hidden=!item.author;
+    const authorNode=$("readerAuthor");authorNode.replaceChildren();authorNode.hidden=!item.author;
+    if(item.author){authorNode.append(document.createTextNode("— "));const authorLink=document.createElement("a");authorLink.textContent=item.author;authorLink.href="#/poet/"+encodeURIComponent(item.author);authorLink.setAttribute("aria-label","مشاهدهٔ صفحهٔ شاعر "+item.author);authorNode.append(authorLink);}
     $("readerKicker").textContent=item.type==="text"?"متن برگزیده":"از کتابخانهٔ اشعار";
     const tags=$("readerTags");tags.replaceChildren();
-    item.tags.forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
+    (Array.isArray(item.tags)?item.tags:[]).forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
+    const metadata=$("readerMetadata");metadata.replaceChildren();
+    [["طبقهٔ اصلی",item.category1],["موضوع",item.category2],["زیرموضوع",item.category3]].forEach(([label,value])=>{if(value){const span=document.createElement("span");span.textContent=label+" · "+value;metadata.append(span);}});
+    const prosodyRoot=$("readerProsody"),prosodyDetails=$("readerProsodyDetails");
+    if(prosodyRoot&&prosodyDetails){
+      prosodyRoot.hidden=false;prosodyDetails.replaceChildren();
+      let profile=null;try{profile=await window.YESStorage.get("prosodyReview",id);}catch(e){}
+      if(!profile&&window.YESProsody)profile=window.YESProsody.analyze(item);
+      const grid=document.createElement("div");grid.className="reader-prosody-grid";
+      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن","تأیید نشده"],["بحر","تأیید نشده"],["قافیه",profile?.rhyme||"نیازمند بررسی"],["ردیف",profile?.radif||"نیازمند بررسی"]];
+      rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
+      if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
+      prosodyDetails.append(grid);
+    }
     const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
     if(relatedRoot&&relatedItems&&window.YESAdvancedSearch?.similar){
       relatedItems.replaceChildren();
