@@ -27,6 +27,9 @@ jobs:
           ref: feature/prosody-corpus-import
           fetch-depth: 1
 
+      - name: Export static site poem collections
+        run: node tools/export_site_poems.js
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
