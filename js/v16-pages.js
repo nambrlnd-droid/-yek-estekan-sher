@@ -3,8 +3,8 @@
 "use strict";
 const $=id=>document.getElementById(id);
 const labels={home:"خانه",library:"کتابخانه",search:"جست‌وجو",favorites:"علاقه‌مندی‌ها",notebook:"دفتر من"};
-const routeIds={home:"homePageView",search:"searchPageView",library:"v15LibraryView",favorites:"favoritesPageView",notebook:"notebookView",pinned:"pinnedView",read:"readerView",image:"imageStudioView"};
-let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,internalClick=false,favoritesBusy=false;
+const routeIds={home:"homePageView",search:"searchPageView",library:"v15LibraryView",favorites:"favoritesPageView",notebook:"notebookView",pinned:"pinnedView",read:"readerView",image:"imageStudioView",poet:"poetPageView"};
+let activeRoute="home",readerReturnRoute="home",pinnedReturnRoute="home",imageReturnRoute="home",imageReturnId=null,currentReadId=null,poetReturnRoute="home",internalClick=false,favoritesBusy=false,poetPageLimit=50;
 const allPageIds=Object.values(routeIds);
 function make(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 function link(route,title,description,glyph){
@@ -46,6 +46,36 @@ function createSearchPage(){
  const regular=$("regularView");if(regular){page.append(regular);regular.hidden=false;}
  main.append(page);
 }
+function createPoetPage(){
+ if($("poetPageView"))return;
+ const page=make("section","v16-page poet-page");page.id="poetPageView";
+ page.innerHTML='<button class="back" id="poetPageBack" type="button">← بازگشت</button><header class="poet-page-head"><span class="v16-eyebrow">شناسنامهٔ شاعر</span><h2 id="poetPageName">نام شاعر</h2><p id="poetPageBio">آثار ثبت‌شده در کتابخانهٔ یک استکان شعر</p><div class="poet-page-stats" id="poetPageStats"></div></header><div class="poet-page-list" id="poetPageWorks"></div><button class="tool-button poet-page-more" id="poetPageMore" type="button" hidden>نمایش آثار بیشتر</button>';
+ document.querySelector("main").append(page);
+ $("poetPageBack").addEventListener("click",()=>go(poetReturnRoute||"home"));
+ $("poetPageMore").addEventListener("click",()=>{poetPageLimit+=50;renderPoetPage(decodeURIComponent(window.YESRouter.current().id));});
+}
+function renderPoetPage(author){
+ const root=$("poetPageWorks"),name=$("poetPageName"),bio=$("poetPageBio"),stats=$("poetPageStats"),more=$("poetPageMore");
+ if(!root||!name||!stats)return;
+ const normalize=value=>window.YESSearch?.normalize(value)||String(value||"").trim().toLowerCase();
+ const all=window.YESContent?.all||window.poemEntries||[];
+ const works=all.filter(item=>item.author&&normalize(item.author)===normalize(author));
+ name.textContent=author;bio.textContent="آثار ثبت‌شده از "+author+" در کتابخانهٔ یک استکان شعر";
+ stats.replaceChildren();
+ const categories=new Set(works.map(item=>item.category1).filter(Boolean));
+ [[works.length.toLocaleString("fa-IR")+" اثر","تعداد آثار"],[categories.size.toLocaleString("fa-IR")+" طبقه","گسترهٔ موضوعی"]].forEach(([value,label])=>{const span=make("span","",value+" · "+label);stats.append(span);});
+ root.replaceChildren();
+ const shown=works.slice(0,poetPageLimit);
+ shown.forEach(item=>{
+  const button=make("button","poet-work"),title=make("strong","",item.title||String(item.body||"").split("\n")[0]||"بدون عنوان");
+  const excerpt=make("span","",String(item.body||"").replace(/\s+/g," ").slice(0,190));
+  const meta=make("span","",[item.category2,item.category3].filter(Boolean).join(" · "));
+  button.type="button";button.append(title,excerpt,meta);button.addEventListener("click",()=>window.YESReader?.open(item.id));root.append(button);
+ });
+ more.hidden=shown.length>=works.length;
+ more.textContent="نمایش آثار بیشتر ("+(works.length-shown.length).toLocaleString("fa-IR")+" اثر باقی‌مانده)";
+ if(!works.length)root.append(make("div","poet-page-empty","در آثار بارگذاری‌شده، اثری با این نام شاعر پیدا نشد."));
+}
 function createFavoritesPage(){
  if($("favoritesPageView"))return;
  const page=make("section","v16-page v16-favorites-page");page.id="favoritesPageView";
@@ -71,11 +101,12 @@ function setVisible(route){
  allPageIds.forEach(id=>{const n=$(id);if(n)n.hidden=id!==target;});
  const regular=$("regularView");if(regular)regular.hidden=route!=="search";
  const body=document.body;
- body.classList.remove("library-open","notebook-open","reader-open","reader-focus","image-studio-open","reading-mode");
+ body.classList.remove("library-open","notebook-open","reader-open","reader-focus","image-studio-open","reading-mode","poet-open");
  if(route==="library")body.classList.add("library-open");
  if(route==="notebook")body.classList.add("notebook-open");
  if(route==="read")body.classList.add("reader-open");
  if(route==="image")body.classList.add("image-studio-open");
+ if(route==="poet")body.classList.add("poet-open");
  if(route==="pinned"&&$("pinnedView"))$("pinnedView").hidden=false;
  const nav=$("v16PrimaryNav");
  nav?.querySelectorAll("[data-route]").forEach(a=>{
@@ -123,6 +154,7 @@ function go(route,id){
 function showRoute(state){
  const route=state?.route||"home";
  if(route==="read"){if(activeRoute!=="read"&&!(activeRoute==="image"&&imageReturnRoute==="read"))readerReturnRoute=activeRoute;currentReadId=state?.id?decodeURIComponent(state.id):currentReadId;activeRoute="read";setVisible("read");return;}
+ if(route==="poet"){if(activeRoute!=="poet")poetReturnRoute=activeRoute;activeRoute="poet";setVisible("poet");renderPoetPage(state?.id?decodeURIComponent(state.id):"");return;}
  if(route==="image"||route==="image-studio"){if(activeRoute!=="image"){imageReturnRoute=activeRoute;imageReturnId=activeRoute==="read"?currentReadId:null;}activeRoute="image";setVisible("image");return;}
  if(route==="pinned"){if(activeRoute!=="pinned")pinnedReturnRoute=activeRoute;activeRoute="pinned";setVisible("pinned");window.renderPinned?.();return;}
  if(!["home","library","search","favorites","notebook"].includes(route)){activeRoute="home";setVisible("home");return;}
@@ -155,11 +187,12 @@ function installInteractions(){
   if(event.target.closest("#imageStudioBack")){event.preventDefault();event.stopImmediatePropagation();go(imageReturnRoute||"home",imageReturnRoute==="read"?imageReturnId:undefined);return;}
  },true);
  window.addEventListener("yes:route",event=>showRoute(event.detail||{route:"home"}));
- window.addEventListener("yes:archive-loaded",()=>{if(activeRoute==="favorites")renderFavorites();});
+ window.addEventListener("yes:archive-loaded",()=>{if(activeRoute==="favorites")renderFavorites();else if(activeRoute==="poet"){const state=window.YESRouter?.current?.();if(state)renderPoetPage(decodeURIComponent(state.id||""));}});
  window.addEventListener("yes:web-poems-loaded",()=>{if(activeRoute==="favorites")renderFavorites();});
  window.addEventListener("yes:archive-ready",()=>{
   if(activeRoute==="notebook")window.YESNotebook?.open("favorites");
   else if(activeRoute==="favorites")renderFavorites();
+  else if(activeRoute==="poet"){const state=window.YESRouter?.current?.();if(state)renderPoetPage(decodeURIComponent(state.id||""));}
   else if(activeRoute==="read"){const state=window.YESRouter?.current?.();if(state)window.dispatchEvent(new CustomEvent("yes:route",{detail:state}));}
  });
 }
