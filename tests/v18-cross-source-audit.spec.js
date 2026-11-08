@@ -19,6 +19,7 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
     const content = window.YESContent?.all || [];
     const pinnedIds = new Set((window.pinnedEntries || []).map(x => String(x.id)));
     const archiveIds = new Set(shard.map(x => String(x.id)));
+    const legacyIds = new Set(legacyItems.map(x => String(x.id)));
     const archiveItems = content.filter(x => x.archiveCategory);
     const webItems = content.filter(x => String(x.id).startsWith("web-hafez-"));
     const legacyItems = content.filter(x => !x.archiveCategory && !String(x.id).startsWith("web-hafez-") && !pinnedIds.has(String(x.id)));
@@ -56,7 +57,7 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
       })),
       reviewQueue: content.filter(x => x.taxonomyReview).length,
       sampleReviewIds: content.filter(x => x.taxonomyReview).slice(0, 10).map(x => x.id),
-      archiveIdCollisionsWithLegacy: shard.filter(x => legacyItems.some(y => String(y.id) === String(x.id))).length
+      archiveIdCollisionsWithLegacy: shard.filter(x => legacyIds.has(String(x.id))).length
     };
     window.__YES_V18_SOURCE_AUDIT = report;
     return report;
