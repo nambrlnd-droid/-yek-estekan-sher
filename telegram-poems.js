@@ -18441,19 +18441,71 @@ const incoming=[
     ],
     "author": "",
     "body": "باتو هر ثانیه رویای دلم کامل شد \nقایقی بودم و دریای دلم کامل شد\nگفته بودم به دلم غصه فردا نخورد\n آمدی از ره و فردای دلم کامل شد\nگفته بودم که تو جانی و جهانی جانم\n گفتم این مصرع و حرف‌های دلم کامل شد\nتو که چون ابر بهاری به دلم باریدی\n تو که باریدی و صحرای دلم کامل شد\nبی‌سبب بهر چه عمریست غزل می‌گویم\n آمدی دفتر زیبای دلم کامل شد\nقبل تو فرق نمی‌کرد کجا با چه کسم\n آمدی مقصد و معنای دلم کامل شد."
+  },
+  {
+    "id": "telegram-7670",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "حسین فاضلیان",
+    "body": "عشق مانند نماز است که بعد از نیت \nنادرست است نگاهی به چپ و راست کنی."
+  },
+  {
+    "id": "telegram-7672",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "",
+    "body": "ولی تنها امیری‌ که نوشته هاشو می‌خونم و \nتحسینش می‌کنم تویی :\n@Amir"
+  },
+  {
+    "id": "telegram-7673",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "",
+    "body": "ولی من با نوشته هاش زندگیییییی می‌کنم."
+  },
+  {
+    "id": "telegram-7674",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "محمدعلی قائدی",
+    "body": "هرکه دل داد به تو حافظه‌اش مختل شد\nمصرع دوم این بیت دگر یادم نیست."
+  },
+  {
+    "id": "telegram-7675",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "صائب تبریزی",
+    "body": "گر قسمت ما باده و گر خون جگر بود\nما نوبت خود را گذراندیم و گذشتیم."
+  },
+  {
+    "id": "telegram-7677",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "شهریار",
+    "body": "ما گذشتیم و گذشت آنچه تو با ما کردی\nتو بمان و دگران وای به حال دگران."
   }
 ];
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,'').toLowerCase();
 const list=window.poemEntries||(window.poemEntries=[]);
 const seen=new Set(list.map(x=>norm(x.body)));
-let added=0,duplicateBodySkipped=0,emptyBodySkipped=0;
-for(const item of incoming){
- const k=norm(item.body);
- if(!k){emptyBodySkipped++;continue;}
- if(seen.has(k)){duplicateBodySkipped++;continue;}
- seen.add(k);list.push(item);added++;
-}
+for(const item of incoming){const k=norm(item.body);if(!k||seen.has(k))continue;seen.add(k);list.push(item);}
 window.telegramArchiveImported=incoming.length;
-window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};
-window.YES_SOURCE_AUDIT["telegram-poems.js"]={sourceRows:incoming.length,added,duplicateBodySkipped,emptyBodySkipped};
 })();

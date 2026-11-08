@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-08T09:02:48.101313+00:00",
-  "fetched_this_run": 798,
-  "archive_cursor": null,
-  "archive_pages_this_run": 39,
+  "updated_at": "2026-11-08T16:02:43.764282+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 1930,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -25186,6 +25186,60 @@
       "source_url": "https://t.me/Poemestic/7667",
       "status": "needs_review",
       "first_seen_at": "2026-11-07T22:46:22.353631+00:00"
+    },
+    {
+      "id": "7670",
+      "text": "عشق مانند نماز است که بعد از نیت \nنادرست است نگاهی به چپ و راست کنی.\n-حسین فاضلیان.",
+      "author": "",
+      "date": "2026-11-08T10:37:38+00:00",
+      "source_url": "https://t.me/Poemestic/7670",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
+    },
+    {
+      "id": "7672",
+      "text": "ولی تنها امیری‌ که نوشته هاشو می‌خونم و \nتحسینش می‌کنم تویی :\n@Amir",
+      "author": "",
+      "date": "2026-11-08T10:49:01+00:00",
+      "source_url": "https://t.me/Poemestic/7672",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
+    },
+    {
+      "id": "7673",
+      "text": "ولی من با نوشته هاش زندگیییییی می‌کنم.",
+      "author": "",
+      "date": "2026-11-08T10:53:01+00:00",
+      "source_url": "https://t.me/Poemestic/7673",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
+    },
+    {
+      "id": "7674",
+      "text": "هرکه دل داد به تو حافظه‌اش مختل شد\nمصرع دوم این بیت دگر یادم نیست.\n-محمدعلی قائدی.",
+      "author": "",
+      "date": "2026-11-08T11:08:55+00:00",
+      "source_url": "https://t.me/Poemestic/7674",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
+    },
+    {
+      "id": "7675",
+      "text": "گر قسمت ما باده و گر خون جگر بود\nما نوبت خود را گذراندیم و گذشتیم.\n-صائب تبریزی.",
+      "author": "",
+      "date": "2026-11-08T13:24:18+00:00",
+      "source_url": "https://t.me/Poemestic/7675",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
+    },
+    {
+      "id": "7677",
+      "text": "ما گذشتیم و گذشت آنچه تو با ما کردی\nتو بمان و دگران وای به حال دگران.\n-شهریار.",
+      "author": "",
+      "date": "2026-11-08T14:44:08+00:00",
+      "source_url": "https://t.me/Poemestic/7677",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-08T15:59:10.099704+00:00"
     }
   ]
 }
