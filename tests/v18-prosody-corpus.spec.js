@@ -51,3 +51,39 @@ test("the published exact-match index applies real source annotations to local p
   expect(result.poemType).toBeTruthy();
   expect(result.source).toBeTruthy();
 });
+
+
+test("batch analysis preserves external-source meter annotations instead of replacing them with provisional estimates", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(async () => {
+    const id = "preserve-external-prosody";
+    const item = { id, body: "بهار آمد و گل‌ها شکفتند\\nجهان از عطر باران تازه شد" };
+    const imported = {
+      id,
+      status: "external_source_matched",
+      confidence: "multiple_exact_couplets",
+      meter: "فاعلاتن فاعلاتن فاعلاتن فاعلن",
+      bahr: "رمل",
+      arkan: "فاعلاتن فاعلاتن فاعلاتن فاعلن",
+      sourceDataset: "P3R",
+      version: "1.8.2-multi-source-exact-match"
+    };
+    let persisted = null;
+    await window.YESProsody.analyzeAll([item], {
+      existingProfiles: new Map([[id, imported]]),
+      onBatch: async batch => { persisted = batch[0]; }
+    });
+    return {
+      status: item.prosody?.status,
+      meter: item.prosody?.meter,
+      source: item.prosody?.sourceDataset,
+      persistedStatus: persisted?.status,
+      persistedMeter: persisted?.meter
+    };
+  });
+  expect(result.status).toBe("external_source_matched");
+  expect(result.meter).toBe("فاعلاتن فاعلاتن فاعلاتن فاعلن");
+  expect(result.source).toBe("P3R");
+  expect(result.persistedStatus).toBe("external_source_matched");
+  expect(result.persistedMeter).toBe("فاعلاتن فاعلاتن فاعلاتن فاعلن");
+});
