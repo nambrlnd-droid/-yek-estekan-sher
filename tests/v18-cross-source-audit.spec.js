@@ -48,6 +48,7 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
       sourceRows,
       sourceAdded,
       sourceDuplicateSkipped,
+      sourceAddedMatchesRuntime: sourceAdded === legacyItems.length + webItems.length + pinned.length,
       manifestTotal: manifest?.total || 0,
       archiveRecords: shard.length,
       archiveItemsInContent: archiveItems.length,
@@ -80,6 +81,7 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
   expect(report.sourceInventory["internet-poems.js"]?.sourceRows).toBe(200);
   expect(report.sourceInventory["pinned.js"]?.sourceRows).toBe(19);
   expect(report.sourceRows).toBeGreaterThanOrEqual(2389);
+  expect(report.sourceAddedMatchesRuntime).toBeTruthy();
   expect(report.manifestTotal).toBe(56880);
   expect(report.archiveRecords).toBe(56880);
   expect(report.archiveItemsInContent).toBe(56880);
