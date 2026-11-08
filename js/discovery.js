@@ -31,8 +31,12 @@ function refreshFilters(){
   "فلسفی و تأملی":["هستی و شناخت"],
   "متفرقه و چندموضوعی":["چندموضوعی / نامشخص"]
  };
+ const subtopicSource=sectionItems.filter(x=>
+  (!c1||x.category1===c1)&&
+  (!c2||(isArchiveCategory(c2)?normalize(x.archiveCategory)===normalize(c2):normalize(x.category2)===normalize(c2)))
+ );
  fillSelect("category3Filter",[
-  ...sectionItems.filter(x=>(!c1||x.category1===c1)&&(!c2||x.category2===c2)).map(x=>x.category3),
+  ...subtopicSource.map(x=>x.category3),
   ...(isArchiveCategory(c2)?(archiveSubtopics[c2]||[]):[])
  ],"همهٔ زیرموضوعات");
  fillSelect("authorFilter",sectionItems.map(x=>x.author),"همهٔ شاعران");
@@ -49,7 +53,11 @@ function filterList(list,f){
   if(section==="texts"&&!isText)return false;
   if(section==="poems"&&isText)return false;
   if(f.c1&&x.category1!==f.c1)return false;
-  if(f.c2&&normalize(x.category2)!==normalize(f.c2))return false;
+  if(f.c2){
+   const selectedArchiveCategory=isArchiveCategory(f.c2);
+   const actualCategory=selectedArchiveCategory?x.archiveCategory:x.category2;
+   if(normalize(actualCategory)!==normalize(f.c2))return false;
+  }
   if(f.c3&&normalize(x.category3)!==normalize(f.c3))return false;
   if(f.author&&x.author!==f.author)return false;
   if(f.credit==="known"&&!x.author)return false;
