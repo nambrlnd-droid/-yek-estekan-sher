@@ -124,9 +124,11 @@ test("human prosody review is saved locally and becomes searchable as confirmed"
   await page.locator("#readerProsodyReviewToggle").click();
   await page.locator("#readerProsodyMeter").fill("فعولن فعولن فعولن فعل");
   await page.locator("#readerProsodyBahr").fill("متقارب مثمن محذوف");
-  await page.locator("#readerProsodyArkan").fill("فعولن × ۳، فعل");
   await page.locator("#readerProsodyScansion").fill("U ـ ـ | U ـ ـ | U ـ ـ | U ـ");
   await page.locator("#readerProsodyVerified").check();
+  await page.locator("#readerProsodySave").click();
+  await expect(page.locator("#readerProsodyReviewStatus")).toContainText("ارکان");
+  await page.locator("#readerProsodyArkan").fill("فعولن × ۳، فعل");
   await page.locator("#readerProsodySave").click();
   await expect(page.locator("#readerProsodyReviewStatus")).toContainText("ذخیره شد");
   const status = await page.evaluate(async () => (await window.YESStorage.get("prosodyReview", "stage3-human-review")).status);
