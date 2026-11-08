@@ -14,7 +14,7 @@ function mount(){
  const rhyme=node("input",{id:"prosodyRhymeFilter",type:"search",placeholder:"قافیهٔ پیشنهادی","aria-label":"قافیهٔ پیشنهادی"});
  const radif=node("input",{id:"prosodyRadifFilter",type:"search",placeholder:"ردیف پیشنهادی","aria-label":"ردیف پیشنهادی"});
  const review=node("select",{id:"prosodyReviewFilter","aria-label":"وضعیت بازبینی عروضی"});
- [["","همهٔ وضعیت‌های عروضی"],["review_required","نیازمند بازبینی عروضی"],["confirmed","دارای بازبینی انسانی"]].forEach(([v,t])=>review.append(node("option",{value:v},t)));
+ [["","همهٔ وضعیت‌های عروضی"],["review_required","نیازمند بازبینی عروضی"],["external_source_matched","تطبیق‌شده با پیکرهٔ بیرونی"],["confirmed","دارای بازبینی انسانی"]].forEach(([v,t])=>review.append(node("option",{value:v},t)));
  const taxonomy=node("select",{id:"taxonomyReviewFilter","aria-label":"وضعیت بازبینی دسته‌بندی"});
  [["","همهٔ وضعیت‌های دسته‌بندی"],["review","نیازمند بازبینی موضوعی"],["human-reviewed","بازبینی انسانی‌شده"],["high","اطمینان زیاد"],["medium","اطمینان متوسط"]].forEach(([v,t])=>taxonomy.append(node("option",{value:v},t)));
  statusNode=node("small",{id:"prosodySearchStatus","aria-live":"polite"},"قافیه و ردیف فعلاً پیشنهاد ماشینی‌اند؛ وزن/بحر فقط پس از تأیید قابل جست‌وجوست.");
