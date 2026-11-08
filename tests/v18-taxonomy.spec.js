@@ -86,3 +86,38 @@ test("religious legacy tags remain under the religious first-level branch", asyn
   expect(result.first).toBe("مذهبی");
   expect(result.second).toBe("مناسبت‌ها و آیین‌های دینی");
 });
+
+
+test("v1.8 keeps multiple legacy subjects as secondary facets", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const item = {
+      id: "taxonomy-test-multi",
+      tags: ["عاشقانه و دلدادگی", "حکمت و اخلاق"],
+      body: "عشق و خرد دو چراغ راه انسان‌اند"
+    };
+    window.YES_TAXONOMY.classify(item);
+    return { primary: item.category2, alternates: item.category2Alternates, topics: item.taxonomyTopics };
+  });
+  expect(result.primary).toBe("عاشقانه و دلدادگی");
+  expect(result.alternates).toContain("حکمت و اخلاق");
+  expect(result.topics).toContain("حکمت و اخلاق");
+});
+
+test("v1.8 taxonomy is synchronized to the reader's normalized content records", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  const result = await page.evaluate(() => {
+    const item = window.YESContent.get("poem-0001");
+    return item && {
+      category1: item.category1,
+      category2: item.category2,
+      category3: item.category3,
+      version: item.taxonomyVersion
+    };
+  });
+  expect(result).toBeTruthy();
+  expect(result.category1).toBeTruthy();
+  expect(result.category2).toBeTruthy();
+  expect(result.category3).toBeTruthy();
+  expect(result.version).toBe("1.8.0");
+});
