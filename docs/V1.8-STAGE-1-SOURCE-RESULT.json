@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "audit_date": "2026-11-08",
+  "audit_run_ids": {
+    "archive": 42457748928,
+    "pwa_smoke": 42457748935,
+    "browser_regression": 42457748942
+  },
+  "archive": {
+    "manifest_total": 56880,
+    "decoded_total": 56880,
+    "shards": 9,
+    "unique_ids": 56880,
+    "duplicate_ids": 0,
+    "duplicate_normalized_bodies_within_shards": 0,
+    "empty_bodies": 0,
+    "missing_author": 0,
+    "missing_title": 0,
+    "integrity_errors": 0
+  },
+  "local_sources": {
+    "poems.js": {
+      "source_rows": 100,
+      "added": 100,
+      "duplicate_body_skipped": 0
+    },
+    "poems-extra.js": {
+      "source_rows": 99,
+      "added": 99,
+      "duplicate_body_skipped": 0
+    },
+    "poems-hasan-collection.js": {
+      "source_rows": 26,
+      "added": 22,
+      "duplicate_body_skipped": 4
+    },
+    "poems-user-collection.js": {
+      "source_rows": 100,
+      "added": 100,
+      "duplicate_body_skipped": 0
+    },
+    "telegram-poems.js": {
+      "source_rows": 1844,
+      "added": 1674,
+      "duplicate_body_skipped": 170
+    },
+    "internet-poems.js": {
+      "source_rows": 200,
+      "added": 200,
+      "duplicate_body_skipped": 0
+    },
+    "pinned.js": {
+      "source_rows": 19,
+      "added": 19,
+      "duplicate_body_skipped": 0
+    }
+  },
+  "local_source_totals": {
+    "source_rows": 2388,
+    "added": 2214,
+    "duplicate_body_skipped": 174,
+    "unique_legacy_poems": 2195,
+    "pinned_records": 19
+  },
+  "external_hafez": {
+    "loader": "poems-web-loader.js",
+    "source_url": "https://cdn.jsdelivr.net/gh/ganjoor/ganjoor-data@main/poets/hafez/ghazal/_cat.json",
+    "catalog_entries_verified": 495,
+    "loader_target": 200,
+    "loaded_in_ci": 0,
+    "failed_in_ci": true,
+    "from_cache": false,
+    "note": "The CI runner could not complete the CDN fetch. The public catalog and sample poem schema were inspected separately; the 200 dynamic records are excluded from runtime totals."
+  },
+  "cross_source_runtime": {
+    "archive_records_in_live_library": 56880,
+    "archive_records_in_reader_content": 56880,
+    "legacy_poems": 2195,
+    "pinned_records": 19,
+    "web_hafez_records": 0,
+    "reader_content_total": 59094,
+    "repeated_normalized_body_keys": 7,
+    "duplicate_ids_across_sources": 0,
+    "archive_id_collisions_with_legacy": 0,
+    "archive_duplicate_body_annotations": 0,
+    "source_added_matches_runtime": true
+  },
+  "taxonomy": {
+    "missing_category_fields": 0,
+    "first_level_counts": {
+      "religious": 3644,
+      "general": 55450
+    },
+    "second_level_count": 36,
+    "third_level_count": 30,
+    "multi_topic_records": 11585,
+    "confidence": {
+      "high": 49155,
+      "medium": 4621,
+      "low": 5318
+    },
+    "review_queue": {
+      "total": 5318,
+      "broad_archive_fallback": 4814,
+      "no_confident_text_or_tag_match": 504
+    }
+  },
+  "tests": {
+    "pwa_smoke": {
+      "status": "success",
+      "passed": 84,
+      "failed": 0
+    },
+    "browser_regression": {
+      "status": "success",
+      "passed": 84,
+      "failed": 0
+    },
+    "archive_audit": {
+      "status": "success"
+    }
+  }
+}

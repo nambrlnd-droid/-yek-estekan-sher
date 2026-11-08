@@ -41,8 +41,33 @@ function status(message){const node=document.getElementById("archiveStatus");if(
 function bodyKey(s){return String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();}
 function initDedup(target){
  if(!seenIds)seenIds=new Set(target.map(x=>x.id).filter(Boolean));
- if(!seenBodies)seenBodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));
+ if(!seenBodies){seenBodies=new Map();for(const item of target){const key=bodyKey(item.body);if(key&&!seenBodies.has(key))seenBodies.set(key,item.id);}}
  if(window.YESContent&&!seenContentIds)seenContentIds=new Set(window.YESContent.all.map(x=>x.id));
+}
+async function verifyShard(bytes,expected,path){
+ if(!expected)throw Error("هش SHA-256 برای فایل آرشیو ثبت نشده است: "+path);
+ if(!window.crypto?.subtle?.digest)throw Error("مرورگر امکان بررسی رمزنگارانهٔ فایل آرشیو را ندارد");
+ const digest=await window.crypto.subtle.digest("SHA-256",bytes);
+ const actual=Array.from(new Uint8Array(digest),value=>value.toString(16).padStart(2,"0")).join("");
+ if(actual.toLowerCase()!==String(expected).toLowerCase())throw Error("اعتبارسنجی SHA-256 فایل آرشیو ناموفق بود: "+path);
+ return true;
+}
+async function verifiedShard(meta){
+ let response=await archiveFetch(meta.file),bytes=await response.arrayBuffer();
+ try{await verifyShard(bytes,meta.sha256,meta.file);return bytes;}
+ catch(firstError){
+  // A corrupted cached response must not poison every subsequent retry.
+  try{
+   if("caches"in window){
+    const cache=await caches.open(ARCHIVE_CACHE);
+    const url=new URL(base+meta.file,location.href).href;
+    await cache.delete(new Request(url,{credentials:"same-origin"}));
+   }
+  }catch(error){}
+  response=await archiveFetch(meta.file);bytes=await response.arrayBuffer();
+  await verifyShard(bytes,meta.sha256,meta.file);
+  return bytes;
+ }
 }
 async function parseArchive(bytes){
  if(typeof Worker!=="undefined"){
@@ -69,17 +94,27 @@ async function loadCategory(name){
   const categoryIndex=m.categories.findIndex(x=>x.name===meta.name)+1;
   status("در حال دریافت «"+meta.name+"»؛ "+meta.count.toLocaleString("fa-IR")+" اثر…");
   window.dispatchEvent(new CustomEvent("yes:archive-loading",{detail:{category:meta.name,categoryIndex,categoryTotal:m.categories.length}}));
-  const response=await archiveFetch(meta.file);
-  const bytes=await response.arrayBuffer();
+  const bytes=await verifiedShard(meta);
   const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
+  // Keep the source shard category explicit so the hierarchical taxonomy can
+  // retain provenance while deriving the new editorial category fields.
+  records.forEach(item=>{if(item&&typeof item==="object"&&!item.archiveCategory)item.archiveCategory=meta.name;});
   categoryRecords.set(meta.name,records);
   const target=window.poemEntries||(window.poemEntries=[]);
   initDedup(target);
   for(const item of records){
    const key=bodyKey(item.body);
-   if(!item.id||seenIds.has(item.id)||!key||seenBodies.has(key))continue;
-   seenIds.add(item.id);seenBodies.add(key);target.push(item);
+   if(!item.id||seenIds.has(item.id)||!key)continue;
+   const duplicateOf=seenBodies.get(key);
+   seenIds.add(item.id);
+   if(duplicateOf){
+    // Keep every uniquely identified source record. A repeated normalized
+    // body is an audit annotation, not a reason to silently drop an item.
+    item.normalizedBodyDuplicate=true;
+    item.normalizedBodyDuplicateOf=duplicateOf;
+   }else seenBodies.set(key,item.id);
+   target.push(item);
   }
   if(window.YESContent){
    for(const item of records){
@@ -118,7 +153,7 @@ async function loadAll(){
 }
 function loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0);}
 window.YESArchive={
- manifest,loadCategory,loadAll,
+ manifest,loadCategory,loadAll,verifyShard,verifiedShard,
  items(name){const key=[...categoryRecords.keys()].find(x=>norm(x)===norm(name));return key?categoryRecords.get(key):[];},
  async randomItems(count=10,categoryName=null){
   const m=await manifest();

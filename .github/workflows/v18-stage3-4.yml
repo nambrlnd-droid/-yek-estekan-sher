@@ -1,0 +1,26 @@
+name: V1.8 stages 3-5 prosody, search and independent pages
+
+on:
+  pull_request:
+    branches: [main, feature/v18-stage-1-audit]
+  workflow_dispatch:
+
+concurrency:
+  group: v18-stage3-5-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  prosody-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test tests/v18-prosody-search.spec.js tests/v18-taxonomy-archive.spec.js

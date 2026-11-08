@@ -30,27 +30,38 @@ function renderTopics(root){
  const items=allItems(),categories=window.YESArchive?.categories?.()||[];
  const first=unique(items.map(x=>x.category1));
  const second=unique(items.map(x=>x.category2));
+ const third=unique(items.map(x=>x.category3));
  const archiveNames=categories.map(x=>x.name);
  const wrap=document.createElement("div");wrap.className="v15-library-grid";
- [["طبقهٔ اول",first],["موضوع‌های موجود در کتابخانه",second],["گنجینهٔ موضوعی",archiveNames]].forEach(([heading,values])=>{
+ const groups=[
+  {heading:"طبقهٔ اول",values:first,field:"category1"},
+  {heading:"موضوع‌های اصلی",values:second,field:"category2"},
+  {heading:"گنجینهٔ موضوعی",values:archiveNames,archive:true},
+  {heading:"زیرموضوع‌ها",values:third,field:"category3"}
+ ];
+ groups.forEach(({heading,values,field,archive})=>{
   const group=document.createElement("section");group.className="v15-library-group";const h=document.createElement("h3");h.textContent=heading;group.append(h);
   values.sort((a,b)=>a.localeCompare(b,"fa")).forEach(value=>{
-   const archive=heading==="گنجینهٔ موضوعی";
-   const count=archive?(categories.find(x=>x.name===value)?.count||0):items.filter(x=>(heading==="طبقهٔ اول"?x.category1:x.category2)===value).length;
-   group.append(card(value,(archive?"تعداد در فهرست گنجینه: ": "در محتوای بارگذاری‌شده: ")+count.toLocaleString("fa-IR")+" اثر",()=>showTopic(value,archive)));
+   const count=archive?(categories.find(x=>x.name===value)?.count||0):items.filter(x=>x[field]===value).length;
+   group.append(card(value,(archive?"تعداد در فهرست گنجینه: ": "در محتوای بارگذاری‌شده: ")+count.toLocaleString("fa-IR")+" اثر",()=>showTopic(value,!!archive,field)));
   });wrap.append(group);
  });root.append(wrap);
 }
-async function showTopic(name,isArchive){
+async function showTopic(name,isArchive,field="category2"){
  activeTopic=name;libraryMode="topic";renderLibrary();
- const result=$("v15LibraryResults");const title=$("v15LibraryTitle");
+ const result=$("v15LibraryResults"),title=$("v15LibraryTitle");
  title.textContent=name;result.replaceChildren();
  if(isArchive){
   const status=document.createElement("p");status.className="v15-empty";status.textContent="در حال بارگذاری این بخش از گنجینه…";result.append(status);
-  try{await window.YESArchive.loadCategory(name);const items=window.YESArchive.items(name)||[];renderItems(result,items,"در این دسته اثری در دسترس نیست.");}
-  catch(e){result.replaceChildren();const p=document.createElement("p");p.className="v15-empty";p.textContent="بارگذاری این دسته انجام نشد؛ اتصال را بررسی و دوباره تلاش کنید.";result.append(p);}
+  try{
+   await window.YESArchive.loadCategory(name);
+   const items=window.YESArchive.items(name)||[];
+   renderItems(result,items,"در این دسته اثری در دسترس نیست.");
+  }catch(e){
+   result.replaceChildren();const p=document.createElement("p");p.className="v15-empty";p.textContent="بارگذاری این دسته انجام نشد؛ اتصال را بررسی و دوباره تلاش کنید.";result.append(p);
+  }
  }else{
-  const items=allItems().filter(x=>norm(x.category1)===norm(name)||norm(x.category2)===norm(name));
+  const items=allItems().filter(x=>norm(x[field])===norm(name));
   renderItems(result,items,"در محتوای بارگذاری‌شده اثری با این موضوع پیدا نشد.");
  }
 }

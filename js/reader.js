@@ -32,11 +32,56 @@
     $("readerTitle").textContent=item.title||"خواندن";
     $("readerBody").textContent=item.body;
     $("readerBody").style.fontSize=fontSize+"px";
-    $("readerAuthor").textContent=item.author?"— "+item.author:"";
-    $("readerAuthor").hidden=!item.author;
+    const authorNode=$("readerAuthor");authorNode.replaceChildren();authorNode.hidden=!item.author;
+    if(item.author){authorNode.append(document.createTextNode("— "));const authorLink=document.createElement("a");authorLink.textContent=item.author;authorLink.href="#/poet/"+encodeURIComponent(item.author);authorLink.setAttribute("aria-label","مشاهدهٔ صفحهٔ شاعر "+item.author);authorNode.append(authorLink);}
     $("readerKicker").textContent=item.type==="text"?"متن برگزیده":"از کتابخانهٔ اشعار";
     const tags=$("readerTags");tags.replaceChildren();
-    item.tags.forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
+    (Array.isArray(item.tags)?item.tags:[]).forEach(tag=>{const span=document.createElement("span");span.textContent=tag;tags.append(span);});
+    const metadata=$("readerMetadata");metadata.replaceChildren();
+    [["طبقهٔ اصلی",item.category1],["موضوع",item.category2],["زیرموضوع",item.category3]].forEach(([label,value])=>{if(value){const span=document.createElement("span");span.textContent=label+" · "+value;metadata.append(span);}});
+    const taxonomyRoot=$("readerTaxonomyReview");
+    if(taxonomyRoot){
+      taxonomyRoot.hidden=false;
+      $("readerTaxonomyCategory1").value=item.category1||"عمومی";
+      $("readerTaxonomyCategory2").value=item.category2||"";
+      $("readerTaxonomyCategory3").value=item.category3||"";
+      $("readerTaxonomySecondary").value=(item.category2Alternates||[]).join("، ");
+      $("readerTaxonomyVerified").checked=false;
+      $("readerTaxonomyReviewStatus").textContent=item.taxonomyConfidence==="human-reviewed"?"طبقه‌بندی این اثر در همین مرورگر بازبینی و ذخیره شده است.":item.taxonomyReview||"در صورت نیاز می‌توانید موضوعات را اصلاح کنید.";
+      $("readerTaxonomyReviewForm").hidden=true;
+    }
+    const prosodyRoot=$("readerProsody"),prosodyDetails=$("readerProsodyDetails");
+    if(prosodyRoot&&prosodyDetails){
+      prosodyRoot.hidden=false;prosodyDetails.replaceChildren();
+      let profile=null;try{profile=await window.YESStorage.get("prosodyReview",id);}catch(e){}
+      if(!profile&&window.YESProsody)profile=window.YESProsody.analyze(item);
+      const grid=document.createElement("div");grid.className="reader-prosody-grid";
+      const verified=profile?.status==="confirmed";
+      const rows=[["ساختار",profile?.poemType==="couplet"?"دو مصراعی":profile?.poemType==="multi-line"?"چندمصراعی":profile?.poemType==="single-line"?"تک‌مصراعی":"قطعه / ناقص"],["تعداد مصراع",String(profile?.lineCount??"—")],["وزن",verified?(profile.meter||"ثبت نشده"):"تأیید نشده"],["بحر",verified?(profile.bahr||"ثبت نشده"):"تأیید نشده"],["قافیهٔ پیشنهادی · اطمینان پایین",profile?.rhyme||"نیازمند بررسی"],["ردیف پیشنهادی · اطمینان پایین",profile?.radif||"نیازمند بررسی"],["وضعیت",verified?"بازبینی انسانی ثبت شده":"در انتظار بازبینی"]];
+      rows.forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;grid.append(span);});
+      if(Array.isArray(profile?.lines)&&profile.lines.length){const syllables=document.createElement("span");syllables.textContent="برآورد هجای نوشتاری هر مصراع · "+profile.lines.map(x=>x.syllableEstimate).join(" / ");grid.append(syllables);}
+      prosodyDetails.append(grid);
+      $("readerProsodyMeter").value=profile?.meter||"";
+      $("readerProsodyBahr").value=profile?.bahr||"";
+      $("readerProsodyArkan").value=profile?.arkan||"";
+      $("readerProsodyScansion").value=profile?.scansion||"";
+      $("readerProsodyReviewerNote").value=profile?.reviewerNote||"";
+      $("readerProsodyVerified").checked=false;
+      $("readerProsodyReviewStatus").textContent=verified?"بازبینی محلی ذخیره شده است؛ این داده هنوز به سرور یا نسخهٔ عمومی منتقل نشده.":"برای ثبت نتیجه، متن و تلفظ را بررسی و گزینهٔ تأیید را فعال کنید.";
+      $("readerProsodyReviewForm").hidden=true;
+    }
+    const relatedRoot=$("readerRelated"),relatedItems=$("readerRelatedItems");
+    if(relatedRoot&&relatedItems&&window.YESAdvancedSearch?.similar){
+      relatedItems.replaceChildren();
+      const related=window.YESAdvancedSearch.similar(item,items(),4);
+      related.forEach(({item:match,reason})=>{
+        const button=document.createElement("button");button.type="button";button.className="reader-related-item";
+        const title=document.createElement("strong");title.textContent=match.title||String(match.body||"").split("\n")[0]||"اثر مشابه";
+        const meta=document.createElement("span");meta.textContent=[match.author,reason].filter(Boolean).join(" · ");
+        button.append(title,meta);button.addEventListener("click",()=>window.YESReader.open(match.id));relatedItems.append(button);
+      });
+      relatedRoot.hidden=related.length===0;
+    }
     $("readerFavorite").textContent=await favoriteState(id)?"♥ نشان‌شده":"♡ نشان‌کردن";
     try{const note=await window.YESStorage.get("notes",id);$("readerNote").value=note?.text||"";}catch(e){$("readerNote").value="";}
     const list=items(),index=list.findIndex(x=>x.id===id);
@@ -81,6 +126,40 @@
     $("readerLarger").onclick=()=>{fontSize=Math.min(30,fontSize+1);$("readerBody").style.fontSize=fontSize+"px";};
     $("readerPrevious").onclick=()=>goRelative(-1);$("readerNext").onclick=()=>goRelative(1);
     $("readerSaveNote").onclick=async()=>{try{await window.YESReader.saveNote(currentId,$("readerNote").value);notify("یادداشت ذخیره شد");}catch(e){notify("ذخیرهٔ یادداشت ممکن نشد");}};
+    $("readerTaxonomyReviewToggle").onclick=()=>{$("readerTaxonomyReviewForm").hidden=!$("readerTaxonomyReviewForm").hidden;};
+    $("readerTaxonomySave").onclick=async()=>{
+      if(!$("readerTaxonomyVerified").checked){$("readerTaxonomyReviewStatus").textContent="برای ثبت بازبینی انسانی، ابتدا بررسی شخصی را تأیید کنید.";return;}
+      try{
+        await window.YES_TAXONOMY.saveReview(currentId,{
+          category1:$("readerTaxonomyCategory1").value,
+          category2:$("readerTaxonomyCategory2").value,
+          category3:$("readerTaxonomyCategory3").value,
+          secondaryTopics:$("readerTaxonomySecondary").value.split(/[،,]/)
+        });
+        const item=content().get(currentId),metadata=$("readerMetadata");metadata.replaceChildren();
+        [["طبقهٔ اصلی",item.category1],["موضوع",item.category2],["زیرموضوع",item.category3]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=label+" · "+value;metadata.append(span);});
+        $("readerTaxonomyReviewStatus").textContent="بازبینی موضوعی ذخیره شد؛ در همین مرورگر و نسخهٔ پشتیبان قابل بازیابی است.";
+        notify("طبقه‌بندی بازبینی و ذخیره شد");
+      }catch(error){$("readerTaxonomyReviewStatus").textContent="ذخیرهٔ بازبینی ممکن نشد: "+String(error?.message||error);}
+    };
+    $("readerProsodyReviewToggle").onclick=()=>{$("readerProsodyReviewForm").hidden=!$("readerProsodyReviewForm").hidden;};
+    $("readerProsodySave").onclick=async()=>{
+      const meter=$("readerProsodyMeter").value.trim(),bahr=$("readerProsodyBahr").value.trim(),arkan=$("readerProsodyArkan").value.trim(),scansion=$("readerProsodyScansion").value.trim();
+      if(!$("readerProsodyVerified").checked){$("readerProsodyReviewStatus").textContent="برای ثبت به‌عنوان تأییدشده، ابتدا بازبینی شخصی را تأیید کنید.";return;}
+      if(!meter||!bahr||!arkan||!scansion){$("readerProsodyReviewStatus").textContent="ثبت وزن، بحر، ارکان و تقطیع برای تأیید الزامی است.";return;}
+      const requiredLines=Math.max(1,String(content().get(currentId)?.body||"").split(/\r?\n/).filter(line=>line.trim()).length);
+      const scansionLines=scansion.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
+      if(scansionLines.length<requiredLines){$("readerProsodyReviewStatus").textContent="تقطیع باید برای همهٔ "+requiredLines+" سطر/مصراع ثبت شود؛ هر سطر تقطیع را در یک خط جداگانه بنویسید.";return;}
+      try{
+        const previous=await window.YESStorage.get("prosodyReview",currentId)||window.YESProsody.analyze(content().get(currentId));
+        const record={...previous,id:currentId,status:"confirmed",confidence:"human-reviewed",meter,bahr,arkan,scansion,scansionLines,reviewerNote:$("readerProsodyReviewerNote").value.trim(),reviewedAt:new Date().toISOString(),reviewer:"بازبینی محلی",reviewReasons:[]};
+        await window.YESStorage.put("prosodyReview",record);
+        const item=content().get(currentId);if(item){item.prosody=record;if(Number.isInteger(item.legacyIndex)&&window.poemEntries?.[item.legacyIndex])window.poemEntries[item.legacyIndex].prosody=record;}
+        $("readerProsodyReviewStatus").textContent="نتیجهٔ بازبینی در همین مرورگر ذخیره شد؛ برای جست‌وجوی وزن در این نشست قابل استفاده است.";
+        window.dispatchEvent(new CustomEvent("yes:prosody-updated",{detail:{id:currentId,record}}));
+        notify("بازبینی عروضی ذخیره شد");
+      }catch(error){$("readerProsodyReviewStatus").textContent="ذخیرهٔ بازبینی ممکن نشد: "+String(error?.message||error);}
+    };
     $("readerAddCollection").onclick=async()=>{try{const cols=await window.YESStorage.all("collections");if(!cols.length){notify("ابتدا در دفتر شخصی یک مجموعه بسازید");return;}const choice=prompt("شناسهٔ مجموعه را وارد کنید:\n"+cols.map(c=>c.id+" — "+c.title).join("\n"));const col=cols.find(c=>c.id===choice);if(!col){notify("مجموعه پیدا نشد");return;}col.itemIds=col.itemIds||[];if(!col.itemIds.includes(currentId))col.itemIds.push(currentId);col.itemSnapshots=col.itemSnapshots||{};col.itemSnapshots[currentId]=content().get(currentId);await window.YESStorage.put("collections",col);notify("به مجموعه افزوده شد");}catch(e){notify("افزودن به مجموعه ممکن نشد");}};
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("reader-open")){if(window.YESPages?.backFromReader)window.YESPages.backFromReader();else window.YESRouter.go("home");}});
   },{once:true});

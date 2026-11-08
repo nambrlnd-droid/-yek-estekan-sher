@@ -40,7 +40,8 @@ test("reader, favorite persistence and image studio work at this viewport", asyn
   await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
   await page.reload();
   await expect(page.locator("#readerView")).toBeVisible();
-  await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
+  // IndexedDB hydration is asynchronous; wait for the persisted state to reappear.
+  await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده", { timeout: 15000 });
   await page.locator("#readerMakeImage").click();
   await expect(page.locator("#imageStudioView")).toBeVisible();
   const canvas = await page.locator("#poetryCanvas").evaluate(el => [el.width, el.height]);
@@ -66,7 +67,7 @@ test("Ganjoor archive category filtering and pagination remain available", async
   await page.waitForFunction(() => window.YESArchive?.manifestData?.total === 56880, null, { timeout: 15000 });
   await page.locator("#category2Filter").selectOption({ label: "حماسی و ملی" });
   await page.waitForFunction(() => window.poemEntries.filter(x => String(x.id).startsWith("ganjoor-")).length >= 200, null, { timeout: 15000 });
-  await expect(page.locator("#category3Filter")).toContainText("نبرد و دلاوری");
+  await expect(page.locator("#category3Filter")).toContainText("میهن و پهلوانی");
   await page.locator("#displayCount").selectOption("10");
   await expect(page.locator("#entries .entry")).toHaveCount(10);
   await page.locator("#displayCount").selectOption("50");

@@ -4,10 +4,12 @@ window.YESWebPoemsReady=(async function(){
 const CACHE="yekestekan-webpoems-200-v1";
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
 const list=window.poemEntries||(window.poemEntries=[]);
+let observedSourceRows=0;
+const noteSource=(added,fromCache,failed=false)=>{window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};window.YES_SOURCE_AUDIT["poems-web-loader.js"]={sourceRows:observedSourceRows,added,duplicateBodySkipped:Math.max(0,observedSourceRows-added),emptyBodySkipped:0,fromCache,failed};};
 const add=items=>{const seen=new Set(list.map(x=>norm(x.body)));let n=0;for(const x of items){const k=norm(x.body);if(!k||seen.has(k))continue;seen.add(k);list.push(x);if(window.YESContent&&!window.YESContent.get(x.id)){window.YESContent.all.push({...x,type:"poem",title:x.title||String(x.body||"").split("\n")[0]||"بدون عنوان",legacyIndex:list.length-1,collectionIds:[]});}n++;}if(window.YESContent)window.YESContent.poems=window.YESContent.all.filter(x=>x.type!=="text");return n;};
 try{
  let cached=null;try{cached=JSON.parse(localStorage.getItem(CACHE)||"null");}catch(e){}
- if(Array.isArray(cached)&&cached.length===200){add(cached);window.dispatchEvent(new Event("yes:web-poems-loaded"));return true;}
+ if(Array.isArray(cached)&&cached.length===200){observedSourceRows=cached.length;const added=add(cached);noteSource(added,true);window.dispatchEvent(new Event("yes:web-poems-loaded"));return true;}
  const root="https://cdn.jsdelivr.net/gh/ganjoor/ganjoor-data@main/";
  const cat=await fetch(root+"poets/hafez/ghazal/_cat.json").then(r=>{if(!r.ok)throw Error("category fetch failed");return r.json();});
  const candidates=(cat.Poems||[]).slice(0,260);
@@ -17,7 +19,8 @@ try{
  }
  await Promise.all(Array.from({length:8},worker));
  if(collected.length!==200)throw Error("only "+collected.length+" unique poems could be loaded");
- add(collected);try{localStorage.setItem(CACHE,JSON.stringify(collected));}catch(e){}
+ observedSourceRows=collected.length;
+ const added=add(collected);noteSource(added,false);try{localStorage.setItem(CACHE,JSON.stringify(collected));}catch(e){}
  window.dispatchEvent(new Event("yes:web-poems-loaded"));return true;
-}catch(error){console.warn("Ganjoor poem import:",error);window.dispatchEvent(new Event("yes:web-poems-load-failed"));return false;}
+}catch(error){noteSource(0,false,true);console.warn("Ganjoor poem import:",error);window.dispatchEvent(new Event("yes:web-poems-load-failed"));return false;}
 })();

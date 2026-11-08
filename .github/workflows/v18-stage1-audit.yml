@@ -1,0 +1,26 @@
+name: V1.8 stage 1 archive audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "data/poetry-archive/**"
+      - "scripts/audit_archive.py"
+      - ".github/workflows/v18-stage1-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Audit all compressed archive shards (read-only)
+        run: python scripts/audit_archive.py
