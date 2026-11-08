@@ -105,3 +105,27 @@ test("poem page exposes taxonomy, prosody status, share and correction link", as
   await expect(page.locator("#readerProsody")).toContainText("تأیید نشده");
   await expect(page.locator(".reader-report a")).toHaveAttribute("href", /github.com\/nambrlnd-droid\/\-yek-estekan-sher\/issues\/new/);
 });
+
+test("human prosody review is saved locally and becomes searchable as confirmed", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  await page.evaluate(() => {
+    const item = { id: "stage3-human-review", type: "poem", title: "آزمون بازبینی", body: "مصراع یک\nمصراع دو", author: "آزمون", tags: [] };
+    window.YESContent.all.push(item);
+    window.poemEntries.push(item);
+    window.YESReader.open(item.id);
+  });
+  await page.locator("#readerProsodyReviewToggle").click();
+  await page.locator("#readerProsodyMeter").fill("فعولن فعولن فعولن فعل");
+  await page.locator("#readerProsodyBahr").fill("متقارب مثمن محذوف");
+  await page.locator("#readerProsodyArkan").fill("فعولن × ۳، فعل");
+  await page.locator("#readerProsodyScansion").fill("U ـ ـ | U ـ ـ | U ـ ـ | U ـ");
+  await page.locator("#readerProsodyVerified").check();
+  await page.locator("#readerProsodySave").click();
+  await expect(page.locator("#readerProsodyReviewStatus")).toContainText("ذخیره شد");
+  const status = await page.evaluate(async () => (await window.YESStorage.get("prosodyReview", "stage3-human-review")).status);
+  expect(status).toBe("confirmed");
+  await page.goto(baseURL + "#/search");
+  await page.locator("#prosodyMeterFilter").fill("متقارب");
+  const match = await page.evaluate(() => window.YESAdvancedSearch.matches(window.poemEntries.find(x => x.id === "stage3-human-review")));
+  expect(match).toBeTruthy();
+});
