@@ -76,7 +76,7 @@ test("archive bootstrap retries a transient shard failure and completes the full
   await page.route("**/data/poetry-archive/manifest.json", route =>
     route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(manifest) })
   );
-  await page.route("**/data/poetry-archive/*.json.gz", async route => {
+  await page.route(url => url.includes("/data/poetry-archive/") && url.endsWith(".json.gz"), async route => {
     const name = new URL(route.request().url()).pathname.split("/").pop();
     const count = (attempts.get(name) || 0) + 1;
     attempts.set(name, count);
