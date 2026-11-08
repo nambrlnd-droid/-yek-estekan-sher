@@ -121,3 +121,12 @@ test("v1.8 taxonomy is synchronized to the reader's normalized content records",
   expect(result.category3).toBeTruthy();
   expect(result.version).toBe("1.8.0");
 });
+
+
+test("v1.8 search subtopic options agree with the hierarchical archive taxonomy", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/search");
+  await page.waitForFunction(() => window.YESArchive?.manifestData?.categories?.length === 9);
+  await page.locator("#category1Filter").selectOption({ label: "عمومی" });
+  await page.locator("#category2Filter").selectOption({ label: "حماسی و ملی" });
+  await expect(page.locator("#category3Filter option").filter({ hasText: "میهن و پهلوانی" })).toHaveCount(1);
+});
