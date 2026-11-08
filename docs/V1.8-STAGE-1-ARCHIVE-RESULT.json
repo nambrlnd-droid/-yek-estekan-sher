@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "workflow": "V1.8 stage 1 archive audit",
+  "run_id": 42450469640,
+  "source_commit": "eb13e6380e4acf5dca4c8b39c1e4a719ec90d595",
+  "manifest_total": 56880,
+  "decoded_total": 56880,
+  "category_count": 9,
+  "unique_ids": 56880,
+  "duplicate_ids": 0,
+  "duplicate_normalized_bodies": 0,
+  "empty_bodies": 0,
+  "missing_author": 0,
+  "missing_title": 0,
+  "gzip_json_size_and_sha256_errors": 0,
+  "categories": [
+    {
+      "name": "اجتماعی و انتقادی",
+      "slug": "social",
+      "count": 2451,
+      "compressed_bytes": 499230,
+      "sha256": "0f9ee60c95aa44375c073ad495b0e7bfbdce9d9d0143740a657711527386bd8b"
+    },
+    {
+      "name": "حماسی و ملی",
+      "slug": "epic",
+      "count": 240,
+      "compressed_bytes": 73093,
+      "sha256": "3e131e79fbc9aa57935eede4dcbd93d97149b88dde8917d662fecc12b6d119e6"
+    },
+    {
+      "name": "حکمی و اخلاقی",
+      "slug": "ethical",
+      "count": 3336,
+      "compressed_bytes": 691613,
+      "sha256": "0127c94b6e4b9bf2364243af838bbab36d4dc033446bb623f43f73e7e87832d3"
+    },
+    {
+      "name": "روایی و داستانی",
+      "slug": "narrative",
+      "count": 1923,
+      "compressed_bytes": 447820,
+      "sha256": "978ad200032267d38f192bb17abda3a4a5e56643344eed780e68569ad77f1521"
+    },
+    {
+      "name": "طبیعت و توصیف",
+      "slug": "nature",
+      "count": 22568,
+      "compressed_bytes": 5925483,
+      "sha256": "ad9312997a4fdb123ccd60ff66fc6daf9e92323cd839121b2b974a451fa454bf"
+    },
+    {
+      "name": "طنز و هجو",
+      "slug": "satire",
+      "count": 705,
+      "compressed_bytes": 143646,
+      "sha256": "6fa35e54b8ab3bfc33a4768799bc9d7555aa9ffbb360d82f6b26899abb2a36c8"
+    },
+    {
+      "name": "عاشقانه و دلدادگی",
+      "slug": "romantic",
+      "count": 9872,
+      "compressed_bytes": 2149584,
+      "sha256": "2149e2041f9ae74d1a015cd38c69f5f7ddc74b8219cad9022fc3cb0d237a1ecc"
+    },
+    {
+      "name": "فلسفی و تأملی",
+      "slug": "philosophical",
+      "count": 6616,
+      "compressed_bytes": 1501945,
+      "sha256": "63cd7bdb503f2e3217be1db77db47f20f953de487660dabc673ba3280ec1cb2b"
+    },
+    {
+      "name": "متفرقه و چندموضوعی",
+      "slug": "misc",
+      "count": 9169,
+      "compressed_bytes": 894180,
+      "sha256": "b7f5b1d659c94eefe0c33698ef751f41493ac0e0a9d543701ff7396c8994ec7d"
+    }
+  ],
+  "read_only": true,
+  "notes": [
+    "No source poem or poet metadata was modified.",
+    "Duplicate-text detection reported no matches within the nine compressed archive shards.",
+    "This report does not assert cross-source deduplication across separately loaded JavaScript collections or the runtime external loader."
+  ]
+}
