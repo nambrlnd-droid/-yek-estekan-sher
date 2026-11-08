@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 
-test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
+test.beforeEach(async ({ page }, testInfo) => {
+  const skipGate = !testInfo.title.includes("full archive boot");
+  await page.addInitScript(skip => { window.__YES_TEST_SKIP_ARCHIVE_GATE = skip; }, skipGate);
 });
 
 test("external P3R exact matches are searchable but remain distinct from human confirmation", async ({ page, baseURL }) => {
@@ -86,4 +87,23 @@ test("batch analysis preserves external-source meter annotations instead of repl
   expect(result.source).toBe("P3R");
   expect(result.persistedStatus).toBe("external_source_matched");
   expect(result.persistedMeter).toBe("فاعلاتن فاعلاتن فاعلاتن فاعلن");
+});
+
+
+test("full archive boot completes only after the exact-match prosody index is applied", async ({ page, baseURL }) => {
+  test.setTimeout(180000);
+  await page.goto(baseURL + "#/home");
+  await page.waitForFunction(() => window.__YES_ARCHIVE_READY === true, null, { timeout: 150000 });
+  const result = await page.evaluate(() => ({
+    archiveReady: window.__YES_ARCHIVE_READY === true,
+    prosodyReady: window.__YES_PROSODY_CORPUS_READY === true,
+    total: window.YESContent.all.length,
+    matched: window.YESContent.all.filter(item => item.prosody?.status === "external_source_matched").length,
+    index: window.YESProsodyCorpus ? "loaded" : "missing"
+  }));
+  expect(result.archiveReady).toBeTruthy();
+  expect(result.prosodyReady).toBeTruthy();
+  expect(result.total).toBeGreaterThanOrEqual(59000);
+  expect(result.matched).toBeGreaterThan(53000);
+  expect(result.index).toBe("loaded");
 });
