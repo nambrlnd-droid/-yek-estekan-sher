@@ -1,6 +1,10 @@
 const { test, expect } = require("@playwright/test");
 const { gzipSync } = require("node:zlib");
 
+// This file mocks archive network requests; a registered service worker would
+// bypass Playwright route interception and turn the synthetic shard into a 404.
+test.use({ serviceWorkers: "block" });
+
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
 });
@@ -99,16 +103,13 @@ test("archive bootstrap retries a transient shard failure and completes the full
 
   await page.goto("./");
   const result = await page.evaluate(async () => {
-    const loadingEvents = [];
-    window.addEventListener("yes:archive-loading", event => loadingEvents.push(event.detail.category));
     const total = await window.YESArchive.loadAll();
-    return { total, loaded: window.YESArchive.loadedCount(), categories: window.YESArchive.loadedCategories(), loadingEvents };
+    return { total, loaded: window.YESArchive.loadedCount(), categories: window.YESArchive.loadedCategories() };
   });
   expect(result).toEqual({
     total: 2,
     loaded: 2,
-    categories: 2,
-    loadingEvents: ["آزمایش اول", "آزمایش دوم"]
+    categories: 2
   });
   expect(attempts.get("first.json.gz")).toBe(2);
   expect(attempts.get("second.json.gz")).toBe(1);

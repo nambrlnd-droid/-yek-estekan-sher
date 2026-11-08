@@ -19,3 +19,5 @@ window.pinnedEntries = [
 {id:"pinned-018",tags:["پیشنهاد‌ومیض","تأملی و ادبی"],body:"روز خلقت در گِلِ ما شوق دیدارِ تو بود؛\nاز همان آغاز ما را کم‌تحمل ساختند."},
 {id:"pinned-019",tags:["پیشنهاد‌ومیض","عاشقانه و عاطفی","امید و دیدار"],body:"شُکر خدا که سفرهٔ باریکِ شیخ و شاه،\nپهن آنچنان نبود که ما بی‌شرف شویم...",author:"حسین جنتی"}
 ];
+window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};
+window.YES_SOURCE_AUDIT["pinned.js"]={sourceRows:window.pinnedEntries.length,added:window.pinnedEntries.length,duplicateBodySkipped:0,emptyBodySkipped:0};

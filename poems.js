@@ -100,3 +100,5 @@ window.poemEntries = [
 {id:"poem-0099",section:"poems",tags:["حکمت و اخلاق","فراق و دلتنگی"],author:"شهریار",body:"آرام و روان و نرم و سنجیده رَوَد\nما ناله کنان و یار نشنیده رود،\nیک عمر گذشت و عاقبت فهمیدیم\nاز دل نرود هر آنکه از دیده رود."},
 {id:"poem-0100",section:"poems",tags:["تنهایی و غربت","هویت و خودشناسی"],author:"شاملو",body:"از رنجی خسته‌ام که از آنِ من نیست\nبر خاکی نشسته‌ام که از آنِ من نیست\nبا نامی زیسته‌ام که از آنِ من نیست\nاز دردی گریسته‌ام که از آنِ من نیست."}
 ];
+window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};
+window.YES_SOURCE_AUDIT["poems.js"]={sourceRows:window.poemEntries.length,added:window.poemEntries.length,duplicateBodySkipped:0,emptyBodySkipped:0};

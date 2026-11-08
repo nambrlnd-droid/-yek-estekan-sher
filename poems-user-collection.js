@@ -1167,5 +1167,13 @@ const rows=[
 const list=window.poemEntries||(window.poemEntries=[]);
 const norm=s=>String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();
 const seen=new Set(list.map(x=>norm(x.body)));
-for(const item of rows){const key=norm(item.body);if(!key||seen.has(key))continue;seen.add(key);list.push(item);}
+let added=0,duplicateBodySkipped=0,emptyBodySkipped=0;
+for(const item of rows){
+ const key=norm(item.body);
+ if(!key){emptyBodySkipped++;continue;}
+ if(seen.has(key)){duplicateBodySkipped++;continue;}
+ seen.add(key);list.push(item);added++;
+}
+window.YES_SOURCE_AUDIT=window.YES_SOURCE_AUDIT||{};
+window.YES_SOURCE_AUDIT["poems-user-collection.js"]={sourceRows:rows.length,added,duplicateBodySkipped,emptyBodySkipped};
 })();

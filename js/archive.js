@@ -41,7 +41,7 @@ function status(message){const node=document.getElementById("archiveStatus");if(
 function bodyKey(s){return String(s||"").normalize("NFKC").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,"").toLowerCase();}
 function initDedup(target){
  if(!seenIds)seenIds=new Set(target.map(x=>x.id).filter(Boolean));
- if(!seenBodies)seenBodies=new Set(target.map(x=>bodyKey(x.body)).filter(Boolean));
+ if(!seenBodies){seenBodies=new Map();for(const item of target){const key=bodyKey(item.body);if(key&&!seenBodies.has(key))seenBodies.set(key,item.id);}}
  if(window.YESContent&&!seenContentIds)seenContentIds=new Set(window.YESContent.all.map(x=>x.id));
 }
 async function parseArchive(bytes){
@@ -73,13 +73,24 @@ async function loadCategory(name){
   const bytes=await response.arrayBuffer();
   const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
+  // Keep the source shard category explicit so the hierarchical taxonomy can
+  // retain provenance while deriving the new editorial category fields.
+  records.forEach(item=>{if(item&&typeof item==="object"&&!item.archiveCategory)item.archiveCategory=meta.name;});
   categoryRecords.set(meta.name,records);
   const target=window.poemEntries||(window.poemEntries=[]);
   initDedup(target);
   for(const item of records){
    const key=bodyKey(item.body);
-   if(!item.id||seenIds.has(item.id)||!key||seenBodies.has(key))continue;
-   seenIds.add(item.id);seenBodies.add(key);target.push(item);
+   if(!item.id||seenIds.has(item.id)||!key)continue;
+   const duplicateOf=seenBodies.get(key);
+   seenIds.add(item.id);
+   if(duplicateOf){
+    // Keep every uniquely identified source record. A repeated normalized
+    // body is an audit annotation, not a reason to silently drop an item.
+    item.normalizedBodyDuplicate=true;
+    item.normalizedBodyDuplicateOf=duplicateOf;
+   }else seenBodies.set(key,item.id);
+   target.push(item);
   }
   if(window.YESContent){
    for(const item of records){
