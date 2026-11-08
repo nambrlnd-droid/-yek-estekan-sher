@@ -1,6 +1,10 @@
 import { test, expect } from "@playwright/test";
 
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
+});
+
 test("external P3R exact matches are searchable but remain distinct from human confirmation", async ({ page, baseURL }) => {
   await page.goto(baseURL + "#/search");
   const result = await page.evaluate(() => {
