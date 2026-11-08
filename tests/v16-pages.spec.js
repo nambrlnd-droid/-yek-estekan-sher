@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 
 test.beforeEach(async ({ page }, testInfo) => {
-  if (testInfo.title !== "all archive poems load before the site is revealed") {
+  if (testInfo.title !== "full archive loads in the background without blocking the site") {
     await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
   }
 });
@@ -156,15 +156,15 @@ test("Escape returns to the page from which a poem was opened", async ({ page })
 });
 
 
-test("all archive poems load before the site is revealed", async ({ page }) => {
+test("full archive loads in the background without blocking the site", async ({ page }) => {
   test.setTimeout(240000);
   await page.addInitScript(() => { Object.defineProperty(window, "YESWebPoemsReady", { configurable: true, get: () => new Promise(() => {}), set: () => {} }); });
   await page.goto("./");
-  await expect(page.locator("#archiveBoot")).toBeVisible();
-  await expect(page.locator("#homePageView")).toBeHidden();
-  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 210000 });
-  await expect(page.locator("#archiveBoot")).toBeHidden({ timeout: 30000 });
+  await expect(page.locator(".site-header")).toBeVisible();
   await expect(page.locator("#homePageView")).toBeVisible();
+  await expect(page.locator("#archiveBoot")).toHaveCount(0);
+  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 210000 });
+  await expect(page.locator(".site-header")).toBeVisible();
   await expect.poll(() => page.evaluate(() => {
     const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
     const poems = window.poemEntries.filter(x => x.section === "poems").length;
@@ -176,8 +176,7 @@ test("all archive poems load before the site is revealed", async ({ page }) => {
   expect(await page.evaluate(() => window.YESArchive.loadedCategories())).toBe(9);
   await page.context().setOffline(true);
   await page.reload();
-  await expect(page.locator("#archiveBoot")).toBeVisible();
-  await page.waitForFunction(() => window.YESArchive?.loadedCount() === 56880, null, { timeout: 30000 });
-  await expect(page.locator("#archiveBoot")).toBeHidden({ timeout: 30000 });
+  await expect(page.locator(".site-header")).toBeVisible();
+  await expect(page.locator("#archiveBoot")).toHaveCount(0);
   await page.context().setOffline(false);
 });
