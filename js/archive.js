@@ -44,6 +44,14 @@ function initDedup(target){
  if(!seenBodies){seenBodies=new Map();for(const item of target){const key=bodyKey(item.body);if(key&&!seenBodies.has(key))seenBodies.set(key,item.id);}}
  if(window.YESContent&&!seenContentIds)seenContentIds=new Set(window.YESContent.all.map(x=>x.id));
 }
+async function verifyShard(bytes,expected,path){
+ if(!expected)throw Error("هش SHA-256 برای فایل آرشیو ثبت نشده است: "+path);
+ if(!window.crypto?.subtle?.digest)throw Error("مرورگر امکان بررسی رمزنگارانهٔ فایل آرشیو را ندارد");
+ const digest=await window.crypto.subtle.digest("SHA-256",bytes);
+ const actual=Array.from(new Uint8Array(digest),value=>value.toString(16).padStart(2,"0")).join("");
+ if(actual.toLowerCase()!==String(expected).toLowerCase())throw Error("اعتبارسنجی SHA-256 فایل آرشیو ناموفق بود: "+path);
+ return true;
+}
 async function parseArchive(bytes){
  if(typeof Worker!=="undefined"){
   try{
@@ -71,6 +79,7 @@ async function loadCategory(name){
   window.dispatchEvent(new CustomEvent("yes:archive-loading",{detail:{category:meta.name,categoryIndex,categoryTotal:m.categories.length}}));
   const response=await archiveFetch(meta.file);
   const bytes=await response.arrayBuffer();
+  await verifyShard(bytes,meta.sha256,meta.file);
   const records=await parseArchive(bytes);
   if(!Array.isArray(records)||records.length!==meta.count)throw Error("تعداد آثار دستهٔ «"+meta.name+"» با فهرست گنجینه مطابقت ندارد");
   // Keep the source shard category explicit so the hierarchical taxonomy can
@@ -129,7 +138,7 @@ async function loadAll(){
 }
 function loadedCount(){return [...loaded.values()].reduce((n,x)=>n+x,0);}
 window.YESArchive={
- manifest,loadCategory,loadAll,
+ manifest,loadCategory,loadAll,verifyShard,
  items(name){const key=[...categoryRecords.keys()].find(x=>norm(x)===norm(name));return key?categoryRecords.get(key):[];},
  async randomItems(count=10,categoryName=null){
   const m=await manifest();
