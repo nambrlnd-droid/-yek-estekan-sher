@@ -26,6 +26,8 @@ CORPUS_URL = "https://media.githubusercontent.com/media/m-shahrestani/Prosody-Re
 CORPUS_NAME = "P3R — Prosody Recognition in Persian Poetry"
 CORPUS_REPOSITORY = "https://github.com/m-shahrestani/Prosody-Recognition-in-Persian-Poetry"
 CORPUS_REVISION = "4a2dcea81967778fc42140dab57e45365723bf7d"
+PROSODY_URL = "https://raw.githubusercontent.com/m-shahrestani/Prosody-Recognition-in-Persian-Poetry/4a2dcea81967778fc42140dab57e45365723bf7d/dataset/prosodies.txt"
+PROSODY_FILE = ROOT / ".cache" / "prosodies.txt"
 
 
 def norm(value: object) -> str:
@@ -59,8 +61,29 @@ def download_corpus() -> None:
         raise RuntimeError(f"Corpus download looks incomplete: {CORPUS.stat().st_size} bytes")
 
 
-def read_corpus() -> dict[tuple[str, str], Counter]:
+def read_prosody_map() -> dict[str, str]:
+    PROSODY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    if not PROSODY_FILE.exists():
+        request = urllib.request.Request(PROSODY_URL, headers={"User-Agent": "YekEstekanSher-ProsodyIndexer/1.0"})
+        with urllib.request.urlopen(request, timeout=60) as response:
+            PROSODY_FILE.write_bytes(response.read())
+    mapping: dict[str, str] = {}
+    digits = str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789")
+    for line in PROSODY_FILE.read_text(encoding="utf-8-sig").splitlines():
+        if " - " not in line:
+            continue
+        label, raw_id = line.rsplit(" - ", 1)
+        prosody_id = raw_id.strip().translate(digits)
+        if prosody_id.isdigit():
+            mapping[prosody_id] = label.strip()
+    if not mapping:
+        raise RuntimeError("Could not parse the upstream prosody ID mapping")
+    return mapping
+
+
+def read_corpus() -> tuple[dict[tuple[str, str], Counter], dict[str, str]]:
     download_corpus()
+    prosody_map = read_prosody_map()
     pair_labels: dict[tuple[str, str], Counter] = defaultdict(Counter)
     rows = 0
     with CORPUS.open("r", encoding="utf-8-sig", newline="") as handle:
@@ -70,17 +93,18 @@ def read_corpus() -> dict[tuple[str, str], Counter]:
             raise RuntimeError(f"Unexpected P3R columns: {reader.fieldnames}")
         for row in reader:
             first, second = norm(row.get("VERSE1")), norm(row.get("VERSE2"))
-            meter = " ".join(str(row.get("PROSODY") or "").split())
-            if first and second and meter:
-                pair_labels[(first, second)][meter] += 1
+            raw_id = str(row.get("PROSODY_ID") or "").strip()
+            meter_key = raw_id if raw_id and raw_id.lower() != "nan" else " ".join(str(row.get("PROSODY") or "").split())
+            if first and second and meter_key:
+                pair_labels[(first, second)][meter_key] += 1
             rows += 1
             if rows % 200_000 == 0:
                 print(f"Read {rows:,} P3R couplets; unique exact pairs: {len(pair_labels):,}")
     print(f"Finished P3R: {rows:,} rows; {len(pair_labels):,} unique exact pairs")
-    return pair_labels
+    return pair_labels, prosody_map
 
 
-def classify_record(record: dict, pair_labels: dict[tuple[str, str], Counter], record_type: str):
+def classify_record(record: dict, pair_labels: dict[tuple[str, str], Counter], prosody_map: dict[str, str], record_type: str):
     lines = [line.strip() for line in str(record.get("body") or "").splitlines() if line.strip()]
     votes: Counter = Counter()
     exact_pairs = 0
@@ -90,23 +114,30 @@ def classify_record(record: dict, pair_labels: dict[tuple[str, str], Counter], r
         if not labels:
             continue
         total_votes = sum(labels.values())
-        meter, count = labels.most_common(1)[0]
+        meter_key, count = labels.most_common(1)[0]
         if count / total_votes < 0.9:
             continue
-        votes[meter] += 1
+        votes[meter_key] += 1
         exact_pairs += 1
     if not votes:
         return None, False
-    meter, count = votes.most_common(1)[0]
+    meter_key, count = votes.most_common(1)[0]
     support = count / sum(votes.values())
     if support < 0.8:
         return None, True
+    prosody_label = prosody_map.get(str(meter_key), str(meter_key))
+    arkan = prosody_label.split(" (", 1)[0].strip()
+    bahr = None
+    if " (" in prosody_label and prosody_label.endswith(")"):
+        bahr = prosody_label.rsplit(" (", 1)[1][:-1].strip()
     item_id = str(record["id"])
     return {
         "id": item_id,
-        "meter": meter,
-        "bahr": None,
-        "arkan": meter,
+        "meter": arkan,
+        "bahr": bahr,
+        "arkan": arkan,
+        "prosodyId": str(meter_key) if str(meter_key).isdigit() else None,
+        "prosodyLabel": prosody_label,
         "scansion": None,
         "meterSource": "P3R exact couplet corpus",
         "sourceDataset": CORPUS_NAME,
@@ -125,7 +156,7 @@ def classify_record(record: dict, pair_labels: dict[tuple[str, str], Counter], r
 
 
 def main() -> None:
-    pair_labels = read_corpus()
+    pair_labels, prosody_map = read_corpus()
     matches: dict[str, dict] = {}
     ambiguous_archive = 0
     ambiguous_local = 0
@@ -150,7 +181,7 @@ def main() -> None:
             if str(record["id"]) in local_ids:
                 shadowed_archive += 1
                 continue
-            profile, ambiguous = classify_record(record, pair_labels, "archive")
+            profile, ambiguous = classify_record(record, pair_labels, prosody_map, "archive")
             if ambiguous:
                 ambiguous_archive += 1
             if profile:
@@ -164,7 +195,7 @@ def main() -> None:
         if not isinstance(record, dict) or record.get("id") is None:
             continue
         item_id = str(record["id"])
-        profile, ambiguous = classify_record(record, pair_labels, record_type)
+        profile, ambiguous = classify_record(record, pair_labels, prosody_map, record_type)
         if ambiguous:
             ambiguous_local += 1
         if profile:
@@ -184,6 +215,8 @@ def main() -> None:
         "matchingMethod": "exact adjacent hemistich-pair text after Unicode/Persian-character normalization; no fuzzy matching",
         "corpusRows": sum(sum(labels.values()) for labels in pair_labels.values()),
         "uniqueExactCoupletKeys": len(pair_labels),
+        "prosodyDefinitions": len(prosody_map),
+        "prosodyDefinitionsSource": PROSODY_URL,
         "archiveRecords": total_archive,
         "matchedArchiveRecords": matched_archive,
         "unmatchedArchiveRecords": total_archive - matched_archive - shadowed_archive,
@@ -197,7 +230,7 @@ def main() -> None:
         "matchedExactArchiveCouplets": matched_archive_couplets,
         "matchedExactStaticSiteCouplets": matched_local_couplets,
         "importedStatus": "external_source_matched (not human-reviewed)",
-        "bahr": "not provided separately in source; left empty",
+        "bahr": "mapped from the upstream prosodies.txt definition where an explicit parenthetical bahr label exists; otherwise left empty",
         "scansion": "binary per-line scansion not provided in source; left empty",
         "output": str(OUT.relative_to(ROOT)),
     }
