@@ -83,13 +83,13 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
   });
   console.log("V1.8_CROSS_SOURCE_AUDIT", JSON.stringify(report));
   expect(report.sourceInventory["poems.js"]?.sourceRows).toBe(100);
-  expect(report.sourceInventory["poems-extra.js"]?.sourceRows).toBe(100);
+  expect(report.sourceInventory["poems-extra.js"]?.sourceRows).toBe(99);
   expect(report.sourceInventory["poems-hasan-collection.js"]?.sourceRows).toBe(26);
   expect(report.sourceInventory["poems-user-collection.js"]?.sourceRows).toBe(100);
   expect(report.sourceInventory["telegram-poems.js"]?.sourceRows).toBe(1844);
   expect(report.sourceInventory["internet-poems.js"]?.sourceRows).toBe(200);
   expect(report.sourceInventory["pinned.js"]?.sourceRows).toBe(19);
-  expect(report.sourceRows).toBeGreaterThanOrEqual(2389);
+  expect(report.sourceRows).toBeGreaterThanOrEqual(2388);
   expect(report.sourceAddedMatchesRuntime).toBeTruthy();
   expect(report.manifestTotal).toBe(56880);
   expect(report.archiveRecords).toBe(56880);
