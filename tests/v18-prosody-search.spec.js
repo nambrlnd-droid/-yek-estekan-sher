@@ -129,3 +129,14 @@ test("human prosody review is saved locally and becomes searchable as confirmed"
   const match = await page.evaluate(() => window.YESAdvancedSearch.matches(window.poemEntries.find(x => x.id === "stage3-human-review")));
   expect(match).toBeTruthy();
 });
+
+test("all public version labels are unified to V1.8", async ({ page, baseURL }) => {
+  await page.goto(baseURL + "#/home");
+  await expect(page).toHaveTitle(/نسخهٔ ۱\.۸/);
+  await expect(page.locator(".site-header .version")).toHaveText("نسخهٔ ۱.۸");
+  await expect(page.locator("footer")).toContainText("نسخهٔ ۱.۸");
+  const visibleLabels = await page.locator(".version").allTextContents();
+  expect(visibleLabels).toEqual(["نسخهٔ ۱.۸"]);
+  const html = await page.content();
+  expect(html).not.toContain("نسخهٔ ۱.۷");
+});
