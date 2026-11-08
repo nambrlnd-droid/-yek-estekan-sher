@@ -63,24 +63,24 @@ function attach(item){const p=analyze(item);item.prosody=p;return p;}
 let lastQueue=[];
 async function analyzeAll(items,options={}){
  const list=Array.isArray(items)?items:[],batchSize=Math.max(100,Number(options.batchSize)||400);
- let done=0,review=0,batch=[];lastQueue=[];
+ let done=0,review=0,confirmed=0,batch=[];lastQueue=[];
+ const existing=options.existingProfiles instanceof Map?options.existingProfiles:new Map();
  const flush=async()=>{if(batch.length&&typeof options.onBatch==="function")await options.onBatch(batch);batch=[];};
  for(let i=0;i<list.length;i++){
-  const item=list[i],p=analyze(item,false);done++;
-  if(p.status!=="confirmed"){review++;if(item&&item.id)lastQueue.push(String(item.id));}
+  const item=list[i],saved=item?.id?existing.get(String(item.id)):null;
+  const p=saved?.status==="confirmed"?saved:analyze(item,false);done++;
+  if(p.status==="confirmed"){confirmed++;if(item&&typeof item==="object")item.prosody=p;}
+  else{review++;if(item&&item.id)lastQueue.push(String(item.id));}
   if(item&&item.id)batch.push({
-   id:String(item.id),version:p.version,status:p.status,confidence:p.confidence,
-   poemType:p.poemType,lineCount:p.lineCount,
-   lines:p.lines.map((line,index)=>({index,wordCount:line.wordCount,syllableEstimate:line.syllableEstimate})),
-   rhyme:p.rhyme,radif:p.radif,meter:p.meter,bahr:p.bahr,arkan:p.arkan,
-   scansion:p.scansion,syllableMethod:p.syllableMethod,
-   reviewReasons:p.reviewReasons,updatedAt:new Date().toISOString()
+   ...p,id:String(item.id),version:p.version||"1.8.0-prosody.2",
+   lines:Array.isArray(p.lines)?p.lines.map((line,index)=>({index,wordCount:line.wordCount,syllableEstimate:line.syllableEstimate})):[],
+   updatedAt:p.reviewedAt||new Date().toISOString()
   });
-  if(batch.length>=batchSize){await flush();if(typeof options.onProgress==="function")options.onProgress({done,total:list.length,reviewRequired:review});await new Promise(resolve=>setTimeout(resolve,0));}
+  if(batch.length>=batchSize){await flush();if(typeof options.onProgress==="function")options.onProgress({done,total:list.length,confirmed,reviewRequired:review});await new Promise(resolve=>setTimeout(resolve,0));}
  }
  await flush();
- if(typeof options.onProgress==="function")options.onProgress({done,total:list.length,reviewRequired:review,complete:true});
- return {total:list.length,analyzed:done,confirmed:0,reviewRequired:review,reviewQueueIds:lastQueue.slice(),version:"1.8.0-prosody.2"};
+ if(typeof options.onProgress==="function")options.onProgress({done,total:list.length,confirmed,reviewRequired:review,complete:true});
+ return {total:list.length,analyzed:done,confirmed,reviewRequired:review,reviewQueueIds:lastQueue.slice(),version:"1.8.0-prosody.2"};
 }
 function reviewQueue(){return lastQueue.slice();}
 window.YESProsody={normalize,lines,syllableEstimate,analyze,attach,analyzeAll,reviewQueue};
