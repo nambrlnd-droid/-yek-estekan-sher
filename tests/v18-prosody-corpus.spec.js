@@ -39,6 +39,7 @@ test("the published exact-match index applies real source annotations to local p
       applied: outcome.applied,
       status: matched?.prosody?.status,
       meter: matched?.prosody?.meter,
+      poemType: matched?.prosody?.poemType,
       source: matched?.prosody?.sourceDataset
     };
   });
@@ -47,5 +48,6 @@ test("the published exact-match index applies real source annotations to local p
   expect(result.applied).toBeGreaterThan(0);
   expect(result.status).toBe("external_source_matched");
   expect(result.meter).toBeTruthy();
+  expect(result.poemType).toBeTruthy();
   expect(result.source).toContain("P3R");
 });
