@@ -13,7 +13,7 @@ self.addEventListener("install",event=>{
 self.addEventListener("activate",event=>{
  event.waitUntil((async()=>{
   const names=await caches.keys();
-  await Promise.all(names.filter(name=>name.startsWith(CACHE_PREFIX)&&name!==CACHE_NAME).map(name=>caches.delete(name)));
+  await Promise.all(names.filter(name=>(name.startsWith(CACHE_PREFIX)||name.startsWith("yes-v13-"))&&name!==CACHE_NAME).map(name=>caches.delete(name)));
   await self.clients.claim();
  })());
 });
