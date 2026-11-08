@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build an exact-couplet prosody index from the MIT / CC BY 4.0 P3R corpus.
+"""Build the reproducible exact-couplet prosody index from the MIT / CC BY 4.0 P3R corpus.
 
 Only exact normalized hemistich-pair matches are used. No fuzzy inference is
 performed; conflicting meter votes are excluded from the published index.
