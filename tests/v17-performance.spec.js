@@ -103,13 +103,16 @@ test("archive bootstrap retries a transient shard failure and completes the full
 
   await page.goto("./");
   const result = await page.evaluate(async () => {
+    const loadingEvents = [];
+    window.addEventListener("yes:archive-loading", event => loadingEvents.push(event.detail.category));
     const total = await window.YESArchive.loadAll();
-    return { total, loaded: window.YESArchive.loadedCount(), categories: window.YESArchive.loadedCategories() };
+    return { total, loaded: window.YESArchive.loadedCount(), categories: window.YESArchive.loadedCategories(), loadingEvents };
   });
   expect(result).toEqual({
     total: 2,
     loaded: 2,
-    categories: 2
+    categories: 2,
+    loadingEvents: ["آزمایش اول", "آزمایش دوم"]
   });
   expect(attempts.get("first.json.gz")).toBe(2);
   expect(attempts.get("second.json.gz")).toBe(1);
