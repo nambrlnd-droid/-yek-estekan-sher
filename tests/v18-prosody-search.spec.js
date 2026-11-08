@@ -1,9 +1,9 @@
 const { test, expect } = require("@playwright/test");
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }, testInfo) => {
   await page.addInitScript(() => {
-    window.__YES_TEST_SKIP_ARCHIVE_GATE = true;
-    window.__YES_TEST_FORCE_ARCHIVE_ERROR = false;
+    window.__YES_TEST_SKIP_ARCHIVE_GATE = !testInfo.title.includes("archive loading failure");
+    window.__YES_TEST_FORCE_ARCHIVE_ERROR = testInfo.title.includes("archive loading failure");
   });
 });
 
@@ -163,10 +163,6 @@ test("full-screen archive gate opens only after the archive-ready signal", async
 
 
 test("archive loading failure keeps the site covered and offers retry", async ({ page, baseURL }) => {
-  await page.addInitScript(() => {
-    window.__YES_TEST_SKIP_ARCHIVE_GATE = false;
-    window.__YES_TEST_FORCE_ARCHIVE_ERROR = true;
-  });
   await page.goto(baseURL + "/#/home");
   await expect(page.locator("#archiveBootScreen")).toBeVisible();
   await expect(page.locator("#archiveBootScreen")).toHaveClass(/has-error/);
