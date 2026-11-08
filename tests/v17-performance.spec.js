@@ -1,6 +1,10 @@
 const { test, expect } = require("@playwright/test");
 const { gzipSync } = require("node:zlib");
 
+// This file mocks archive network requests; a registered service worker would
+// bypass Playwright route interception and turn the synthetic shard into a 404.
+test.use({ serviceWorkers: "block" });
+
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => { window.__YES_TEST_SKIP_ARCHIVE_GATE = true; });
 });
