@@ -40,7 +40,8 @@ test("reader, favorite persistence and image studio work at this viewport", asyn
   await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
   await page.reload();
   await expect(page.locator("#readerView")).toBeVisible();
-  await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده");
+  // IndexedDB hydration is asynchronous; wait for the persisted state to reappear.
+  await expect(page.locator("#readerFavorite")).toContainText("نشان‌شده", { timeout: 15000 });
   await page.locator("#readerMakeImage").click();
   await expect(page.locator("#imageStudioView")).toBeVisible();
   const canvas = await page.locator("#poetryCanvas").evaluate(el => [el.width, el.height]);
