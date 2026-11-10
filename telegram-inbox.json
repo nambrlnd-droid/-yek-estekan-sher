@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-10T15:51:59.696887+00:00",
-  "fetched_this_run": 816,
-  "archive_cursor": null,
-  "archive_pages_this_run": 40,
+  "updated_at": "2026-11-10T21:52:07.192706+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2003,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -25447,6 +25447,42 @@
       "source_url": "https://t.me/Poemestic/7705",
       "status": "needs_review",
       "first_seen_at": "2026-11-10T15:50:31.267962+00:00"
+    },
+    {
+      "id": "7706",
+      "text": "تو را \nباران \nبه باران \nگریه کردم.",
+      "author": "",
+      "date": "2026-11-10T16:59:23+00:00",
+      "source_url": "https://t.me/Poemestic/7706",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-10T21:48:46.593232+00:00"
+    },
+    {
+      "id": "7708",
+      "text": "نه خلاف عهد کردم که حدیث جز تو گفتم\nهمه بر سر زبانند و تو در میان جانی\nعوض تو من نیابم که به هیچ کس نمانی.\n-سعدی.",
+      "author": "",
+      "date": "2026-11-10T18:51:24+00:00",
+      "source_url": "https://t.me/Poemestic/7708",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-10T21:48:46.593232+00:00"
+    },
+    {
+      "id": "7709",
+      "text": "اگه شبا با هنزفری میخوابی؛ \nاین پلی لیست برا توعه :\n@Playlistmood",
+      "author": "",
+      "date": "2026-11-10T19:58:09+00:00",
+      "source_url": "https://t.me/Poemestic/7709",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-10T21:48:46.593232+00:00"
+    },
+    {
+      "id": "7710",
+      "text": "سراپا اگر زرد و پژمرده‌ایم\nولی دل به پاییز نسپرده‌ایم\nچو گلدان خالی، لب پنجره\nپُر از خاطرات ترک خورده‌ایم\nاگر داغ دل بود، ما دیده‌ایم\nاگر خون دل بود، ما خورده‌ایم\nاگر دل دلیل است، آورده‌ایم\nاگر داغ شرط است، ما برده‌ایم\nگواهی بخواهید، اینک گواه:\nهمین زخم هایی که نشمرده‌ایم.\n-قیصر امین پور.",
+      "author": "",
+      "date": "2026-11-10T20:11:20+00:00",
+      "source_url": "https://t.me/Poemestic/7710",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-10T21:48:46.593232+00:00"
     }
   ]
 }
