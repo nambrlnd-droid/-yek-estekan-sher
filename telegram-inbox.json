@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-11T09:31:34.148905+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2003,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-11T17:30:06.582396+00:00",
+  "fetched_this_run": 823,
+  "archive_cursor": null,
+  "archive_pages_this_run": 41,
   "posts": [
     {
       "id": "1",
@@ -25483,6 +25483,69 @@
       "source_url": "https://t.me/Poemestic/7710",
       "status": "needs_review",
       "first_seen_at": "2026-11-10T21:48:46.593232+00:00"
+    },
+    {
+      "id": "7711",
+      "text": "آمدم کز تو ستانم دل نافرم‍ان را\nدیدمت روی و به فرمان تو کردم جان را.\n-عاشق اصفهانی.",
+      "author": "",
+      "date": "2026-11-11T10:00:58+00:00",
+      "source_url": "https://t.me/Poemestic/7711",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7712",
+      "text": "يا گرمى يک بوسه به پيشانى من باش\nيا علت يک عمر پريشانى من باش\nبا فاصله اى امن كه آسيب نبينی\nبنشين و فقط شاهد ويرانى من باش.‌ \n-تقی سیدی‌.",
+      "author": "",
+      "date": "2026-11-11T10:26:14+00:00",
+      "source_url": "https://t.me/Poemestic/7712",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7715",
+      "text": "کوچ تاثیری ندارد در علاج حال من\nهر کجا رفتم غمت آمد به استقبال من.\n-محسن حیدری.",
+      "author": "",
+      "date": "2026-11-11T10:59:49+00:00",
+      "source_url": "https://t.me/Poemestic/7715",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7716",
+      "text": "سیبِ شیرینِ لبت باشد و آدم نخورد؟\nتو بهشتی و چه بیم از به گناه افتادن؟\n-حامد عسکری.",
+      "author": "",
+      "date": "2026-11-11T11:44:10+00:00",
+      "source_url": "https://t.me/Poemestic/7716",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7718",
+      "text": "درد دارد كه خودت علتِ لبخند شوی\nو دلت در همه حالات پر از غم باشد.\n-رسول‌ احدی.",
+      "author": "",
+      "date": "2026-11-11T14:25:19+00:00",
+      "source_url": "https://t.me/Poemestic/7718",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7719",
+      "text": "خیلیاتون ازم خواستید گپ چت بزنم؛\nگپ چت خوبیه :\nhttps://t.me/+NwDunbT2GcUwMjRk",
+      "author": "",
+      "date": "2026-11-11T17:17:59+00:00",
+      "source_url": "https://t.me/Poemestic/7719",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7720",
+      "text": "بیاید گپ حرف بزنیم.",
+      "author": "",
+      "date": "2026-11-11T17:23:35+00:00",
+      "source_url": "https://t.me/Poemestic/7720",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
     }
   ]
 }
