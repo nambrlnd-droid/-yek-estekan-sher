@@ -18701,6 +18701,16 @@ const incoming=[
     ],
     "author": "",
     "body": "بیاید گپ حرف بزنیم."
+  },
+  {
+    "id": "telegram-7726",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "جواد صارمی",
+    "body": "دکتر برایم نسخه کرده دیدنت را\nروزی سه وعده در بغل بوییدنت را\nدر بین داروهای تجویزی ، به شدت \nتاکید کرده شب به شب بوسیدنت را."
   }
 ];
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,'').toLowerCase();

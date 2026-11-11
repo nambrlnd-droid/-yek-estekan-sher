@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-11T17:30:06.582396+00:00",
-  "fetched_this_run": 823,
-  "archive_cursor": null,
-  "archive_pages_this_run": 41,
+  "updated_at": "2026-11-11T23:46:50.185646+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2015,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -25546,6 +25546,33 @@
       "source_url": "https://t.me/Poemestic/7720",
       "status": "needs_review",
       "first_seen_at": "2026-11-11T17:28:39.007993+00:00"
+    },
+    {
+      "id": "7724",
+      "text": "ببین که از که بریدی \nو با که پیوستی.\n-سعدی.",
+      "author": "",
+      "date": "2026-11-11T18:20:36+00:00",
+      "source_url": "https://t.me/Poemestic/7724",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T23:43:17.737056+00:00"
+    },
+    {
+      "id": "7725",
+      "text": "نه دست‌رسی به یار دارم\nنه طاقت انتظار دارم\nهر جور که از تو بر من آید\nاز گردش روزگار دارم\nمن کاَندُه تو کشیده باشم\nاندوه زمانه خوار دارم\nدر آب دو دیده از تو غرقم\nو امید لب و کنار دارم\nدشنام همی دهی به سعدی\nمن با دو لب تو کار دارم.\n-سعدی.",
+      "author": "",
+      "date": "2026-11-11T18:33:22+00:00",
+      "source_url": "https://t.me/Poemestic/7725",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T23:43:17.737056+00:00"
+    },
+    {
+      "id": "7726",
+      "text": "دکتر برایم نسخه کرده دیدنت را\nروزی سه وعده در بغل بوییدنت را\nدر بین داروهای تجویزی ، به شدت \nتاکید کرده شب به شب بوسیدنت را.\n-جواد صارمی.",
+      "author": "",
+      "date": "2026-11-11T19:08:59+00:00",
+      "source_url": "https://t.me/Poemestic/7726",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-11T23:43:17.737056+00:00"
     }
   ]
 }
