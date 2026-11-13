@@ -67,3 +67,70 @@ test("renderer blocks poem overflow instead of drawing clipped text", async ({ p
   expect(result.reason).toBe("POEM_OVERFLOW");
   expect(result.issueCodes).toContain("POEM_OVERFLOW");
 });
+
+
+test("v2 renderer supports all 60 template-format combinations without losing source text", async ({ page }) => {
+  await page.goto("./");
+  await page.addScriptTag({ path: "js/image-studio/template-registry.js" });
+  await page.addScriptTag({ path: "js/image-studio/poem-layout.js" });
+  await page.addScriptTag({ path: "js/image-studio/quality-check.js" });
+  await page.addScriptTag({ path: "js/image-studio/renderer.js" });
+  const report = await page.evaluate(async () => {
+    const manifest = await (await fetch("assets/image-studio/manifest.v2.json")).json();
+    const registry = window.YESImageStudioV2Registry.create(manifest);
+    const canvas = document.createElement("canvas");
+    const source = "بهار آمد، دل از غم رها شد\n  و این سطر با فاصله آغاز می‌شود؛";
+    const rows = [];
+    for (const template of manifest.templates) {
+      for (const format of ["square", "portrait", "story", "landscape"]) {
+        const result = window.YESImageStudioV2Renderer.render({
+          registry, layoutEngine: window.YESImageStudioV2Layout,
+          quality: window.YESImageStudioV2Quality, canvas,
+          templateId: template.id, format, text: source, author: "آزمون"
+        });
+        rows.push({
+          templateId: template.id, format, rendered: result.rendered,
+          width: canvas.width, height: canvas.height,
+          sourceText: result.poemLayout.sourceText,
+          sourcePreserved: result.poemLayout.integrity.sourcePreserved,
+          explicitLineBreaks: result.poemLayout.integrity.explicitLineBreaks,
+          qualityOk: result.quality.ok
+        });
+      }
+    }
+    return rows;
+  });
+  expect(report).toHaveLength(60);
+  for (const row of report) {
+    expect(row.rendered, row.templateId + "/" + row.format).toBeTruthy();
+    expect(row.qualityOk, row.templateId + "/" + row.format).toBeTruthy();
+    expect(row.sourceText).toBe("بهار آمد، دل از غم رها شد\n  و این سطر با فاصله آغاز می‌شود؛");
+    expect(row.sourcePreserved).toBeTruthy();
+    expect(row.explicitLineBreaks).toBe(1);
+  }
+});
+
+test("quality checker rejects malformed colors and unsafe geometry as structured issues", async ({ page }) => {
+  await page.goto("./");
+  await page.addScriptTag({ path: "js/image-studio/quality-check.js" });
+  const result = await page.evaluate(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1080; canvas.height = 1080;
+    const report = window.YESImageStudioV2Quality.inspect({
+      canvas,
+      layout: {
+        canvas: { width: 1080, height: 1080 },
+        safeArea: { left: 0.8, right: 0.3, top: 0.05, bottom: 0.05 },
+        poem: { x: 0.2, y: 0.1, w: 0.9, h: 0.8 },
+        author: { x: 1.2, y: 0.9 }
+      },
+      template: { palette: { text: "not-a-color", background: "#FFFFFF" } },
+      poemLayout: { overflow: false, fontSize: 20, lines: [{ text: "آزمون" }] }
+    });
+    return report.issues.map(issue => issue.code);
+  });
+  expect(result).toContain("INVALID_SAFE_AREA");
+  expect(result).toContain("POEM_OUTSIDE_CANVAS");
+  expect(result).toContain("INVALID_PALETTE_COLOR");
+  expect(result).toContain("AUTHOR_OUTSIDE_CANVAS");
+});
