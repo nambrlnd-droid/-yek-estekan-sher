@@ -28,7 +28,7 @@ test("v2 export refuses overflow, quality failures and warnings by default", asy
     const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1080;
     const base={canvas,format:"square",templateId:"sepideh",rendered:true,blocked:false};
     async function rejected(renderResult){
-      try{await window.YESImageStudioV2Export.exportPNG({renderResult});return false;}catch(_){return true;}
+      try{await window.YESImageStudioV2Export.exportPNG({renderResult,rejectWarnings:true});return false;}catch(_){return true;}
     }
     return {
       overflow:await rejected({...base,rendered:false,blocked:true,quality:{ok:false,warnings:[]}}),
@@ -71,4 +71,20 @@ test("all 60 v2 template-format combinations have valid target dimensions", asyn
   });
   expect(result.count).toBe(60);
   expect(result.invalid).toEqual([]);
+});
+
+
+test("non-fatal missing-asset warnings remain visible but do not block a PNG export", async ({ page }) => {
+  await page.goto("./");
+  await page.addScriptTag({ path: "js/image-studio/export-manager.js" });
+  const result=await page.evaluate(async()=>{
+    const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1080;
+    const warning={code:"TEXTURE_NOT_AVAILABLE"};
+    const exported=await window.YESImageStudioV2Export.exportPNG({
+      renderResult:{canvas,format:"square",templateId:"shenzar",rendered:true,blocked:false,quality:{ok:true,warnings:[warning]}}
+    });
+    return {mime:exported.mime,warnings:exported.warnings};
+  });
+  expect(result.mime).toBe("image/png");
+  expect(result.warnings).toEqual([{code:"TEXTURE_NOT_AVAILABLE"}]);
 });
