@@ -95,3 +95,24 @@ fails closed by default.
 
 This module is not yet connected to the production renderer. The current live
 studio and its asset behavior remain unchanged.
+
+
+## Renderer adapter and quality preflight
+
+The isolated v2 Canvas renderer consumes the registry, poem-layout engine and
+quality checker as explicit dependencies. It sizes the canvas from the selected
+template/format, paints the declared solid background, applies RTL text
+direction, lays out the poem, and optionally places the author credit.
+
+The adapter deliberately does not emulate missing textures, frames or ornaments.
+Until those assets are present in the approved local license catalog, the
+quality report emits explicit availability warnings. This avoids silently
+substituting unreviewed visual assets.
+
+The preflight report checks canvas dimensions, poem bounds, safe-area placement,
+overflow and text/background contrast. Overflow is a hard failure: the renderer
+does not paint a clipped or truncated poem and returns `blocked: true` with
+reason `POEM_OVERFLOW`. Strict mode can reject any quality issue or warning.
+
+The adapter remains isolated from `js/image-studio.js`; no production UI,
+legacy export dimensions, stored settings or service-worker behavior is changed.
