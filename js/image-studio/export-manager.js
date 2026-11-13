@@ -6,6 +6,7 @@
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
   "use strict";
   const FORMATS=["square","portrait","story","landscape"];
+  const FORMAT_DIMENSIONS={square:{width:1080,height:1080},portrait:{width:1080,height:1350},story:{width:1080,height:1920},landscape:{width:1920,height:1080}};
   const MAX_PIXELS=12000000;
   function safeName(value){
     const name=String(value||"poem").normalize("NFKC").replace(/[\\/:*?"<>|\u0000-\u001f]/g,"-").replace(/\s+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,80);
@@ -15,6 +16,8 @@
     if(!canvas||typeof canvas.toBlob!=="function")throw new TypeError("A canvas supporting PNG Blob export is required");
     if(!FORMATS.includes(format))throw new Error("Unsupported export format: "+format);
     if(!(canvas.width>0&&canvas.height>0)||canvas.width*canvas.height>MAX_PIXELS)throw new Error("Canvas dimensions are invalid or exceed the export safety limit");
+    const expected=FORMAT_DIMENSIONS[format];
+    if(canvas.width!==expected.width||canvas.height!==expected.height)throw new Error("Canvas dimensions do not match the approved v2 format");
   }
   function toBlob(canvas){
     return new Promise((resolve,reject)=>{
@@ -53,5 +56,5 @@
     }finally{env.URL.revokeObjectURL(url);}
     return {downloaded:true,filename:exported.filename};
   }
-  return {FORMATS,MAX_PIXELS,safeName,exportPNG,download};
+  return {FORMATS,FORMAT_DIMENSIONS,MAX_PIXELS,safeName,exportPNG,download};
 });
