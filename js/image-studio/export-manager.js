@@ -32,14 +32,14 @@
     if(!result||!result.canvas)throw new TypeError("A successful renderer result is required");
     if(result.blocked||!result.rendered)throw new Error("Export blocked: renderer did not produce a complete poem");
     if(!result.quality||!result.quality.ok)throw new Error("Export blocked: quality preflight contains errors");
-    if(opts.rejectWarnings!==false&&result.quality.warnings&&result.quality.warnings.length)throw new Error("Export blocked: quality preflight contains warnings");
+    if(opts.rejectWarnings===true&&result.quality.warnings&&result.quality.warnings.length)throw new Error("Export blocked: quality preflight contains warnings");
     validateCanvas(result.canvas,result.format);
     const expected=opts.expectedDimensions;
     if(expected&&(result.canvas.width!==expected.width||result.canvas.height!==expected.height))throw new Error("Export dimensions do not match the selected format");
     const blob=await toBlob(result.canvas);
     if(blob.size===0)throw new Error("PNG export is empty");
     return {blob,mime:blob.type,bytes:blob.size,width:result.canvas.width,height:result.canvas.height,
-      format:result.format,templateId:result.templateId,filename:safeName(opts.filename||result.templateId||"poem")+".png"};
+      format:result.format,templateId:result.templateId,warnings:(result.quality.warnings||[]).slice(),filename:safeName(opts.filename||result.templateId||"poem")+".png"};
   }
   function download(exported,environment){
     if(!exported||!exported.blob||exported.mime!=="image/png")throw new TypeError("A verified PNG export result is required");
