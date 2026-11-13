@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-13T09:35:10.693969+00:00",
-  "fetched_this_run": 839,
-  "archive_cursor": null,
-  "archive_pages_this_run": 41,
+  "updated_at": "2026-11-13T17:27:10.504615+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2074,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -25654,6 +25654,24 @@
       "source_url": "https://t.me/Poemestic/7737",
       "status": "needs_review",
       "first_seen_at": "2026-11-12T21:07:44.240668+00:00"
+    },
+    {
+      "id": "7738",
+      "text": "دلم، دریا به دریا، از تماشای تو می‌ گیرد\nدلم دریاست اما از تماشای تو می‌ گیرد\nنسیم از گیسوانت رد شد و باران تو را بوسید\nطبیعت سهم خود را از تماشای تو می‌ گیرد.\n-فاضل نظری.",
+      "author": "",
+      "date": "2026-11-13T11:50:47+00:00",
+      "source_url": "https://t.me/Poemestic/7738",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-13T17:23:36.295664+00:00"
+    },
+    {
+      "id": "7740",
+      "text": "تا جان و دلم باشد من جان و دلت جویم\n یا من به کنار افتم یا تو به کنار آیی.\n-نظامی.",
+      "author": "",
+      "date": "2026-11-13T16:34:34+00:00",
+      "source_url": "https://t.me/Poemestic/7740",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-13T17:23:36.295664+00:00"
     }
   ]
 }
