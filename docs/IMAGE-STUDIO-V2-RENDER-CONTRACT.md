@@ -116,3 +116,28 @@ reason `POEM_OVERFLOW`. Strict mode can reject any quality issue or warning.
 
 The adapter remains isolated from `js/image-studio.js`; no production UI,
 legacy export dimensions, stored settings or service-worker behavior is changed.
+
+
+## PNG export manager
+
+The additive export manager accepts only a successful v2 renderer result. It
+rejects blocked/overflow renders, failed quality reports, invalid canvases,
+unsupported formats, empty PNG blobs and canvases above the 12-megapixel
+safety limit. It enforces the canonical dimensions for each format rather than
+trusting arbitrary caller-provided sizes:
+
+- square: 1080×1080
+- portrait: 1080×1350
+- story: 1080×1920
+- landscape: 1920×1080
+
+PNG encoding uses the browser's `canvas.toBlob` API. The result includes the
+Blob, MIME type, byte count, dimensions, template/format identifiers, safe
+filename and any non-fatal quality warnings. Warnings such as unavailable
+unlicensed textures remain visible but do not block a basic solid-background
+export by default; callers may opt into strict warning rejection. Errors and
+poem overflow always block export.
+
+A separate explicit download method creates and revokes a temporary object URL.
+Export does not trigger a download automatically, mutate persisted settings,
+or alter the legacy renderer.
