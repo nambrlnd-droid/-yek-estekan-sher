@@ -25,7 +25,7 @@
     const lines=[];let line="";
     tokens.forEach(token=>{
       if(/^\s+$/.test(token)){
-        if(line)line+=token;
+        line+=token;
         return;
       }
       const candidate=line+token;
