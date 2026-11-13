@@ -34,7 +34,7 @@ The current v1 renderer uses 1200×1200 for square and 1600×900 for landscape. 
 - `author`: normalized author anchor.
 - `ornaments`: declarative local ornament placements.
 
-Geometry values use normalized coordinates in the range 0–1. The origin is the top-right for RTL composition: `x` is the right edge of the element box, `y` is its top edge, and width/height are positive fractions of the canvas. The renderer converts this coordinate model into Canvas coordinates. Pixel coordinates do not belong in the manifest.
+Geometry values use normalized coordinates in the range 0–1. The origin is the top-right for RTL composition: `x` is the distance from the right canvas edge to the element box right edge, `y` is its top edge, and width/height are positive fractions of the canvas. Thus the Canvas left coordinate is `1 - x - width`; a point anchor such as the author uses Canvas x = `1 - x`. The renderer converts this coordinate model into Canvas coordinates. Pixel coordinates do not belong in the manifest.
 
 ## 4. Text integrity and layout
 
