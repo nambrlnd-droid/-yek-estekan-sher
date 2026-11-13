@@ -6,7 +6,8 @@
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
   "use strict";
   const FORMATS=["square","portrait","story","landscape"];
-  const REQUIRED_METHODS=["open","render","applyTemplate"];\n  const HEX=/^#[0-9a-fA-F]{6}$/;
+  const REQUIRED_METHODS=["open","render","applyTemplate"];
+  const HEX=/^#[0-9a-fA-F]{6}$/;
   function assert(condition,message){if(!condition)throw new Error("Image Studio v2 manifest: "+message);}
   function validate(manifest){
     assert(manifest&&manifest.schemaVersion==="2.0.0","unsupported schema version");
@@ -18,7 +19,8 @@
     manifest.templates.forEach(template=>{
       assert(template&&typeof template.id==="string"&&!ids.has(template.id),"template IDs must be unique and non-empty");
       ids.add(template.id);
-      assert(familyIds.has(template.family),"unknown family for "+template.id);\n      assert(template.palette&&["background","text","accent","muted"].every(key=>typeof template.palette[key]==="string"&&HEX.test(template.palette[key])),"invalid palette for "+template.id);
+      assert(familyIds.has(template.family),"unknown family for "+template.id);
+      assert(template.palette&&["background","text","accent","muted"].every(key=>typeof template.palette[key]==="string"&&HEX.test(template.palette[key])),"invalid palette for "+template.id);
       assert(template.formats&&FORMATS.every(format=>template.formats[format]),"missing format for "+template.id);
       FORMATS.forEach(format=>{
         const layout=template.formats[format];
@@ -26,7 +28,11 @@
         const {width,height}=layout.canvas;
         assert(Number.isFinite(width)&&width>0&&Number.isFinite(height)&&height>0,"invalid canvas dimensions");
         ["x","y","w","h"].forEach(key=>assert(Number.isFinite(layout.poem[key])&&layout.poem[key]>=0&&layout.poem[key]<=1,"invalid poem geometry "+template.id+"/"+format+"/"+key));
-        assert(layout.poem.x+layout.poem.w<=1&&layout.poem.y+layout.poem.h<=1,"poem region exceeds canvas");\n        const safe=layout.safeArea;\n        ["left","right","top","bottom"].forEach(key=>assert(Number.isFinite(safe[key])&&safe[key]>=0&&safe[key]<1,"invalid safe area "+template.id+"/"+format+"/"+key));\n        assert(safe.left+safe.right<1&&safe.top+safe.bottom<1,"safe area collapses content region");\n        ["x","y"].forEach(key=>assert(Number.isFinite(layout.author[key])&&layout.author[key]>=0&&layout.author[key]<=1,"invalid author anchor "+template.id+"/"+format+"/"+key));
+        assert(layout.poem.x+layout.poem.w<=1&&layout.poem.y+layout.poem.h<=1,"poem region exceeds canvas");
+        const safe=layout.safeArea;
+        ["left","right","top","bottom"].forEach(key=>assert(Number.isFinite(safe[key])&&safe[key]>=0&&safe[key]<1,"invalid safe area "+template.id+"/"+format+"/"+key));
+        assert(safe.left+safe.right<1&&safe.top+safe.bottom<1,"safe area collapses content region");
+        ["x","y"].forEach(key=>assert(Number.isFinite(layout.author[key])&&layout.author[key]>=0&&layout.author[key]<=1,"invalid author anchor "+template.id+"/"+format+"/"+key));
       });
     });
     assert(manifest.assetPolicy&&manifest.assetPolicy.remoteAssetsAllowed===false,"remote assets must remain disabled");
