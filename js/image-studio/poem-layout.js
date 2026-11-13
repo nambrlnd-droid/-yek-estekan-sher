@@ -30,12 +30,12 @@
       }
       const candidate=line+token;
       if(!line||measure(ctx,candidate.trimEnd())<=maxWidth){line=candidate;return;}
-      lines.push(line.trimEnd());
+      lines.push(line);
       if(measure(ctx,token)<=maxWidth){line=token.trimStart();return;}
       const pieces=splitLongToken(token,maxWidth,ctx);
       lines.push(...pieces.slice(0,-1));line=pieces[pieces.length-1]||"";
     });
-    if(line||!lines.length)lines.push(line.trimEnd());
+    if(line||!lines.length)lines.push(line);
     return lines;
   }
   function layout(options){
