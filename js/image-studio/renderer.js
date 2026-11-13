@@ -48,7 +48,7 @@
       });
     }
     const authorText=String(opts.author||"");
-    if(authorText){
+    if(authorText&&!poem.overflow){
       const author=selected.author;
       ctx.fillStyle=template.palette.accent;
       ctx.font=layoutEngine.fontSpec("400",Math.max(14,poem.fontSize*0.62),typography.fontFamily||"Tahoma",typography.fontFallback||["Tahoma","sans-serif"]);
