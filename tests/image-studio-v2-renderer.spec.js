@@ -42,3 +42,28 @@ test("quality checker detects overflow and weak contrast", async ({ page }) => {
   expect(result.issues.some(item=>item.code==="POEM_OVERFLOW")).toBeTruthy();
   expect(result.warnings.some(item=>item.code==="LOW_TEXT_CONTRAST")).toBeTruthy();
 });
+
+
+test("renderer blocks poem overflow instead of drawing clipped text", async ({ page }) => {
+  await page.goto("./");
+  await page.addScriptTag({ path: "js/image-studio/template-registry.js" });
+  await page.addScriptTag({ path: "js/image-studio/poem-layout.js" });
+  await page.addScriptTag({ path: "js/image-studio/quality-check.js" });
+  await page.addScriptTag({ path: "js/image-studio/renderer.js" });
+  const result = await page.evaluate(async () => {
+    const manifest = await (await fetch("assets/image-studio/manifest.v2.json")).json();
+    const registry = window.YESImageStudioV2Registry.create(manifest);
+    const canvas = document.createElement("canvas");
+    const rendered = window.YESImageStudioV2Renderer.render({
+      registry, layoutEngine: window.YESImageStudioV2Layout, quality: window.YESImageStudioV2Quality,
+      canvas, templateId: "sepideh", format: "square",
+      text: ("این یک شعر بلند برای آزمون جلوگیری از برش متن است\n").repeat(100)
+    });
+    return { rendered: rendered.rendered, blocked: rendered.blocked, reason: rendered.reason,
+      issueCodes: rendered.quality.issues.map(issue => issue.code) };
+  });
+  expect(result.rendered).toBeFalsy();
+  expect(result.blocked).toBeTruthy();
+  expect(result.reason).toBe("POEM_OVERFLOW");
+  expect(result.issueCodes).toContain("POEM_OVERFLOW");
+});
