@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "deny-by-default",
+  "assets": [],
+  "notes": "No image, texture, ornament, or font asset is approved until its local file and license evidence are recorded."
+}

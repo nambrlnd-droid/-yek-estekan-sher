@@ -1,0 +1,2565 @@
+{
+  "schemaVersion": "2.0.0",
+  "manifestId": "yes-image-studio-templates",
+  "locale": "fa-IR",
+  "direction": "rtl",
+  "status": "design-contract",
+  "notes": "Declarative design data; not yet connected to production renderer.",
+  "outputFormats": {
+    "square": {
+      "width": 1080,
+      "height": 1080
+    },
+    "portrait": {
+      "width": 1080,
+      "height": 1350
+    },
+    "story": {
+      "width": 1080,
+      "height": 1920
+    },
+    "landscape": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "families": [
+    {
+      "id": "minimal",
+      "name": "مینیمال و ظریف",
+      "description": "فضای خالی، تایپوگرافی و جزئیات محدود"
+    },
+    {
+      "id": "iranian",
+      "name": "سنتی ایرانی",
+      "description": "الهام از نسخه‌پردازی، باغ و هندسهٔ ایرانی"
+    },
+    {
+      "id": "cinematic",
+      "name": "سینمایی و احساسی",
+      "description": "عمق، نور و پس‌زمینهٔ روایی"
+    },
+    {
+      "id": "modern",
+      "name": "مدرن و هنری",
+      "description": "هندسه، فرم‌های آزاد و ترکیب‌بندی معاصر"
+    },
+    {
+      "id": "luxury",
+      "name": "لوکس و شبانه",
+      "description": "رنگ‌های عمیق و تأکیدهای محدود"
+    }
+  ],
+  "typographyDefaults": {
+    "fontFallback": [
+      "Tahoma",
+      "sans-serif"
+    ],
+    "preferredSizeByMinDimension": 0.046,
+    "minimumSizeByMinDimension": 0.022,
+    "lineHeight": 1.8,
+    "verseGap": 0.55,
+    "manualLineBreaks": "preserve",
+    "direction": "rtl",
+    "textTransform": "none"
+  },
+  "layoutRules": {
+    "coordinateSystem": "normalized-0-to-1",
+    "origin": "top-right-for-rtl",
+    "textIntegrity": "exact-source-text",
+    "overflow": "never-clip-or-drop; return structured overflow warning",
+    "adaptation": "independent-layout-per-format",
+    "longPoemOrder": [
+      "expand-poem-region",
+      "reduce-ornament-density",
+      "adjust-verse-gap",
+      "adjust-line-height",
+      "reduce-font-to-minimum",
+      "report-overflow"
+    ]
+  },
+  "assetPolicy": {
+    "remoteAssetsAllowed": false,
+    "requireLocalFiles": true,
+    "requireLicenseRecord": true,
+    "licenseManifest": "assets/image-studio/licenses/manifest.json",
+    "noUnverifiedAssets": true
+  },
+  "legacyCompatibility": {
+    "publicApi": "window.YESImageStudio",
+    "preserveMethods": [
+      "open",
+      "render",
+      "applyTemplate"
+    ],
+    "legacyTemplateIds": [
+      "classic",
+      "garden",
+      "tile",
+      "rose",
+      "ink",
+      "midnight",
+      "minimal",
+      "saffron",
+      "lavender",
+      "copper",
+      "sea",
+      "sand"
+    ],
+    "migration": "additive-only; legacy IDs and stored settings remain readable"
+  },
+  "templates": [
+    {
+      "id": "sepideh",
+      "name": "سپیده",
+      "family": "minimal",
+      "palette": {
+        "background": "#F5F0E7",
+        "text": "#292923",
+        "accent": "#B69B68",
+        "muted": "#8A8277"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#F5F0E7",
+        "texture": null
+      },
+      "frame": {
+        "id": "none",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.25,
+            "w": 0.78,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": []
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.27,
+            "w": 0.78,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": []
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.34,
+            "w": 0.78,
+            "h": 0.39
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": []
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.18,
+            "w": 0.56,
+            "h": 0.64
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": []
+        }
+      }
+    },
+    {
+      "id": "shenzar",
+      "name": "شنزار",
+      "family": "minimal",
+      "palette": {
+        "background": "#D8C3A0",
+        "text": "#3E3026",
+        "accent": "#A77C50",
+        "muted": "#8A745A"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "400",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#D8C3A0",
+        "texture": {
+          "id": "paper-grain",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "soft",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.25,
+            "w": 0.74,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "landscape-horizon",
+              "anchor": "bottom",
+              "opacity": 0.22,
+              "area": 0.16
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.25,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "landscape-horizon",
+              "anchor": "bottom",
+              "opacity": 0.22,
+              "area": 0.16
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.25,
+            "w": 0.76,
+            "h": 0.39
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "landscape-horizon",
+              "anchor": "bottom",
+              "opacity": 0.22,
+              "area": 0.16
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.25,
+            "w": 0.56,
+            "h": 0.64
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "landscape-horizon",
+              "anchor": "bottom",
+              "opacity": 0.22,
+              "area": 0.16
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "morkab",
+      "name": "مرکب خالص",
+      "family": "minimal",
+      "palette": {
+        "background": "#FAFAF7",
+        "text": "#151515",
+        "accent": "#777777",
+        "muted": "#777777"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#FAFAF7",
+        "texture": null
+      },
+      "frame": {
+        "id": "none",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.28,
+            "w": 0.74,
+            "h": 0.45
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": []
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.28,
+            "w": 0.76,
+            "h": 0.45
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": []
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.28,
+            "w": 0.76,
+            "h": 0.45
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": []
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.28,
+            "w": 0.56,
+            "h": 0.45
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": []
+        }
+      }
+    },
+    {
+      "id": "noskheh",
+      "name": "نسخهٔ خطی",
+      "family": "iranian",
+      "palette": {
+        "background": "#E8D8B7",
+        "text": "#35291F",
+        "accent": "#B49358",
+        "muted": "#873D42"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#E8D8B7",
+        "texture": {
+          "id": "paper-grain",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "manuscript",
+        "opacity": 0.72
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.18,
+            "y": 0.2,
+            "w": 0.64,
+            "h": 0.62
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "manuscript-corners",
+              "anchor": "corners",
+              "opacity": 0.8,
+              "area": 0.1
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.18,
+            "y": 0.2,
+            "w": 0.64,
+            "h": 0.62
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "manuscript-corners",
+              "anchor": "corners",
+              "opacity": 0.8,
+              "area": 0.1
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.18,
+            "y": 0.24,
+            "w": 0.64,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "manuscript-corners",
+              "anchor": "corners",
+              "opacity": 0.8,
+              "area": 0.1
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.2,
+            "w": 0.56,
+            "h": 0.62
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "manuscript-corners",
+              "anchor": "corners",
+              "opacity": 0.8,
+              "area": 0.1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "bagh",
+      "name": "باغ ایرانی",
+      "family": "iranian",
+      "palette": {
+        "background": "#25483B",
+        "text": "#F4EBDD",
+        "accent": "#C2A46D",
+        "muted": "#91A98A"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#25483B",
+        "texture": {
+          "id": "botanical",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "corner-flora",
+        "opacity": 0.72
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.18,
+            "y": 0.24,
+            "w": 0.64,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "botanical-corners",
+              "anchor": "corners",
+              "opacity": 0.58,
+              "area": 0.09
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.18,
+            "y": 0.24,
+            "w": 0.64,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "botanical-corners",
+              "anchor": "corners",
+              "opacity": 0.58,
+              "area": 0.09
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.18,
+            "y": 0.24,
+            "w": 0.64,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "botanical-corners",
+              "anchor": "corners",
+              "opacity": 0.58,
+              "area": 0.09
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.24,
+            "w": 0.56,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "botanical-corners",
+              "anchor": "corners",
+              "opacity": 0.58,
+              "area": 0.09
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "kashi",
+      "name": "کاشی فیروزه",
+      "family": "iranian",
+      "palette": {
+        "background": "#167D83",
+        "text": "#FFF8E9",
+        "accent": "#D0AE69",
+        "muted": "#183D68"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "600",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#167D83",
+        "texture": {
+          "id": "geometric-tile",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "mihrab",
+        "opacity": 0.72
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.2,
+            "y": 0.21,
+            "w": 0.6,
+            "h": 0.58
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "tile-frame",
+              "anchor": "perimeter",
+              "opacity": 0.72,
+              "area": 0.12
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.2,
+            "y": 0.21,
+            "w": 0.6,
+            "h": 0.58
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "tile-frame",
+              "anchor": "perimeter",
+              "opacity": 0.72,
+              "area": 0.12
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.2,
+            "y": 0.24,
+            "w": 0.6,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "tile-frame",
+              "anchor": "perimeter",
+              "opacity": 0.72,
+              "area": 0.12
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.21,
+            "w": 0.56,
+            "h": 0.58
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "tile-frame",
+              "anchor": "perimeter",
+              "opacity": 0.72,
+              "area": 0.12
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "baran",
+      "name": "باران",
+      "family": "cinematic",
+      "palette": {
+        "background": "#263746",
+        "text": "#F5F5F1",
+        "accent": "#9EBBC9",
+        "muted": "#A3A8AD"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "400",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#263746",
+        "texture": {
+          "id": "rain",
+          "opacity": 0.22
+        }
+      },
+      "frame": {
+        "id": "cinematic-dark",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.24,
+            "w": 0.74,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "rain-overlay",
+              "anchor": "full-bleed",
+              "opacity": 0.13,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.48,
+              "area": 0.48
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.24,
+            "w": 0.74,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "rain-overlay",
+              "anchor": "full-bleed",
+              "opacity": 0.13,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.48,
+              "area": 0.48
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.32,
+            "w": 0.74,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "rain-overlay",
+              "anchor": "full-bleed",
+              "opacity": 0.13,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.48,
+              "area": 0.48
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.52,
+            "y": 0.24,
+            "w": 0.4,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.67,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "rain-overlay",
+              "anchor": "full-bleed",
+              "opacity": 0.13,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.48,
+              "area": 0.48
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ghorub",
+      "name": "غروب",
+      "family": "cinematic",
+      "palette": {
+        "background": "#A64E34",
+        "text": "#FFF0D8",
+        "accent": "#E0A65A",
+        "muted": "#432A2B"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "400",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#A64E34",
+        "texture": {
+          "id": "sunset",
+          "opacity": 0.22
+        }
+      },
+      "frame": {
+        "id": "horizon",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.2,
+            "w": 0.74,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "sunset-horizon",
+              "anchor": "bottom",
+              "opacity": 0.75,
+              "area": 0.24
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.2,
+            "w": 0.76,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "sunset-horizon",
+              "anchor": "bottom",
+              "opacity": 0.75,
+              "area": 0.24
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.24,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "sunset-horizon",
+              "anchor": "bottom",
+              "opacity": 0.75,
+              "area": 0.24
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.2,
+            "w": 0.56,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "sunset-horizon",
+              "anchor": "bottom",
+              "opacity": 0.75,
+              "area": 0.24
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "meh",
+      "name": "مه صبحگاهی",
+      "family": "cinematic",
+      "palette": {
+        "background": "#AEB8B7",
+        "text": "#293536",
+        "accent": "#718985",
+        "muted": "#F4F5F0"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#AEB8B7",
+        "texture": {
+          "id": "mist",
+          "opacity": 0.22
+        }
+      },
+      "frame": {
+        "id": "soft",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.27,
+            "w": 0.74,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "mist-layers",
+              "anchor": "full-bleed",
+              "opacity": 0.3,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.18,
+              "area": 0.55
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.27,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "mist-layers",
+              "anchor": "full-bleed",
+              "opacity": 0.3,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.18,
+              "area": 0.55
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.27,
+            "w": 0.76,
+            "h": 0.39
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "mist-layers",
+              "anchor": "full-bleed",
+              "opacity": 0.3,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.18,
+              "area": 0.55
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.27,
+            "w": 0.56,
+            "h": 0.64
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "mist-layers",
+              "anchor": "full-bleed",
+              "opacity": 0.3,
+              "area": 1
+            },
+            {
+              "kind": "text-scrim",
+              "anchor": "behind-poem",
+              "opacity": 0.18,
+              "area": 0.55
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "zaferan",
+      "name": "زعفرانی",
+      "family": "modern",
+      "palette": {
+        "background": "#D89A2B",
+        "text": "#202A44",
+        "accent": "#FFF0D0",
+        "muted": "#9A4936"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#D89A2B",
+        "texture": {
+          "id": "abstract-geometry",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "asymmetric",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.25,
+            "w": 0.59,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "abstract-blocks",
+              "anchor": "upper-left",
+              "opacity": 0.85,
+              "area": 0.24
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.25,
+            "w": 0.59,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "abstract-blocks",
+              "anchor": "upper-left",
+              "opacity": 0.85,
+              "area": 0.24
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.39,
+            "w": 0.59,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "abstract-blocks",
+              "anchor": "upper-left",
+              "opacity": 0.85,
+              "area": 0.24
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.49,
+            "y": 0.25,
+            "w": 0.43,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.67,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "abstract-blocks",
+              "anchor": "left",
+              "opacity": 0.85,
+              "area": 0.24
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "hendeseh",
+      "name": "هندسهٔ آرام",
+      "family": "modern",
+      "palette": {
+        "background": "#ECEDEA",
+        "text": "#202020",
+        "accent": "#536F8D",
+        "muted": "#9DAA9C"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "400",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#ECEDEA",
+        "texture": {
+          "id": "grid",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "structured",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.16,
+            "y": 0.24,
+            "w": 0.68,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "grid-lines",
+              "anchor": "background",
+              "opacity": 0.24,
+              "area": 1
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.16,
+            "y": 0.24,
+            "w": 0.68,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "grid-lines",
+              "anchor": "background",
+              "opacity": 0.24,
+              "area": 1
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.16,
+            "y": 0.24,
+            "w": 0.68,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "grid-lines",
+              "anchor": "background",
+              "opacity": 0.24,
+              "area": 1
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.49,
+            "y": 0.24,
+            "w": 0.42,
+            "h": 0.5
+          },
+          "author": {
+            "x": 0.67,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "grid-lines",
+              "anchor": "background",
+              "opacity": 0.24,
+              "area": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "moj",
+      "name": "موج معاصر",
+      "family": "modern",
+      "palette": {
+        "background": "#38304D",
+        "text": "#F8F5F0",
+        "accent": "#B9A4D3",
+        "muted": "#D5A3B0"
+      },
+      "typography": {
+        "fontFamily": "Vazirmatn",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "400",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#38304D",
+        "texture": {
+          "id": "waves",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "fluid",
+        "opacity": 0.35
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.27,
+            "w": 0.74,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "wave-curves",
+              "anchor": "edges",
+              "opacity": 0.48,
+              "area": 0.22
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.27,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "wave-curves",
+              "anchor": "edges",
+              "opacity": 0.48,
+              "area": 0.22
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.27,
+            "w": 0.76,
+            "h": 0.39
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "wave-curves",
+              "anchor": "edges",
+              "opacity": 0.48,
+              "area": 0.22
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.27,
+            "w": 0.56,
+            "h": 0.64
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "wave-curves",
+              "anchor": "edges",
+              "opacity": 0.48,
+              "area": 0.22
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "shab",
+      "name": "شب لاجوردی",
+      "family": "luxury",
+      "palette": {
+        "background": "#111D3B",
+        "text": "#F4EAD6",
+        "accent": "#C6A76A",
+        "muted": "#647C9C"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#111D3B",
+        "texture": {
+          "id": "stars",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "ornate-thin",
+        "opacity": 0.65
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.17,
+            "y": 0.23,
+            "w": 0.66,
+            "h": 0.53
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "thin-frame",
+              "anchor": "perimeter",
+              "opacity": 0.8,
+              "area": 0.07
+            },
+            {
+              "kind": "stars",
+              "anchor": "corners",
+              "opacity": 0.38,
+              "area": 0.06
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.17,
+            "y": 0.23,
+            "w": 0.66,
+            "h": 0.53
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "thin-frame",
+              "anchor": "perimeter",
+              "opacity": 0.8,
+              "area": 0.07
+            },
+            {
+              "kind": "stars",
+              "anchor": "corners",
+              "opacity": 0.38,
+              "area": 0.06
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.17,
+            "y": 0.24,
+            "w": 0.66,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "thin-frame",
+              "anchor": "perimeter",
+              "opacity": 0.8,
+              "area": 0.07
+            },
+            {
+              "kind": "stars",
+              "anchor": "corners",
+              "opacity": 0.38,
+              "area": 0.06
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.23,
+            "w": 0.56,
+            "h": 0.53
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "thin-frame",
+              "anchor": "perimeter",
+              "opacity": 0.8,
+              "area": 0.07
+            },
+            {
+              "kind": "stars",
+              "anchor": "corners",
+              "opacity": 0.38,
+              "area": 0.06
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "mesi",
+      "name": "مسی و تیره",
+      "family": "luxury",
+      "palette": {
+        "background": "#29211F",
+        "text": "#F1E5D2",
+        "accent": "#B87554",
+        "muted": "#826052"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#29211F",
+        "texture": {
+          "id": "metal-lines",
+          "opacity": 0.12
+        }
+      },
+      "frame": {
+        "id": "linear",
+        "opacity": 0.65
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.13,
+            "y": 0.25,
+            "w": 0.74,
+            "h": 0.48
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "copper-lines",
+              "anchor": "side-edges",
+              "opacity": 0.7,
+              "area": 0.08
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.25,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "copper-lines",
+              "anchor": "side-edges",
+              "opacity": 0.7,
+              "area": 0.08
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.25,
+            "w": 0.76,
+            "h": 0.39
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "copper-lines",
+              "anchor": "side-edges",
+              "opacity": 0.7,
+              "area": 0.08
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.25,
+            "w": 0.56,
+            "h": 0.64
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "copper-lines",
+              "anchor": "side-edges",
+              "opacity": 0.7,
+              "area": 0.08
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "zar",
+      "name": "زر خاموش",
+      "family": "luxury",
+      "palette": {
+        "background": "#171717",
+        "text": "#F4F0E8",
+        "accent": "#B99A5D",
+        "muted": "#77736B"
+      },
+      "typography": {
+        "fontFamily": "Noto Naskh Arabic",
+        "fontFallback": [
+          "Noto Naskh Arabic",
+          "Vazirmatn",
+          "Tahoma",
+          "sans-serif"
+        ],
+        "weight": "500",
+        "preferredScale": 0.046,
+        "minimumScale": 0.022,
+        "lineHeight": 1.8,
+        "verseGap": 0.55
+      },
+      "background": {
+        "type": "solid",
+        "color": "#171717",
+        "texture": null
+      },
+      "frame": {
+        "id": "minimal-gold",
+        "opacity": 0.65
+      },
+      "formats": {
+        "square": {
+          "canvas": {
+            "width": 1080,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.28,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "gold-mark",
+              "anchor": "top-center",
+              "opacity": 0.9,
+              "area": 0.015
+            }
+          ]
+        },
+        "portrait": {
+          "canvas": {
+            "width": 1080,
+            "height": 1350
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.28,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.82,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "gold-mark",
+              "anchor": "top-center",
+              "opacity": 0.9,
+              "area": 0.015
+            }
+          ]
+        },
+        "story": {
+          "canvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.12,
+            "y": 0.28,
+            "w": 0.76,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.5,
+            "y": 0.76,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "gold-mark",
+              "anchor": "top-center",
+              "opacity": 0.9,
+              "area": 0.015
+            }
+          ]
+        },
+        "landscape": {
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "safeArea": {
+            "left": 0.07,
+            "right": 0.07,
+            "top": 0.065,
+            "bottom": 0.065
+          },
+          "poem": {
+            "x": 0.35,
+            "y": 0.28,
+            "w": 0.56,
+            "h": 0.46
+          },
+          "author": {
+            "x": 0.63,
+            "y": 0.86,
+            "align": "center"
+          },
+          "ornaments": [
+            {
+              "kind": "gold-mark",
+              "anchor": "top-center",
+              "opacity": 0.9,
+              "area": 0.015
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
