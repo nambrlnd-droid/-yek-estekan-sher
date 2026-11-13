@@ -70,3 +70,28 @@ Recommended modules: `template-registry.js`, `poem-layout.js`, `asset-manager.js
 - Every poem rectangle remains inside the canvas.
 - No remote asset URLs occur in the manifest.
 - Legacy renderer files remain unchanged in this stage.
+
+
+## Local asset manager contract
+
+The v2 asset manager is additive and deny-by-default. Its license catalog lives at
+`assets/image-studio/licenses/manifest.json`. An empty catalog is intentional:
+no image, texture, ornament, or font is considered approved merely because a
+file exists in the repository.
+
+Every future catalog entry must include:
+- a stable unique ID and an asset kind;
+- a path confined to the local `assets/image-studio/{backgrounds,textures,ornaments,fonts}/` tree;
+- a license identifier, a verifiable HTTPS license reference, source/origin,
+  and explicit attribution text (empty only when attribution is not required);
+- a SHA-256 digest of the exact local file.
+
+The manager rejects remote paths, traversal paths, duplicate IDs/paths, missing
+license metadata, unknown assets, and files whose digest does not match the
+catalog. It does not download assets or contact a remote licensing service.
+Do not populate the catalog until both the local file and its license evidence
+have been reviewed. In environments without Web Crypto, digest verification
+fails closed by default.
+
+This module is not yet connected to the production renderer. The current live
+studio and its asset behavior remain unchanged.
