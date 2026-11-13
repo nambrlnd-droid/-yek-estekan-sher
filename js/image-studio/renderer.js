@@ -20,7 +20,7 @@
     canvas.width=selected.canvas.width;canvas.height=selected.canvas.height;
     const ctx=canvas.getContext("2d");
     if(!ctx)throw new Error("Canvas 2D context is unavailable");
-    const poemBox={x:selected.poem.x*canvas.width,y:selected.poem.y*canvas.height,width:selected.poem.w*canvas.width,height:selected.poem.h*canvas.height};
+    const poemBox={x:(1-selected.poem.x-selected.poem.w)*canvas.width,y:selected.poem.y*canvas.height,width:selected.poem.w*canvas.width,height:selected.poem.h*canvas.height};
     const typography=template.typography||{};
     const minDimension=Math.min(canvas.width,canvas.height);
     const poem=layoutEngine.layout({
@@ -53,7 +53,7 @@
       ctx.fillStyle=template.palette.accent;
       ctx.font=layoutEngine.fontSpec("400",Math.max(14,poem.fontSize*0.62),typography.fontFamily||"Tahoma",typography.fontFallback||["Tahoma","sans-serif"]);
       ctx.textAlign=author.align||"center";
-      ctx.fillText(authorText,author.x*canvas.width,author.y*canvas.height);
+      ctx.fillText(authorText,(1-author.x)*canvas.width,author.y*canvas.height);
     }
     ctx.restore();
     const report=quality.inspect({canvas,layout:selected,template,poemLayout:poem});
