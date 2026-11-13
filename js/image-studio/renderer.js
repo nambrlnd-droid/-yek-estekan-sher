@@ -35,16 +35,18 @@
     ctx.fillStyle=template.background&&template.background.color||template.palette.background;
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.direction="rtl";ctx.textAlign="center";ctx.textBaseline="middle";
-    ctx.fillStyle=template.palette.text;
-    ctx.font=layoutEngine.fontSpec(typography.weight||"400",poem.fontSize,typography.fontFamily||"Tahoma",typography.fontFallback||["Tahoma","sans-serif"]);
-    const totalHeight=poem.lines.length*poem.lineHeight;
-    let y=poemBox.y+(poemBox.height-totalHeight)/2+poem.lineHeight/2;
-    let previousParagraph=-1;
-    poem.lines.forEach(line=>{
-      if(previousParagraph!==-1&&line.paragraphIndex!==previousParagraph)y+=poem.fontSize*(typography.verseGap==null?0.55:typography.verseGap);
-      ctx.fillText(line.text,poemBox.x+poemBox.width/2,y);
-      y+=poem.lineHeight;previousParagraph=line.paragraphIndex;
-    });
+    if(!poem.overflow){
+      ctx.fillStyle=template.palette.text;
+      ctx.font=layoutEngine.fontSpec(typography.weight||"400",poem.fontSize,typography.fontFamily||"Tahoma",typography.fontFallback||["Tahoma","sans-serif"]);
+      const totalHeight=poem.lines.length*poem.lineHeight;
+      let y=poemBox.y+(poemBox.height-totalHeight)/2+poem.lineHeight/2;
+      let previousParagraph=-1;
+      poem.lines.forEach(line=>{
+        if(previousParagraph!==-1&&line.paragraphIndex!==previousParagraph)y+=poem.fontSize*(typography.verseGap==null?0.55:typography.verseGap);
+        ctx.fillText(line.text,poemBox.x+poemBox.width/2,y);
+        y+=poem.lineHeight;previousParagraph=line.paragraphIndex;
+      });
+    }
     const authorText=String(opts.author||"");
     if(authorText){
       const author=selected.author;
@@ -56,7 +58,7 @@
     ctx.restore();
     const report=quality.inspect({canvas,layout:selected,template,poemLayout:poem});
     if(opts.strict&&(!report.ok||report.warnings.length))throw Object.assign(new Error("Image Studio v2 preflight failed"),{report});
-    return {canvas,templateId:template.id,format:opts.format,poemLayout:poem,quality:report,rendered:true};
+    return {canvas,templateId:template.id,format:opts.format,poemLayout:poem,quality:report,rendered:!poem.overflow,blocked:poem.overflow,reason:poem.overflow?"POEM_OVERFLOW":null};
   }
   return {render};
 });
