@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-14T11:00:03.915871+00:00",
-  "fetched_this_run": 852,
-  "archive_cursor": null,
-  "archive_pages_this_run": 42,
+  "updated_at": "2026-11-14T17:13:17.421450+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2096,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -25780,6 +25780,24 @@
       "source_url": "https://t.me/Poemestic/7815",
       "status": "needs_review",
       "first_seen_at": "2026-11-13T22:54:02.720472+00:00"
+    },
+    {
+      "id": "7816",
+      "text": "به خوابم یک نظر بگذر، که سرمستم کند بویت\nکه من مشتاقم ای سرکش، به قد و قامت و رویت‌.\n-صائب تبریزی‌.",
+      "author": "",
+      "date": "2026-11-14T12:01:45+00:00",
+      "source_url": "https://t.me/Poemestic/7816",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-14T17:09:44.420608+00:00"
+    },
+    {
+      "id": "7817",
+      "text": "مثل سیگار ندیدم با وفا معشوقه‌ای\nمن بر او آتش ولی او بوسه بر لب میزند.\n-مهدی رجایی فرد.",
+      "author": "",
+      "date": "2026-11-14T13:56:26+00:00",
+      "source_url": "https://t.me/Poemestic/7817",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-14T17:09:44.420608+00:00"
     }
   ]
 }
