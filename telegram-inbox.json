@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-13T22:55:34.214344+00:00",
-  "fetched_this_run": 841,
-  "archive_cursor": null,
-  "archive_pages_this_run": 42,
+  "updated_at": "2026-11-14T03:21:50.581327+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2095,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
