@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-15T15:57:18.725008+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2151,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-15T21:04:54.859979+00:00",
+  "fetched_this_run": 866,
+  "archive_cursor": null,
+  "archive_pages_this_run": 43,
   "posts": [
     {
       "id": "1",
@@ -25933,6 +25933,42 @@
       "source_url": "https://t.me/Poemestic/7835",
       "status": "needs_review",
       "first_seen_at": "2026-11-15T15:53:21.905927+00:00"
+    },
+    {
+      "id": "7836",
+      "text": "روند این همرهان غمناک با تو\nنیاید هیچ‌کس در خاک با تو\nرفیقانت همه بدساز گردند\nز تو هر یک به راهی باز گردند \nبه مرگ و زندگی، در خواب و مستی\nتویی با خویشتن هر جا که هستی.\n-نظامی.",
+      "author": "",
+      "date": "2026-11-15T15:59:09+00:00",
+      "source_url": "https://t.me/Poemestic/7836",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-15T21:03:20.715891+00:00"
+    },
+    {
+      "id": "7838",
+      "text": "ای که با بوسيدنت خشکیده شد زاینده رود\nآن کویر لوت هم ای ناقلا کار تو بود؟\n-علیرضا بابایی.",
+      "author": "",
+      "date": "2026-11-15T16:47:26+00:00",
+      "source_url": "https://t.me/Poemestic/7838",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-15T21:03:20.715891+00:00"
+    },
+    {
+      "id": "7839",
+      "text": "فقط با شوق می‌خوانی و از دردم چه‌ می دانی؟\nتو جان می‌گیری از شعری که من را بارها کشته.\n-فرامرز عرب عامری.",
+      "author": "",
+      "date": "2026-11-15T18:52:01+00:00",
+      "source_url": "https://t.me/Poemestic/7839",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-15T21:03:20.715891+00:00"
+    },
+    {
+      "id": "7840",
+      "text": "دیر آمدی اگرچه شتابان، چه فایده؟\nبر نعشِ تشنه، بارشِ باران چه فایده؟\n-جواد منفرد‌.",
+      "author": "",
+      "date": "2026-11-15T19:53:01+00:00",
+      "source_url": "https://t.me/Poemestic/7840",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-15T21:03:20.715891+00:00"
     }
   ]
 }
