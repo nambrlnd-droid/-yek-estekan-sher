@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-16T18:39:07.980755+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2170,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-17T02:08:41.987646+00:00",
+  "fetched_this_run": 877,
+  "archive_cursor": null,
+  "archive_pages_this_run": 43,
   "posts": [
     {
       "id": "1",
@@ -26050,6 +26050,33 @@
       "source_url": "https://t.me/Poemestic/7851",
       "status": "needs_review",
       "first_seen_at": "2026-11-16T18:35:12.056968+00:00"
+    },
+    {
+      "id": "7852",
+      "text": "ظاهر آرام مارا بنگر و بگذر،\nکه ما در خویشتن صدها نبردِ بی صدا داریم.",
+      "author": "",
+      "date": "2026-11-16T18:48:25+00:00",
+      "source_url": "https://t.me/Poemestic/7852",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-17T02:06:58.152290+00:00"
+    },
+    {
+      "id": "7854",
+      "text": "نه رازش می‌توانم گفت با کس\nنه کس را می‌توانم دید با وی.\n-حافظ.",
+      "author": "",
+      "date": "2026-11-16T21:19:46+00:00",
+      "source_url": "https://t.me/Poemestic/7854",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-17T02:06:58.152290+00:00"
+    },
+    {
+      "id": "7855",
+      "text": "اگه بیدارید و بیکارید، پستای روزهای قبل چنل رو بخونید و با نگاهتون خوشحالم کنید :>",
+      "author": "",
+      "date": "2026-11-16T21:31:01+00:00",
+      "source_url": "https://t.me/Poemestic/7855",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-17T02:06:58.152290+00:00"
     }
   ]
 }
