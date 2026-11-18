@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-18T10:14:03.740473+00:00",
-  "fetched_this_run": 885,
-  "archive_cursor": null,
-  "archive_pages_this_run": 44,
+  "updated_at": "2026-11-18T18:55:18.945025+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2239,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26140,6 +26140,78 @@
       "source_url": "https://t.me/Poemestic/7866",
       "status": "needs_review",
       "first_seen_at": "2026-11-17T19:26:15.010651+00:00"
+    },
+    {
+      "id": "7868",
+      "text": "تو هم دلتنگی و هم بی‌قراری در خیالاتم\nتو من را دوست داری، عاشق این احتمالاتم.\n-سید تقی سیدی.",
+      "author": "",
+      "date": "2026-11-18T10:27:04+00:00",
+      "source_url": "https://t.me/Poemestic/7868",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7871",
+      "text": "گاه ما هم چون نهنگ خسته‌ای جا می‌زنیم \nاو به خشکی می‌زند، ما دل به دریا می‌زنیم.\n -مولانا.",
+      "author": "",
+      "date": "2026-11-18T11:55:24+00:00",
+      "source_url": "https://t.me/Poemestic/7871",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7872",
+      "text": "سخن‌ها از وفا می‌گفتی و جور و جفا کردی\nبه ما دیدی چه‌ها می‌گفتی و آخر چه‌ها کردی؟\n-حزین لاهیجی‌.",
+      "author": "",
+      "date": "2026-11-18T14:35:53+00:00",
+      "source_url": "https://t.me/Poemestic/7872",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7879",
+      "text": "از دور تورا می‌بوسمت؛\nاگرچه تن به تن می‌خواهمت.",
+      "author": "",
+      "date": "2026-11-18T14:46:54+00:00",
+      "source_url": "https://t.me/Poemestic/7879",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7887",
+      "text": "دل رُبایانه دگر بر سرِ ناز آمده‌ای\nاز دلِ ما چه به جا مانده که باز آمده‌ای؟\n-صائب ‌تبریزی.",
+      "author": "",
+      "date": "2026-11-18T14:59:24+00:00",
+      "source_url": "https://t.me/Poemestic/7887",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7894",
+      "text": "‏گر\nز\nدرون\nشکسته‌ای،\nفاش\nمکن\nکه\nخسته‌ای.\n-سیمین بهبهانی.",
+      "author": "",
+      "date": "2026-11-18T15:10:32+00:00",
+      "source_url": "https://t.me/Poemestic/7894",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7903",
+      "text": "گر شاخه ها دارد تری، ور سرو دارد سروری \nور گل کند صد دلبری، ای جان تو چیزی دیگری.\n-مولانا.",
+      "author": "",
+      "date": "2026-11-18T15:21:47+00:00",
+      "source_url": "https://t.me/Poemestic/7903",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7911",
+      "text": "خوب یا بد مثل ذاتش بوده دقت کرده‌ام\nهر کسی تصویری از من در خیالش ساخته.\n-محسن حیدری.",
+      "author": "",
+      "date": "2026-11-18T18:45:44+00:00",
+      "source_url": "https://t.me/Poemestic/7911",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
     }
   ]
 }
