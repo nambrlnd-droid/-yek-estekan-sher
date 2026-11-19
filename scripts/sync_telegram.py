@@ -127,6 +127,9 @@ def build_publication(posts):
         if key and key not in seen:
             seen.add(key)
             unique.append(entry)
+    invalid_tags = [entry["id"] for entry in unique if not isinstance(entry.get("tags"), list) or not entry["tags"] or any(not isinstance(tag, str) or not tag.strip() for tag in entry["tags"])]
+    if invalid_tags:
+        raise ValueError(f"Generated Telegram entries contain invalid topic labels: {invalid_tags[:10]}")
     source = json.dumps(unique, ensure_ascii=False, indent=2)
     js = (
         "/* Generated from reviewed public posts in @Poemestic. "
