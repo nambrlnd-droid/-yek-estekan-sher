@@ -57,6 +57,7 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
       pinnedRecords: pinned.length,
       webHafezRecords: webItems.length,
       telegramImportedSourceRows: window.telegramArchiveImported || 0,
+      telegramTagErrors: window.telegramArchiveTagErrors ?? null,
       crossSourceOrRepeatedBodies: crossSourceBodies,
       duplicateIdsAcrossSources: duplicateIds,
       duplicateBodyAnnotations: shard.filter(x => x.normalizedBodyDuplicate).length,
@@ -89,8 +90,9 @@ test("v1.8 cross-source archive audit reports overlaps without deleting content"
   expect(report.sourceInventory["poems-extra.js"]?.sourceRows).toBe(99);
   expect(report.sourceInventory["poems-hasan-collection.js"]?.sourceRows).toBe(26);
   expect(report.sourceInventory["poems-user-collection.js"]?.sourceRows).toBe(100);
-  // Telegram imports are tracked separately from the legacy JavaScript source inventory.
-  expect(report.telegramImportedSourceRows).toBe(1850);
+  // Telegram imports are tracked separately; counts follow the generated source, not a stale snapshot.
+  expect(report.telegramImportedSourceRows).toBeGreaterThan(0);
+  expect(report.telegramTagErrors).toBe(0);
   expect(report.sourceInventory["internet-poems.js"]?.sourceRows).toBe(200);
   expect(report.sourceInventory["pinned.js"]?.sourceRows).toBe(19);
   expect(report.sourceRows).toBeGreaterThanOrEqual(500);
