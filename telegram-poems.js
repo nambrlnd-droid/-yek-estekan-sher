@@ -17847,5 +17847,5 @@ const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e
 const list=window.poemEntries||(window.poemEntries=[]);
 const seen=new Set(list.map(x=>norm(x.body)));
 for(const item of incoming){const k=norm(item.body);if(!k||seen.has(k))continue;seen.add(k);list.push(item);}
-window.telegramArchiveImported=incoming.length;
+window.telegramArchiveImported=incoming.length;window.telegramArchiveTagErrors=incoming.filter(item=>!Array.isArray(item.tags)||!item.tags.length||item.tags.some(tag=>typeof tag!=='string'||!tag.trim())).length;
 })();
