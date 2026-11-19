@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-18T18:55:18.945025+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2239,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-19T01:15:36.089377+00:00",
+  "fetched_this_run": 893,
+  "archive_cursor": null,
+  "archive_pages_this_run": 44,
   "posts": [
     {
       "id": "1",
@@ -26212,6 +26212,15 @@
       "source_url": "https://t.me/Poemestic/7911",
       "status": "needs_review",
       "first_seen_at": "2026-11-18T18:51:54.225079+00:00"
+    },
+    {
+      "id": "7912",
+      "text": "شمع می‌سوزد و پروانه به دورش نگران    \nمن‌ که‌ می‌سوزم‌ و‌ پروانه‌ ندارم‌ چه‌ کنم؟\n-لادری.",
+      "author": "",
+      "date": "2026-11-18T21:00:56+00:00",
+      "source_url": "https://t.me/Poemestic/7912",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-19T01:14:06.055976+00:00"
     }
   ]
 }
