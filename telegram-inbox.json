@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-19T18:20:13.219085+00:00",
-  "fetched_this_run": 894,
-  "archive_cursor": null,
-  "archive_pages_this_run": 44,
+  "updated_at": "2026-11-20T01:00:14.719573+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2254,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26284,6 +26284,24 @@
       "source_url": "https://t.me/Poemestic/7921",
       "status": "needs_review",
       "first_seen_at": "2026-11-19T18:18:37.283771+00:00"
+    },
+    {
+      "id": "7924",
+      "text": "سراغ از منِ تنها نمی‌گرفت کسی\nغم تو آمد و هر شب گذاشت سر به سرم.\n-سید تقی سیدی.",
+      "author": "",
+      "date": "2026-11-19T19:24:15+00:00",
+      "source_url": "https://t.me/Poemestic/7924",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T00:56:15.286475+00:00"
+    },
+    {
+      "id": "7925",
+      "text": "حدیث چشم مگو، \nبا جماعت کوران.\n-مولانا.",
+      "author": "",
+      "date": "2026-11-19T20:12:50+00:00",
+      "source_url": "https://t.me/Poemestic/7925",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T00:56:15.286475+00:00"
     }
   ]
 }
