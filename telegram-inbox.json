@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-20T08:36:12.156769+00:00",
-  "fetched_this_run": 900,
-  "archive_cursor": null,
-  "archive_pages_this_run": 44,
+  "updated_at": "2026-11-20T17:23:17.191305+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2256,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26302,6 +26302,15 @@
       "source_url": "https://t.me/Poemestic/7925",
       "status": "needs_review",
       "first_seen_at": "2026-11-20T00:56:15.286475+00:00"
+    },
+    {
+      "id": "7926",
+      "text": "دل به دلبر دادم و دلدار، دل را، دل ندید\nدل به دلبر دل سپرد، دلدار، پا از دل کشید\nدل به دنبال دلش، دل دل کنان، دلخونِ دل\nدل ز دلبر خواستم، دلبر، دل از این دل برید.",
+      "author": "",
+      "date": "2026-11-20T09:49:00+00:00",
+      "source_url": "https://t.me/Poemestic/7926",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T17:19:21.815666+00:00"
     }
   ]
 }
