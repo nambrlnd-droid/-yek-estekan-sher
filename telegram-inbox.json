@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-20T17:23:17.191305+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2256,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-20T23:24:02.888816+00:00",
+  "fetched_this_run": 901,
+  "archive_cursor": null,
+  "archive_pages_this_run": 45,
   "posts": [
     {
       "id": "1",
@@ -26311,6 +26311,51 @@
       "source_url": "https://t.me/Poemestic/7926",
       "status": "needs_review",
       "first_seen_at": "2026-11-20T17:19:21.815666+00:00"
+    },
+    {
+      "id": "7927",
+      "text": "گرچه گاهی بالشم از گریه تا فردا تر است\nبا خیالش خواب‌هایم شب به شب زیباتر است.\n-پانته‌ آ صفایی.",
+      "author": "",
+      "date": "2026-11-20T19:50:16+00:00",
+      "source_url": "https://t.me/Poemestic/7927",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T23:22:33.686749+00:00"
+    },
+    {
+      "id": "7929",
+      "text": "اگه بیداری بیا باهم چندتا تکست قشنگ بخونیم :\n@Midnightexts",
+      "author": "",
+      "date": "2026-11-20T20:00:45+00:00",
+      "source_url": "https://t.me/Poemestic/7929",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T23:22:33.686749+00:00"
+    },
+    {
+      "id": "7930",
+      "text": "بیدارا بیان 🤍",
+      "author": "",
+      "date": "2026-11-20T20:04:17+00:00",
+      "source_url": "https://t.me/Poemestic/7930",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T23:22:33.686749+00:00"
+    },
+    {
+      "id": "7931",
+      "text": "مرگ بعضی وقت‌ها از درد دوری بهتر است\nبی‌قرارم کرده و گفته صبوری بهتر است‌.\n-حامد عسکری‌.",
+      "author": "",
+      "date": "2026-11-20T20:15:01+00:00",
+      "source_url": "https://t.me/Poemestic/7931",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T23:22:33.686749+00:00"
+    },
+    {
+      "id": "7932",
+      "text": "تو را در عین دوری دوست دارم \nتو را با این صبوری دوست دارم \nتو را در حین کوری دوست دارم\nتو را صد سال نوری دوست دارم.",
+      "author": "",
+      "date": "2026-11-20T20:39:36+00:00",
+      "source_url": "https://t.me/Poemestic/7932",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-20T23:22:33.686749+00:00"
     }
   ]
 }
