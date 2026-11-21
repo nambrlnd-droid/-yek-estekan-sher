@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-21T04:21:38.382064+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2265,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-21T13:05:13.653084+00:00",
+  "fetched_this_run": 906,
+  "archive_cursor": null,
+  "archive_pages_this_run": 45,
   "posts": [
     {
       "id": "1",
@@ -26356,6 +26356,15 @@
       "source_url": "https://t.me/Poemestic/7932",
       "status": "needs_review",
       "first_seen_at": "2026-11-20T23:22:33.686749+00:00"
+    },
+    {
+      "id": "7934",
+      "text": "شیرین لبی، اما دل‌آزاری\n با ما سر جرح و جفا داری\n می‌سوزم ز هجران تو، نترسی ز آه من\nدست من و دامان تو، چه باشد گناه من؟\nدارم ز تو نامهربان شوقی به دل شوری به جان \nمی‌سوزم از سوز نهان ز جانم چه می‌خواهی؟\nنگاهی بنداز به من گاهی.",
+      "author": "",
+      "date": "2026-11-21T11:20:20+00:00",
+      "source_url": "https://t.me/Poemestic/7934",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-21T13:03:31.634499+00:00"
     }
   ]
 }
