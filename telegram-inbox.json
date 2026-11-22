@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-22T07:32:44.988822+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2280,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-22T15:43:07.646404+00:00",
+  "fetched_this_run": 914,
+  "archive_cursor": null,
+  "archive_pages_this_run": 45,
   "posts": [
     {
       "id": "1",
@@ -26446,6 +26446,33 @@
       "source_url": "https://t.me/Poemestic/7945",
       "status": "needs_review",
       "first_seen_at": "2026-11-21T20:07:20.715955+00:00"
+    },
+    {
+      "id": "7947",
+      "text": "آن نخل ناخلف که تبر شد ز ما نبود\nما را زمانه گر شکند، ساز می‌شویم.\n-صائب تبریزی.",
+      "author": "",
+      "date": "2026-11-22T10:57:35+00:00",
+      "source_url": "https://t.me/Poemestic/7947",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-22T15:41:33.616851+00:00"
+    },
+    {
+      "id": "7948",
+      "text": "تا نگاهم برنگاهش خورد طوفان شد دلم\n دیدمش از دور میخندید بی تاب شد دلم\nبوی عطرش هوش میبرد از سر عاشق ما\nتا که رفتم تا بگویم حرف دل پلک هایم را گشودم \nشانس ماهم این بود رویا دیده بود دلم.",
+      "author": "",
+      "date": "2026-11-22T11:34:50+00:00",
+      "source_url": "https://t.me/Poemestic/7948",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-22T15:41:33.616851+00:00"
+    },
+    {
+      "id": "7949",
+      "text": "اگر برای ابد\nهوای دیدن تو\nنیافتد از سر من\nچه کنم؟",
+      "author": "",
+      "date": "2026-11-22T12:21:51+00:00",
+      "source_url": "https://t.me/Poemestic/7949",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-22T15:41:33.616851+00:00"
     }
   ]
 }
