@@ -19431,6 +19431,16 @@ const incoming=[
     ],
     "author": "",
     "body": "همین تو را بس که من دیگر \nتو را آنطور که میدیدم نمیبینم."
+  },
+  {
+    "id": "telegram-7977",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "",
+    "body": "کجاست بارشی از ابر مهربانِ صدایت؟\nکه تشنه مانده دلم در هوای زمزمه‌هایت."
   }
 ];
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,'').toLowerCase();
