@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-25T02:52:10.589442+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2356,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-25T13:00:34.800505+00:00",
+  "fetched_this_run": 936,
+  "archive_cursor": null,
+  "archive_pages_this_run": 46,
   "posts": [
     {
       "id": "1",
@@ -26698,6 +26698,33 @@
       "source_url": "https://t.me/Poemestic/7989",
       "status": "needs_review",
       "first_seen_at": "2026-11-25T02:48:33.422091+00:00"
+    },
+    {
+      "id": "7990",
+      "text": "گر بدانی\nمن چقدر منتظرم \nمی آیی.\n-عاطفه فلاحی.",
+      "author": "",
+      "date": "2026-11-25T10:43:26+00:00",
+      "source_url": "https://t.me/Poemestic/7990",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T12:58:56.483091+00:00"
+    },
+    {
+      "id": "7991",
+      "text": "حال دل پرسیدی و گفتم که خوبم بارها\nخوبم، اما خوب ویرانم، نفهمیدی مرا.",
+      "author": "",
+      "date": "2026-11-25T11:11:44+00:00",
+      "source_url": "https://t.me/Poemestic/7991",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T12:58:56.483091+00:00"
+    },
+    {
+      "id": "7992",
+      "text": "ما در خلوت به روی خلق ببستیم\nاز همه بازآمدیم و با تو نشستیم.\n-سعدی.",
+      "author": "",
+      "date": "2026-11-25T12:44:14+00:00",
+      "source_url": "https://t.me/Poemestic/7992",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T12:58:56.483091+00:00"
     }
   ]
 }

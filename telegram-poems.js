@@ -19471,6 +19471,26 @@ const incoming=[
     ],
     "author": "حسین دهلوی",
     "body": "من همان رودم که بهر دیدنت مرداب شد\nماه من بس کن ندیدن‌های بی‌اندازه را."
+  },
+  {
+    "id": "telegram-7990",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "عاطفه فلاحی",
+    "body": "گر بدانی\nمن چقدر منتظرم \nمی آیی."
+  },
+  {
+    "id": "telegram-7991",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "",
+    "body": "حال دل پرسیدی و گفتم که خوبم بارها\nخوبم، اما خوب ویرانم، نفهمیدی مرا."
   }
 ];
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,'').toLowerCase();
