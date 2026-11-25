@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-25T13:00:34.800505+00:00",
-  "fetched_this_run": 936,
-  "archive_cursor": null,
-  "archive_pages_this_run": 46,
+  "updated_at": "2026-11-25T22:38:30.317152+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2369,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26725,6 +26725,42 @@
       "source_url": "https://t.me/Poemestic/7992",
       "status": "needs_review",
       "first_seen_at": "2026-11-25T12:58:56.483091+00:00"
+    },
+    {
+      "id": "7993",
+      "text": "صد نامه نوشتم صد راه نشان دادم\nیا نامه نمیخوانی یا بیشعور و حیوانی.",
+      "author": "",
+      "date": "2026-11-25T13:35:25+00:00",
+      "source_url": "https://t.me/Poemestic/7993",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T22:34:31.763086+00:00"
+    },
+    {
+      "id": "7994",
+      "text": "دل خوش به این مشو که مرا پیر میکنی؛\nمن پیر هم شوم، تو جوانی برای من.\n-مرتضی لطفی.",
+      "author": "",
+      "date": "2026-11-25T17:34:17+00:00",
+      "source_url": "https://t.me/Poemestic/7994",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T22:34:31.763086+00:00"
+    },
+    {
+      "id": "7995",
+      "text": "کانفیگ نامحدود یک‌ماهه + تست رایگان :\nتک‌کاربره: 95 هزار تومان\nدوکاربره: 155 هزار تومان\nسه‌کاربره: 205 هزار تومان\n سفارش از ربات: \n🤖 @FAST_VPN_FAST_bot\nچنل:\n✈️ @fastvpn_A",
+      "author": "",
+      "date": "2026-11-25T19:35:43+00:00",
+      "source_url": "https://t.me/Poemestic/7995",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T22:34:31.763086+00:00"
+    },
+    {
+      "id": "7996",
+      "text": "ای عشق مدد کن که به سامان برسیم\nچون مزرعه‌ی تشنه به باران برسیم\nیا من برسم به یار و یا یار به من\nیا هردو بمیریم و به پایان برسیم‌.\n-قیصر امین‌ پور‌.",
+      "author": "",
+      "date": "2026-11-25T19:52:52+00:00",
+      "source_url": "https://t.me/Poemestic/7996",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T22:34:31.763086+00:00"
     }
   ]
 }

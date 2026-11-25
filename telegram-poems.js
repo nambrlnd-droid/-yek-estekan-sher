@@ -19491,6 +19491,26 @@ const incoming=[
     ],
     "author": "",
     "body": "حال دل پرسیدی و گفتم که خوبم بارها\nخوبم، اما خوب ویرانم، نفهمیدی مرا."
+  },
+  {
+    "id": "telegram-7993",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "",
+    "body": "صد نامه نوشتم صد راه نشان دادم\nیا نامه نمیخوانی یا بیشعور و حیوانی."
+  },
+  {
+    "id": "telegram-7994",
+    "section": "poems",
+    "tags": [
+      0,
+      0
+    ],
+    "author": "مرتضی لطفی",
+    "body": "دل خوش به این مشو که مرا پیر میکنی؛\nمن پیر هم شوم، تو جوانی برای من."
   }
 ];
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s\p{P}\p{S}\u200c\u200e\u200fـ]/gu,'').toLowerCase();
