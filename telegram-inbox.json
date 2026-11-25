@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-24T18:23:24.719773+00:00",
-  "fetched_this_run": 930,
-  "archive_cursor": null,
-  "archive_pages_this_run": 46,
+  "updated_at": "2026-11-25T02:52:10.589442+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2356,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26671,6 +26671,33 @@
       "source_url": "https://t.me/Poemestic/7983",
       "status": "needs_review",
       "first_seen_at": "2026-11-24T18:21:35.678928+00:00"
+    },
+    {
+      "id": "7987",
+      "text": "کانفیگ نامحدود یک‌ماهه + تست رایگان :\nتک‌کاربره: 95 هزار تومان\nدوکاربره: 155 هزار تومان\nسه‌کاربره: 205 هزار تومان\n سفارش از ربات: \n🤖 @FAST_VPN_FAST_bot\nچنل:\n✈️ @fastvpn_A",
+      "author": "",
+      "date": "2026-11-24T20:04:06+00:00",
+      "source_url": "https://t.me/Poemestic/7987",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T02:48:33.422091+00:00"
+    },
+    {
+      "id": "7988",
+      "text": "با خیالش، با نگاهش، با فراقش، با غمش\nگاہ گریان، گاہ سوزان، گاہ لرزانم چو شمع.\n-اطهری کرمانی.",
+      "author": "",
+      "date": "2026-11-24T20:16:01+00:00",
+      "source_url": "https://t.me/Poemestic/7988",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T02:48:33.422091+00:00"
+    },
+    {
+      "id": "7989",
+      "text": "من همان رودم که بهر دیدنت مرداب شد\nماه من بس کن ندیدن‌های بی‌اندازه را.\n-حسین دهلوی.",
+      "author": "",
+      "date": "2026-11-24T20:26:01+00:00",
+      "source_url": "https://t.me/Poemestic/7989",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-25T02:48:33.422091+00:00"
     }
   ]
 }
