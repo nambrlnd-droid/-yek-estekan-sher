@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-26T14:34:21.220618+00:00",
-  "fetched_this_run": 2020,
-  "archive_cursor": 2379,
-  "archive_pages_this_run": 100,
+  "updated_at": "2026-11-26T23:22:00.438009+00:00",
+  "fetched_this_run": 947,
+  "archive_cursor": null,
+  "archive_pages_this_run": 47,
   "posts": [
     {
       "id": "1",
@@ -26815,6 +26815,24 @@
       "source_url": "https://t.me/Poemestic/8002",
       "status": "needs_review",
       "first_seen_at": "2026-11-26T14:30:20.038183+00:00"
+    },
+    {
+      "id": "8003",
+      "text": "چاره‌ ها رفت ز دست دل بیچاره ‌ی من \nتو بیا چاره ‌ی من شو که تویی چاره ‌ی من.",
+      "author": "",
+      "date": "2026-11-26T15:04:07+00:00",
+      "source_url": "https://t.me/Poemestic/8003",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-26T23:20:21.981064+00:00"
+    },
+    {
+      "id": "8007",
+      "text": "آری، آغاز دوست داشتن است \nگرچه پایان راه ناپیداست؛\nمن به پایان دگر نیندیشم\nکه همین دوست داشتن زیباست‌.\n-فروغ فرخزاد‌.",
+      "author": "",
+      "date": "2026-11-26T17:51:43+00:00",
+      "source_url": "https://t.me/Poemestic/8007",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-26T23:20:21.981064+00:00"
     }
   ]
 }
