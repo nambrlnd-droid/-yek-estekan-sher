@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-27T15:39:44.742294+00:00",
-  "fetched_this_run": 946,
-  "archive_cursor": null,
-  "archive_pages_this_run": 47,
+  "updated_at": "2026-11-27T23:48:31.860360+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2425,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26878,6 +26878,69 @@
       "source_url": "https://t.me/Poemestic/8012",
       "status": "needs_review",
       "first_seen_at": "2026-11-27T15:37:50.324161+00:00"
+    },
+    {
+      "id": "8016",
+      "text": "گفتی بیا گفتم کجا\nگفتی میانِ جانِ ما\nگفتی مَرو گفتم چرا\nگفتی که می‌خواهم تو‌ را.\n-مولانا.",
+      "author": "",
+      "date": "2026-11-27T17:15:09+00:00",
+      "source_url": "https://t.me/Poemestic/8016",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8017",
+      "text": "ناگهان خوابی مرا خواهد ربود\nمن تُهی خواهم شد از فریاد درد.\n-فروغ فرخزاد.",
+      "author": "",
+      "date": "2026-11-27T17:51:54+00:00",
+      "source_url": "https://t.me/Poemestic/8017",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8018",
+      "text": "تو وعده می‌دهی و فکر می‌کنی که مرا\nهزارسالگیِ نوح و صبرِ ایوب است.\n-سجاد سامانی.",
+      "author": "",
+      "date": "2026-11-27T18:26:04+00:00",
+      "source_url": "https://t.me/Poemestic/8018",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8019",
+      "text": "نمی‌دونم چطور منظورمو برسونم ولی با تکستاش زندگی‌ میکنم :\n@HonrOrDeath",
+      "author": "",
+      "date": "2026-11-27T19:56:48+00:00",
+      "source_url": "https://t.me/Poemestic/8019",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8020",
+      "text": "هی تکستاشو میخونم، هی یاد تو میوفتم.",
+      "author": "",
+      "date": "2026-11-27T20:01:20+00:00",
+      "source_url": "https://t.me/Poemestic/8020",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8021",
+      "text": "ریزه میزه قد فنچ است و زبانش بس دراز\nگرچه کوچک، نصف او زیر زمین پنهان شده‌.\n-چاورش محمد‌.",
+      "author": "",
+      "date": "2026-11-27T20:12:01+00:00",
+      "source_url": "https://t.me/Poemestic/8021",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8022",
+      "text": "یک نفر می گفت دیدی آخرش سرما گذشت\nموسم گرما رسید و فصل سختی‌ها گذشت\nگفتم آری دیدم اما کاش می دیدی تو هم\nبین سرد وگرم این دنیا چه ها برما گذشت.\n-مهدی جوینی.",
+      "author": "",
+      "date": "2026-11-27T20:41:23+00:00",
+      "source_url": "https://t.me/Poemestic/8022",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
     }
   ]
 }
