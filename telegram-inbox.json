@@ -1,9 +1,9 @@
 {
   "channel": "Poemestic",
-  "updated_at": "2026-11-28T05:01:30.654723+00:00",
-  "fetched_this_run": 956,
-  "archive_cursor": null,
-  "archive_pages_this_run": 47,
+  "updated_at": "2026-11-28T14:17:47.901083+00:00",
+  "fetched_this_run": 2020,
+  "archive_cursor": 2427,
+  "archive_pages_this_run": 100,
   "posts": [
     {
       "id": "1",
@@ -26941,6 +26941,24 @@
       "source_url": "https://t.me/Poemestic/8022",
       "status": "needs_review",
       "first_seen_at": "2026-11-27T23:44:45.902808+00:00"
+    },
+    {
+      "id": "8023",
+      "text": "گوشه‌گیران زود در دل‌ها تصرف می‌کنند\nبیشتر دل می‌برد خالی که در کنج لب است.\n- صائب‌ تبریزی.",
+      "author": "",
+      "date": "2026-11-28T08:48:37+00:00",
+      "source_url": "https://t.me/Poemestic/8023",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-28T14:14:18.611999+00:00"
+    },
+    {
+      "id": "8025",
+      "text": "گفتند که نامحرمی و بوسه حرام است\nدل گفت که محرم تر از این عشق کدام است\nبوسیدم و لب دادم و آغوش کشیدم\nنامحرم من، محرمی و کار تمام است.\n-رهی معیری.",
+      "author": "",
+      "date": "2026-11-28T13:14:45+00:00",
+      "source_url": "https://t.me/Poemestic/8025",
+      "status": "needs_review",
+      "first_seen_at": "2026-11-28T14:14:18.611999+00:00"
     }
   ]
 }
